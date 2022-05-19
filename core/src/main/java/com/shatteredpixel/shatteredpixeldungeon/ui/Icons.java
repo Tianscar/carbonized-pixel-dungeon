@@ -88,7 +88,9 @@ public enum Icons {
 	KRISTJAN,
 	CUBE_CODE,
 	PURIGRO,
-	ARCNOR;
+	ARCNOR,
+	TIANSCAR,
+	PTR;
 
 	public Image get() {
 		return get( this );
@@ -248,10 +250,17 @@ public enum Icons {
 			icon.scale.set(PixelScene.align(0.49f));
 			break;
 		case CUBE_CODE:
-			icon.frame( icon.texture.uvRect( 101, 32, 128, 62 ) );
+			icon.frame( icon.texture.uvRect( 128, 96, 160, 128 ) );
 			icon.scale.set(PixelScene.align(0.49f));
 			break;
-
+		case TIANSCAR:
+			icon.frame( icon.texture.uvRect( 160, 96, 192, 128 ) );
+			icon.scale.set(PixelScene.align(0.49f));
+			break;
+		case PTR:
+			icon.frame( icon.texture.uvRect( 192, 96, 224, 128 ) );
+			icon.scale.set(PixelScene.align(0.49f));
+			break;
 		}
 		return icon;
 	}

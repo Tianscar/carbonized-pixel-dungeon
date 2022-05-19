@@ -63,6 +63,36 @@ public class AboutScene extends PixelScene {
 		Component content = list.content();
 		content.clear();
 
+		//*** Carbonized Pixel Dungeon Credits ***
+
+		final int TIANS_COLOR = 0x808080;
+		CreditsBlock tians = new CreditsBlock(true, TIANS_COLOR,
+				"Carbonized Pixel Dungeon",
+				Icons.TIANSCAR.get(),
+				"Developed by: _Tianscar_\nBased on Shattered Pixel Dungeon's open source",
+				"capd.tianscar.com",
+				"https://capd.tianscar.com");
+		if (landscape()){
+			tians.setRect((w - fullWidth)/2f - 6, 6, 120, 0);
+		} else {
+			tians.setRect((w - fullWidth)/2f, 2, 120, 0);
+		}
+		content.add(tians);
+
+		CreditsBlock ptr = new CreditsBlock(false, TIANS_COLOR,
+				"Music:",
+				Icons.PTR.get(),
+				"Progressive Tune",
+				"progressive-tune.github.io/ptr",
+				"https://progressive-tune.github.io/ptr");
+		ptr.setSize(colWidth/2f, 0);
+		if (landscape()){
+			ptr.setPos(tians.right() + colWidth/4f, tians.top() + (tians.height() - ptr.height())/2f);
+		} else {
+			ptr.setRect(w / 2f - colWidth/4f, tians.bottom() + 5, colWidth/2f, 0);
+		}
+		content.add(ptr);
+
 		//*** Shattered Pixel Dungeon Credits ***
 
 		String shpxLink = "https://ShatteredPixel.com";
@@ -78,9 +108,9 @@ public class AboutScene extends PixelScene {
 				"ShatteredPixel.com",
 				shpxLink);
 		if (landscape()){
-			shpx.setRect((w - fullWidth)/2f - 6, 10, 120, 0);
+			shpx.setRect(tians.left(), tians.bottom() + 12, colWidth, 0);
 		} else {
-			shpx.setRect((w - fullWidth)/2f, 6, 120, 0);
+			shpx.setRect(tians.left(), ptr.bottom() + 12, colWidth, 0);
 		}
 		content.add(shpx);
 
@@ -97,6 +127,8 @@ public class AboutScene extends PixelScene {
 			alex.setPos(w/2f - colWidth/2f, shpx.bottom()+5);
 		}
 		content.add(alex);
+
+		addLine(alex.top() - 4, content);
 
 		CreditsBlock charlie = new CreditsBlock(false, Window.SHPX_COLOR,
 				"Sound Effects:",
