@@ -23,27 +23,7 @@ public class v1_X_Changes {
 
 	public static void add_v1_0_Changes( ArrayList<ChangeInfo> changeInfos ) {
 
-		ChangeInfo changes = new ChangeInfo("Coming Soon", true, "");
-		changes.hardlight(0xCCCCCC);
-		changeInfos.add(changes);
-
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Overview",
-			"The next Shattered update will be v1.1.0, and will focus heavily on alchemy! I want to make alchemy more cohesive, simple, and make it better at recycling items the player doesn’t want into items that they do want.\n\n" +
-			"Expect to hear more details about v1.1.0 in a future news post, likely sometime in September."));
-
-		changes.addButton( new ChangeButton(new Image(Assets.Environment.TILES_SEWERS, 48, 96, 16, 16 ), "Alchemical Energy",
-				"The most major change will be an overhaul to how alchemy energy works. Currently energy sort of sits on top of the system and acts as a limiter on how much advanced alchemy a player can perform, but otherwise does nothing. I have some plans to make energy a much more integral part of the system, and for it to tie directly into recycling consumable items. "));
-
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ALCHEMIZE), "Alchemy Recipes",
-				"With alchemical energy changing, I'll naturally be looking at many of the game's higher end alchemy recipes as well! I can't promise that every single recipe will be perfect, but I hope to make some major changes in the next update that will substantially improve on many recipes. "));
-
-		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "More New Music",
-				"So far the early reception to the new music has been extremely positive! Kristjan and I are already working on some new tracks, and we might be ready to add more music in the next update. The current plan is to have a unique track for every region of the dungeon! "));
-
-		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"Lastly, there will be some smaller miscellaneous changes v1.1.0 as well. I plan to continue keeping an eye on game balance and making tweaks to the new hero abilities added in the v0.9 updates. I might have enough time spare to rework an item or two as well! "));
-
-		changes = new ChangeInfo("v1.0.0", true, "");
+		ChangeInfo changes = new ChangeInfo("v1.0.0", true, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
