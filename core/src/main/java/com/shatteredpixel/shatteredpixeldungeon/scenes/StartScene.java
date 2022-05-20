@@ -21,10 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
-import com.shatteredpixel.shatteredpixeldungeon.Chrome;
-import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -38,14 +35,15 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
 
 import java.util.ArrayList;
 
 public class StartScene extends PixelScene {
 	
-	private static final int SLOT_WIDTH = 120;
-	private static final int SLOT_HEIGHT = 30;
+	private static final int SLOT_WIDTH = 100;
+	private static final int SLOT_HEIGHT = 22;
 	
 	@Override
 	public void create() {
@@ -77,8 +75,11 @@ public class StartScene extends PixelScene {
 		add(title);
 		
 		ArrayList<GamesInProgress.Info> games = GamesInProgress.checkAll();
-		
-		int slotGap = landscape() ? 5 : 10;
+
+		int slotGap = (h - 20 - (landscape() ? 3 : 4)*SLOT_HEIGHT) /3;
+		slotGap /= landscape() ? 3 : 5;
+		slotGap = Math.max(slotGap, 2);
+
 		int slotCount = Math.min(GamesInProgress.MAX_SLOTS, games.size()+1);
 		int slotsHeight = slotCount*SLOT_HEIGHT + (slotCount-1)* slotGap;
 		
@@ -129,12 +130,23 @@ public class StartScene extends PixelScene {
 		
 		private int slot;
 		private boolean newGame;
+
+		@Override
+		protected void onPointerDown() {
+			bg.brightness( 1.2f );
+			Sample.INSTANCE.play( Assets.Sounds.CLICK );
+		}
+
+		@Override
+		protected void onPointerUp() {
+			bg.resetColor();
+		}
 		
 		@Override
 		protected void createChildren() {
 			super.createChildren();
 			
-			bg = Chrome.get(Chrome.Type.GEM);
+			bg = Chrome.get(Chrome.Type.GREY_BUTTON_TR);
 			add( bg);
 			
 			name = PixelScene.renderTextBlock(9);

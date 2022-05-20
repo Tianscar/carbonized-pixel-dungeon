@@ -168,7 +168,7 @@ public class ChangesScene extends PixelScene {
 				panel.innerHeight() + 2);
 		list.scrollTo(0, 0);
 
-		StyledButton btn1_1 = new StyledButton(Chrome.Type.GREY_BUTTON_TR, "1.X"){
+		StyledButton btn1_1 = new StyledButton(Chrome.Type.TOAST, "1.X"){
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -182,7 +182,7 @@ public class ChangesScene extends PixelScene {
 		btn1_1.setRect(list.left()-4f, list.bottom(), 22, changesSelected == 0 ? 19 : 15);
 		addToBack(btn1_1);
 
-		StyledButton btn0_9 = new StyledButton(Chrome.Type.GREY_BUTTON_TR, "0.9"){
+		StyledButton btn0_9 = new StyledButton(Chrome.Type.TOAST, "0.9"){
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -196,7 +196,7 @@ public class ChangesScene extends PixelScene {
 		btn0_9.setRect(btn1_1.right()+1, list.bottom(), 22, changesSelected == 1 ? 19 : 15);
 		addToBack(btn0_9);
 
-		StyledButton btn0_8 = new StyledButton(Chrome.Type.GREY_BUTTON_TR, "0.8"){
+		StyledButton btn0_8 = new StyledButton(Chrome.Type.TOAST, "0.8"){
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -210,7 +210,7 @@ public class ChangesScene extends PixelScene {
 		btn0_8.setRect(btn0_9.right() + 1, list.bottom(), 22, changesSelected == 2 ? 19 : 15);
 		addToBack(btn0_8);
 		
-		StyledButton btn0_7 = new StyledButton(Chrome.Type.GREY_BUTTON_TR, "0.7"){
+		StyledButton btn0_7 = new StyledButton(Chrome.Type.TOAST, "0.7"){
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -224,7 +224,7 @@ public class ChangesScene extends PixelScene {
 		btn0_7.setRect(btn0_8.right() + 1, btn0_8.top(), 22, changesSelected == 3 ? 19 : 15);
 		addToBack(btn0_7);
 		
-		StyledButton btn0_6 = new StyledButton(Chrome.Type.GREY_BUTTON_TR, "0.6"){
+		StyledButton btn0_6 = new StyledButton(Chrome.Type.TOAST, "0.6"){
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -238,7 +238,7 @@ public class ChangesScene extends PixelScene {
 		btn0_6.setRect(btn0_7.right() + 1, btn0_8.top(), 22, changesSelected == 4 ? 19 : 15);
 		addToBack(btn0_6);
 		
-		StyledButton btnOld = new StyledButton(Chrome.Type.GREY_BUTTON_TR,"0.5-1"){
+		StyledButton btnOld = new StyledButton(Chrome.Type.TOAST,"0.5-1"){
 			@Override
 			protected void onClick() {
 				super.onClick();

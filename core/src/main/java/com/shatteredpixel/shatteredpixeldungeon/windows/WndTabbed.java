@@ -31,6 +31,7 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
+import com.watabou.noosa.ui.Component;
 import com.watabou.utils.RectF;
 
 import java.util.ArrayList;
@@ -41,16 +42,16 @@ public class WndTabbed extends Window {
 	protected Tab selected;
 	
 	public WndTabbed() {
-		super( 0, 0, Chrome.get( Chrome.Type.TAB_SET ) );
+		super( 0, 0, Chrome.get( Chrome.Type.TOAST ) );
 	}
 	
 	protected Tab add( Tab tab ) {
 
 		tab.setPos( tabs.size() == 0 ?
-			-chrome.marginLeft() + 1 :
-			tabs.get( tabs.size() - 1 ).right(), height );
+			-chrome.marginLeft() :
+			tabs.get( tabs.size() - 1 ).right(), height + 1 );
 		tab.select( tab.selected );
-		super.add( tab );
+		super.addToBack( tab );
 		
 		tabs.add( tab );
 
@@ -85,7 +86,7 @@ public class WndTabbed extends Window {
 			width + chrome.marginHor(),
 			height + chrome.marginVer() );
 		
-		camera.resize( (int)chrome.width, chrome.marginTop() + height + tabHeight() );
+		camera.resize( (int)chrome.width, chrome.marginTop() + height + 1 + tabHeight() + 4);
 		camera.x = (int)(Game.width - camera.screenWidth()) / 2;
 		camera.y = (int)(Game.height - camera.screenHeight()) / 2;
 		camera.y += yOffset * camera.zoom;
@@ -110,21 +111,21 @@ public class WndTabbed extends Window {
 
 	public void layoutTabs(){
 		//subtract two as that horizontal space is transparent at the bottom
-		int fullWidth = width+chrome.marginHor()-2;
+		int fullWidth = width+chrome.marginHor();
 		float numTabs = tabs.size();
 		float tabWidth = (fullWidth - (numTabs-1))/numTabs;
 
-		float pos = -chrome.marginLeft() + 1;
+		float pos = -chrome.marginLeft();
 		for (Tab tab : tabs){
 			tab.setSize(tabWidth, tabHeight());
-			tab.setPos(pos, height);
+			tab.setPos(pos, height + 1);
 			pos = tab.right() + 1;
 			PixelScene.align(tab);
 		}
 	}
 	
 	protected int tabHeight() {
-		return 25;
+		return 25 - 4;
 	}
 	
 	protected void onClick( Tab tab ) {
@@ -132,7 +133,24 @@ public class WndTabbed extends Window {
 	}
 	
 	protected class Tab extends Button {
-		
+
+		protected float selectedHeight;
+		protected float normalHeight;
+
+		@Override
+		public Component setSize(float width, float height) {
+			selectedHeight = height + 4;
+			normalHeight = height;
+			return super.setSize(width, height);
+		}
+
+		@Override
+		public Component setRect(float x, float y, float width, float height) {
+			selectedHeight = height + 4;
+			normalHeight = height;
+			return super.setRect(x, y, width, height);
+		}
+
 		protected final int CUT = 5;
 		
 		protected boolean selected;
@@ -141,6 +159,7 @@ public class WndTabbed extends Window {
 		
 		@Override
 		protected void layout() {
+			height = selected ? selectedHeight : normalHeight;
 			super.layout();
 			
 			if (bg != null) {
@@ -158,9 +177,7 @@ public class WndTabbed extends Window {
 				remove( bg );
 			}
 			
-			bg = Chrome.get( selected ?
-				Chrome.Type.TAB_SELECTED :
-				Chrome.Type.TAB_UNSELECTED );
+			bg = Chrome.get( Chrome.Type.TOAST );
 			addToBack( bg );
 			
 			layout();
@@ -198,7 +215,7 @@ public class WndTabbed extends Window {
 			
 			btLabel.setPos(
 					x + (width - btLabel.width()) / 2,
-					y + (height - btLabel.height()) / 2 - (selected ? 1 : 3)
+					y + (height - btLabel.height()) / 2
 			);
 			PixelScene.align(btLabel);
 		}
@@ -236,7 +253,8 @@ public class WndTabbed extends Window {
 			
 			icon.frame(defaultFrame);
 			icon.x = x + (width - icon.width) / 2;
-			icon.y = y + (height - icon.height) / 2 - 1;
+			icon.y = y + (height - icon.height) / 2;
+			/*
 			if (!selected) {
 				icon.y -= 2;
 				//if some of the icon is going into the window, cut it off
@@ -247,6 +265,8 @@ public class WndTabbed extends Window {
 					icon.y = y + CUT;
 				}
 			}
+
+			 */
 			PixelScene.align(icon);
 		}
 		

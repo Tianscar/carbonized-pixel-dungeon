@@ -51,11 +51,11 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 	public static final int SHPX_COLOR = 0x33BB33;
 	
 	public Window() {
-		this( 0, 0, 0, Chrome.get( Chrome.Type.WINDOW ) );
+		this( 0, 0, 0, Chrome.get( Chrome.Type.TOAST ) );
 	}
 	
 	public Window( int width, int height ) {
-		this( width, height, 0, Chrome.get( Chrome.Type.WINDOW ) );
+		this( width, height, 0, Chrome.get( Chrome.Type.TOAST ) );
 	}
 
 	public Window( int width, int height, NinePatch chrome ) {
