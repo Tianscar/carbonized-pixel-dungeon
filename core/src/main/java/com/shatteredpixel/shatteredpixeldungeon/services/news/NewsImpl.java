@@ -19,12 +19,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-apply plugin: 'java-library'
+package com.shatteredpixel.shatteredpixeldungeon.services.news;
 
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-sourceCompatibility = targetCompatibility = appJavaCompatibility
+import com.watabou.utils.DeviceCompat;
 
-dependencies {
-    implementation project(':SPD-classes')
-    api project(':services')
+public class NewsImpl {
+
+	private static NewsService newsChecker = DeviceCompat.isDebug() ? new DebugNews() : new ShatteredNews();
+
+	public static NewsService getNewsService(){
+		return newsChecker;
+	}
+
+	public static boolean supportsNews(){
+		return true;
+	}
+
 }

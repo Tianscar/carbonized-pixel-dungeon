@@ -19,12 +19,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-apply plugin: 'java-library'
+package com.shatteredpixel.shatteredpixeldungeon.services.updates;
 
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-sourceCompatibility = targetCompatibility = appJavaCompatibility
+import com.watabou.noosa.Game;
+import com.watabou.utils.DeviceCompat;
 
-dependencies {
-    implementation project(':SPD-classes')
-    api project(':services')
+public class UpdateImpl {
+
+	private static UpdateService updateChecker = DeviceCompat.isDebug() ? new DebugUpdates() : new GitHubUpdates();
+
+	public static UpdateService getUpdateService(){
+		return updateChecker;
+	}
+
+	public static boolean supportsUpdates() {
+		return true;
+	}
+
 }

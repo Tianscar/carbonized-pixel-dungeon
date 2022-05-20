@@ -22,11 +22,6 @@ task debug(dependsOn: classes, type: JavaExec) {
     systemProperty 'Specification-Title', appName
     systemProperty 'Specification-Version', appVersionName + "-INDEV"
     systemProperty 'Implementation-Version', appVersionCode
-
-    dependencies {
-        debugImplementation project(':services:updates:debugUpdates')
-        debugImplementation project(':services:news:debugNews')
-    }
 }
 
 //need a separate task to compile dependencies first, seeing as we're setting them up in an odd way
@@ -47,11 +42,6 @@ task release(dependsOn: compileForRelease, type: Jar) {
         attributes 'Specification-Version': appVersionName
         attributes 'Implementation-Version': appVersionCode
     }
-
-    dependencies {
-        releaseImplementation project(':services:updates:githubUpdates')
-        releaseImplementation project(':services:news:shatteredNews')
-    }
 }
 
 dependencies {
@@ -67,9 +57,4 @@ dependencies {
     implementation "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-windows"
     implementation "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-macos"
     implementation "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-linux"
-
-    //Need these at compile time to prevent errors there.
-    // The actual dependency used at runtime will vary based on source set.
-    compileOnly project(':services:updates:debugUpdates')
-    compileOnly project(':services:news:debugNews')
 }
