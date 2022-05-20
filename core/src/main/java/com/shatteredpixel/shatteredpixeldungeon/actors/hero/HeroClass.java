@@ -64,7 +64,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortswor
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.watabou.utils.DeviceCompat;
+import com.watabou.noosa.Game;
 
 public enum HeroClass {
 
@@ -286,7 +286,7 @@ public enum HeroClass {
 	
 	public boolean isUnlocked(){
 		//always unlock on debug builds
-		if (DeviceCompat.isDebug()) return true;
+		if (Game.platform.isDebug()) return true;
 		
 		switch (this){
 			case WARRIOR: default:

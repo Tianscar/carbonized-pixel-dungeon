@@ -23,15 +23,10 @@ package com.watabou.noosa.audio;
 
 import com.badlogic.gdx.Gdx;
 import com.watabou.noosa.Game;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Random;
 
-import java.awt.MediaTracker;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public enum Music {
 	
@@ -53,7 +48,7 @@ public enum Music {
 	public synchronized void play( String assetName, boolean looping ) {
 
 		//iOS cannot play ogg, so we use an mp3 alternative instead
-		if (assetName != null && DeviceCompat.isiOS()){
+		if (assetName != null && Game.platform.isiOS()){
 			assetName = assetName.replace(".ogg", ".mp3");
 		}
 		
@@ -84,7 +79,7 @@ public enum Music {
 		}
 
 		//iOS cannot play ogg, so we use an mp3 alternative instead
-		if (tracks != null && DeviceCompat.isiOS()){
+		if (tracks != null && Game.platform.isiOS()){
 			for (int i = 0; i < tracks.length; i ++){
 				tracks[i] = tracks[i].replace(".ogg", ".mp3");
 			}
@@ -131,7 +126,7 @@ public enum Music {
 		public void onCompletion(com.badlogic.gdx.audio.Music music) {
 			//we do this in a separate thread to avoid graphics hitching while the music is prepared
 			//FIXME this fixes graphics stutter but there's still some audio stutter, perhaps keep more than 1 player alive?
-			if (!DeviceCompat.isDesktop()) {
+			if (!Game.platform.isDesktop()) {
 				new Thread() {
 					@Override
 					public void run() {

@@ -22,11 +22,10 @@
 package com.shatteredpixel.shatteredpixeldungeon.services.updates;
 
 import com.watabou.noosa.Game;
-import com.watabou.utils.DeviceCompat;
 
 public class UpdateImpl {
 
-	private static UpdateService updateChecker = DeviceCompat.isDebug() ? new DebugUpdates() : new GitHubUpdates();
+	private static UpdateService updateChecker = Game.version.contains("INDEV") ? new DebugUpdates() : new GitHubUpdates();
 
 	public static UpdateService getUpdateService(){
 		return updateChecker;

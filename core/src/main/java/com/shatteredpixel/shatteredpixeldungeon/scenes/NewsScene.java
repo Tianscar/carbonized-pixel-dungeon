@@ -42,7 +42,6 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.DeviceCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -151,7 +150,7 @@ public class NewsScene extends PixelScene {
 				link += "?utm_source=shatteredpd";
 				link += "&utm_medium=news_page";
 				link += "&utm_campaign=ingame_link";
-				DeviceCompat.openURI(link);
+				Game.platform.openURI(link);
 			}
 		};
 		btnSite.icon(Icons.get(Icons.NEWS));
@@ -323,7 +322,7 @@ public class NewsScene extends PixelScene {
 					link += "?utm_source=shatteredpd";
 					link += "&utm_medium=news_page";
 					link += "&utm_campaign=ingame_link";
-					DeviceCompat.openURI(link);
+					Game.platform.openURI(link);
 				}
 			};
 			link.setRect(0, height + 2, width, BTN_HEIGHT);

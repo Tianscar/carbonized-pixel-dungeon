@@ -2,8 +2,8 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.TextInput;
-import com.watabou.utils.DeviceCompat;
 
 public class WndTextInput extends Window {
 
@@ -17,7 +17,7 @@ public class WndTextInput extends Window {
 		super();
 
 		//need to offset to give space for the soft keyboard
-		if (!DeviceCompat.isDesktop()) {
+		if (!Game.platform.isDesktop()) {
 			if (PixelScene.landscape()) {
 				offset(-45);
 			} else {

@@ -32,10 +32,10 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.StyledButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.Camera;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.DeviceCompat;
 
 public class SupporterScene extends PixelScene {
 
@@ -83,7 +83,7 @@ public class SupporterScene extends PixelScene {
 				link += "?utm_source=shatteredpd";
 				link += "&utm_medium=supporter_page";
 				link += "&utm_campaign=ingame_link";
-				DeviceCompat.openURI(link);
+				Game.platform.openURI(link);
 			}
 		};
 		link.icon(Icons.get(Icons.GOLD));

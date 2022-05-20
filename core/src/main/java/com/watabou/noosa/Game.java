@@ -35,7 +35,6 @@ import com.watabou.input.PointerEvent;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PlatformSupport;
 import com.watabou.utils.Reflection;
 
@@ -87,7 +86,7 @@ public class Game implements ApplicationListener {
 		sceneClass = c;
 		
 		instance = this;
-		this.platform = platform;
+		Game.platform = platform;
 	}
 	
 	@Override
@@ -153,7 +152,7 @@ public class Game implements ApplicationListener {
 
 		if (justResumed){
 			justResumed = false;
-			if (DeviceCompat.isAndroid()) return;
+			if (Game.platform.isAndroid()) return;
 		}
 
 		NoosaScript.get().resetCamera();

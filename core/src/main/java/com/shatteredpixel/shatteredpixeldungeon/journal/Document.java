@@ -23,8 +23,8 @@ package com.shatteredpixel.shatteredpixeldungeon.journal;
 
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.DeviceCompat;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -135,7 +135,7 @@ public enum Document {
 
 	//pages and default states
 	static {
-		boolean debug = DeviceCompat.isDebug();
+		boolean debug = Game.platform.isDebug();
 		//hero starts with these
 		ADVENTURERS_GUIDE.pagesStates.put(GUIDE_INTRO,          debug ? READ : FOUND);
 		ADVENTURERS_GUIDE.pagesStates.put(GUIDE_EXAMINING,      debug ? READ : FOUND);

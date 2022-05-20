@@ -58,8 +58,8 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
-import com.watabou.utils.DeviceCompat;
 
 import java.util.ArrayList;
 
@@ -576,26 +576,23 @@ public class v0_8_X_Changes {
 				"_-_ Fleeing enemies are now more willing to run around the hero to retreat.\n\n" +
 				"_-_ The hero is now interrupted if their path becomes obstructed by an ally."));
 
-		if (DeviceCompat.isDesktop()) {
-			changes.addButton( new ChangeButton( Icons.get( Icons.LIBGDX ), "libGDX Desktop Functionality",
-					"The desktop version of the game is now running through the same codebase as the Android version!\n\n" +
-					"Moving forward the desktop version of the game will be at feature parity with the Android version, which includes translations, access to betas, and release timings!\n\n" +
-					"Currently all features from the old desktop codebase have been re-implemented in this version:\n" +
-					"_-_ Keyboard support, including movement and keybindings\n" +
-					"_-_ Mouse support, including scroll to zoom\n" +
-					"_-_ Full window management support, including fullscreen\n" +
-					"_-_ Update notifier (also now appears for android users)\n\n" +
-					"The following additional features have also been added:\n" +
-					"_-_ Support for all languages, including asian scripts\n" +
-					"_-_ Support for smooth font (droid sans) on all languages\n" +
-					"_-_ A crash popup, which includes debug info" ) );
-		} else {
-			changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.SCROLL_TIWAZ, null), "Update Notification",
-					"A little blinking button will now appear in the bottom-left of the title screen if an update is available for the game. \n\n" +
-					"The Google Play version of the game uses Google's in-app updates library, and will seamlessly update the game through Google Play if the user accepts the prompt.\n\n" +
-					"Other versions of the game will grab update info from Github, and will direct the player to the latest releases page to download the update.\n\n" +
-					"Note that on Android, both updaters require Android 5.0+ to work correctly. If your device isn't compatible the notification simply won't appear."));
-		}
+		changes.addButton( new ChangeButton( Icons.get( Icons.LIBGDX ), "libGDX Desktop Functionality",
+				"The desktop version of the game is now running through the same codebase as the Android version!\n\n" +
+						"Moving forward the desktop version of the game will be at feature parity with the Android version, which includes translations, access to betas, and release timings!\n\n" +
+						"Currently all features from the old desktop codebase have been re-implemented in this version:\n" +
+						"_-_ Keyboard support, including movement and keybindings\n" +
+						"_-_ Mouse support, including scroll to zoom\n" +
+						"_-_ Full window management support, including fullscreen\n" +
+						"_-_ Update notifier (also now appears for android users)\n\n" +
+						"The following additional features have also been added:\n" +
+						"_-_ Support for all languages, including asian scripts\n" +
+						"_-_ Support for smooth font (droid sans) on all languages\n" +
+						"_-_ A crash popup, which includes debug info" ) );
+		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.SCROLL_TIWAZ, null), "Update Notification",
+				"A little blinking button will now appear in the bottom-left of the title screen if an update is available for the game. \n\n" +
+						"The Google Play version of the game uses Google's in-app updates library, and will seamlessly update the game through Google Play if the user accepts the prompt.\n\n" +
+						"Other versions of the game will grab update info from Github, and will direct the player to the latest releases page to download the update.\n\n" +
+						"Note that on Android, both updaters require Android 5.0+ to work correctly. If your device isn't compatible the notification simply won't appear."));
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"_-_ The game now flashes red when the hero is badly hurt.\n" +

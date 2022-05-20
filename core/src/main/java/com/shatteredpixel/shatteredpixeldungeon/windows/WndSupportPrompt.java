@@ -30,7 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
-import com.watabou.utils.DeviceCompat;
+import com.watabou.noosa.Game;
 
 public class WndSupportPrompt extends Window {
 
@@ -66,7 +66,7 @@ public class WndSupportPrompt extends Window {
 				link += "?utm_source=shatteredpd";
 				link += "&utm_medium=supporter_prompt";
 				link += "&utm_campaign=ingame_link";
-				DeviceCompat.openURI(link);
+				Game.platform.openURI(link);
 				SPDSettings.supportNagged(true);
 				WndSupportPrompt.super.hide();
 			}

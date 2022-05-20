@@ -52,7 +52,6 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.SkinnedBlock;
-import com.watabou.utils.DeviceCompat;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -163,7 +162,7 @@ public class InterlevelScene extends PixelScene {
 		if (Updates.isInstallable()){
 			fadeTime += 0.5f; //adds 1 second total
 		//speed up transition when debugging
-		} else if (DeviceCompat.isDebug()){
+		} else if (Game.platform.isDebug()){
 			fadeTime = 0f;
 		}
 		

@@ -41,7 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.services.updates.UpdateImpl;
 import com.shatteredpixel.shatteredpixeldungeon.services.updates.Updates;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.ui.Button;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.FileUtils;
 
 public class AndroidGame extends AndroidApplication {

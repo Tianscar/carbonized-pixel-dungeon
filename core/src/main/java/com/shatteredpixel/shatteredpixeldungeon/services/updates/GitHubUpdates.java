@@ -26,7 +26,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.DeviceCompat;
 
 import javax.net.ssl.SSLProtocolException;
 import java.util.regex.Matcher;
@@ -124,7 +123,7 @@ public class GitHubUpdates extends UpdateService {
 
 	@Override
 	public void initializeUpdate(AvailableUpdateData update) {
-		DeviceCompat.openURI( update.URL );
+		Game.platform.openURI( update.URL );
 	}
 
 	@Override

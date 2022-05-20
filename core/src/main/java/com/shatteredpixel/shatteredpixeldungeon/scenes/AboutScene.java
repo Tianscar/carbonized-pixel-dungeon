@@ -30,13 +30,8 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ScrollPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.input.PointerEvent;
-import com.watabou.noosa.Camera;
-import com.watabou.noosa.ColorBlock;
-import com.watabou.noosa.Group;
-import com.watabou.noosa.Image;
-import com.watabou.noosa.PointerArea;
+import com.watabou.noosa.*;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.DeviceCompat;
 
 public class AboutScene extends PixelScene {
 
@@ -347,7 +342,7 @@ public class AboutScene extends PixelScene {
 				linkButton = new PointerArea(0, 0, 0, 0){
 					@Override
 					protected void onClick( PointerEvent event ) {
-						DeviceCompat.openURI( linkUrl );
+						Game.platform.openURI( linkUrl );
 					}
 				};
 				add(linkButton);

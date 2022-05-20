@@ -44,7 +44,6 @@ import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -213,7 +212,7 @@ public class WndSettings extends WndTabbed {
 					SPDSettings.fullscreen(checked());
 				}
 			};
-			if (DeviceCompat.supportsFullScreen()){
+			if (Game.platform.supportsFullScreen()){
 				chkFullscreen.checked(SPDSettings.fullscreen());
 			} else {
 				chkFullscreen.checked(true);
@@ -239,7 +238,7 @@ public class WndSettings extends WndTabbed {
 				add(optScale);
 			}
 
-			if (DeviceCompat.isAndroid() && PixelScene.maxScreenZoom >= 2) {
+			if (Game.platform.isAndroid() && PixelScene.maxScreenZoom >= 2) {
 				chkSaver = new CheckBox(Messages.get(this, "saver")) {
 					@Override
 					protected void onClick() {
@@ -268,7 +267,7 @@ public class WndSettings extends WndTabbed {
 				add( chkSaver );
 			}
 
-			if (DeviceCompat.isAndroid()) {
+			if (Game.platform.isAndroid()) {
 				btnOrientation = new RedButton(PixelScene.landscape() ?
 						Messages.get(this, "portrait")
 						: Messages.get(this, "landscape")) {
@@ -466,7 +465,7 @@ public class WndSettings extends WndTabbed {
 			chkFont.checked(SPDSettings.systemFont());
 			add(chkFont);
 
-			if (DeviceCompat.hasHardKeyboard()){
+			if (Game.platform.hasHardKeyboard()){
 
 				sep3 = new ColorBlock(1, 1, 0xFF000000);
 				add(sep3);
@@ -577,7 +576,7 @@ public class WndSettings extends WndTabbed {
 				}
 			}
 
-			if (!DeviceCompat.isDesktop()){
+			if (!Game.platform.isDesktop()){
 				chkWifi = new CheckBox(Messages.get(this, "wifi")){
 					@Override
 					protected void onClick() {

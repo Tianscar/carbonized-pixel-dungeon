@@ -21,11 +21,11 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.services.news;
 
-import com.watabou.utils.DeviceCompat;
+import com.watabou.noosa.Game;
 
 public class NewsImpl {
 
-	private static NewsService newsChecker = DeviceCompat.isDebug() ? new DebugNews() : new ShatteredNews();
+	private static NewsService newsChecker = Game.version.contains("INDEV") ? new DebugNews() : new ShatteredNews();
 
 	public static NewsService getNewsService(){
 		return newsChecker;

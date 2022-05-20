@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.WelcomeScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PlatformSupport;
 
 public class ShatteredPixelDungeon extends Game {
@@ -136,7 +135,7 @@ public class ShatteredPixelDungeon extends Game {
 
 	@Override
 	public void finish() {
-		if (!DeviceCompat.isiOS()) {
+		if (!Game.platform.isiOS()) {
 			super.finish();
 		} else {
 			//can't exit on iOS (Apple guidelines), so just go to title screen
