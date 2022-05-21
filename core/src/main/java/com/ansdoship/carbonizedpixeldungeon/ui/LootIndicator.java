@@ -22,7 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.SPDAction;
+import com.ansdoship.carbonizedpixeldungeon.PDAction;
 import com.ansdoship.carbonizedpixeldungeon.items.Heap;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.pixeldungeonclasses.input.GameAction;
@@ -56,7 +56,7 @@ public class LootIndicator extends Tag {
 
 			@Override
 			public GameAction keyAction() {
-				return SPDAction.TAG_LOOT;
+				return PDAction.TAG_LOOT;
 			}
 		};
 		slot.showExtraInfo( false );

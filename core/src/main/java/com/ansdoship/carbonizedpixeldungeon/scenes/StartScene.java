@@ -113,7 +113,7 @@ public class StartScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+		CarbonizedPixelDungeon.switchNoFade( TitleScene.class );
 	}
 	
 	private static class SaveSlotButton extends Button {
@@ -271,9 +271,9 @@ public class StartScene extends PixelScene {
 			if (newGame) {
 				GamesInProgress.selectedClass = null;
 				GamesInProgress.curSlot = slot;
-				ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+				CarbonizedPixelDungeon.switchScene(HeroSelectScene.class);
 			} else {
-				ShatteredPixelDungeon.scene().add( new WndGameInProgress(slot));
+				CarbonizedPixelDungeon.scene().add( new WndGameInProgress(slot));
 			}
 		}
 	}

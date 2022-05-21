@@ -27,7 +27,7 @@ import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 import com.ansdoship.carbonizedpixeldungeon.levels.painters.Painter;
 import com.ansdoship.pixeldungeonclasses.utils.Point;
 
-//import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SacrificialFire;
+//import com.ansdoship.carbonizedpixeldungeon.actors.blobs.SacrificialFire;
 
 public class AltarRoom extends SpecialRoom {
 

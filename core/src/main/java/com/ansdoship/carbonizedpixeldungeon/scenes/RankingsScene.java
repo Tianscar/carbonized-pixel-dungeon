@@ -22,8 +22,8 @@
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Rankings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -144,7 +144,7 @@ public class RankingsScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+		CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
 	}
 	
 	public static class Record extends Button {

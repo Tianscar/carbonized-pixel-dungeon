@@ -31,90 +31,79 @@ import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
 
-public class ShatteredPixelDungeon extends Game {
+public class CarbonizedPixelDungeon extends Game {
 
-	//variable constants for specific older versions of shattered, used for data conversion
-	//versions older than v0.8.0b are no longer supported, and data from them is ignored
-	public static final int v0_8_0b = 414;
-	public static final int v0_8_1a = 422;
-	public static final int v0_8_2d = 463;
-
-	public static final int v0_9_0b  = 489;
-	public static final int v0_9_1d  = 511;
-	public static final int v0_9_2b  = 531;
-	public static final int v0_9_3c  = 557; //557 on iOS, 554 on other platforms
-
-	public static final int v1_0_0   = 565;
+	public static final int v0_0_1   = 1;
 	
-	public ShatteredPixelDungeon( PlatformSupport platform ) {
+	public CarbonizedPixelDungeon(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
 
 		//v1.0.0
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfFear.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAffection" );
+				"com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfAffection" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfDeepSleep.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfDeepenedSleep" );
+				"com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfDeepenedSleep" );
 
 		//v0.9.3
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.actors.mobs.Tengu.class,
-				"com.shatteredpixel.shatteredpixeldungeon.actors.mobs.NewTengu" );
+				"com.ansdoship.carbonizedpixeldungeon.actors.mobs.NewTengu" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.PrisonBossLevel.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewPrisonBossLevel" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewPrisonBossLevel" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.PrisonBossLevel.ExitVisual.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewPrisonBossLevel$exitVisual" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewPrisonBossLevel$exitVisual" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.PrisonBossLevel.ExitVisualWalls.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewPrisonBossLevel$exitVisualWalls" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewPrisonBossLevel$exitVisualWalls" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.actors.mobs.DM300.class,
-				"com.shatteredpixel.shatteredpixeldungeon.actors.mobs.NewDM300" );
+				"com.ansdoship.carbonizedpixeldungeon.actors.mobs.NewDM300" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.CavesBossLevel.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewCavesBossLevel" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewCavesBossLevel" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.CavesBossLevel.PylonEnergy.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewCavesBossLevel$PylonEnergy" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewCavesBossLevel$PylonEnergy" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.CavesBossLevel.ArenaVisuals.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewCavesBossLevel$ArenaVisuals" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewCavesBossLevel$ArenaVisuals" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.CavesBossLevel.CityEntrance.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewCavesBossLevel$CityEntrance" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewCavesBossLevel$CityEntrance" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.CavesBossLevel.EntranceOverhang.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewCavesBossLevel$EntranceOverhang" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewCavesBossLevel$EntranceOverhang" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.CityBossLevel.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewCityBossLevel" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewCityBossLevel" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.CityBossLevel.CustomGroundVisuals.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewCityBossLevel$CustomGroundVisuals" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewCityBossLevel$CustomGroundVisuals" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.CityBossLevel.CustomWallVisuals.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewCityBossLevel$CustomWallVisuals" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewCityBossLevel$CustomWallVisuals" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.HallsBossLevel.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewHallsBossLevel" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewHallsBossLevel" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.HallsBossLevel.CenterPieceVisuals.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewHallsBossLevel$CenterPieceWalls" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewHallsBossLevel$CenterPieceWalls" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.levels.HallsBossLevel.CenterPieceWalls.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.NewHallsBossLevel$CenterPieceWalls" );
+				"com.ansdoship.carbonizedpixeldungeon.levels.NewHallsBossLevel$CenterPieceWalls" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.items.Waterskin.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.DewVial" );
+				"com.ansdoship.carbonizedpixeldungeon.items.DewVial" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.items.TengusMask.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery" );
+				"com.ansdoship.carbonizedpixeldungeon.items.TomeOfMastery" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.items.KingsCrown.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.ArmorKit" );
+				"com.ansdoship.carbonizedpixeldungeon.items.ArmorKit" );
 		
 	}
 	
@@ -123,12 +112,12 @@ public class ShatteredPixelDungeon extends Game {
 		super.create();
 
 		updateSystemUI();
-		SPDAction.loadBindings();
+		PDAction.loadBindings();
 		
-		Music.INSTANCE.enable( SPDSettings.music() );
-		Music.INSTANCE.volume( SPDSettings.musicVol()*SPDSettings.musicVol()/100f );
-		Sample.INSTANCE.enable( SPDSettings.soundFx() );
-		Sample.INSTANCE.volume( SPDSettings.SFXVol()*SPDSettings.SFXVol()/100f );
+		Music.INSTANCE.enable( PDSettings.music() );
+		Music.INSTANCE.volume( PDSettings.musicVol()* PDSettings.musicVol()/100f );
+		Sample.INSTANCE.enable( PDSettings.soundFx() );
+		Sample.INSTANCE.volume( PDSettings.SFXVol()* PDSettings.SFXVol()/100f );
 
 		Sample.INSTANCE.load( Assets.Sounds.all );
 		

@@ -21,8 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.levels.rooms.special;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.levels.rooms.Room;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
@@ -172,7 +172,7 @@ public abstract class SpecialRoom extends Room {
 			}
 		} else {
 			initForRun();
-			ShatteredPixelDungeon.reportException(new Exception("specials array didn't exist!"));
+			CarbonizedPixelDungeon.reportException(new Exception("specials array didn't exist!"));
 		}
 		pitNeededDepth = bundle.getInt(PIT);
 	}

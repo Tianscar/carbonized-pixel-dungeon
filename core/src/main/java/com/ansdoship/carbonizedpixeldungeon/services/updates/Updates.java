@@ -21,7 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.services.updates;
 
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 import java.util.Date;
@@ -50,11 +50,11 @@ public class Updates {
 		if (lastCheck != null && (new Date().getTime() - lastCheck.getTime()) < CHECK_DELAY) return;
 
 		//We do this so that automatically enabled beta checking (for users who DLed a beta) persists afterward
-		if (SPDSettings.betas()){
-			SPDSettings.betas(true);
+		if (PDSettings.betas()){
+			PDSettings.betas(true);
 		}
 
-		service.checkForUpdate(!SPDSettings.WiFi(), SPDSettings.betas(), new UpdateService.UpdateResultCallback() {
+		service.checkForUpdate(!PDSettings.WiFi(), PDSettings.betas(), new UpdateService.UpdateResultCallback() {
 			@Override
 			public void onUpdateAvailable(AvailableUpdateData update) {
 				lastCheck = new Date();

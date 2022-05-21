@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
@@ -105,14 +105,14 @@ public class TalentButton extends Button {
 				&& Dungeon.hero.isAlive()
 				&& Dungeon.hero.talentPointsAvailable(tier) > 0
 				&& Dungeon.hero.pointsInTalent(talent) < talent.maxPoints()){
-			ShatteredPixelDungeon.scene().addToFront(new WndInfoTalent(talent, pointsInTalent, new Callback() {
+			CarbonizedPixelDungeon.scene().addToFront(new WndInfoTalent(talent, pointsInTalent, new Callback() {
 				@Override
 				public void call() {
 					upgradeTalent();
 				}
 			}));
 		} else {
-			ShatteredPixelDungeon.scene().addToFront(new WndInfoTalent(talent, pointsInTalent, null));
+			CarbonizedPixelDungeon.scene().addToFront(new WndInfoTalent(talent, pointsInTalent, null));
 		}
 	}
 

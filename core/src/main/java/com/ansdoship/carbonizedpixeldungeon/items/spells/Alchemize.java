@@ -21,7 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items.spells;
 
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.AlchemicalCatalyst;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -44,7 +44,7 @@ public class Alchemize extends Spell implements AlchemyScene.AlchemyProvider {
 		detach( curUser.belongings.backpack );
 		updateQuickslot();
 		AlchemyScene.setProvider(this);
-		ShatteredPixelDungeon.switchScene(AlchemyScene.class);
+		CarbonizedPixelDungeon.switchScene(AlchemyScene.class);
 	}
 	
 	@Override

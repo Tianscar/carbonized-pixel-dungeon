@@ -21,9 +21,9 @@
 
 package com.ansdoship.carbonizedpixeldungeon.windows;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Challenges;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.ui.CheckBox;
@@ -82,7 +82,7 @@ public class WndChallenges extends Window {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					ShatteredPixelDungeon.scene().add(
+					CarbonizedPixelDungeon.scene().add(
 							new WndMessage(Messages.get(Challenges.class, challenge+"_desc"))
 					);
 				}
@@ -106,7 +106,7 @@ public class WndChallenges extends Window {
 					value |= Challenges.MASKS[i];
 				}
 			}
-			SPDSettings.challenges( value );
+			PDSettings.challenges( value );
 		}
 
 		super.onBackPressed();

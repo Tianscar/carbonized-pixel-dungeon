@@ -23,8 +23,8 @@ package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.SPDAction;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
+import com.ansdoship.carbonizedpixeldungeon.PDAction;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.CellSelector;
@@ -91,7 +91,7 @@ public class Toolbar extends Component {
 			
 			@Override
 			public GameAction keyAction() {
-				return SPDAction.WAIT;
+				return PDAction.WAIT;
 			}
 			
 			protected boolean onLongClick() {
@@ -110,7 +110,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				return SPDAction.REST;
+				return PDAction.REST;
 			}
 		});
 		
@@ -128,7 +128,7 @@ public class Toolbar extends Component {
 			
 			@Override
 			public GameAction keyAction() {
-				return SPDAction.SEARCH;
+				return PDAction.SEARCH;
 			}
 			
 			@Override
@@ -148,7 +148,7 @@ public class Toolbar extends Component {
 			
 			@Override
 			public GameAction keyAction() {
-				return SPDAction.INVENTORY;
+				return PDAction.INVENTORY;
 			}
 			
 			@Override
@@ -178,12 +178,12 @@ public class Toolbar extends Component {
 	protected void layout() {
 
 		for(int i = 0; i <= 3; i++) {
-			if (i == 0 && !SPDSettings.flipToolbar() ||
-				i == 3 && SPDSettings.flipToolbar()){
+			if (i == 0 && !PDSettings.flipToolbar() ||
+				i == 3 && PDSettings.flipToolbar()){
 				btnQuick[i].border(0, 2);
 				btnQuick[i].frame(106, 0, 19, 24);
-			} else if (i == 0 && SPDSettings.flipToolbar() ||
-					i == 3 && !SPDSettings.flipToolbar()){
+			} else if (i == 0 && PDSettings.flipToolbar() ||
+					i == 3 && !PDSettings.flipToolbar()){
 				btnQuick[i].border(2, 1);
 				btnQuick[i].frame(86, 0, 20, 24);
 			} else {
@@ -193,7 +193,7 @@ public class Toolbar extends Component {
 		}
 
 		float right = width;
-		switch(Mode.valueOf(SPDSettings.toolbarMode())){
+		switch(Mode.valueOf(PDSettings.toolbarMode())){
 			case SPLIT:
 				btnWait.setPos(x, y);
 				btnSearch.setPos(btnWait.right(), y);
@@ -244,7 +244,7 @@ public class Toolbar extends Component {
 		}
 		right = width;
 
-		if (SPDSettings.flipToolbar()) {
+		if (PDSettings.flipToolbar()) {
 
 			btnWait.setPos( (right - btnWait.right()), y);
 			btnSearch.setPos( (right - btnSearch.right()), y);

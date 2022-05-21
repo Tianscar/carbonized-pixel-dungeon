@@ -21,7 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
 import com.ansdoship.carbonizedpixeldungeon.ui.Archs;
 import com.ansdoship.carbonizedpixeldungeon.ui.ExitButton;
@@ -280,7 +280,7 @@ public class AboutScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchScene(TitleScene.class);
+		CarbonizedPixelDungeon.switchScene(TitleScene.class);
 	}
 
 	private void addLine( float y, Group content ){

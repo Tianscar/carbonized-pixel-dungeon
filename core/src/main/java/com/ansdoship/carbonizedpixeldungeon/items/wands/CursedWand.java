@@ -24,7 +24,7 @@ package com.ansdoship.carbonizedpixeldungeon.items.wands;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Challenges;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Blob;
@@ -405,7 +405,7 @@ public class CursedWand {
 						return false;
 					}
 				} catch(IOException e){
-					ShatteredPixelDungeon.reportException(e);
+					CarbonizedPixelDungeon.reportException(e);
 					//maybe don't kill the game if the save failed.
 					return cursedEffect(origin, user, targetPos);
 				}

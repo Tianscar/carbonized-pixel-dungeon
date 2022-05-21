@@ -4,27 +4,28 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
+        classpath 'com.android.tools.build:gradle:7.0.4'
     }
 }
 
 allprojects {
 
     ext {
-        appName = 'Shattered Pixel Dungeon'
-        appPackageName = 'com.shatteredpixel.shatteredpixeldungeon'
+        appName = 'Carbonized Pixel Dungeon'
+        appPackageName = 'com.ansdoship.carbonizedpixeldungeon'
 
-        appVersionCode = 574
-        appVersionName = '1.0.3'
+        appVersionCode = 1
+        appVersionName = '0.0.1'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
-        appAndroidCompileSDK = 30 //TODO update to 31 once it is out of preview
+        appAndroidCompileSDK = 31
         appAndroidMinSDK = 14
         appAndroidTargetSDK = 31
 
         gdxVersion = '1.10.0'
-        robovmVersion = '2.3.13'
+        gdxControllersVersion = '2.2.1'
+        robovmVersion = '2.3.14'
     }
     version = appVersionName
 

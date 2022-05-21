@@ -21,8 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.windows;
 
-import com.ansdoship.carbonizedpixeldungeon.SPDAction;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDAction;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
@@ -115,7 +115,7 @@ public class WndKeyBindings extends Window {
 		RedButton btnDefaults = new RedButton(Messages.get(this, "default"), 9){
 			@Override
 			protected void onClick() {
-				changedBindings = SPDAction.getDefaults();
+				changedBindings = PDAction.getDefaults();
 				for (BindingItem i : listItems){
 					int key1 = 0;
 					int key2 = 0;
@@ -136,7 +136,7 @@ public class WndKeyBindings extends Window {
 			@Override
 			protected void onClick() {
 				KeyBindings.setAllBindings(changedBindings);
-				SPDAction.saveBindings();
+				PDAction.saveBindings();
 				hide();
 			}
 		};
@@ -259,11 +259,11 @@ public class WndKeyBindings extends Window {
 			if (inside(x, y)){
 				//assigning second key
 				if (x >= this.x + 3*width()/4 && key1 != 0) {
-					ShatteredPixelDungeon.scene().addToFront( new WndChangeBinding(gameAction, this, false, key2, key1));
+					CarbonizedPixelDungeon.scene().addToFront( new WndChangeBinding(gameAction, this, false, key2, key1));
 
 				//assigning first key
 				} else if (x >= this.x + width()/2){
-					ShatteredPixelDungeon.scene().addToFront( new WndChangeBinding(gameAction, this, true, key1, key2));
+					CarbonizedPixelDungeon.scene().addToFront( new WndChangeBinding(gameAction, this, true, key1, key2));
 
 				}
 				return true;

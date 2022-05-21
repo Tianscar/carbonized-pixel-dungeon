@@ -21,9 +21,9 @@
 
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Chrome;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.messages.Languages;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.services.news.News;
@@ -162,13 +162,13 @@ public class NewsScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+		CarbonizedPixelDungeon.switchNoFade( TitleScene.class );
 	}
 
 	@Override
 	public void update() {
 		if (displayingNoArticles && News.articlesAvailable()){
-			ShatteredPixelDungeon.seamlessResetScene();
+			CarbonizedPixelDungeon.seamlessResetScene();
 		}
 		super.update();
 	}
@@ -191,17 +191,17 @@ public class NewsScene extends PixelScene {
 			}
 			
 			if (!News.articlesAvailable()){
-				if (SPDSettings.news()) {
-					if (SPDSettings.WiFi() && !Game.platform.connectedToUnmeteredNetwork()) {
+				if (PDSettings.news()) {
+					if (PDSettings.WiFi() && !Game.platform.connectedToUnmeteredNetwork()) {
 						message += "\n\n" + Messages.get(this, "metered_network");
 
 						button = new RedButton(Messages.get(this, "enable_data")) {
 							@Override
 							protected void onClick() {
 								super.onClick();
-								SPDSettings.WiFi(false);
+								PDSettings.WiFi(false);
 								News.checkForNews();
-								ShatteredPixelDungeon.seamlessResetScene();
+								CarbonizedPixelDungeon.seamlessResetScene();
 							}
 						};
 						add(button);
@@ -215,9 +215,9 @@ public class NewsScene extends PixelScene {
 						@Override
 						protected void onClick() {
 							super.onClick();
-							SPDSettings.news(true);
+							PDSettings.news(true);
 							News.checkForNews();
-							ShatteredPixelDungeon.seamlessResetScene();
+							CarbonizedPixelDungeon.seamlessResetScene();
 						}
 					};
 					add(button);
@@ -268,7 +268,7 @@ public class NewsScene extends PixelScene {
 			this.article = article;
 
 			icon(News.parseArticleIcon(article));
-			long lastRead = SPDSettings.newsLastRead();
+			long lastRead = PDSettings.newsLastRead();
 			if (lastRead > 0 && article.date.getTime() > lastRead) {
 				textColor(Window.SHPX_COLOR);
 			}
@@ -301,10 +301,10 @@ public class NewsScene extends PixelScene {
 		protected void onClick() {
 			super.onClick();
 			textColor(Window.WHITE);
-			if (article.date.getTime() > SPDSettings.newsLastRead()){
-				SPDSettings.newsLastRead(article.date.getTime());
+			if (article.date.getTime() > PDSettings.newsLastRead()){
+				PDSettings.newsLastRead(article.date.getTime());
 			}
-			ShatteredPixelDungeon.scene().addToFront(new WndArticle(article));
+			CarbonizedPixelDungeon.scene().addToFront(new WndArticle(article));
 		}
 	}
 

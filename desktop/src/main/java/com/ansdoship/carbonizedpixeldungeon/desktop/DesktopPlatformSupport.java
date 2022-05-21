@@ -25,7 +25,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
 import com.ansdoship.pixeldungeonclasses.utils.Point;
@@ -39,8 +39,8 @@ public class DesktopPlatformSupport extends PlatformSupport {
 	@Override
 	public void updateDisplaySize() {
 		//FIXME we still set window resolution when game becomes maximized =/
-		if (!SPDSettings.fullscreen()) {
-			SPDSettings.windowResolution( new Point( Game.width, Game.height ) );
+		if (!PDSettings.fullscreen()) {
+			PDSettings.windowResolution( new Point( Game.width, Game.height ) );
 		}
 	}
 	
@@ -49,10 +49,10 @@ public class DesktopPlatformSupport extends PlatformSupport {
 		Gdx.app.postRunnable( new Runnable() {
 			@Override
 			public void run () {
-				if (SPDSettings.fullscreen()){
+				if (PDSettings.fullscreen()){
 					Gdx.graphics.setFullscreenMode( Gdx.graphics.getDisplayMode() );
 				} else {
-					Point p = SPDSettings.windowResolution();
+					Point p = PDSettings.windowResolution();
 					Gdx.graphics.setWindowedMode( p.x, p.y );
 				}
 			}

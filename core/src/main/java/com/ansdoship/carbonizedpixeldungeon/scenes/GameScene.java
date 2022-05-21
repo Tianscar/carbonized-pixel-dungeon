@@ -26,8 +26,8 @@ import com.ansdoship.carbonizedpixeldungeon.Badges;
 import com.ansdoship.carbonizedpixeldungeon.Challenges;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.Rankings;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Statistics;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
@@ -181,7 +181,7 @@ public class GameScene extends PixelScene {
 	public void create() {
 		
 		if (Dungeon.hero == null || Dungeon.level == null){
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+			CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
 			return;
 		}
 		
@@ -190,10 +190,10 @@ public class GameScene extends PixelScene {
 				new float[]{1, 1, 0.5f},
 				false);
 
-		SPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
+		PDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		
 		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + SPDSettings.zoom(), maxZoom));
+		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + PDSettings.zoom(), maxZoom));
 
 		scene = this;
 
@@ -596,7 +596,7 @@ public class GameScene extends PixelScene {
 			try {
 				actorThread.wait(msToWait);
 			} catch (InterruptedException e) {
-				ShatteredPixelDungeon.reportException(e);
+				CarbonizedPixelDungeon.reportException(e);
 			}
 			return !Actor.processing();
 		}
@@ -610,7 +610,7 @@ public class GameScene extends PixelScene {
 			Badges.saveGlobal();
 			Journal.saveGlobal();
 		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
+			CarbonizedPixelDungeon.reportException(e);
 		}
 	}
 
@@ -704,9 +704,9 @@ public class GameScene extends PixelScene {
 
 		if (scene == null) return;
 
-		float tagLeft = SPDSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
+		float tagLeft = PDSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
 
-		if (SPDSettings.flipTags()) {
+		if (PDSettings.flipTags()) {
 			scene.log.setRect(scene.attack.width(), scene.toolbar.top()-2, uiCamera.width - scene.attack.width(), 0);
 		} else {
 			scene.log.setRect(0, scene.toolbar.top()-2, uiCamera.width - scene.attack.width(),  0 );

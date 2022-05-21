@@ -33,8 +33,8 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidAudio;
 import com.badlogic.gdx.backends.android.AsynchronousAndroidAudio;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.services.news.News;
 import com.ansdoship.carbonizedpixeldungeon.services.news.NewsImpl;
 import com.ansdoship.carbonizedpixeldungeon.services.updates.UpdateImpl;
@@ -82,15 +82,15 @@ public class AndroidGame extends AndroidApplication {
 			// so that we don't need to rely on Gdx.app, which isn't initialized yet.
 			// Note that we use a different prefs name on android for legacy purposes,
 			// this is the default prefs filename given to an android app (.xml is automatically added to it)
-			SPDSettings.set(instance.getPreferences("ShatteredPixelDungeon"));
+			PDSettings.set(instance.getPreferences("CarbonizedPixelDungeon"));
 
 		} else {
 			instance = this;
 		}
 		
 		//set desired orientation (if it exists) before initializing the app.
-		if (SPDSettings.landscape() != null) {
-			instance.setRequestedOrientation( SPDSettings.landscape() ?
+		if (PDSettings.landscape() != null) {
+			instance.setRequestedOrientation( PDSettings.landscape() ?
 					ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE :
 					ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT );
 		}
@@ -114,7 +114,7 @@ public class AndroidGame extends AndroidApplication {
 
 		Button.longClick = ViewConfiguration.getLongPressTimeout()/1000f;
 		
-		initialize(new ShatteredPixelDungeon(support), config);
+		initialize(new CarbonizedPixelDungeon(support), config);
 		
 	}
 

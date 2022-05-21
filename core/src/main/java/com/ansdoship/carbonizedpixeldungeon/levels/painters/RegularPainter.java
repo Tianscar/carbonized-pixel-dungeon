@@ -21,8 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.levels.painters;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.journal.Document;
 import com.ansdoship.carbonizedpixeldungeon.levels.Level;
 import com.ansdoship.carbonizedpixeldungeon.levels.Patch;
@@ -157,7 +157,7 @@ public abstract class RegularPainter extends Painter {
 						doorSpots.add(p);
 				}
 				if (doorSpots.isEmpty()){
-					ShatteredPixelDungeon.reportException(
+					CarbonizedPixelDungeon.reportException(
 							new RuntimeException("Could not place a door! " +
 									"r=" + r.getClass().getSimpleName() +
 									" n=" + n.getClass().getSimpleName()));

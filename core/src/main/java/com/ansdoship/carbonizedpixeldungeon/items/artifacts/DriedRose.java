@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.items.artifacts;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.blobs.CorrosiveGas;
@@ -257,7 +257,7 @@ public class DriedRose extends Artifact {
 					ghostID = 0;
 				}
 			} catch ( ClassCastException e ){
-				ShatteredPixelDungeon.reportException(e);
+				CarbonizedPixelDungeon.reportException(e);
 				ghostID = 0;
 			}
 		}
@@ -755,7 +755,7 @@ public class DriedRose extends Artifact {
 					yell( Messages.get( this, "dialogue_halls_" + variant ));
 					break;
 			}
-			if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+			if (CarbonizedPixelDungeon.scene() instanceof GameScene) {
 				Sample.INSTANCE.play( Assets.Sounds.GHOST );
 			}
 		}

@@ -21,8 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.windows;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Statistics;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
@@ -131,7 +131,7 @@ public class WndHero extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					ShatteredPixelDungeon.scene().addToFront(new WndHeroInfo(hero.heroClass));
+					CarbonizedPixelDungeon.scene().addToFront(new WndHeroInfo(hero.heroClass));
 				}
 			};
 			infoButton.setRect(title.right(), 0, 16, 16);

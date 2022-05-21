@@ -24,8 +24,8 @@ package com.ansdoship.carbonizedpixeldungeon.messages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,7 +68,7 @@ public class Messages {
 	};
 
 	static{
-		setup(SPDSettings.language());
+		setup(PDSettings.language());
 	}
 
 	public static void setup( Languages lang ){
@@ -101,7 +101,7 @@ public class Messages {
 	public static String get(Class c, String k, Object...args){
 		String key;
 		if (c != null){
-			key = c.getName().replace("com.shatteredpixel.shatteredpixeldungeon.", "");
+			key = c.getName().replace("com.ansdoship.carbonizedpixeldungeon.", "");
 			key += "." + k;
 		} else
 			key = k;
@@ -144,7 +144,7 @@ public class Messages {
 		try {
 			return String.format(Locale.ENGLISH, format, args);
 		} catch (IllegalFormatException e) {
-			ShatteredPixelDungeon.reportException( e );
+			CarbonizedPixelDungeon.reportException( e );
 			return format;
 		}
 	}

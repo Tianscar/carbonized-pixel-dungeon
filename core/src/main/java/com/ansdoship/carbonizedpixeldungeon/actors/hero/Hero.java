@@ -21,13 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.actors.hero;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.Badges;
-import com.ansdoship.carbonizedpixeldungeon.Bones;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.GamesInProgress;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
-import com.ansdoship.carbonizedpixeldungeon.Statistics;
+import com.ansdoship.carbonizedpixeldungeon.*;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Alchemy;
@@ -821,7 +816,7 @@ public class Hero extends Char {
 				alch.alchPos = dst;
 				AlchemyScene.setProvider( alch );
 			}
-			ShatteredPixelDungeon.switchScene(AlchemyScene.class);
+			CarbonizedPixelDungeon.switchScene(AlchemyScene.class);
 			return false;
 
 		} else if (getCloser( dst )) {

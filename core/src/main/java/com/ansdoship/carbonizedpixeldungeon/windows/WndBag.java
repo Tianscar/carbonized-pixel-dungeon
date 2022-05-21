@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.windows;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.SPDAction;
+import com.ansdoship.carbonizedpixeldungeon.PDAction;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.LostInventory;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
@@ -244,7 +244,7 @@ public class WndBag extends WndTabbed {
 
 	@Override
 	public boolean onSignal(KeyEvent event) {
-		if (event.pressed && KeyBindings.getActionForKey( event ) == SPDAction.INVENTORY) {
+		if (event.pressed && KeyBindings.getActionForKey( event ) == PDAction.INVENTORY) {
 			hide();
 			return true;
 		} else {

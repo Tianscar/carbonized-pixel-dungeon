@@ -21,11 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.levels;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.Challenges;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
-import com.ansdoship.carbonizedpixeldungeon.Statistics;
+import com.ansdoship.carbonizedpixeldungeon.*;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Blob;
@@ -308,11 +305,6 @@ public abstract class Level implements Bundlable {
 	public void restoreFromBundle( Bundle bundle ) {
 
 		version = bundle.getInt( VERSION );
-		
-		//saves from before v0.8.0b are not supported
-		if (version < ShatteredPixelDungeon.v0_8_0b){
-			throw new RuntimeException("old save");
-		}
 
 		setSize( bundle.getInt(WIDTH), bundle.getInt(HEIGHT));
 		
@@ -806,7 +798,7 @@ public abstract class Level implements Bundlable {
 			heap.drop(item);
 		}
 		
-		if (Dungeon.level != null && ShatteredPixelDungeon.scene() instanceof GameScene) {
+		if (Dungeon.level != null && CarbonizedPixelDungeon.scene() instanceof GameScene) {
 			pressCell( cell );
 		}
 		

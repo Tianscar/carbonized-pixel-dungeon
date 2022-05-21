@@ -21,16 +21,10 @@
 
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.Badges;
-import com.ansdoship.carbonizedpixeldungeon.Chrome;
-import com.ansdoship.carbonizedpixeldungeon.GamesInProgress;
-import com.ansdoship.carbonizedpixeldungeon.Rankings;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.*;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.effects.BannerSprites;
 import com.ansdoship.carbonizedpixeldungeon.effects.Fireball;
-import com.ansdoship.carbonizedpixeldungeon.journal.Document;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.ui.Archs;
 import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
@@ -46,16 +40,16 @@ import com.ansdoship.pixeldungeonclasses.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
 
-	private static final int LATEST_UPDATE = ShatteredPixelDungeon.v1_0_0;
+	private static final int LATEST_UPDATE = CarbonizedPixelDungeon.v0_0_1;
 
 	@Override
 	public void create() {
 		super.create();
 
-		final int previousVersion = SPDSettings.version();
+		final int previousVersion = PDSettings.version();
 
-		if (ShatteredPixelDungeon.versionCode == previousVersion && !SPDSettings.intro()) {
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+		if (CarbonizedPixelDungeon.versionCode == previousVersion && !PDSettings.intro()) {
+			CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
 			return;
 		}
 
@@ -112,27 +106,27 @@ public class WelcomeScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				if (previousVersion == 0 || SPDSettings.intro()){
-					SPDSettings.version(ShatteredPixelDungeon.versionCode);
+				if (previousVersion == 0 || PDSettings.intro()){
+					PDSettings.version(CarbonizedPixelDungeon.versionCode);
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+					CarbonizedPixelDungeon.switchScene(HeroSelectScene.class);
 				} else {
 					updateVersion(previousVersion);
-					ShatteredPixelDungeon.switchScene(TitleScene.class);
+					CarbonizedPixelDungeon.switchScene(TitleScene.class);
 				}
 			}
 		};
 
 		float buttonY = Math.min(topRegion + (PixelScene.landscape() ? 60 : 120), h - 24);
 
-		if (previousVersion != 0 && !SPDSettings.intro()){
+		if (previousVersion != 0 && !PDSettings.intro()){
 			StyledButton changes = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(TitleScene.class, "changes")){
 				@Override
 				protected void onClick() {
 					super.onClick();
 					updateVersion(previousVersion);
-					ShatteredPixelDungeon.switchScene(ChangesScene.class);
+					CarbonizedPixelDungeon.switchScene(ChangesScene.class);
 				}
 			};
 			okay.setRect(title.x, buttonY, (title.width()/2)-2, 20);
@@ -150,9 +144,9 @@ public class WelcomeScene extends PixelScene {
 
 		RenderedTextBlock text = PixelScene.renderTextBlock(6);
 		String message;
-		if (previousVersion == 0 || SPDSettings.intro()) {
+		if (previousVersion == 0 || PDSettings.intro()) {
 			message = Messages.get(this, "welcome_msg");
-		} else if (previousVersion <= ShatteredPixelDungeon.versionCode) {
+		} else if (previousVersion <= CarbonizedPixelDungeon.versionCode) {
 			if (previousVersion < LATEST_UPDATE){
 				message = Messages.get(this, "update_intro");
 				message += "\n\n" + Messages.get(this, "update_msg");
@@ -194,29 +188,19 @@ public class WelcomeScene extends PixelScene {
 					} catch (Exception e) {
 						//if we encounter a fatal per-record error, then clear that record
 						Rankings.INSTANCE.records.remove(rec);
-						ShatteredPixelDungeon.reportException(e);
+						CarbonizedPixelDungeon.reportException(e);
 					}
 				}
 				Rankings.INSTANCE.save();
 			} catch (Exception e) {
 				//if we encounter a fatal error, then just clear the rankings
 				FileUtils.deleteFile( Rankings.RANKINGS_FILE );
-				ShatteredPixelDungeon.reportException(e);
+				CarbonizedPixelDungeon.reportException(e);
 			}
 
 		}
 
-		//if the player has beaten Goo, automatically give all guidebook pages
-		if (previousVersion <= ShatteredPixelDungeon.v0_9_3c){
-			Badges.loadGlobal();
-			if (Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_1)){
-				for (String page : Document.ADVENTURERS_GUIDE.pageNames()){
-					Document.ADVENTURERS_GUIDE.readPage(page);
-				}
-			}
-		}
-
-		SPDSettings.version(ShatteredPixelDungeon.versionCode);
+		PDSettings.version(CarbonizedPixelDungeon.versionCode);
 	}
 	
 }

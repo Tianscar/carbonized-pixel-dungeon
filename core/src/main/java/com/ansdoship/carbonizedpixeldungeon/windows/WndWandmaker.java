@@ -22,9 +22,9 @@
 package com.ansdoship.carbonizedpixeldungeon.windows;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Chrome;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.quest.CorpseDust;
@@ -137,7 +137,7 @@ public class WndWandmaker extends Window {
 				@Override
 				protected void onClick() {
 					if (Dungeon.hero.belongings.contains(questItem)) {
-						ShatteredPixelDungeon.scene().addToFront(new RewardWindow(item));
+						CarbonizedPixelDungeon.scene().addToFront(new RewardWindow(item));
 					} else {
 						hide();
 					}

@@ -30,9 +30,9 @@ import com.ansdoship.pixeldungeonclasses.utils.FileUtils;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-public class SPDAction extends GameAction {
+public class PDAction extends GameAction {
 
-	protected SPDAction( String name ){
+	protected PDAction(String name ){
 		super( name );
 	}
 
@@ -41,79 +41,79 @@ public class SPDAction extends GameAction {
 	public static final GameAction BACK  = GameAction.BACK;
 	//--
 
-	public static final GameAction HERO_INFO   = new SPDAction("hero_info");
-	public static final GameAction JOURNAL     = new SPDAction("journal");
+	public static final GameAction HERO_INFO   = new PDAction("hero_info");
+	public static final GameAction JOURNAL     = new PDAction("journal");
 
-	public static final GameAction WAIT        = new SPDAction("wait");
-	public static final GameAction SEARCH      = new SPDAction("search");
-	public static final GameAction REST        = new SPDAction("rest");
+	public static final GameAction WAIT        = new PDAction("wait");
+	public static final GameAction SEARCH      = new PDAction("search");
+	public static final GameAction REST        = new PDAction("rest");
 
-	public static final GameAction INVENTORY   = new SPDAction("inventory");
-	public static final GameAction QUICKSLOT_1 = new SPDAction("quickslot_1");
-	public static final GameAction QUICKSLOT_2 = new SPDAction("quickslot_2");
-	public static final GameAction QUICKSLOT_3 = new SPDAction("quickslot_3");
-	public static final GameAction QUICKSLOT_4 = new SPDAction("quickslot_4");
+	public static final GameAction INVENTORY   = new PDAction("inventory");
+	public static final GameAction QUICKSLOT_1 = new PDAction("quickslot_1");
+	public static final GameAction QUICKSLOT_2 = new PDAction("quickslot_2");
+	public static final GameAction QUICKSLOT_3 = new PDAction("quickslot_3");
+	public static final GameAction QUICKSLOT_4 = new PDAction("quickslot_4");
 
-	public static final GameAction TAG_ATTACK  = new SPDAction("tag_attack");
-	public static final GameAction TAG_DANGER  = new SPDAction("tag_danger");
-	public static final GameAction TAG_ACTION  = new SPDAction("tag_action");
-	public static final GameAction TAG_LOOT    = new SPDAction("tag_loot");
-	public static final GameAction TAG_RESUME  = new SPDAction("tag_resume");
+	public static final GameAction TAG_ATTACK  = new PDAction("tag_attack");
+	public static final GameAction TAG_DANGER  = new PDAction("tag_danger");
+	public static final GameAction TAG_ACTION  = new PDAction("tag_action");
+	public static final GameAction TAG_LOOT    = new PDAction("tag_loot");
+	public static final GameAction TAG_RESUME  = new PDAction("tag_resume");
 
-	public static final GameAction ZOOM_IN     = new SPDAction("zoom_in");
-	public static final GameAction ZOOM_OUT    = new SPDAction("zoom_out");
+	public static final GameAction ZOOM_IN     = new PDAction("zoom_in");
+	public static final GameAction ZOOM_OUT    = new PDAction("zoom_out");
 
-	public static final GameAction N           = new SPDAction("n");
-	public static final GameAction E           = new SPDAction("e");
-	public static final GameAction S           = new SPDAction("s");
-	public static final GameAction W           = new SPDAction("w");
-	public static final GameAction NE          = new SPDAction("ne");
-	public static final GameAction SE          = new SPDAction("se");
-	public static final GameAction SW          = new SPDAction("sw");
-	public static final GameAction NW          = new SPDAction("nw");
+	public static final GameAction N           = new PDAction("n");
+	public static final GameAction E           = new PDAction("e");
+	public static final GameAction S           = new PDAction("s");
+	public static final GameAction W           = new PDAction("w");
+	public static final GameAction NE          = new PDAction("ne");
+	public static final GameAction SE          = new PDAction("se");
+	public static final GameAction SW          = new PDAction("sw");
+	public static final GameAction NW          = new PDAction("nw");
 
 	private static final LinkedHashMap<Integer, GameAction> defaultBindings = new LinkedHashMap<>();
 	static {
-		defaultBindings.put( Input.Keys.ESCAPE,      SPDAction.BACK );
-		defaultBindings.put( Input.Keys.BACKSPACE,   SPDAction.BACK );
+		defaultBindings.put( Input.Keys.ESCAPE,      PDAction.BACK );
+		defaultBindings.put( Input.Keys.BACKSPACE,   PDAction.BACK );
 
-		defaultBindings.put( Input.Keys.H,           SPDAction.HERO_INFO );
-		defaultBindings.put( Input.Keys.J,           SPDAction.JOURNAL );
+		defaultBindings.put( Input.Keys.H,           PDAction.HERO_INFO );
+		defaultBindings.put( Input.Keys.J,           PDAction.JOURNAL );
 
-		defaultBindings.put( Input.Keys.SPACE,       SPDAction.WAIT );
-		defaultBindings.put( Input.Keys.S,           SPDAction.SEARCH );
-		defaultBindings.put( Input.Keys.Z,           SPDAction.REST );
+		defaultBindings.put( Input.Keys.SPACE,       PDAction.WAIT );
+		defaultBindings.put( Input.Keys.S,           PDAction.SEARCH );
+		defaultBindings.put( Input.Keys.Z,           PDAction.REST );
 
-		defaultBindings.put( Input.Keys.I,           SPDAction.INVENTORY );
-		defaultBindings.put( Input.Keys.Q,           SPDAction.QUICKSLOT_1 );
-		defaultBindings.put( Input.Keys.W,           SPDAction.QUICKSLOT_2 );
-		defaultBindings.put( Input.Keys.E,           SPDAction.QUICKSLOT_3 );
-		defaultBindings.put( Input.Keys.R,           SPDAction.QUICKSLOT_4 );
+		defaultBindings.put( Input.Keys.I,           PDAction.INVENTORY );
+		defaultBindings.put( Input.Keys.Q,           PDAction.QUICKSLOT_1 );
+		defaultBindings.put( Input.Keys.W,           PDAction.QUICKSLOT_2 );
+		defaultBindings.put( Input.Keys.E,           PDAction.QUICKSLOT_3 );
+		defaultBindings.put( Input.Keys.R,           PDAction.QUICKSLOT_4 );
 
-		defaultBindings.put( Input.Keys.A,           SPDAction.TAG_ATTACK );
-		defaultBindings.put( Input.Keys.TAB,         SPDAction.TAG_DANGER );
-		defaultBindings.put( Input.Keys.D,           SPDAction.TAG_ACTION );
-		defaultBindings.put( Input.Keys.ENTER,       SPDAction.TAG_LOOT );
-		defaultBindings.put( Input.Keys.T,           SPDAction.TAG_RESUME );
+		defaultBindings.put( Input.Keys.A,           PDAction.TAG_ATTACK );
+		defaultBindings.put( Input.Keys.TAB,         PDAction.TAG_DANGER );
+		defaultBindings.put( Input.Keys.D,           PDAction.TAG_ACTION );
+		defaultBindings.put( Input.Keys.ENTER,       PDAction.TAG_LOOT );
+		defaultBindings.put( Input.Keys.T,           PDAction.TAG_RESUME );
 
-		defaultBindings.put( Input.Keys.PLUS,        SPDAction.ZOOM_IN );
-		defaultBindings.put( Input.Keys.EQUALS,      SPDAction.ZOOM_IN );
-		defaultBindings.put( Input.Keys.MINUS,       SPDAction.ZOOM_OUT );
+		defaultBindings.put( Input.Keys.PLUS,        PDAction.ZOOM_IN );
+		defaultBindings.put( Input.Keys.EQUALS,      PDAction.ZOOM_IN );
+		defaultBindings.put( Input.Keys.MINUS,       PDAction.ZOOM_OUT );
 
-		defaultBindings.put( Input.Keys.UP,          SPDAction.N );
-		defaultBindings.put( Input.Keys.RIGHT,       SPDAction.E );
-		defaultBindings.put( Input.Keys.DOWN,        SPDAction.S );
-		defaultBindings.put( Input.Keys.LEFT,        SPDAction.W );
+		defaultBindings.put( Input.Keys.UP,          PDAction.N );
+		defaultBindings.put( Input.Keys.RIGHT,       PDAction.E );
+		defaultBindings.put( Input.Keys.DOWN,        PDAction.S );
+		defaultBindings.put( Input.Keys.LEFT,        PDAction.W );
 
-		defaultBindings.put( Input.Keys.NUMPAD_5,    SPDAction.WAIT );
-		defaultBindings.put( Input.Keys.NUMPAD_8,    SPDAction.N );
-		defaultBindings.put( Input.Keys.NUMPAD_9,    SPDAction.NE );
-		defaultBindings.put( Input.Keys.NUMPAD_6,    SPDAction.E );
-		defaultBindings.put( Input.Keys.NUMPAD_3,    SPDAction.SE );
-		defaultBindings.put( Input.Keys.NUMPAD_2,    SPDAction.S );
-		defaultBindings.put( Input.Keys.NUMPAD_1,    SPDAction.SW );
-		defaultBindings.put( Input.Keys.NUMPAD_4,    SPDAction.W );
-		defaultBindings.put( Input.Keys.NUMPAD_7,    SPDAction.NW );
+		defaultBindings.put( Input.Keys.NUMPAD_5,    PDAction.WAIT );
+		defaultBindings.put( Input.Keys.NUMPAD_8,    PDAction.N );
+		defaultBindings.put( Input.Keys.NUMPAD_9,    PDAction.NE );
+		defaultBindings.put( Input.Keys.NUMPAD_6,    PDAction.E );
+		defaultBindings.put( Input.Keys.NUMPAD_3,    PDAction.SE );
+		defaultBindings.put( Input.Keys.NUMPAD_2,    PDAction.S );
+		defaultBindings.put( Input.Keys.NUMPAD_1,    PDAction.SW );
+		defaultBindings.put( Input.Keys.NUMPAD_4,    PDAction.W );
+		defaultBindings.put( Input.Keys.NUMPAD_7,    PDAction.NW );
 	}
 
 	public static LinkedHashMap<Integer, GameAction> getDefaults() {
@@ -122,8 +122,8 @@ public class SPDAction extends GameAction {
 
 	//hard bindings for android devices
 	static {
-		KeyBindings.addHardBinding( Input.Keys.BACK, SPDAction.BACK );
-		KeyBindings.addHardBinding( Input.Keys.MENU, SPDAction.INVENTORY );
+		KeyBindings.addHardBinding( Input.Keys.BACK, PDAction.BACK );
+		KeyBindings.addHardBinding( Input.Keys.MENU, PDAction.INVENTORY );
 	}
 
 	//we only save/loads keys which differ from the default configuration.
@@ -242,7 +242,7 @@ public class SPDAction extends GameAction {
 		try {
 			FileUtils.bundleToFile(BINDINGS_FILE, b);
 		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
+			CarbonizedPixelDungeon.reportException(e);
 		}
 
 	}

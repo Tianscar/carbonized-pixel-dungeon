@@ -21,7 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.ui;
 
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.scenes.TitleScene;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 
@@ -39,7 +39,7 @@ public class ExitButton extends IconButton {
 		if (Game.scene() instanceof TitleScene) {
 			Game.instance.finish();
 		} else {
-			ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+			CarbonizedPixelDungeon.switchNoFade( TitleScene.class );
 		}
 	}
 }

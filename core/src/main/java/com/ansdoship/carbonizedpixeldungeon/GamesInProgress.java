@@ -101,16 +101,12 @@ public class GamesInProgress {
 				info = new Info();
 				info.slot = slot;
 				Dungeon.preview(info, bundle);
-				
-				//saves from before v0.8.0b are not supported
-				if (info.version < ShatteredPixelDungeon.v0_8_0b) {
-					info = null;
-				}
+
 
 			} catch (IOException e) {
 				info = null;
 			} catch (Exception e){
-				ShatteredPixelDungeon.reportException( e );
+				CarbonizedPixelDungeon.reportException( e );
 				info = null;
 			}
 			

@@ -21,7 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.windows;
 
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.FeedbackScene;
@@ -60,7 +60,7 @@ public class WndSupportPrompt extends Window {
 				super.onClick();
 				String link = "https://sponsor.tianscar.com";
 				Game.platform.openURI(link);
-				SPDSettings.supportNagged(true);
+				PDSettings.supportNagged(true);
 				WndSupportPrompt.super.hide();
 			}
 		};
@@ -71,7 +71,7 @@ public class WndSupportPrompt extends Window {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				SPDSettings.supportNagged(true);
+				PDSettings.supportNagged(true);
 				WndSupportPrompt.super.hide();
 			}
 		};

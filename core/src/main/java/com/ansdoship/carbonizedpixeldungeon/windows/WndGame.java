@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.windows;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.GamesInProgress;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.HeroSelectScene;
@@ -94,7 +94,7 @@ public class WndGame extends Window {
 					InterlevelScene.noStory = true;
 					GamesInProgress.selectedClass = Dungeon.hero.heroClass;
 					GamesInProgress.curSlot = GamesInProgress.firstEmpty();
-					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+					CarbonizedPixelDungeon.switchScene(HeroSelectScene.class);
 				}
 			} );
 			curBtn.icon(Icons.get(Icons.ENTER));
@@ -117,7 +117,7 @@ public class WndGame extends Window {
 				try {
 					Dungeon.saveAll();
 				} catch (IOException e) {
-					ShatteredPixelDungeon.reportException(e);
+					CarbonizedPixelDungeon.reportException(e);
 				}
 				Game.switchScene(TitleScene.class);
 			}

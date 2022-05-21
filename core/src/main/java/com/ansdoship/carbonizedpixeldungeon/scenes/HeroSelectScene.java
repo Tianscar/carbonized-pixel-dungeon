@@ -21,13 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
-import com.ansdoship.carbonizedpixeldungeon.Badges;
-import com.ansdoship.carbonizedpixeldungeon.Chrome;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.GamesInProgress;
-import com.ansdoship.carbonizedpixeldungeon.Rankings;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.*;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.ansdoship.carbonizedpixeldungeon.journal.Journal;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -121,8 +116,8 @@ public class HeroSelectScene extends PixelScene {
 				ActionIndicator.action = null;
 				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 
-				if (SPDSettings.intro()) {
-					SPDSettings.intro( false );
+				if (PDSettings.intro()) {
+					PDSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
 					Game.switchScene( InterlevelScene.class );
@@ -139,7 +134,7 @@ public class HeroSelectScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				ShatteredPixelDungeon.scene().addToFront(new WndHeroInfo(GamesInProgress.selectedClass));
+				CarbonizedPixelDungeon.scene().addToFront(new WndHeroInfo(GamesInProgress.selectedClass));
 			}
 		};
 		infoButton.visible = false;
@@ -165,13 +160,13 @@ public class HeroSelectScene extends PixelScene {
 		}
 
 		challengeButton = new IconButton(
-				Icons.get( SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
+				Icons.get( PDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.scene().addToFront(new WndChallenges(SPDSettings.challenges(), true) {
+				CarbonizedPixelDungeon.scene().addToFront(new WndChallenges(PDSettings.challenges(), true) {
 					public void onBackPressed() {
 						super.onBackPressed();
-						icon(Icons.get(SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
+						icon(Icons.get(PDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
 					}
 				} );
 			}
@@ -191,13 +186,13 @@ public class HeroSelectScene extends PixelScene {
 			add(challengeButton);
 		} else {
 			Dungeon.challenges = 0;
-			SPDSettings.challenges(0);
+			PDSettings.challenges(0);
 		}
 
 		btnExit = new ExitButton();
 		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
 		add( btnExit );
-		btnExit.visible = !SPDSettings.intro() || Rankings.INSTANCE.totalNumber > 0;
+		btnExit.visible = !PDSettings.intro() || Rankings.INSTANCE.totalNumber > 0;
 
 		PointerArea fadeResetter = new PointerArea(0, 0, Camera.main.width, Camera.main.height){
 			@Override
@@ -244,7 +239,7 @@ public class HeroSelectScene extends PixelScene {
 	@Override
 	public void update() {
 		super.update();
-		btnExit.visible = !SPDSettings.intro() || Rankings.INSTANCE.totalNumber > 0;
+		btnExit.visible = !PDSettings.intro() || Rankings.INSTANCE.totalNumber > 0;
 		//do not fade when a window is open
 		for (Object v : members){
 			if (v instanceof Window) resetFade();
@@ -272,7 +267,7 @@ public class HeroSelectScene extends PixelScene {
 	@Override
 	protected void onBackPressed() {
 		if (btnExit.visible){
-			ShatteredPixelDungeon.switchScene(TitleScene.class);
+			CarbonizedPixelDungeon.switchScene(TitleScene.class);
 		} else {
 			super.onBackPressed();
 		}
@@ -313,9 +308,9 @@ public class HeroSelectScene extends PixelScene {
 			super.onClick();
 
 			if( !cl.isUnlocked() ){
-				ShatteredPixelDungeon.scene().addToFront( new WndMessage(cl.unlockMsg()));
+				CarbonizedPixelDungeon.scene().addToFront( new WndMessage(cl.unlockMsg()));
 			} else if (GamesInProgress.selectedClass == cl) {
-				ShatteredPixelDungeon.scene().add(new WndHeroInfo(cl));
+				CarbonizedPixelDungeon.scene().add(new WndHeroInfo(cl));
 			} else {
 				setSelectedHero(cl);
 			}

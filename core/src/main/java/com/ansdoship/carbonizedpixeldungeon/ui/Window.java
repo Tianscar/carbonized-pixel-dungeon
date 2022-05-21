@@ -22,7 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Chrome;
-import com.ansdoship.carbonizedpixeldungeon.SPDAction;
+import com.ansdoship.carbonizedpixeldungeon.PDAction;
 import com.ansdoship.carbonizedpixeldungeon.effects.ShadowBox;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.pixeldungeonclasses.input.KeyBindings;
@@ -159,7 +159,7 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 	@Override
 	public boolean onSignal( KeyEvent event ) {
 		if (event.pressed) {
-			if (KeyBindings.getActionForKey( event ) == SPDAction.BACK){
+			if (KeyBindings.getActionForKey( event ) == PDAction.BACK){
 				onBackPressed();
 			}
 		}

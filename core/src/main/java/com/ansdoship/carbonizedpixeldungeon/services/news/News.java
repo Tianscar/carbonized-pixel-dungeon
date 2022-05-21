@@ -21,10 +21,10 @@
 
 package com.ansdoship.carbonizedpixeldungeon.services.news;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
@@ -52,7 +52,7 @@ public class News {
 		if (Gdx.app.getType() == Application.ApplicationType.Android && Gdx.app.getVersion() < 20){
 			useHTTPS = false; //android versions below 5.0 don't support TLSv1.2 by default
 		}
-		service.checkForArticles(!SPDSettings.WiFi(), useHTTPS, new NewsService.NewsResultCallback() {
+		service.checkForArticles(!PDSettings.WiFi(), useHTTPS, new NewsService.NewsResultCallback() {
 			@Override
 			public void onArticlesFound(ArrayList<NewsArticle> articles) {
 				lastCheck = new Date();
@@ -116,7 +116,7 @@ public class News {
 
 		//if we run into any formatting errors (or icon is null), default to the news icon
 		} catch (Exception e){
-			if (article.icon != null) ShatteredPixelDungeon.reportException(e);
+			if (article.icon != null) CarbonizedPixelDungeon.reportException(e);
 			return Icons.get(Icons.NEWS);
 		}
 	}

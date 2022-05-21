@@ -21,7 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.levels.rooms.standard;
 
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.Imp;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.ImpShopkeeper;
@@ -86,7 +86,7 @@ public class ImpShopRoom extends ShopRoom {
 
 		Mob shopkeeper = new ImpShopkeeper();
 		shopkeeper.pos = pos;
-		if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+		if (CarbonizedPixelDungeon.scene() instanceof GameScene) {
 			GameScene.add(shopkeeper);
 		} else {
 			level.mobs.add(shopkeeper);

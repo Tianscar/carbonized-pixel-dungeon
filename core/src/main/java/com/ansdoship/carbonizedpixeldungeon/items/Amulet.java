@@ -21,11 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items;
 
-import com.ansdoship.carbonizedpixeldungeon.Badges;
-import com.ansdoship.carbonizedpixeldungeon.Challenges;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
-import com.ansdoship.carbonizedpixeldungeon.Statistics;
+import com.ansdoship.carbonizedpixeldungeon.*;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.scenes.AmuletScene;
@@ -105,7 +102,7 @@ public class Amulet extends Item {
 				}
 			});
 		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
+			CarbonizedPixelDungeon.reportException(e);
 		}
 	}
 	

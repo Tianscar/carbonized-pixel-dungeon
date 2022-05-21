@@ -21,9 +21,9 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items.keys;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndSupportPrompt;
@@ -49,17 +49,17 @@ public class SkeletonKey extends Key {
 
 	@Override
 	public boolean doPickUp(Hero hero) {
-		if(!SPDSettings.supportNagged()){
+		if(!PDSettings.supportNagged()){
 			try {
 				Dungeon.saveAll();
 				Game.runOnRenderThread(new Callback() {
 					@Override
 					public void call() {
-						ShatteredPixelDungeon.scene().add(new WndSupportPrompt());
+						CarbonizedPixelDungeon.scene().add(new WndSupportPrompt());
 					}
 				});
 			} catch (IOException e) {
-				ShatteredPixelDungeon.reportException(e);
+				CarbonizedPixelDungeon.reportException(e);
 			}
 			
 		}

@@ -208,7 +208,7 @@ public enum Rankings {
 		try {
 			FileUtils.bundleToFile( RANKINGS_FILE, bundle);
 		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
+			CarbonizedPixelDungeon.reportException(e);
 		}
 
 	}

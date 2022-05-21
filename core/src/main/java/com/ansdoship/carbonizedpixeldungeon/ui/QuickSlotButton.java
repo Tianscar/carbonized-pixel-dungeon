@@ -22,7 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.SPDAction;
+import com.ansdoship.carbonizedpixeldungeon.PDAction;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.LostInventory;
@@ -153,13 +153,13 @@ public class QuickSlotButton extends Button {
 	public GameAction keyAction() {
 		switch (slotNum){
 			case 0:
-				return SPDAction.QUICKSLOT_1;
+				return PDAction.QUICKSLOT_1;
 			case 1:
-				return SPDAction.QUICKSLOT_2;
+				return PDAction.QUICKSLOT_2;
 			case 2:
-				return SPDAction.QUICKSLOT_3;
+				return PDAction.QUICKSLOT_3;
 			case 3:
-				return SPDAction.QUICKSLOT_4;
+				return PDAction.QUICKSLOT_4;
 			default:
 				return super.keyAction();
 		}

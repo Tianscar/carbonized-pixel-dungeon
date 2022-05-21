@@ -21,8 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Chrome;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.ui.*;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
@@ -126,7 +126,7 @@ public class FeedbackScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+		CarbonizedPixelDungeon.switchNoFade( TitleScene.class );
 	}
 
 	private static class FeedbackMessage extends Component {

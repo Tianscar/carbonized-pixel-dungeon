@@ -21,8 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.mechanics;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 
 import java.util.ArrayList;
@@ -157,7 +157,7 @@ public class Ballistica {
 			end = Math.min( end, path.size()-1);
 			return path.subList(start, end+1);
 		} catch (Exception e){
-			ShatteredPixelDungeon.reportException(e);
+			CarbonizedPixelDungeon.reportException(e);
 			return new ArrayList<>();
 		}
 	}

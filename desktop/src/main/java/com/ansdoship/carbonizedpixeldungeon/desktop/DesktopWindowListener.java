@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.desktop;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 
 public class DesktopWindowListener implements Lwjgl3WindowListener {
 	
@@ -32,7 +32,7 @@ public class DesktopWindowListener implements Lwjgl3WindowListener {
 	
 	@Override
 	public void maximized ( boolean b ) {
-		SPDSettings.windowMaximized( b );
+		PDSettings.windowMaximized( b );
 	}
 	
 	@Override

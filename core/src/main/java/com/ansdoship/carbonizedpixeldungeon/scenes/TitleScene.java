@@ -21,11 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.Chrome;
-import com.ansdoship.carbonizedpixeldungeon.GamesInProgress;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.*;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.effects.BannerSprites;
 import com.ansdoship.carbonizedpixeldungeon.effects.Fireball;
 import com.ansdoship.carbonizedpixeldungeon.messages.Languages;
@@ -113,9 +110,9 @@ public class TitleScene extends PixelScene {
 				if (GamesInProgress.checkAll().size() == 0){
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+					CarbonizedPixelDungeon.switchScene(HeroSelectScene.class);
 				} else {
-					ShatteredPixelDungeon.switchNoFade( StartScene.class );
+					CarbonizedPixelDungeon.switchNoFade( StartScene.class );
 				}
 			}
 			
@@ -125,7 +122,7 @@ public class TitleScene extends PixelScene {
 				if (Game.platform.isDebug()) {
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+					CarbonizedPixelDungeon.switchScene(HeroSelectScene.class);
 					return true;
 				}
 				return super.onLongClick();
@@ -140,7 +137,7 @@ public class TitleScene extends PixelScene {
 		StyledButton btnRankings = new StyledButton(GREY_TR,Messages.get(this, "rankings")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( RankingsScene.class );
+				CarbonizedPixelDungeon.switchNoFade( RankingsScene.class );
 			}
 		};
 		btnRankings.icon(Icons.get(Icons.RANKINGS));
@@ -149,7 +146,7 @@ public class TitleScene extends PixelScene {
 		StyledButton btnBadges = new StyledButton(GREY_TR, Messages.get(this, "badges")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( BadgesScene.class );
+				CarbonizedPixelDungeon.switchNoFade( BadgesScene.class );
 			}
 		};
 		btnBadges.icon(Icons.get(Icons.BADGES));
@@ -169,7 +166,7 @@ public class TitleScene extends PixelScene {
 		StyledButton btnAbout = new StyledButton(GREY_TR, Messages.get(this, "about")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchScene( AboutScene.class );
+				CarbonizedPixelDungeon.switchScene( AboutScene.class );
 			}
 		};
 		btnAbout.icon(new ItemSprite(ItemSpriteSheet.TENGU_SHOCKER));
@@ -222,7 +219,7 @@ public class TitleScene extends PixelScene {
 
 		public NewsButton(Chrome.Type type, String label ){
 			super(type, label);
-			if (SPDSettings.news()) News.checkForNews();
+			if (PDSettings.news()) News.checkForNews();
 		}
 
 		int unreadCount = -1;
@@ -232,13 +229,13 @@ public class TitleScene extends PixelScene {
 			super.update();
 
 			if (unreadCount == -1 && News.articlesAvailable()){
-				long lastRead = SPDSettings.newsLastRead();
+				long lastRead = PDSettings.newsLastRead();
 				if (lastRead == 0){
 					if (News.articles().get(0) != null) {
-						SPDSettings.newsLastRead(News.articles().get(0).date.getTime());
+						PDSettings.newsLastRead(News.articles().get(0).date.getTime());
 					}
 				} else {
-					unreadCount = News.unreadArticles(new Date(SPDSettings.newsLastRead()));
+					unreadCount = News.unreadArticles(new Date(PDSettings.newsLastRead()));
 					if (unreadCount > 0) {
 						unreadCount = Math.min(unreadCount, 9);
 						text(text() + "(" + unreadCount + ")");
@@ -254,7 +251,7 @@ public class TitleScene extends PixelScene {
 		@Override
 		protected void onClick() {
 			super.onClick();
-			ShatteredPixelDungeon.switchNoFade( NewsScene.class );
+			CarbonizedPixelDungeon.switchNoFade( NewsScene.class );
 		}
 	}
 
@@ -262,7 +259,7 @@ public class TitleScene extends PixelScene {
 
 		public ChangesButton( Chrome.Type type, String label ){
 			super(type, label);
-			if (SPDSettings.updates()) Updates.checkForUpdate();
+			if (PDSettings.updates()) Updates.checkForUpdate();
 		}
 
 		boolean updateShown = false;
@@ -290,7 +287,7 @@ public class TitleScene extends PixelScene {
 			} else if (Updates.updateAvailable()){
 				AvailableUpdateData update = Updates.updateData();
 
-				ShatteredPixelDungeon.scene().addToFront( new WndOptions(
+				CarbonizedPixelDungeon.scene().addToFront(new WndOptions(
 						Icons.get(Icons.CHANGES),
 						update.versionName == null ? Messages.get(this,"title") : Messages.get(this,"versioned_title", update.versionName),
 						update.desc == null ? Messages.get(this,"desc") : update.desc,
@@ -303,14 +300,14 @@ public class TitleScene extends PixelScene {
 							Updates.launchUpdate(Updates.updateData());
 						} else if (index == 1){
 							ChangesScene.changesSelected = 0;
-							ShatteredPixelDungeon.switchNoFade( ChangesScene.class );
+							CarbonizedPixelDungeon.switchNoFade( ChangesScene.class );
 						}
 					}
 				});
 
 			} else {
 				ChangesScene.changesSelected = 0;
-				ShatteredPixelDungeon.switchNoFade( ChangesScene.class );
+				CarbonizedPixelDungeon.switchNoFade( ChangesScene.class );
 			}
 		}
 
@@ -342,7 +339,7 @@ public class TitleScene extends PixelScene {
 			if (Messages.lang().status() == Languages.Status.INCOMPLETE){
 				WndSettings.last_index = 4;
 			}
-			ShatteredPixelDungeon.switchNoFade(SettingsScene.class);
+			CarbonizedPixelDungeon.switchNoFade(SettingsScene.class);
 		}
 	}
 
@@ -356,7 +353,7 @@ public class TitleScene extends PixelScene {
 
 		@Override
 		protected void onClick() {
-			ShatteredPixelDungeon.switchNoFade(FeedbackScene.class);
+			CarbonizedPixelDungeon.switchNoFade(FeedbackScene.class);
 		}
 	}
 }

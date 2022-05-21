@@ -4,7 +4,7 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
 import com.badlogic.gdx.graphics.glutils.HdpiMode;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.services.news.News;
 import com.ansdoship.carbonizedpixeldungeon.services.news.NewsImpl;
 import com.ansdoship.carbonizedpixeldungeon.services.updates.UpdateImpl;
@@ -92,7 +92,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
 		config.addIosDevice("IPAD_PRO_12.8_5G", "iPad13,10", 264);
 		config.addIosDevice("IPAD_PRO_12.8_5G", "iPad13,11", 264);
 
-		return new IOSApplication(new ShatteredPixelDungeon(new IOSPlatformSupport()), config);
+		return new IOSApplication(new CarbonizedPixelDungeon(new IOSPlatformSupport()), config);
 	}
 
 	public static void main(String[] argv) {

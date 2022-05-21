@@ -32,7 +32,7 @@ import com.ansdoship.pixeldungeonclasses.utils.Point;
 
 import java.util.Locale;
 
-public class SPDSettings extends GameSettings {
+public class PDSettings extends GameSettings {
 	
 	//Version info
 	
@@ -59,7 +59,7 @@ public class SPDSettings extends GameSettings {
 	public static void fullscreen( boolean value ) {
 		put( KEY_FULLSCREEN, value );
 		
-		ShatteredPixelDungeon.updateSystemUI();
+		CarbonizedPixelDungeon.updateSystemUI();
 	}
 	
 	public static boolean fullscreen() {
@@ -68,7 +68,7 @@ public class SPDSettings extends GameSettings {
 	
 	public static void landscape( boolean value ){
 		put( KEY_LANDSCAPE, value );
-		((ShatteredPixelDungeon)ShatteredPixelDungeon.instance).updateDisplaySize();
+		((CarbonizedPixelDungeon) CarbonizedPixelDungeon.instance).updateDisplaySize();
 	}
 	
 	//can return null because we need to directly handle the case of landscape not being set
@@ -83,7 +83,7 @@ public class SPDSettings extends GameSettings {
 	
 	public static void powerSaver( boolean value ){
 		put( KEY_POWER_SAVER, value );
-		((ShatteredPixelDungeon)ShatteredPixelDungeon.instance).updateDisplaySize();
+		((CarbonizedPixelDungeon) CarbonizedPixelDungeon.instance).updateDisplaySize();
 	}
 	
 	public static boolean powerSaver(){

@@ -21,7 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items;
 
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.ansdoship.carbonizedpixeldungeon.items.bombs.Bomb;
 import com.ansdoship.carbonizedpixeldungeon.items.food.Blandfruit;
@@ -153,7 +153,7 @@ public abstract class Recipe {
 				result.quantity(outQuantity);
 				return result;
 			} catch (Exception e) {
-				ShatteredPixelDungeon.reportException( e );
+				CarbonizedPixelDungeon.reportException( e );
 				return null;
 			}
 		}

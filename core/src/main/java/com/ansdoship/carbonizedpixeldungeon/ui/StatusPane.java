@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.SPDAction;
+import com.ansdoship.carbonizedpixeldungeon.PDAction;
 import com.ansdoship.carbonizedpixeldungeon.Statistics;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
@@ -98,7 +98,7 @@ public class StatusPane extends Component {
 			
 			@Override
 			public GameAction keyAction() {
-				return SPDAction.HERO_INFO;
+				return PDAction.HERO_INFO;
 			}
 		}.setRect( 0, 1, 30, 30 ));
 
@@ -294,7 +294,7 @@ public class StatusPane extends Component {
 		
 		@Override
 		public GameAction keyAction() {
-			return SPDAction.JOURNAL;
+			return PDAction.JOURNAL;
 		}
 		
 		@Override

@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.tiles;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 
 public class GridTileMap extends DungeonTilemap {
@@ -38,7 +38,7 @@ public class GridTileMap extends DungeonTilemap {
 
 	@Override
 	public synchronized void updateMap() {
-		gridSetting = SPDSettings.visualGrid();
+		gridSetting = PDSettings.visualGrid();
 		super.updateMap();
 	}
 

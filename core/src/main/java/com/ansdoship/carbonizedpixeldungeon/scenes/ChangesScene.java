@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.scenes;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Chrome;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.ui.Archs;
 import com.ansdoship.carbonizedpixeldungeon.ui.ExitButton;
@@ -172,7 +172,7 @@ public class ChangesScene extends PixelScene {
 				super.onClick();
 				if (changesSelected != 0) {
 					changesSelected = 0;
-					ShatteredPixelDungeon.seamlessResetScene();
+					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
 		};
@@ -186,7 +186,7 @@ public class ChangesScene extends PixelScene {
 				super.onClick();
 				if (changesSelected != 1) {
 					changesSelected = 1;
-					ShatteredPixelDungeon.seamlessResetScene();
+					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
 		};
@@ -200,7 +200,7 @@ public class ChangesScene extends PixelScene {
 				super.onClick();
 				if (changesSelected != 2) {
 					changesSelected = 2;
-					ShatteredPixelDungeon.seamlessResetScene();
+					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
 		};
@@ -214,7 +214,7 @@ public class ChangesScene extends PixelScene {
 				super.onClick();
 				if (changesSelected != 3) {
 					changesSelected = 3;
-					ShatteredPixelDungeon.seamlessResetScene();
+					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
 		};
@@ -228,7 +228,7 @@ public class ChangesScene extends PixelScene {
 				super.onClick();
 				if (changesSelected != 4) {
 					changesSelected = 4;
-					ShatteredPixelDungeon.seamlessResetScene();
+					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
 		};
@@ -245,7 +245,7 @@ public class ChangesScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+		CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
 	}
 
 }

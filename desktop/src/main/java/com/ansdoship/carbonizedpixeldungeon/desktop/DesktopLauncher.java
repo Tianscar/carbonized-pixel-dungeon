@@ -25,12 +25,10 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3FileHandle;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Preferences;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.services.news.News;
 import com.ansdoship.carbonizedpixeldungeon.services.news.NewsImpl;
 import com.ansdoship.carbonizedpixeldungeon.services.updates.UpdateImpl;
@@ -71,8 +69,8 @@ public class DesktopLauncher {
 
 				//shorten/simplify exception message to make it easier to fit into a message box
 				exceptionMsg = exceptionMsg.replaceAll("\\(.*:([0-9]*)\\)", "($1)");
-				exceptionMsg = exceptionMsg.replace("com.shatteredpixel.shatteredpixeldungeon.", "");
-				exceptionMsg = exceptionMsg.replace("com.watabou.", "");
+				exceptionMsg = exceptionMsg.replace("com.ansdoship.carbonizedpixeldungeon.", "");
+				exceptionMsg = exceptionMsg.replace("com.ansdoship.pixeldungeonclasses.", "");
 				exceptionMsg = exceptionMsg.replace("com.badlogic.gdx.", "");
 				exceptionMsg = exceptionMsg.replace("\t", "    ");
 
@@ -115,38 +113,33 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		
 		config.setTitle( title );
-		
+
 		String basePath = "";
 		if (SharedLibraryLoader.isWindows) {
 			if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
-				basePath = "Application Data/.shatteredpixel/Shattered Pixel Dungeon/";
+				basePath = "Application Data/AnsdoShip/Carbonized Pixel Dungeon/";
 			} else {
-				basePath = "AppData/Roaming/.shatteredpixel/Shattered Pixel Dungeon/";
+				basePath = "AppData/Roaming/AnsdoShip/Carbonized Pixel Dungeon/";
 			}
 		} else if (SharedLibraryLoader.isMac) {
-			basePath = "Library/Application Support/Shattered Pixel Dungeon/";
+			basePath = "Library/Application Support/Carbonized Pixel Dungeon/";
 		} else if (SharedLibraryLoader.isLinux) {
-			basePath = ".shatteredpixel/shattered-pixel-dungeon/";
-		}
-
-		//copy over prefs from old file location from legacy desktop codebase
-		FileHandle oldPrefs = new Lwjgl3FileHandle(basePath + "pd-prefs", Files.FileType.External);
-		FileHandle newPrefs = new Lwjgl3FileHandle(basePath + SPDSettings.DEFAULT_PREFS_FILE, Files.FileType.External);
-		if (oldPrefs.exists() && !newPrefs.exists()){
-			oldPrefs.copyTo(newPrefs);
+			String XDGHome = System.getenv().get("XDG_DATA_HOME");
+			if (XDGHome == null) XDGHome = ".local/share/";
+			basePath = XDGHome + "ansdoship/carbonized-pixel-dungeon/";
 		}
 
 		config.setPreferencesConfig( basePath, Files.FileType.External );
-		SPDSettings.set( new Lwjgl3Preferences( SPDSettings.DEFAULT_PREFS_FILE, basePath) );
+		PDSettings.set( new Lwjgl3Preferences( PDSettings.DEFAULT_PREFS_FILE, basePath) );
 		FileUtils.setDefaultFileProperties( Files.FileType.External, basePath );
 		
-		config.setWindowSizeLimits( 480, 320, -1, -1 );
-		Point p = SPDSettings.windowResolution();
+		config.setWindowSizeLimits( 720, 400, -1, -1 );
+		Point p = PDSettings.windowResolution();
 		config.setWindowedMode( p.x, p.y );
 
-		config.setMaximized(SPDSettings.windowMaximized());
+		config.setMaximized(PDSettings.windowMaximized());
 
-		if (SPDSettings.fullscreen()) {
+		if (PDSettings.fullscreen()) {
 			config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		}
 		
@@ -157,6 +150,6 @@ public class DesktopLauncher {
 		config.setWindowIcon("icons/icon_16.png", "icons/icon_32.png", "icons/icon_64.png",
 				"icons/icon_128.png", "icons/icon_256.png");
 
-		new Lwjgl3Application(new ShatteredPixelDungeon(new DesktopPlatformSupport()), config);
+		new Lwjgl3Application(new CarbonizedPixelDungeon(new DesktopPlatformSupport()), config);
 	}
 }

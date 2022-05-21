@@ -21,7 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.levels.rooms.secret;
 
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.levels.rooms.special.SpecialRoom;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
@@ -115,7 +115,7 @@ public abstract class SecretRoom extends SpecialRoom {
 			regionSecretsThisRun = bundle.getIntArray(REGIONS);
 		} else {
 			initForRun();
-			ShatteredPixelDungeon.reportException(new Exception("secrets array didn't exist!"));
+			CarbonizedPixelDungeon.reportException(new Exception("secrets array didn't exist!"));
 		}
 	}
 	

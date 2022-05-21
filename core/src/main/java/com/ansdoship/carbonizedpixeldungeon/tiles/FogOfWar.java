@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.tiles;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.pixeldungeonclasses.gltextures.TextureCache;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.NoosaScript;
@@ -173,7 +173,7 @@ public class FogOfWar extends Image {
 		this.visible = visible;
 		this.visited = visited;
 		this.mapped = mapped;
-		this.brightness = SPDSettings.brightness() + 1;
+		this.brightness = PDSettings.brightness() + 1;
 
 		moveToUpdating();
 		

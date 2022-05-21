@@ -1,11 +1,11 @@
 package com.ansdoship.carbonizedpixeldungeon.ios;
 
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.ansdoship.carbonizedpixeldungeon.SPDSettings;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
 
@@ -30,7 +30,7 @@ public class IOSPlatformSupport extends PlatformSupport {
 			UIApplication.getSharedApplication().setStatusBarHidden(true);
 		}
 
-		if (!SPDSettings.fullscreen()) {
+		if (!PDSettings.fullscreen()) {
 			int insetChange = Gdx.graphics.getSafeInsetBottom() - Game.bottomInset;
 			Game.bottomInset = Gdx.graphics.getSafeInsetBottom();
 			Game.height -= insetChange;
@@ -48,7 +48,7 @@ public class IOSPlatformSupport extends PlatformSupport {
 		int prevInset = Game.bottomInset;
 		updateDisplaySize();
 		if (prevInset != Game.bottomInset) {
-			ShatteredPixelDungeon.seamlessResetScene();
+			CarbonizedPixelDungeon.seamlessResetScene();
 		}
 	}
 

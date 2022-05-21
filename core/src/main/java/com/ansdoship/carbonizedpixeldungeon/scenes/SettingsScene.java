@@ -22,7 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.ShatteredPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.ui.Archs;
 import com.ansdoship.carbonizedpixeldungeon.ui.ExitButton;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndSettings;
@@ -67,7 +67,7 @@ public class SettingsScene extends PixelScene {
 			wndSettings.hide();
 			wndSettings = null;
 		}
-		ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+		CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
 	}
 
 }
