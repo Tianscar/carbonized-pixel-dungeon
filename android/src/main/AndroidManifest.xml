@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.shatteredpixel.shatteredpixeldungeon.android"
+	package="com.ansdoship.carbonizedpixeldungeon.android"
 	android:installLocation="auto"
 	android:targetSandboxVersion="2"
 	xmlns:dist="http://schemas.android.com/apk/distribution">
@@ -27,10 +27,10 @@
 		android:resizeableActivity="true"
 		android:allowBackup="true"
 		android:fullBackupOnly="true"
-		android:backupAgent=".AndroidBackupHandler">
+		android:backupAgent="com.ansdoship.carbonizedpixeldungeon.android.AndroidBackupHandler">
 		<activity
 			android:label="${appName}"
-			android:name=".AndroidLauncher"
+			android:name="com.ansdoship.carbonizedpixeldungeon.android.AndroidLauncher"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
 		</activity>
 		<activity
 			android:label="${appName}"
-			android:name=".AndroidGame"
+			android:name="com.ansdoship.carbonizedpixeldungeon.android.AndroidGame"
 			android:screenOrientation="nosensor"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize">
 		</activity>
