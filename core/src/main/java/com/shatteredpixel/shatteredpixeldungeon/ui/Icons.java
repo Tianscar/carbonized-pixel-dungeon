@@ -79,6 +79,8 @@ public enum Icons {
 	LIBGDX,
 	WATA,
 	WARNING,
+	GITHUB,
+	MAIL,
 
 	//credits icons:
 	//16x16
@@ -227,6 +229,12 @@ public enum Icons {
 			break;
 		case WARNING:
 			icon.frame( icon.texture.uvRect( 34, 81, 48, 95 ) );
+			break;
+		case GITHUB:
+			icon.frame( icon.texture.uvRect( 120, 64, 136, 80 ) );
+			break;
+		case MAIL:
+			icon.frame( icon.texture.uvRect( 136, 64, 152, 80 ) );
 			break;
 
 		case ALEKS:

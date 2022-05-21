@@ -132,4 +132,20 @@ public class DesktopPlatformSupport extends PlatformSupport {
 			return regularsplitter.split(text);
 		}
 	}
+
+	@Override
+	public boolean isAndroid() {
+		return false;
+	}
+
+	@Override
+	public boolean isiOS() {
+		return false;
+	}
+
+	@Override
+	public boolean isDesktop() {
+		return true;
+	}
+
 }

@@ -23,21 +23,15 @@ package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.ui.Archs;
-import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
-import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
-import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
-import com.shatteredpixel.shatteredpixeldungeon.ui.StyledButton;
-import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.shatteredpixel.shatteredpixeldungeon.ui.*;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Component;
 
-public class SupporterScene extends PixelScene {
+public class FeedbackScene extends PixelScene {
 
 	private static final int BTN_HEIGHT = 22;
 	private static final int GAP = 2;
@@ -70,28 +64,48 @@ public class SupporterScene extends PixelScene {
 		align(title);
 		add(title);
 
-		SupporterMessage msg = new SupporterMessage();
+		FeedbackMessage msg = new FeedbackMessage();
 		msg.setSize(elementWidth, 0);
 		add(msg);
 
-		StyledButton link = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "supporter_link")){
+		StyledButton sponsorLink = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "sponsor_link")){
 			@Override
 			protected void onClick() {
 				super.onClick();
-				String link = "https://www.patreon.com/ShatteredPixel";
-				//tracking codes, so that the website knows where this pageview came from
-				link += "?utm_source=shatteredpd";
-				link += "&utm_medium=supporter_page";
-				link += "&utm_campaign=ingame_link";
+				String link = "https://sponsor.tianscar.com";
 				Game.platform.openURI(link);
 			}
 		};
-		link.icon(Icons.get(Icons.GOLD));
-		link.textColor(Window.TITLE_COLOR);
-		link.setSize(elementWidth, BTN_HEIGHT);
-		add(link);
+		sponsorLink.icon(Icons.get(Icons.GOLD));
+		sponsorLink.textColor(Window.TITLE_COLOR);
+		sponsorLink.setSize(elementWidth, BTN_HEIGHT);
+		add(sponsorLink);
 
-		float elementHeight = msg.height() + BTN_HEIGHT + GAP;
+		StyledButton feedbackLink = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "feedback_link")){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				String link = "https://github.com/AnsdoShip/carbonized-pixel-dungeon";
+				Game.platform.openURI(link);
+			}
+		};
+		feedbackLink.icon(Icons.get(Icons.GITHUB));
+		feedbackLink.setSize(landscape() ? ((elementWidth - GAP) * 0.5f) : elementWidth, BTN_HEIGHT);
+		add(feedbackLink);
+
+		StyledButton feedbackMail = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "feedback_mail")){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				String link = "mailto://tianscar.protonmail.com";
+				Game.platform.openURI(link);
+			}
+		};
+		feedbackMail.icon(Icons.get(Icons.MAIL));
+		feedbackMail.setSize(feedbackLink.width(), BTN_HEIGHT);
+		add(feedbackMail);
+
+		float elementHeight = msg.height() + BTN_HEIGHT * (landscape() ? 2 : 3) + GAP;
 
 		float top = 16 + (h - 16 - elementHeight)/2f;
 		float left = (w-elementWidth)/2f;
@@ -99,8 +113,14 @@ public class SupporterScene extends PixelScene {
 		msg.setPos(left, top);
 		align(msg);
 
-		link.setPos(left, msg.bottom()+GAP);
-		align(link);
+		sponsorLink.setPos(left, msg.bottom()+GAP);
+		align(sponsorLink);
+
+		feedbackLink.setPos(left, sponsorLink.bottom()+GAP);
+		align(feedbackLink);
+
+		feedbackMail.setPos(landscape() ? (feedbackLink.right()+GAP) : left, (landscape() ? sponsorLink.bottom() : feedbackLink.bottom()) +GAP);
+		align(feedbackMail);
 
 	}
 
@@ -109,7 +129,7 @@ public class SupporterScene extends PixelScene {
 		ShatteredPixelDungeon.switchNoFade( TitleScene.class );
 	}
 
-	private static class SupporterMessage extends Component {
+	private static class FeedbackMessage extends Component {
 
 		NinePatch bg;
 		RenderedTextBlock text;
@@ -120,17 +140,17 @@ public class SupporterScene extends PixelScene {
 			bg = Chrome.get(Chrome.Type.GREY_BUTTON_TR);
 			add(bg);
 
-			String message = Messages.get(SupporterScene.class, "intro");
-			message += "\n\n" + Messages.get(SupporterScene.class, "patreon_msg");
-			if (Messages.lang() != Languages.ENGLISH) {
-				message += "\n" + Messages.get(SupporterScene.class, "patreon_english");
-			}
-			message += "\n\n- Evan";
+			String message = Messages.get(FeedbackScene.class, "intro");
+			message += "\n\n" + Messages.get(FeedbackScene.class, "sponsor_msg");
+			message += "\n\n" + Messages.get(FeedbackScene.class, "feedback_msg");
+			message += "\n" + Messages.get(FeedbackScene.class, "feedback_msg_pr");
+			message += "\n\n" + Messages.get(FeedbackScene.class, "thanks");
+			message += "\n\n- Tianscar";
 
 			text = PixelScene.renderTextBlock(message, 6);
 			add(text);
 
-			icon = Icons.get(Icons.SHPX);
+			icon = Icons.get(Icons.TIANSCAR);
 			add(icon);
 
 		}
@@ -144,7 +164,7 @@ public class SupporterScene extends PixelScene {
 			text.setPos(x + bg.marginLeft(), y + bg.marginTop() + 1);
 
 			icon.y = text.bottom() - icon.height() + 4;
-			icon.x = x + 25;
+			icon.x = x + 33;
 
 			height = (text.bottom() + 3) - y;
 

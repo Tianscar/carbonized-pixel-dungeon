@@ -135,4 +135,20 @@ public class IOSPlatformSupport extends PlatformSupport {
 			return regularsplitter.split(text);
 		}
 	}
+
+	@Override
+	public boolean isAndroid() {
+		return false;
+	}
+
+	@Override
+	public boolean isiOS() {
+		return true;
+	}
+
+	@Override
+	public boolean isDesktop() {
+		return false;
+	}
+
 }
