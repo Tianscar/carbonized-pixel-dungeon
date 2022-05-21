@@ -38,8 +38,8 @@ public class SettingsScene extends PixelScene {
 		super.create();
 
 		Music.INSTANCE.playTracks(
-				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
-				new float[]{1, 1},
+				new String[]{Assets.Music.THEME},
+				new float[]{1},
 				false);
 
 		wndSettings = new WndSettings() {

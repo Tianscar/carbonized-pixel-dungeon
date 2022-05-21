@@ -77,7 +77,7 @@ public class AboutScene extends PixelScene {
 		CreditsBlock ptr = new CreditsBlock(false, TIANS_COLOR,
 				"Music:",
 				Icons.PTR.get(),
-				"Progressive Tune",
+				"Progressive Tune/Jason",
 				"progressive-tune.github.io/ptr",
 				"https://progressive-tune.github.io/ptr");
 		ptr.setSize(colWidth/2f, 0);
