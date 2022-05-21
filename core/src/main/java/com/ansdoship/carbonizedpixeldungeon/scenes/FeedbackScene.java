@@ -90,22 +90,10 @@ public class FeedbackScene extends PixelScene {
 			}
 		};
 		feedbackLink.icon(Icons.get(Icons.GITHUB));
-		feedbackLink.setSize(landscape() ? ((elementWidth - GAP) * 0.5f) : elementWidth, BTN_HEIGHT);
+		feedbackLink.setSize(elementWidth, BTN_HEIGHT);
 		add(feedbackLink);
 
-		StyledButton feedbackMail = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "feedback_mail")){
-			@Override
-			protected void onClick() {
-				super.onClick();
-				String link = "mailto://tianscar.protonmail.com";
-				Game.platform.openURI(link);
-			}
-		};
-		feedbackMail.icon(Icons.get(Icons.MAIL));
-		feedbackMail.setSize(feedbackLink.width(), BTN_HEIGHT);
-		add(feedbackMail);
-
-		float elementHeight = msg.height() + BTN_HEIGHT * (landscape() ? 2 : 3) + GAP;
+		float elementHeight = msg.height() + BTN_HEIGHT * 2 + GAP;
 
 		float top = 16 + (h - 16 - elementHeight)/2f;
 		float left = (w-elementWidth)/2f;
@@ -118,9 +106,6 @@ public class FeedbackScene extends PixelScene {
 
 		feedbackLink.setPos(left, sponsorLink.bottom()+GAP);
 		align(feedbackLink);
-
-		feedbackMail.setPos(landscape() ? (feedbackLink.right()+GAP) : left, (landscape() ? sponsorLink.bottom() : feedbackLink.bottom()) +GAP);
-		align(feedbackMail);
 
 	}
 

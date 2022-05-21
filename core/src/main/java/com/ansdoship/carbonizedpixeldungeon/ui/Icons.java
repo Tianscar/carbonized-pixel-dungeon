@@ -80,7 +80,6 @@ public enum Icons {
 	WATA,
 	WARNING,
 	GITHUB,
-	MAIL,
 
 	//credits icons:
 	//16x16
@@ -233,7 +232,7 @@ public enum Icons {
 		case GITHUB:
 			icon.frame( icon.texture.uvRect( 120, 64, 136, 80 ) );
 			break;
-		case MAIL:
+		case TIANSCAR:
 			icon.frame( icon.texture.uvRect( 136, 64, 152, 80 ) );
 			break;
 
@@ -261,12 +260,8 @@ public enum Icons {
 			icon.frame( icon.texture.uvRect( 128, 96, 160, 128 ) );
 			icon.scale.set(PixelScene.align(0.49f));
 			break;
-		case TIANSCAR:
-			icon.frame( icon.texture.uvRect( 160, 96, 192, 128 ) );
-			icon.scale.set(PixelScene.align(0.49f));
-			break;
 		case PTR:
-			icon.frame( icon.texture.uvRect( 192, 96, 224, 128 ) );
+			icon.frame( icon.texture.uvRect( 160, 96, 192, 128 ) );
 			icon.scale.set(PixelScene.align(0.49f));
 			break;
 		}

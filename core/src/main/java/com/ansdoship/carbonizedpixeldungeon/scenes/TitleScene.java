@@ -169,7 +169,7 @@ public class TitleScene extends PixelScene {
 				CarbonizedPixelDungeon.switchScene( AboutScene.class );
 			}
 		};
-		btnAbout.icon(new ItemSprite(ItemSpriteSheet.TENGU_SHOCKER));
+		btnAbout.icon(Icons.get(Icons.TIANSCAR));
 		add(btnAbout);
 		
 		final int BTN_HEIGHT = 20;

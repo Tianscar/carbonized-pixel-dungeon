@@ -445,7 +445,7 @@ public class WndSettings extends WndTabbed {
 			sep2 = new ColorBlock(1, 1, 0xFF000000);
 			add(sep2);
 
-			chkFont = new CheckBox(Messages.get(this, "system_font")){
+			chkFont = new CheckBox(Messages.get(this, Game.platform.isAndroid() ? "system_font" : "fallback_font")){
 				@Override
 				protected void onClick() {
 					super.onClick();

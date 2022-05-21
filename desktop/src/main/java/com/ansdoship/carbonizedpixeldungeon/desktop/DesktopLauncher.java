@@ -133,7 +133,7 @@ public class DesktopLauncher {
 		PDSettings.set( new Lwjgl3Preferences( PDSettings.DEFAULT_PREFS_FILE, basePath) );
 		FileUtils.setDefaultFileProperties( Files.FileType.External, basePath );
 		
-		config.setWindowSizeLimits( 720, 400, -1, -1 );
+		config.setWindowSizeLimits( 480, 320, -1, -1 );
 		Point p = PDSettings.windowResolution();
 		config.setWindowedMode( p.x, p.y );
 
