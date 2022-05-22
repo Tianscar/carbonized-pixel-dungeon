@@ -360,8 +360,11 @@ public class Hero extends Char {
 	@Override
 	public void hitSound(float pitch) {
 		if ( belongings.weapon() != null && belongings.weapon2() != null ) {
-			belongings.weapon().hitSound(pitch);
-			belongings.weapon2().hitSound(pitch);
+			if ( belongings.weapon() instanceof MeleeWeapon ) {
+				belongings.weapon().hitSound(pitch);
+				belongings.weapon2().hitSound(pitch);
+			}
+			else belongings.weapon().hitSound(pitch);
 		} else if ( belongings.weapon() != null ) {
 			belongings.weapon().hitSound(pitch);
 		} else if ( belongings.weapon2() != null ) {
@@ -436,8 +439,11 @@ public class Hero extends Char {
 		}
 
 		if (wep != null && wep2 != null) {
-			return (int)((attackSkill * accuracy * wep.accuracyFactor( this ) +
-					attackSkill * accuracy * wep2.accuracyFactor( this )) * 0.5f);
+			if (wep instanceof MeleeWeapon) {
+				return (int)((attackSkill * accuracy * wep.accuracyFactor( this ) +
+						attackSkill * accuracy * wep2.accuracyFactor( this )) * 0.5f);
+			}
+			else return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
 		} else if (wep != null) {
 			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
 		} else if (wep2 != null) {
@@ -526,14 +532,18 @@ public class Hero extends Char {
 		int dmg;
 
 		if (wep != null && wep2 != null) {
-			dmg = (int) ((wep.damageRoll( this ) + wep2.damageRoll( this )) * 0.5f);
-			if (!(wep instanceof MissileWeapon) && !(wep2 instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
+			if (wep instanceof MeleeWeapon) {
+				dmg = (int) ((wep.damageRoll( this ) + wep2.damageRoll( this )) * 0.5f);
+				dmg += RingOfForce.armedDamageBonus(this);
+			} else {
+				dmg = wep.damageRoll( this );
+			}
 		} else if (wep != null) {
 			dmg = wep.damageRoll( this );
-			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
+			if (wep instanceof MeleeWeapon) dmg += RingOfForce.armedDamageBonus(this);
 		} else if (wep2 != null) {
 			dmg = wep2.damageRoll( this );
-			if (!(wep2 instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
+			dmg += RingOfForce.armedDamageBonus(this);
 		} else {
 			dmg = RingOfForce.damageRoll(this);
 		}
@@ -571,11 +581,12 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack(){
-		if (belongings.weapon() == null || !(belongings.weapon() instanceof Weapon)) {
-			return belongings.weapon2() == null || !(belongings.weapon() instanceof Weapon) || STR() >= ((Weapon) belongings.weapon2()).STRReq();
+		if (belongings.weapon() == null || !(belongings.weapon() instanceof Weapon) ||
+				belongings.weapon2() == null || !(belongings.weapon2() instanceof Weapon) ||
+				STR() < ((Weapon)belongings.weapon()).STRReq() || STR() < ((Weapon) belongings.weapon2()).STRReq()) {
+			return false;
 		}
-		else if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
-		if (belongings.weapon() instanceof Flail) return false;
+		else if (belongings.weapon() instanceof Flail || belongings.weapon2() instanceof Flail) return false;
 
 		return true;
 	}
@@ -594,7 +605,10 @@ public class Hero extends Char {
 		KindOfWeapon wep2 = Dungeon.hero.belongings.weapon2();
 
 		if (wep != null && wep2 != null) {
-			return wep.canReach( this, enemy.pos ) || wep2.canReach( this, enemy.pos );
+			if (wep instanceof MeleeWeapon) {
+				return wep.canReach( this, enemy.pos ) && wep2.canReach( this, enemy.pos );
+			}
+			else return wep.canReach( this, enemy.pos );
 		} else if (wep != null) {
 			return wep.canReach(this, enemy.pos);
 		} else if (wep2 != null) {
@@ -612,8 +626,12 @@ public class Hero extends Char {
 
 		KindOfWeapon wep = belongings.weapon();
 		KindOfWeapon wep2 = belongings.weapon2();
-		if (wep != null && wep2 != null && wep instanceof MeleeWeapon) {
-			return (wep.delayFactor( this ) + wep2.delayFactor( this )) * 0.5f;
+
+		if (wep != null && wep2 != null) {
+			if (wep instanceof MeleeWeapon) {
+				return (wep.delayFactor( this ) + wep2.delayFactor( this )) * 0.5f;
+			}
+			else return wep.delayFactor( this );
 		} else if (wep != null) {
 			return wep.delayFactor( this );
 		} else if (wep2 != null) {
@@ -1827,7 +1845,6 @@ public class Hero extends Char {
 
 		if (hit && subClass == HeroSubClass.GLADIATOR){
 			Buff.affect( this, Combo.class ).hit( enemy );
-			if (belongings.weapon2 != null) Buff.affect( this, Combo.class ).hit( enemy );
 		}
 
 		curAction = null;

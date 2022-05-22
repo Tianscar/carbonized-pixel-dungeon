@@ -32,7 +32,7 @@ public class BattleAxe extends MeleeWeapon {
 		hitSoundPitch = 0.9f;
 
 		tier = 4;
-		twoHanded = true;
+		twoHanded = false;
 		ACC = 1.24f; //24% boost to accuracy
 	}
 
