@@ -1144,13 +1144,22 @@ public class Hero extends Char {
 	@Override
 	public int attackProc( final Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
-		int damage2 = damage;
 		
 		KindOfWeapon wep = belongings.weapon();
-		if (wep != null) damage = wep.proc( this, enemy, damage );
-
 		KindOfWeapon wep2 = belongings.weapon2();
-		if (wep2 != null && wep instanceof MeleeWeapon) damage += wep2.proc( this, enemy, damage2 );
+
+		if (wep != null && wep2 != null) {
+			if (wep instanceof MeleeWeapon) {
+				damage = wep.proc( this, enemy, damage ) + wep2.proc( this, enemy, damage );
+			}
+			else damage = wep.proc( this, enemy, damage );
+		}
+		else if (wep != null) {
+			damage = wep.proc( this, enemy, damage );
+		}
+		else if (wep2 != null) {
+			damage = wep2.proc( this, enemy, damage );
+		}
 
 		if (buff(Talent.SpiritBladesTracker.class) != null
 				&& Random.Int(10) < 3*pointsInTalent(Talent.SPIRIT_BLADES)){
