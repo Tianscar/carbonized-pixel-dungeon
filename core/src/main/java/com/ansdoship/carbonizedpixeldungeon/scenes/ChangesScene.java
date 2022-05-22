@@ -32,16 +32,16 @@ import com.ansdoship.carbonizedpixeldungeon.ui.ScrollPane;
 import com.ansdoship.carbonizedpixeldungeon.ui.StyledButton;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
 import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_1_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_2_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_3_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_4_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_5_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_6_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_7_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_8_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v0_9_X_Changes;
-import com.ansdoship.carbonizedpixeldungeon.ui.changelist.v1_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_1_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_2_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_3_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_4_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_5_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_6_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_7_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_8_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_9_X_Changes;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v1_0_X_Changes;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
 import com.ansdoship.pixeldungeonclasses.noosa.NinePatch;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
@@ -93,7 +93,7 @@ public class ChangesScene extends PixelScene {
 		
 		switch (changesSelected){
 			case 0: default:
-				v1_X_Changes.addAllChanges(changeInfos);
+				v1_0_X_Changes.addAllChanges(changeInfos);
 				v0_9_X_Changes.addAllChanges(changeInfos);
 				break;
 			case 1:

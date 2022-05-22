@@ -32,6 +32,7 @@ public class Spear extends MeleeWeapon {
 		hitSoundPitch = 0.9f;
 
 		tier = 2;
+		twoHanded = true;
 		DLY = 1.5f; //0.67x speed
 		RCH = 2;    //extra reach
 	}

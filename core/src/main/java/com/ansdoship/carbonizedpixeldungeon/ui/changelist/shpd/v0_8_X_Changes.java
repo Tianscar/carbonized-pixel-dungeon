@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.ansdoship.carbonizedpixeldungeon.ui.changelist;
+package com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.DwarfKing;
@@ -58,6 +58,8 @@ import com.ansdoship.carbonizedpixeldungeon.ui.BuffIcon;
 import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeButton;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 
 import java.util.ArrayList;

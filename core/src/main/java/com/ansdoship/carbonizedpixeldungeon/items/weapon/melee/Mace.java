@@ -32,6 +32,7 @@ public class Mace extends MeleeWeapon {
 		hitSoundPitch = 1f;
 
 		tier = 3;
+		twoHanded = false;
 		ACC = 1.28f; //28% boost to accuracy
 	}
 

@@ -32,6 +32,7 @@ public class WarHammer extends MeleeWeapon {
 		hitSoundPitch = 1f;
 
 		tier = 5;
+		twoHanded = true;
 		ACC = 1.20f; //20% boost to accuracy
 	}
 

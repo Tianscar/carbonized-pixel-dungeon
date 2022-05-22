@@ -33,6 +33,7 @@ public class Quarterstaff extends MeleeWeapon {
 		hitSoundPitch = 1f;
 
 		tier = 2;
+		twoHanded = true;
 	}
 
 	@Override

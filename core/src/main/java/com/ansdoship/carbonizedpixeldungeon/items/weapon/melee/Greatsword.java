@@ -32,6 +32,7 @@ public class Greatsword extends MeleeWeapon {
 		hitSoundPitch = 1f;
 
 		tier=5;
+		twoHanded = true;
 	}
 
 }

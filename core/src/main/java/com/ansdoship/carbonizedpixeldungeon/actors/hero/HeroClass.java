@@ -57,10 +57,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRage;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfMagicMissile;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Dagger;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Gloves;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.*;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -140,6 +137,7 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
+		hero.STR += 1;
 		(hero.belongings.weapon = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
@@ -151,6 +149,8 @@ public enum HeroClass {
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
+		new BattleAxe().identify().collect();
+		new Dagger().identify().collect();
 	}
 
 	private static void initMage( Hero hero ) {

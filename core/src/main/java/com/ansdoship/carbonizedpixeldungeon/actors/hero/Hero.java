@@ -102,6 +102,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Flail;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.ansdoship.carbonizedpixeldungeon.journal.Document;
 import com.ansdoship.carbonizedpixeldungeon.journal.Notes;
@@ -358,8 +359,13 @@ public class Hero extends Char {
 
 	@Override
 	public void hitSound(float pitch) {
-		if ( belongings.weapon() != null ){
+		if ( belongings.weapon() != null && belongings.weapon2() != null ) {
 			belongings.weapon().hitSound(pitch);
+			belongings.weapon2().hitSound(pitch);
+		} else if ( belongings.weapon() != null ) {
+			belongings.weapon().hitSound(pitch);
+		} else if ( belongings.weapon2() != null ) {
+			belongings.weapon2().hitSound(pitch);
 		} else if (RingOfForce.getBuffedBonus(this, RingOfForce.Force.class) > 0) {
 			//pitch deepens by 2.5% (additive) per point of strength, down to 75%
 			super.hitSound( pitch * GameMath.gate( 0.75f, 1.25f - 0.025f*STR(), 1f) );
@@ -416,6 +422,7 @@ public class Hero extends Char {
 	@Override
 	public int attackSkill( Char target ) {
 		KindOfWeapon wep = belongings.weapon();
+		KindOfWeapon wep2 = belongings.weapon2();
 		
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
@@ -427,9 +434,14 @@ public class Hero extends Char {
 				accuracy *= 1.5f;
 			}
 		}
-		
-		if (wep != null) {
+
+		if (wep != null && wep2 != null) {
+			return (int)((attackSkill * accuracy * wep.accuracyFactor( this ) +
+					attackSkill * accuracy * wep2.accuracyFactor( this )) * 0.5f);
+		} else if (wep != null) {
 			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
+		} else if (wep2 != null) {
+			return (int)(attackSkill * accuracy * wep2.accuracyFactor( this ));
 		} else {
 			return (int)(attackSkill * accuracy);
 		}
@@ -492,6 +504,13 @@ public class Hero extends Char {
 			}
 			if (wepDr > 0) dr += wepDr;
 		}
+		if (belongings.weapon2() != null)  {
+			int wep2Dr = Random.NormalIntRange( 0 , belongings.weapon2().defenseFactor( this ) );
+			if (STR() < ((Weapon)belongings.weapon2()).STRReq()){
+				wep2Dr -= 2*(((Weapon)belongings.weapon2()).STRReq() - STR());
+			}
+			if (wep2Dr > 0) dr += wep2Dr;
+		}
 
 		if (buff(HoldFast.class) != null){
 			dr += Random.NormalIntRange(0, 2*pointsInTalent(Talent.HOLD_FAST));
@@ -503,11 +522,18 @@ public class Hero extends Char {
 	@Override
 	public int damageRoll() {
 		KindOfWeapon wep = belongings.weapon();
+		KindOfWeapon wep2 = belongings.weapon2();
 		int dmg;
 
-		if (wep != null) {
+		if (wep != null && wep2 != null) {
+			dmg = (int) ((wep.damageRoll( this ) + wep2.damageRoll( this )) * 0.5f);
+			if (!(wep instanceof MissileWeapon) && !(wep2 instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
+		} else if (wep != null) {
 			dmg = wep.damageRoll( this );
 			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
+		} else if (wep2 != null) {
+			dmg = wep2.damageRoll( this );
+			if (!(wep2 instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
 		} else {
 			dmg = RingOfForce.damageRoll(this);
 		}
@@ -545,9 +571,11 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack(){
-		if (belongings.weapon() == null || !(belongings.weapon() instanceof Weapon))    return true;
-		if (STR() < ((Weapon)belongings.weapon()).STRReq())                             return false;
-		if (belongings.weapon() instanceof Flail)                                       return false;
+		if (belongings.weapon() == null || !(belongings.weapon() instanceof Weapon)) {
+			return belongings.weapon2() == null || !(belongings.weapon() instanceof Weapon) || STR() >= ((Weapon) belongings.weapon2()).STRReq();
+		}
+		else if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
+		if (belongings.weapon() instanceof Flail) return false;
 
 		return true;
 	}
@@ -563,9 +591,14 @@ public class Hero extends Char {
 		}
 
 		KindOfWeapon wep = Dungeon.hero.belongings.weapon();
+		KindOfWeapon wep2 = Dungeon.hero.belongings.weapon2();
 
-		if (wep != null){
+		if (wep != null && wep2 != null) {
+			return wep.canReach( this, enemy.pos ) || wep2.canReach( this, enemy.pos );
+		} else if (wep != null) {
 			return wep.canReach(this, enemy.pos);
+		} else if (wep2 != null) {
+			return wep2.canReach(this, enemy.pos);
 		} else {
 			return false;
 		}
@@ -577,10 +610,14 @@ public class Hero extends Char {
 			return 0;
 		}
 
-		if (belongings.weapon() != null) {
-			
-			return belongings.weapon().delayFactor( this );
-			
+		KindOfWeapon wep = belongings.weapon();
+		KindOfWeapon wep2 = belongings.weapon2();
+		if (wep != null && wep2 != null && wep instanceof MeleeWeapon) {
+			return (wep.delayFactor( this ) + wep2.delayFactor( this )) * 0.5f;
+		} else if (wep != null) {
+			return wep.delayFactor( this );
+		} else if (wep2 != null) {
+			return wep2.delayFactor( this );
 		} else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
 			//But there's going to be that one guy who gets a furor+force ring combo
@@ -1107,15 +1144,20 @@ public class Hero extends Char {
 	@Override
 	public int attackProc( final Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
+		int damage2 = damage;
 		
 		KindOfWeapon wep = belongings.weapon();
-
 		if (wep != null) damage = wep.proc( this, enemy, damage );
+
+		KindOfWeapon wep2 = belongings.weapon2();
+		if (wep2 != null && wep instanceof MeleeWeapon) damage += wep2.proc( this, enemy, damage2 );
 
 		if (buff(Talent.SpiritBladesTracker.class) != null
 				&& Random.Int(10) < 3*pointsInTalent(Talent.SPIRIT_BLADES)){
 			SpiritBow bow = belongings.getItem(SpiritBow.class);
-			if (bow != null) damage = bow.proc( this, enemy, damage );
+			if (bow != null) {
+				damage = bow.proc( this, enemy, damage );
+			}
 			buff(Talent.SpiritBladesTracker.class).detach();
 		}
 
@@ -1776,6 +1818,7 @@ public class Hero extends Char {
 
 		if (hit && subClass == HeroSubClass.GLADIATOR){
 			Buff.affect( this, Combo.class ).hit( enemy );
+			if (belongings.weapon2 != null) Buff.affect( this, Combo.class ).hit( enemy );
 		}
 
 		curAction = null;

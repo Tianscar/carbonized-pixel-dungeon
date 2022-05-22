@@ -32,6 +32,7 @@ public class Longsword extends MeleeWeapon {
 		hitSoundPitch = 1f;
 
 		tier = 4;
+		twoHanded = false;
 	}
 
 }

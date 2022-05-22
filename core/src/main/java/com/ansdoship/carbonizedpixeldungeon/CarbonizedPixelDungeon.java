@@ -38,7 +38,7 @@ public class CarbonizedPixelDungeon extends Game {
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
 
-		//v1.0.0
+		//SHPD v1.0.0
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfFear.class,
 				"com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfAffection" );
@@ -46,7 +46,7 @@ public class CarbonizedPixelDungeon extends Game {
 				com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfDeepSleep.class,
 				"com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfDeepenedSleep" );
 
-		//v0.9.3
+		//SHPD v0.9.3
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.actors.mobs.Tengu.class,
 				"com.ansdoship.carbonizedpixeldungeon.actors.mobs.NewTengu" );

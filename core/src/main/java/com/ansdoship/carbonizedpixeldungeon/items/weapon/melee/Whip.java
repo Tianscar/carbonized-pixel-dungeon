@@ -32,6 +32,7 @@ public class Whip extends MeleeWeapon {
 		hitSoundPitch = 1.1f;
 
 		tier = 3;
+		twoHanded = false;
 		RCH = 3;    //lots of extra reach
 	}
 

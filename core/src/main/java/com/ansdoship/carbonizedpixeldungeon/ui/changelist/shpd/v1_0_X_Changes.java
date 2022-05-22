@@ -1,4 +1,4 @@
-package com.ansdoship.carbonizedpixeldungeon.ui.changelist;
+package com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.items.bombs.WoollyBomb;
@@ -11,11 +11,13 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.sprites.SpectralNecromancerSprite;
 import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeButton;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 
 import java.util.ArrayList;
 
-public class v1_X_Changes {
+public class v1_0_X_Changes {
 
 	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ){
 		add_v1_0_Changes(changeInfos);

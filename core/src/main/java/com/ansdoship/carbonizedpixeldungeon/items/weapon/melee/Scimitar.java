@@ -32,6 +32,7 @@ public class Scimitar extends MeleeWeapon {
 		hitSoundPitch = 1.2f;
 
 		tier = 3;
+		twoHanded = false;
 		DLY = 0.8f; //1.25x speed
 	}
 

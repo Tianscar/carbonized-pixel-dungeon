@@ -36,6 +36,7 @@ public class Dirk extends MeleeWeapon {
 		hitSoundPitch = 1f;
 
 		tier = 2;
+		twoHanded = false;
 	}
 
 	@Override

@@ -67,6 +67,7 @@ public class Belongings implements Iterable<Item> {
 	}
 
 	public KindOfWeapon weapon = null;
+	public KindOfWeapon weapon2 = null;
 	public Armor armor = null;
 	public Artifact artifact = null;
 	public KindofMisc misc = null;
@@ -86,6 +87,15 @@ public class Belongings implements Iterable<Item> {
 		boolean lostInvent = owner != null && owner.buff(LostInventory.class) != null;
 		if (!lostInvent || (weapon != null && weapon.keptThoughLostInvent)){
 			return weapon;
+		} else {
+			return null;
+		}
+	}
+
+	public KindOfWeapon weapon2(){
+		boolean lostInvent = owner != null && owner.buff(LostInventory.class) != null;
+		if (!lostInvent || (weapon2 != null && weapon2.keptThoughLostInvent)){
+			return weapon2;
 		} else {
 			return null;
 		}
@@ -130,6 +140,7 @@ public class Belongings implements Iterable<Item> {
 	// ***
 	
 	private static final String WEAPON		= "weapon";
+	private static final String WEAPON_2    = "weapon_2";
 	private static final String ARMOR		= "armor";
 	private static final String ARTIFACT   = "artifact";
 	private static final String MISC       = "misc";
@@ -140,6 +151,7 @@ public class Belongings implements Iterable<Item> {
 		backpack.storeInBundle( bundle );
 		
 		bundle.put( WEAPON, weapon );
+		bundle.put( WEAPON_2, weapon2 );
 		bundle.put( ARMOR, armor );
 		bundle.put( ARTIFACT, artifact );
 		bundle.put( MISC, misc );
@@ -152,45 +164,21 @@ public class Belongings implements Iterable<Item> {
 		backpack.restoreFromBundle( bundle );
 		
 		weapon = (KindOfWeapon) bundle.get(WEAPON);
-		if (weapon() != null) {
-			weapon().activate(owner);
-		}
+		if (weapon() != null) weapon().activate(owner);
+
+		weapon2 = (KindOfWeapon) bundle.get(WEAPON_2);
+		if (weapon2() != null) weapon2().activate(owner);
 		
 		armor = (Armor)bundle.get( ARMOR );
-		if (armor() != null){
-			armor().activate( owner );
-		}
+		if (armor() != null) armor().activate( owner );
 
-		//pre-0.8.2
-		if (bundle.contains("misc1") || bundle.contains("misc2")){
-			artifact = null;
-			misc = null;
-			ring = null;
-
-			KindofMisc m = (KindofMisc)bundle.get("misc1");
-			if (m instanceof Artifact){
-				artifact = (Artifact) m;
-			} else if (m instanceof Ring) {
-				ring = (Ring) m;
-			}
-
-			m = (KindofMisc)bundle.get("misc2");
-			if (m instanceof Artifact){
-				if (artifact == null)   artifact = (Artifact) m;
-				else                    misc = (Artifact) m;
-			} else if (m instanceof Ring) {
-				if (ring == null)       ring = (Ring) m;
-				else                    misc = (Ring) m;
-			}
-
-		} else {
-			artifact = (Artifact) bundle.get(ARTIFACT);
-			misc = (KindofMisc) bundle.get(MISC);
-			ring = (Ring) bundle.get(RING);
-		}
-
+		artifact = (Artifact) bundle.get(ARTIFACT);
 		if (artifact() != null)   artifact().activate(owner);
+
+		misc = (KindofMisc) bundle.get(MISC);
 		if (misc() != null)       misc().activate( owner );
+
+		ring = (Ring) bundle.get(RING);
 		if (ring() != null)       ring().activate( owner );
 	}
 	
@@ -312,6 +300,10 @@ public class Belongings implements Iterable<Item> {
 			weapon().identify();
 			Badges.validateItemLevelAquired(weapon());
 		}
+		if (weapon2() != null) {
+			weapon2().identify();
+			Badges.validateItemLevelAquired(weapon2());
+		}
 		if (armor() != null) {
 			armor().identify();
 			Badges.validateItemLevelAquired(armor());
@@ -336,7 +328,7 @@ public class Belongings implements Iterable<Item> {
 	}
 	
 	public void uncurseEquipped() {
-		ScrollOfRemoveCurse.uncurse( owner, armor(), weapon(), artifact(), misc(), ring());
+		ScrollOfRemoveCurse.uncurse( owner, armor(), weapon(), weapon2(), artifact(), misc(), ring());
 	}
 	
 	public Item randomUnequipped() {
@@ -368,7 +360,7 @@ public class Belongings implements Iterable<Item> {
 		
 		private Iterator<Item> backpackIterator = backpack.iterator();
 		
-		private Item[] equipped = {weapon, armor, artifact, misc, ring};
+		private Item[] equipped = {weapon, weapon2, armor, artifact, misc, ring};
 		private int backpackIndex = equipped.length;
 		
 		@Override
@@ -403,16 +395,19 @@ public class Belongings implements Iterable<Item> {
 				equipped[0] = weapon = null;
 				break;
 			case 1:
-				equipped[1] = armor = null;
+				equipped[1] = weapon2 = null;
 				break;
 			case 2:
-				equipped[2] = artifact = null;
+				equipped[2] = armor = null;
 				break;
 			case 3:
-				equipped[3] = misc = null;
+				equipped[3] = artifact = null;
 				break;
 			case 4:
-				equipped[4] = ring = null;
+				equipped[4] = misc = null;
+				break;
+			case 5:
+				equipped[5] = ring = null;
 				break;
 			default:
 				backpackIterator.remove();

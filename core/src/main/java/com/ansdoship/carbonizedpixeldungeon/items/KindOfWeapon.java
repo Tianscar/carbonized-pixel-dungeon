@@ -27,15 +27,22 @@ import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
+import com.ansdoship.carbonizedpixeldungeon.items.artifacts.Artifact;
+import com.ansdoship.carbonizedpixeldungeon.items.rings.Ring;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
+import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.ui.ActionIndicator;
 import com.ansdoship.carbonizedpixeldungeon.utils.BArray;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
+import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 abstract public class KindOfWeapon extends EquipableItem {
+
+	public boolean twoHanded;
 	
 	protected static final float TIME_TO_EQUIP = 1f;
 
@@ -44,35 +51,129 @@ abstract public class KindOfWeapon extends EquipableItem {
 	
 	@Override
 	public boolean isEquipped( Hero hero ) {
-		return hero.belongings.weapon() == this;
+		return hero.belongings.weapon() == this || hero.belongings.weapon2() == this;
 	}
 	
 	@Override
 	public boolean doEquip( Hero hero ) {
 
-		detachAll( hero.belongings.backpack );
-		
-		if (hero.belongings.weapon == null || hero.belongings.weapon.doUnequip( hero, true )) {
-			
-			hero.belongings.weapon = this;
-			activate( hero );
-			Talent.onItemEquipped(hero, this);
-			ActionIndicator.updateIcon();
-			updateQuickslot();
-			
-			cursedKnown = true;
-			if (cursed) {
-				equipCursed( hero );
-				GLog.n( Messages.get(KindOfWeapon.class, "equip_cursed") );
+		boolean equipFull = false;
+		boolean shouldEquip = false;
+		if (twoHanded) {
+			KindOfWeapon tmpWeapon = hero.belongings.weapon;
+			KindOfWeapon tmpWeapon2 = hero.belongings.weapon2;
+			if ((hero.belongings.weapon == null || hero.belongings.weapon.doUnequip( hero, true )) &&
+					(hero.belongings.weapon2 == null || hero.belongings.weapon2.doUnequip( hero, true ))) {
+				hero.belongings.weapon = this;
+				hero.belongings.weapon2 = null;
+				shouldEquip = true;
 			}
-			
-			hero.spendAndNext( TIME_TO_EQUIP );
-			return true;
-			
-		} else {
-			
-			collect( hero.belongings.backpack );
+			else { // Rollback if failed to equip
+				hero.belongings.weapon = tmpWeapon;
+				hero.belongings.weapon2 = tmpWeapon2;
+			}
+		}
+		else {
+			if (hero.belongings.weapon == null) {
+				hero.belongings.weapon = this;
+				shouldEquip = true;
+			}
+			else if (hero.belongings.weapon.twoHanded) {
+				if (hero.belongings.weapon.doUnequip( hero, true )) {
+					hero.belongings.weapon = this;
+					shouldEquip = true;
+				}
+			}
+			else if (hero.belongings.weapon2 == null) {
+				hero.belongings.weapon2 = this;
+				shouldEquip = true;
+			}
+			else {
+				equipFull = true;
+			}
+		}
+		if (equipFull) {
+
+			GameScene.show(
+					new WndOptions(new ItemSprite(this),
+							Messages.get(KindofMisc.class, "unequip_title"),
+							Messages.get(KindofMisc.class, "unequip_message"),
+							hero.belongings.weapon == null ? "---" : Messages.titleCase(hero.belongings.weapon.toString()),
+							hero.belongings.weapon2 == null ? "---" : Messages.titleCase(hero.belongings.weapon2.toString())) {
+
+						@Override
+						protected void onSelect(int index) {
+
+							boolean shouldEquip = false;
+
+							switch (index) {
+								case 0: default:
+									if (hero.belongings.weapon.doUnequip( hero, true )) {
+										hero.belongings.weapon = KindOfWeapon.this;
+										shouldEquip = true;
+									}
+									break;
+								case 1:
+									if (hero.belongings.weapon2.doUnequip( hero, true )) {
+										hero.belongings.weapon2 = KindOfWeapon.this;
+										shouldEquip = true;
+									}
+									break;
+							}
+
+							detachAll( hero.belongings.backpack );
+
+							if (shouldEquip) {
+								
+								activate( hero );
+								Talent.onItemEquipped(hero, KindOfWeapon.this);
+								ActionIndicator.updateIcon();
+								updateQuickslot();
+
+								cursedKnown = true;
+								if (cursed) {
+									equipCursed( hero );
+									GLog.n( Messages.get(KindOfWeapon.class, "equip_cursed") );
+								}
+
+								hero.spendAndNext( TIME_TO_EQUIP );
+
+							} else {
+
+								collect( hero.belongings.backpack );
+							}
+
+						}
+					});
+
 			return false;
+		}
+		else {
+
+			detachAll( hero.belongings.backpack );
+
+			if (shouldEquip) {
+				
+				activate( hero );
+				Talent.onItemEquipped(hero, this);
+				ActionIndicator.updateIcon();
+				updateQuickslot();
+
+				cursedKnown = true;
+				if (cursed) {
+					equipCursed( hero );
+					GLog.n( Messages.get(KindOfWeapon.class, "equip_cursed") );
+				}
+
+				hero.spendAndNext( TIME_TO_EQUIP );
+				return true;
+
+			} else {
+
+				collect( hero.belongings.backpack );
+				return false;
+			}
+
 		}
 	}
 
@@ -80,7 +181,8 @@ abstract public class KindOfWeapon extends EquipableItem {
 	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
 		if (super.doUnequip( hero, collect, single )) {
 
-			hero.belongings.weapon = null;
+			if (hero.belongings.weapon == this) hero.belongings.weapon = null;
+			else if (hero.belongings.weapon2 == this) hero.belongings.weapon2 = null;
 			return true;
 
 		} else {

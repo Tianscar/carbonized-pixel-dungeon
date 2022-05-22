@@ -81,6 +81,8 @@ public class MeleeWeapon extends Weapon {
 			}
 		}
 
+		info += "\n\n" + Messages.get(MeleeWeapon.class, twoHanded ? "two_handed" : "one_handed");
+
 		String statsInfo = statsInfo();
 		if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
 

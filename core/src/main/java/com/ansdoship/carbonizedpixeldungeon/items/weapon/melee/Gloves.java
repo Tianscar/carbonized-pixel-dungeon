@@ -32,6 +32,7 @@ public class Gloves extends MeleeWeapon {
 		hitSoundPitch = 1.3f;
 
 		tier = 1;
+		twoHanded = true;
 		DLY = 0.5f; //2x speed
 		
 		bones = false;
