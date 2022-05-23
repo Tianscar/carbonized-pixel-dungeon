@@ -14,8 +14,8 @@ allprojects {
         appName = 'Carbonized Pixel Dungeon'
         appPackageName = 'com.ansdoship.carbonizedpixeldungeon'
 
-        appVersionCode = 6
-        appVersionName = '0.0.3'
+        appVersionCode = 7
+        appVersionName = '0.0.3p1'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
