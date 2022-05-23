@@ -626,14 +626,12 @@ public class Hero extends Char {
 
 	public boolean canAttack(Char enemy){
 		if (enemy == null || pos == enemy.pos || !Actor.chars().contains(enemy)) {
-			canWep1Attack = false;
-			canWep2Attack = false;
+			return false;
 		}
 
 		//can always attack adjacent enemies
 		if (Dungeon.level.adjacent(pos, enemy.pos)) {
-			canWep1Attack = true;
-			canWep2Attack = true;
+			return true;
 		}
 
 		KindOfWeapon wep = Dungeon.hero.belongings.weapon();
