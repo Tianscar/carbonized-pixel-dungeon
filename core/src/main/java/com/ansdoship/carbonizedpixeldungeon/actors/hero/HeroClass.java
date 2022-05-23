@@ -149,6 +149,11 @@ public enum HeroClass {
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
+		new Shortsword().identify().collect();
+		Shortsword shortsword = new Shortsword();
+		shortsword.cursed = true;
+		shortsword.identify().collect();
+		new Dagger().identify().collect();
 	}
 
 	private static void initMage( Hero hero ) {

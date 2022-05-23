@@ -385,6 +385,10 @@ public class Hero extends Char {
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
 			return true;
 		}
+		if ( belongings.weapon2() != null && belongings.weapon2().defenseFactor(this) >= 4 ){
+			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
+			return true;
+		}
 		return super.blockSound(pitch);
 	}
 
@@ -533,7 +537,7 @@ public class Hero extends Char {
 		int dmg;
 
 		if (canWep1Attack && canWep2Attack) {
-			dmg = wep.damageRoll( this ) + wep2.damageRoll( this );
+			dmg = (int) ((wep.damageRoll( this ) + wep2.damageRoll( this )) / 1.5f);
 			if (wep instanceof MeleeWeapon && wep2 instanceof MeleeWeapon) dmg += RingOfForce.armedDamageBonus(this);
 		}
 		else if (canWep1Attack) {
@@ -643,7 +647,7 @@ public class Hero extends Char {
 		KindOfWeapon wep2 = belongings.weapon2();
 
 		if (canWep1Attack && canWep2Attack) {
-			return wep.delayFactor( this ) + wep2.delayFactor( this );
+			return (wep.delayFactor( this ) + wep2.delayFactor( this )) / 1.5f;
 		} else if (canWep1Attack) {
 			return wep.delayFactor( this );
 		} else if (canWep2Attack) {
@@ -1179,7 +1183,7 @@ public class Hero extends Char {
 		KindOfWeapon wep2 = belongings.weapon2();
 
 		if (canWep1Attack && canWep2Attack) {
-			damage = wep.proc( this, enemy, damage ) + wep2.proc( this, enemy, damage );
+			damage = (int) ((wep.proc( this, enemy, damage ) + wep2.proc( this, enemy, damage )) * 0.5f);
 		}
 		else if (canWep1Attack) {
 			damage = wep.proc( this, enemy, damage );
