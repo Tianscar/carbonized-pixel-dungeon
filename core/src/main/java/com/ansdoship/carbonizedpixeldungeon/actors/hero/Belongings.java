@@ -35,6 +35,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.Ring;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
@@ -46,6 +47,11 @@ public class Belongings implements Iterable<Item> {
 	private Hero owner;
 
 	public static class Backpack extends Bag {
+
+		{
+			image = ItemSpriteSheet.BACKPACK;
+		}
+
 		public int capacity(){
 			int cap = super.capacity();
 			for (Item item : items){

@@ -65,8 +65,8 @@ public class WndBag extends WndTabbed {
 	protected static int SLOT_WIDTH_P   = 18;
 	protected static int SLOT_WIDTH_L   = 18;
 
-	protected static int SLOT_HEIGHT_P	= 18;
-	protected static int SLOT_HEIGHT_L	= 18;
+	protected static int SLOT_HEIGHT_P	= 20;
+	protected static int SLOT_HEIGHT_L	= 20;
 
 	protected static final int SLOT_MARGIN	= 1;
 	
@@ -202,12 +202,17 @@ public class WndBag extends WndTabbed {
 		
 		// Equipped items
 		Belongings stuff = Dungeon.hero.belongings;
-		placeItem( stuff.weapon != null ? stuff.weapon : new Placeholder( ItemSpriteSheet.WEAPON_HOLDER ) );
-		placeItem( stuff.weapon2 != null ? stuff.weapon2 : new Placeholder( ItemSpriteSheet.WEAPON_HOLDER ) );
+		placeItem( stuff.weapon != null ? stuff.weapon : new Placeholder( ItemSpriteSheet.WEAPON2_HOLDER ) );
+		if ( stuff.weapon == null || !stuff.weapon.twoHanded ) {
+			placeItem( stuff.weapon2 != null ? stuff.weapon2 : new Placeholder( ItemSpriteSheet.WEAPON_HOLDER ) );
+		}
 		placeItem( stuff.armor != null ? stuff.armor : new Placeholder( ItemSpriteSheet.ARMOR_HOLDER ) );
 		placeItem( stuff.artifact != null ? stuff.artifact : new Placeholder( ItemSpriteSheet.ARTIFACT_HOLDER ) );
 		placeItem( stuff.misc != null ? stuff.misc : new Placeholder( ItemSpriteSheet.SOMETHING ) );
 		placeItem( stuff.ring != null ? stuff.ring : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
+		if ( stuff.weapon != null && stuff.weapon.twoHanded ) {
+			if (container == Dungeon.hero.belongings.backpack) placeItem(container);
+		}
 
 		//the container itself if it's not the root backpack
 		if (container != Dungeon.hero.belongings.backpack){

@@ -43,6 +43,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.BrokenSeal;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.Waterskin;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.ClothArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.ansdoship.carbonizedpixeldungeon.items.food.Food;
@@ -50,6 +51,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfInvisibility;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
+import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfForce;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -149,11 +151,11 @@ public enum HeroClass {
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
-		new Shortsword().identify().collect();
-		Shortsword shortsword = new Shortsword();
-		shortsword.cursed = true;
-		shortsword.identify().collect();
 		new Dagger().identify().collect();
+		new AlchemistsToolkit().identify().collect();
+		new RingOfForce().identify().collect();
+		new RingOfForce().identify().collect();
+		new Spear().identify().collect();
 	}
 
 	private static void initMage( Hero hero ) {

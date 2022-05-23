@@ -53,6 +53,8 @@ public class PDAction extends GameAction {
 	public static final GameAction QUICKSLOT_2 = new PDAction("quickslot_2");
 	public static final GameAction QUICKSLOT_3 = new PDAction("quickslot_3");
 	public static final GameAction QUICKSLOT_4 = new PDAction("quickslot_4");
+	public static final GameAction QUICKSLOT_5 = new PDAction("quickslot_5");
+	public static final GameAction QUICKSLOT_6 = new PDAction("quickslot_6");
 
 	public static final GameAction TAG_ATTACK  = new PDAction("tag_attack");
 	public static final GameAction TAG_DANGER  = new PDAction("tag_danger");
@@ -85,10 +87,12 @@ public class PDAction extends GameAction {
 		defaultBindings.put( Input.Keys.Z,           PDAction.REST );
 
 		defaultBindings.put( Input.Keys.I,           PDAction.INVENTORY );
-		defaultBindings.put( Input.Keys.Q,           PDAction.QUICKSLOT_1 );
-		defaultBindings.put( Input.Keys.W,           PDAction.QUICKSLOT_2 );
-		defaultBindings.put( Input.Keys.E,           PDAction.QUICKSLOT_3 );
-		defaultBindings.put( Input.Keys.R,           PDAction.QUICKSLOT_4 );
+		defaultBindings.put( Input.Keys.NUM_1,       PDAction.QUICKSLOT_1 );
+		defaultBindings.put( Input.Keys.NUM_2,       PDAction.QUICKSLOT_2 );
+		defaultBindings.put( Input.Keys.NUM_3,       PDAction.QUICKSLOT_3 );
+		defaultBindings.put( Input.Keys.NUM_4,       PDAction.QUICKSLOT_4 );
+		defaultBindings.put( Input.Keys.NUM_5,       PDAction.QUICKSLOT_5 );
+		defaultBindings.put( Input.Keys.NUM_6,       PDAction.QUICKSLOT_6 );
 
 		defaultBindings.put( Input.Keys.A,           PDAction.TAG_ATTACK );
 		defaultBindings.put( Input.Keys.TAB,         PDAction.TAG_DANGER );

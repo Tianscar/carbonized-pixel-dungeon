@@ -152,6 +152,8 @@ public class Hero extends Char {
 	
 	public static final int MAX_LEVEL = 30;
 
+	public static final int MAX_HUNGER = 450;
+
 	public static final int STARTING_STR = 10;
 	
 	private static final float TIME_TO_REST		    = 1f;
@@ -188,6 +190,8 @@ public class Hero extends Char {
 	public int exp = 0;
 	
 	public int HTBoost = 0;
+
+	public int hunger;
 	
 	private ArrayList<Mob> visibleEnemies;
 
@@ -199,6 +203,7 @@ public class Hero extends Char {
 		super();
 
 		HP = HT = 20;
+		hunger = 0;
 		STR = STARTING_STR;
 		
 		belongings = new Belongings( this );
@@ -221,6 +226,15 @@ public class Hero extends Char {
 			HP += Math.max(HT - curHT, 0);
 		}
 		HP = Math.min(HP, HT);
+	}
+
+	public int hunger() {
+		if (isAlive()) {
+			Hunger hungerBuff = Dungeon.hero.buff(Hunger.class);
+			hunger = hungerBuff == null ? MAX_HUNGER : MAX_HUNGER - hungerBuff.hunger();
+		}
+		if (hunger < 0) hunger = 0;
+		return hunger;
 	}
 
 	public int STR() {
@@ -250,6 +264,7 @@ public class Hero extends Char {
 	private static final String LEVEL		= "lvl";
 	private static final String EXPERIENCE	= "exp";
 	private static final String HTBOOST     = "htboost";
+	private static final String HUNGER      = "hunger";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -270,6 +285,8 @@ public class Hero extends Char {
 		bundle.put( EXPERIENCE, exp );
 		
 		bundle.put( HTBOOST, HTBoost );
+
+		bundle.put( HUNGER, hunger );
 
 		belongings.storeInBundle( bundle );
 	}
@@ -293,6 +310,8 @@ public class Hero extends Char {
 		defenseSkill = bundle.getInt( DEFENSE );
 		
 		STR = bundle.getInt( STRENGTH );
+
+		hunger = bundle.getInt( HUNGER );
 
 		belongings.restoreFromBundle( bundle );
 	}
@@ -1857,10 +1876,7 @@ public class Hero extends Char {
 		spend( attackDelay() );
 
 		if (hit && subClass == HeroSubClass.GLADIATOR){
-			if (canWep1Attack && canWep2Attack) {
-				Buff.affect( this, Combo.class ).hit( enemy );
-			}
-			else Buff.affect( this, Combo.class ).hit( enemy );
+			Buff.affect( this, Combo.class ).hit( enemy );
 		}
 
 		curAction = null;

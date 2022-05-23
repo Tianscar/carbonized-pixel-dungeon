@@ -25,6 +25,8 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.PDAction;
 import com.ansdoship.carbonizedpixeldungeon.Statistics;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Hunger;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.journal.Document;
@@ -62,6 +64,8 @@ public class StatusPane extends Component {
 	private Image shieldedHP;
 	private Image hp;
 	private BitmapText hpText;
+	private Image hg;
+	private BitmapText hgText;
 
 	private Image exp;
 
@@ -130,6 +134,13 @@ public class StatusPane extends Component {
 		hpText.alpha(0.6f);
 		add(hpText);
 
+		hg = new Image( Assets.Interfaces.HG_BAR );
+		add( hg );
+
+		hgText = new BitmapText(PixelScene.pixelFont);
+		hgText.alpha(0.6f);
+		add(hgText);
+
 		exp = new Image( Assets.Interfaces.XP_BAR );
 		add( exp );
 
@@ -182,6 +193,15 @@ public class StatusPane extends Component {
 		hpText.y -= 0.001f; //prefer to be slightly higher
 		PixelScene.align(hpText);
 
+		hg.x = hp.x;
+		hg.y = hp.y + hp.height + 1;
+
+		hgText.scale.set(PixelScene.align(0.5f));
+		hgText.x = hg.x + 1;
+		hgText.y = hg.y + (hg.height - (hgText.baseLine()+hgText.scale.y))/2f;
+		hgText.y -= 0.001f; //prefer to be slightly higher
+		PixelScene.align(hgText);
+
 		bossHP.setPos( 6 + (width - bossHP.width())/2, 20);
 
 		depth.x = width - 35.5f - depth.width() / 2f;
@@ -190,7 +210,7 @@ public class StatusPane extends Component {
 
 		danger.setPos( width - danger.width(), 20 );
 
-		buffs.setPos( 31, 9 );
+		buffs.setPos( 31, 9 + 3 );
 
 		btnJournal.setPos( width - 42, 1 );
 
@@ -235,6 +255,10 @@ public class StatusPane extends Component {
 		} else {
 			hpText.text(health + "+" + shield +  "/" + max);
 		}
+
+		int hunger = Dungeon.hero.hunger();
+		hg.scale.x = Math.max( 0, hunger / (float)Hero.MAX_HUNGER);
+		hgText.text(hunger + "/" + Hero.MAX_HUNGER);
 
 		exp.scale.x = (width / exp.width) * Dungeon.hero.exp / Dungeon.hero.maxExp();
 

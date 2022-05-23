@@ -130,6 +130,7 @@ public class GamesInProgress {
 		info.exp = hero.exp;
 		info.hp = hero.HP;
 		info.ht = hero.HT;
+		info.hunger = hero.hunger();
 		info.shld = hero.shielding();
 		info.heroClass = hero.heroClass;
 		info.subClass = hero.subClass;
@@ -162,6 +163,7 @@ public class GamesInProgress {
 		public int exp;
 		public int hp;
 		public int ht;
+		public int hunger;
 		public int shld;
 		public HeroClass heroClass;
 		public HeroSubClass subClass;

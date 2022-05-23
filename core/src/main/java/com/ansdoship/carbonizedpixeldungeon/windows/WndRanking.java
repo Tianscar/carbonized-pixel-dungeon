@@ -21,11 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.windows;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.Badges;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.Rankings;
-import com.ansdoship.carbonizedpixeldungeon.Statistics;
+import com.ansdoship.carbonizedpixeldungeon.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
@@ -53,7 +49,7 @@ import java.util.Locale;
 public class WndRanking extends WndTabbed {
 	
 	private static final int WIDTH			= 115;
-	private static final int HEIGHT			= 144;
+	private static final int HEIGHT			= 146;
 	
 	private static Thread thread;
 	private String error = null;
@@ -272,6 +268,9 @@ public class WndRanking extends WndTabbed {
 			if (stuff.weapon != null) {
 				addItem( stuff.weapon );
 			}
+			if (stuff.weapon2 != null) {
+				addItem( stuff.weapon2 );
+			}
 			if (stuff.armor != null) {
 				addItem( stuff.armor );
 			}
@@ -286,21 +285,18 @@ public class WndRanking extends WndTabbed {
 			}
 
 			pos = 0;
-			for (int i = 0; i < 4; i++){
+			float slotWidth = (WIDTH - QuickSlot.SIZE + 1) / (float)QuickSlot.SIZE;
+			for (int i = 0; i < QuickSlot.SIZE; i++){
 				if (Dungeon.quickslot.getItem(i) != null){
 					QuickSlotButton slot = new QuickSlotButton(Dungeon.quickslot.getItem(i));
 
-					slot.setRect( pos, 120, 28, 23 );
+					slot.setRect( pos, 126, slotWidth, QuickSlotButton.HEIGHT );
+					PixelScene.align(slot);
 
 					add(slot);
+					pos += slotWidth + 1;
 
-				} else {
-					ColorBlock bg = new ColorBlock( 28, 23, 0x9953564D );
-					bg.x = pos;
-					bg.y = 120;
-					add(bg);
 				}
-				pos += 29;
 			}
 		}
 		
@@ -332,8 +328,9 @@ public class WndRanking extends WndTabbed {
 	}
 
 	private class ItemButton extends Button {
-		
-		public static final int HEIGHT	= 23;
+
+		public static final int WIDTH   = 18;
+		public static final int HEIGHT	= 20;
 		
 		private Item item;
 		
@@ -360,7 +357,7 @@ public class WndRanking extends WndTabbed {
 		@Override
 		protected void createChildren() {
 			
-			bg = new ColorBlock( 28, HEIGHT, 0x9953564D );
+			bg = new ColorBlock( WIDTH, HEIGHT, 0x9953564D );
 			add( bg );
 			
 			slot = new ItemSlot();
@@ -377,7 +374,7 @@ public class WndRanking extends WndTabbed {
 			bg.x = x;
 			bg.y = y;
 			
-			slot.setRect( x, y, 28, HEIGHT );
+			slot.setRect( x, y, WIDTH, HEIGHT );
 			PixelScene.align(slot);
 			
 			name.maxWidth((int)(width - slot.width() - 2));
@@ -409,7 +406,8 @@ public class WndRanking extends WndTabbed {
 
 	private class QuickSlotButton extends ItemSlot{
 
-		public static final int HEIGHT	= 23;
+		public static final int WIDTH   = 18;
+		public static final int HEIGHT	= 20;
 
 		private Item item;
 		private ColorBlock bg;
@@ -421,7 +419,7 @@ public class WndRanking extends WndTabbed {
 
 		@Override
 		protected void createChildren() {
-			bg = new ColorBlock( 28, HEIGHT, 0x9953564D );
+			bg = new ColorBlock( WIDTH, HEIGHT, 0x9953564D );
 			add( bg );
 
 			super.createChildren();

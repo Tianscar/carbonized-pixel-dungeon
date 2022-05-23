@@ -36,8 +36,8 @@ public class QuickSlot {
 	 * which can happen for a stackable item that has been 'used up', these are refered to a placeholders.
 	 */
 
-	//note that the current max size is coded at 4, due to UI constraints, but it could be much much bigger with no issue.
-	public static int SIZE = 4;
+	//note that the current max size is coded at 6, due to UI constraints, but it could be much much bigger with no issue.
+	public static int SIZE = 6;
 	private Item[] slots = new Item[SIZE];
 
 
@@ -107,7 +107,7 @@ public class QuickSlot {
 
 		ArrayList<Item> result = new ArrayList<>();
 		for (int i = 0; i < SIZE; i ++)
-		if (getItem(i) != null && !isPlaceholder(i))
+			if (getItem(i) != null && !isPlaceholder(i))
 				result.add(getItem(i));
 
 		return Random.element(result);

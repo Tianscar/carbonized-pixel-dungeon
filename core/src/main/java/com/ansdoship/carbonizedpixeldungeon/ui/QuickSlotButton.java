@@ -23,6 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.PDAction;
+import com.ansdoship.carbonizedpixeldungeon.QuickSlot;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.LostInventory;
@@ -40,7 +41,7 @@ import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 
 public class QuickSlotButton extends Button {
 	
-	private static QuickSlotButton[] instance = new QuickSlotButton[4];
+	private static QuickSlotButton[] instance = new QuickSlotButton[QuickSlot.SIZE];
 	private int slotNum;
 
 	private ItemSlot slot;
@@ -67,7 +68,7 @@ public class QuickSlotButton extends Button {
 	}
 
 	public static void reset() {
-		instance = new QuickSlotButton[4];
+		instance = new QuickSlotButton[QuickSlot.SIZE];
 
 		lastTarget = null;
 	}
@@ -160,6 +161,10 @@ public class QuickSlotButton extends Button {
 				return PDAction.QUICKSLOT_3;
 			case 3:
 				return PDAction.QUICKSLOT_4;
+			case 4:
+				return PDAction.QUICKSLOT_5;
+			case 5:
+				return PDAction.QUICKSLOT_6;
 			default:
 				return super.keyAction();
 		}
