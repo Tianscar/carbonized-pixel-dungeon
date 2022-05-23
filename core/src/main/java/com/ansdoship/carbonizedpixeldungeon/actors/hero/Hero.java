@@ -166,6 +166,9 @@ public class Hero extends Char {
 	private int attackSkill = 10;
 	private int defenseSkill = 5;
 
+	private boolean canWep1Attack = false;
+	private boolean canWep2Attack = false;
+
 	public boolean ready = false;
 	private boolean damageInterrupt = true;
 	public HeroAction curAction = null;
@@ -359,15 +362,14 @@ public class Hero extends Char {
 
 	@Override
 	public void hitSound(float pitch) {
-		if ( belongings.weapon() != null && belongings.weapon2() != null ) {
-			if ( belongings.weapon() instanceof MeleeWeapon ) {
-				belongings.weapon().hitSound(pitch);
-				belongings.weapon2().hitSound(pitch);
-			}
-			else belongings.weapon().hitSound(pitch);
-		} else if ( belongings.weapon() != null ) {
+		if (canWep1Attack && canWep2Attack) {
 			belongings.weapon().hitSound(pitch);
-		} else if ( belongings.weapon2() != null ) {
+			belongings.weapon2().hitSound(pitch);
+		}
+		else if (canWep1Attack) {
+			belongings.weapon().hitSound(pitch);
+		}
+		else if (canWep2Attack) {
 			belongings.weapon2().hitSound(pitch);
 		} else if (RingOfForce.getBuffedBonus(this, RingOfForce.Force.class) > 0) {
 			//pitch deepens by 2.5% (additive) per point of strength, down to 75%
@@ -438,15 +440,14 @@ public class Hero extends Char {
 			}
 		}
 
-		if (wep != null && wep2 != null) {
-			if (wep instanceof MeleeWeapon) {
-				return (int)((attackSkill * accuracy * wep.accuracyFactor( this ) +
-						attackSkill * accuracy * wep2.accuracyFactor( this )) * 0.5f);
-			}
-			else return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
-		} else if (wep != null) {
+		if (canWep1Attack && canWep2Attack) {
+			return (int) (((attackSkill * accuracy * wep.accuracyFactor( this ) +
+					attackSkill * accuracy * wep2.accuracyFactor( this ))) * 0.5f);
+		}
+		else if (canWep1Attack) {
 			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
-		} else if (wep2 != null) {
+		}
+		else if (canWep2Attack) {
 			return (int)(attackSkill * accuracy * wep2.accuracyFactor( this ));
 		} else {
 			return (int)(attackSkill * accuracy);
@@ -531,20 +532,19 @@ public class Hero extends Char {
 		KindOfWeapon wep2 = belongings.weapon2();
 		int dmg;
 
-		if (wep != null && wep2 != null) {
-			if (wep instanceof MeleeWeapon) {
-				dmg = (int) ((wep.damageRoll( this ) + wep2.damageRoll( this )) * 0.5f);
-				dmg += RingOfForce.armedDamageBonus(this);
-			} else {
-				dmg = wep.damageRoll( this );
-			}
-		} else if (wep != null) {
+		if (canWep1Attack && canWep2Attack) {
+			dmg = wep.damageRoll( this ) + wep2.damageRoll( this );
+			if (wep instanceof MeleeWeapon && wep2 instanceof MeleeWeapon) dmg += RingOfForce.armedDamageBonus(this);
+		}
+		else if (canWep1Attack) {
 			dmg = wep.damageRoll( this );
 			if (wep instanceof MeleeWeapon) dmg += RingOfForce.armedDamageBonus(this);
-		} else if (wep2 != null) {
+		}
+		else if (canWep2Attack) {
 			dmg = wep2.damageRoll( this );
-			dmg += RingOfForce.armedDamageBonus(this);
-		} else {
+			if (wep2 instanceof MeleeWeapon) dmg += RingOfForce.armedDamageBonus(this);
+		}
+		else {
 			dmg = RingOfForce.damageRoll(this);
 		}
 		if (dmg < 0) dmg = 0;
@@ -581,41 +581,56 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack(){
-		if (belongings.weapon() == null || !(belongings.weapon() instanceof Weapon) ||
-				belongings.weapon2() == null || !(belongings.weapon2() instanceof Weapon) ||
-				STR() < ((Weapon)belongings.weapon()).STRReq() || STR() < ((Weapon) belongings.weapon2()).STRReq()) {
-			return false;
+		if (canWep1Attack && canWep2Attack) {
+			if ((belongings.weapon() == null || !(belongings.weapon() instanceof Weapon)) &&
+					(belongings.weapon2() == null || !(belongings.weapon2() instanceof Weapon))) return true;
+			if (STR() < ((Weapon)belongings.weapon()).STRReq() || STR() < ((Weapon)belongings.weapon2()).STRReq()) return false;
+			if (belongings.weapon() instanceof Flail || belongings.weapon2() instanceof Flail) return false;
 		}
-		else if (belongings.weapon() instanceof Flail || belongings.weapon2() instanceof Flail) return false;
+		else if (canWep1Attack) {
+			if (belongings.weapon() == null || !(belongings.weapon() instanceof Weapon)) return true;
+			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
+			if (belongings.weapon() instanceof Flail) return false;
+		}
+		else if (canWep2Attack) {
+			if (belongings.weapon2() == null || !(belongings.weapon2() instanceof Weapon)) return true;
+			if (STR() < ((Weapon)belongings.weapon2()).STRReq()) return false;
+			if (belongings.weapon2() instanceof Flail) return false;
+		}
 
 		return true;
 	}
 
 	public boolean canAttack(Char enemy){
 		if (enemy == null || pos == enemy.pos || !Actor.chars().contains(enemy)) {
-			return false;
+			canWep1Attack = false;
+			canWep2Attack = false;
 		}
 
 		//can always attack adjacent enemies
 		if (Dungeon.level.adjacent(pos, enemy.pos)) {
-			return true;
+			canWep1Attack = true;
+			canWep2Attack = true;
 		}
 
 		KindOfWeapon wep = Dungeon.hero.belongings.weapon();
 		KindOfWeapon wep2 = Dungeon.hero.belongings.weapon2();
 
-		if (wep != null && wep2 != null) {
-			if (wep instanceof MeleeWeapon) {
-				return wep.canReach( this, enemy.pos ) && wep2.canReach( this, enemy.pos );
-			}
-			else return wep.canReach( this, enemy.pos );
+		if (wep instanceof MeleeWeapon && wep2 instanceof MeleeWeapon) {
+			canWep1Attack = wep.canReach(this, enemy.pos);
+			canWep2Attack = wep2.canReach(this, enemy.pos);
 		} else if (wep != null) {
-			return wep.canReach(this, enemy.pos);
+			canWep1Attack = wep.canReach(this, enemy.pos);
+			canWep2Attack = false;
 		} else if (wep2 != null) {
-			return wep2.canReach(this, enemy.pos);
+			canWep1Attack = false;
+			canWep2Attack = wep2.canReach(this, enemy.pos);
 		} else {
-			return false;
+			canWep1Attack = false;
+			canWep2Attack = false;
 		}
+
+		return canWep1Attack || canWep2Attack;
 	}
 	
 	public float attackDelay() {
@@ -627,14 +642,11 @@ public class Hero extends Char {
 		KindOfWeapon wep = belongings.weapon();
 		KindOfWeapon wep2 = belongings.weapon2();
 
-		if (wep != null && wep2 != null) {
-			if (wep instanceof MeleeWeapon) {
-				return (wep.delayFactor( this ) + wep2.delayFactor( this )) * 0.5f;
-			}
-			else return wep.delayFactor( this );
-		} else if (wep != null) {
+		if (canWep1Attack && canWep2Attack) {
+			return wep.delayFactor( this ) + wep2.delayFactor( this );
+		} else if (canWep1Attack) {
 			return wep.delayFactor( this );
-		} else if (wep2 != null) {
+		} else if (canWep2Attack) {
 			return wep2.delayFactor( this );
 		} else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
@@ -1166,16 +1178,13 @@ public class Hero extends Char {
 		KindOfWeapon wep = belongings.weapon();
 		KindOfWeapon wep2 = belongings.weapon2();
 
-		if (wep != null && wep2 != null) {
-			if (wep instanceof MeleeWeapon) {
-				damage = wep.proc( this, enemy, damage ) + wep2.proc( this, enemy, damage );
-			}
-			else damage = wep.proc( this, enemy, damage );
+		if (canWep1Attack && canWep2Attack) {
+			damage = wep.proc( this, enemy, damage ) + wep2.proc( this, enemy, damage );
 		}
-		else if (wep != null) {
+		else if (canWep1Attack) {
 			damage = wep.proc( this, enemy, damage );
 		}
-		else if (wep2 != null) {
+		else if (canWep2Attack) {
 			damage = wep2.proc( this, enemy, damage );
 		}
 
@@ -1844,7 +1853,10 @@ public class Hero extends Char {
 		spend( attackDelay() );
 
 		if (hit && subClass == HeroSubClass.GLADIATOR){
-			Buff.affect( this, Combo.class ).hit( enemy );
+			if (canWep1Attack && canWep2Attack) {
+				Buff.affect( this, Combo.class ).hit( enemy );
+			}
+			else Buff.affect( this, Combo.class ).hit( enemy );
 		}
 
 		curAction = null;

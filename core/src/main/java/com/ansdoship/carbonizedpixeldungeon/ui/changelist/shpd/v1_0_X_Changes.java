@@ -25,7 +25,7 @@ public class v1_0_X_Changes {
 
 	public static void add_v1_0_Changes( ArrayList<ChangeInfo> changeInfos ) {
 
-		ChangeInfo changes = new ChangeInfo("v1.0.0", true, "");
+		ChangeInfo changes = new ChangeInfo("v1.0.X", true, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
