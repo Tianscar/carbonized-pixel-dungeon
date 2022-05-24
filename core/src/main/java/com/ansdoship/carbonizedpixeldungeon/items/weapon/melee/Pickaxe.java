@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.ansdoship.carbonizedpixeldungeon.items.quest;
+package com.ansdoship.carbonizedpixeldungeon.items.weapon.melee;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
@@ -29,7 +29,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Bat;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.ansdoship.carbonizedpixeldungeon.items.quest.DarkGold;
 import com.ansdoship.carbonizedpixeldungeon.levels.Level;
 import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -44,7 +44,7 @@ import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 
 import java.util.ArrayList;
 
-public class Pickaxe extends Weapon {
+public class Pickaxe extends MeleeWeapon {
 	
 	public static final String AC_MINE	= "MINE";
 	
@@ -61,6 +61,9 @@ public class Pickaxe extends Weapon {
 		bones = false;
 		
 		defaultAction = AC_MINE;
+
+		tier = 2;
+		twoHanded = false;
 
 	}
 	

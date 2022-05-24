@@ -23,6 +23,8 @@ package com.ansdoship.carbonizedpixeldungeon.scenes;
 
 import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.Archs;
 import com.ansdoship.carbonizedpixeldungeon.ui.ExitButton;
 import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
@@ -60,13 +62,13 @@ public class AboutScene extends PixelScene {
 
 		//*** Carbonized Pixel Dungeon Credits ***
 
-		final int TIANS_COLOR = 0x808080;
+		final int TIANS_COLOR = 0xBBBBBB;
 		CreditsBlock tians = new CreditsBlock(true, TIANS_COLOR,
 				"Carbonized Pixel Dungeon",
-				Icons.TIANSCAR.get(),
+				new ItemSprite( ItemSpriteSheet.CARBON_STEEL ),
 				"Developed by: _Tianscar_\nBased on Shattered Pixel Dungeon's open source",
-				"capd.tianscar.com",
-				"https://capd.tianscar.com");
+				"cbpd.tianscar.com",
+				"https://cbpd.tianscar.com");
 		if (landscape()){
 			tians.setRect((w - fullWidth)/2f - 6, 6, 120, 0);
 		} else {

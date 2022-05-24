@@ -169,7 +169,7 @@ public class TitleScene extends PixelScene {
 				CarbonizedPixelDungeon.switchScene( AboutScene.class );
 			}
 		};
-		btnAbout.icon(Icons.get(Icons.TIANSCAR));
+		btnAbout.icon( new ItemSprite(ItemSpriteSheet.CARBON_STEEL) );
 		add(btnAbout);
 		
 		final int BTN_HEIGHT = 20;
@@ -299,15 +299,15 @@ public class TitleScene extends PixelScene {
 						if (index == 0) {
 							Updates.launchUpdate(Updates.updateData());
 						} else if (index == 1){
-							ChangesScene.changesSelected = 0;
-							CarbonizedPixelDungeon.switchNoFade( ChangesScene.class );
+							NewChangesScene.changesSelected = 0;
+							CarbonizedPixelDungeon.switchNoFade( NewChangesScene.class );
 						}
 					}
 				});
 
 			} else {
-				ChangesScene.changesSelected = 0;
-				CarbonizedPixelDungeon.switchNoFade( ChangesScene.class );
+				NewChangesScene.changesSelected = 0;
+				CarbonizedPixelDungeon.switchNoFade( NewChangesScene.class );
 			}
 		}
 

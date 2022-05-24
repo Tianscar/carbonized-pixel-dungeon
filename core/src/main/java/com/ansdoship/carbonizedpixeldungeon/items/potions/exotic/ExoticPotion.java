@@ -38,6 +38,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPurity;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfToxicGas;
 import com.ansdoship.carbonizedpixeldungeon.plants.Plant;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public class ExoticPotion extends Potion {
 	public void reset() {
 		super.reset();
 		if (handler != null && handler.contains(exoToReg.get(this.getClass()))) {
-			image = handler.image(exoToReg.get(this.getClass())) + 16;
+			image = handler.image(exoToReg.get(this.getClass())) + ItemSpriteSheet.WIDTH;
 			color = handler.label(exoToReg.get(this.getClass()));
 		}
 	}

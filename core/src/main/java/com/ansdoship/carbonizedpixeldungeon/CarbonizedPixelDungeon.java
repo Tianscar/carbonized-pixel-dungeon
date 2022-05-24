@@ -33,10 +33,15 @@ import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
 
 public class CarbonizedPixelDungeon extends Game {
 
-	public static final int v0_0_1   = 1;
+	public static final int v0_0_4   = 9;
 	
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
+
+		//CBPD v0.0.4
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Pickaxe.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.quest.Pickaxe" );
 
 		//SHPD v1.0.0
 		Bundle.addAlias(

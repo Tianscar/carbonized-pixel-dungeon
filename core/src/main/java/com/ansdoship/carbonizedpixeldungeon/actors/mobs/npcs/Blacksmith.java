@@ -31,7 +31,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.EquipableItem;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
 import com.ansdoship.carbonizedpixeldungeon.items.quest.DarkGold;
-import com.ansdoship.carbonizedpixeldungeon.items.quest.Pickaxe;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Pickaxe;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.ansdoship.carbonizedpixeldungeon.journal.Notes;

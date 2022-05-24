@@ -25,6 +25,8 @@ import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.FeedbackScene;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
 import com.ansdoship.carbonizedpixeldungeon.ui.RedButton;
 import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
@@ -40,7 +42,7 @@ public class WndSupportPrompt extends Window {
 
 		int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
 
-		IconTitle title = new IconTitle(Icons.get(Icons.TIANSCAR), Messages.get(WndSupportPrompt.class, "title"));
+		IconTitle title = new IconTitle(new ItemSprite( ItemSpriteSheet.CARBON_STEEL ), Messages.get(WndSupportPrompt.class, "title"));
 		title.setRect( 0, 0, width, 0 );
 		add(title);
 
@@ -64,7 +66,7 @@ public class WndSupportPrompt extends Window {
 				WndSupportPrompt.super.hide();
 			}
 		};
-		link.setRect(0, text.bottom() + 4, width, 18);
+		link.setRect(0, text.bottom() + 4, (width - 2) * 0.5f, 18);
 		add(link);
 
 		RedButton close = new RedButton(Messages.get(this, "close")){
@@ -75,7 +77,7 @@ public class WndSupportPrompt extends Window {
 				WndSupportPrompt.super.hide();
 			}
 		};
-		close.setRect(0, link.bottom() + 2, width, 18);
+		close.setRect(link.right() + 2, text.bottom() + 4, (width - 2) * 0.5f, 18);
 		add(close);
 
 		resize(width, (int)close.bottom());

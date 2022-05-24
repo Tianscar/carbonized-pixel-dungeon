@@ -80,6 +80,8 @@ public enum Icons {
 	WATA,
 	WARNING,
 	GITHUB,
+	DISCORD,
+	QQ,
 
 	//credits icons:
 	//16x16
@@ -90,7 +92,6 @@ public enum Icons {
 	CUBE_CODE,
 	PURIGRO,
 	ARCNOR,
-	TIANSCAR,
 	PTR;
 
 	public Image get() {
@@ -232,8 +233,11 @@ public enum Icons {
 		case GITHUB:
 			icon.frame( icon.texture.uvRect( 120, 64, 136, 80 ) );
 			break;
-		case TIANSCAR:
-			icon.frame( icon.texture.uvRect( 136, 64, 152, 80 ) );
+		case DISCORD:
+			icon.frame( icon.texture.uvRect( 137, 64, 153, 80 ) );
+			break;
+		case QQ:
+			icon.frame( icon.texture.uvRect( 154, 64, 170, 80 ) );
 			break;
 
 		case ALEKS:

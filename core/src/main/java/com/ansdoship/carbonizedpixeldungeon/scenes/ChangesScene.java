@@ -32,6 +32,7 @@ import com.ansdoship.carbonizedpixeldungeon.ui.ScrollPane;
 import com.ansdoship.carbonizedpixeldungeon.ui.StyledButton;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
 import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
+import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeSelection;
 import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_1_X_Changes;
 import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_2_X_Changes;
 import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v0_3_X_Changes;
@@ -134,6 +135,19 @@ public class ChangesScene extends PixelScene {
 		float posY = 0;
 		float nextPosY = 0;
 		boolean second = false;
+		if (changesSelected == 0) {
+			ChangeSelection selection = new ChangeSelection(Messages.get(this, "later"), Messages.get(this, "cbpd")) {
+				@Override
+				public void onClick() {
+					NewChangesScene.changesSelected = 0;
+					CarbonizedPixelDungeon.switchNoFade(NewChangesScene.class);
+				}
+			};
+			selection.hardlight(Window.TITLE_COLOR);
+			selection.setRect(0, posY, panel.innerWidth(), 0);
+			content.add(selection);
+			posY = nextPosY = selection.bottom();
+		}
 		for (ChangeInfo info : changeInfos){
 			if (info.major) {
 				posY = nextPosY;

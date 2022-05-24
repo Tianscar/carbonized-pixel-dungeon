@@ -37,6 +37,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTerror;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.Runestone;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public abstract class ExoticScroll extends Scroll {
 	public void reset() {
 		super.reset();
 		if (handler != null && handler.contains(exoToReg.get(this.getClass()))) {
-			image = handler.image(exoToReg.get(this.getClass())) + 16;
+			image = handler.image(exoToReg.get(this.getClass())) + ItemSpriteSheet.WIDTH;
 			rune = handler.label(exoToReg.get(this.getClass()));
 		}
 	}

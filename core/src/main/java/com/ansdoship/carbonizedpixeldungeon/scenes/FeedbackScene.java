@@ -24,6 +24,8 @@ package com.ansdoship.carbonizedpixeldungeon.scenes;
 import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Chrome;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.*;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
@@ -33,7 +35,7 @@ import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
 
 public class FeedbackScene extends PixelScene {
 
-	private static final int BTN_HEIGHT = 22;
+	private static final int BTN_HEIGHT = 20;
 	private static final int GAP = 2;
 
 	@Override
@@ -78,10 +80,10 @@ public class FeedbackScene extends PixelScene {
 		};
 		sponsorLink.icon(Icons.get(Icons.GOLD));
 		sponsorLink.textColor(Window.TITLE_COLOR);
-		sponsorLink.setSize(elementWidth, BTN_HEIGHT);
+		sponsorLink.setSize(landscape() ? (elementWidth - GAP) * 0.5f : elementWidth, BTN_HEIGHT);
 		add(sponsorLink);
 
-		StyledButton feedbackLink = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "feedback_link")){
+		StyledButton feedbackLink = new StyledButton(Chrome.Type.GREY_BUTTON_TR, ""){
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -90,10 +92,34 @@ public class FeedbackScene extends PixelScene {
 			}
 		};
 		feedbackLink.icon(Icons.get(Icons.GITHUB));
-		feedbackLink.setSize(elementWidth, BTN_HEIGHT);
+		feedbackLink.setSize((sponsorLink.width() - GAP * 2) / 3, BTN_HEIGHT);
 		add(feedbackLink);
 
-		float elementHeight = msg.height() + BTN_HEIGHT * 2 + GAP;
+		StyledButton qqLink = new StyledButton(Chrome.Type.GREY_BUTTON_TR, ""){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				String link = "https://jq.qq.com/?_wv=1027&k=Af0aT21o";
+				Game.platform.openURI(link);
+			}
+		};
+		qqLink.icon(Icons.get(Icons.QQ));
+		qqLink.setSize(feedbackLink.width(), BTN_HEIGHT);
+		add(qqLink);
+
+		StyledButton discordLink = new StyledButton(Chrome.Type.GREY_BUTTON_TR, ""){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				String link = "https://discord.gg/24Bykt4YfJ";
+				Game.platform.openURI(link);
+			}
+		};
+		discordLink.icon(Icons.get(Icons.DISCORD));
+		discordLink.setSize(feedbackLink.width(), BTN_HEIGHT);
+		add(discordLink);
+
+		float elementHeight = msg.height() + (landscape() ? BTN_HEIGHT : BTN_HEIGHT * 2) + GAP;
 
 		float top = 16 + (h - 16 - elementHeight)/2f;
 		float left = (w-elementWidth)/2f;
@@ -104,8 +130,14 @@ public class FeedbackScene extends PixelScene {
 		sponsorLink.setPos(left, msg.bottom()+GAP);
 		align(sponsorLink);
 
-		feedbackLink.setPos(left, sponsorLink.bottom()+GAP);
+		feedbackLink.setPos(landscape() ? sponsorLink.right() + GAP : left, landscape() ? msg.bottom()+GAP : sponsorLink.bottom() + GAP);
 		align(feedbackLink);
+
+		qqLink.setPos(feedbackLink.right() + GAP, feedbackLink.top());
+		align(qqLink);
+
+		discordLink.setPos(qqLink.right() + GAP, feedbackLink.top());
+		align(discordLink);
 
 	}
 
@@ -135,7 +167,7 @@ public class FeedbackScene extends PixelScene {
 			text = PixelScene.renderTextBlock(message, 6);
 			add(text);
 
-			icon = Icons.get(Icons.TIANSCAR);
+			icon = new ItemSprite( ItemSpriteSheet.CARBON_STEEL );
 			add(icon);
 
 		}
