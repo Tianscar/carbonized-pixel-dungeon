@@ -47,17 +47,11 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.ansdoship.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
-import com.ansdoship.pixeldungeonclasses.noosa.Camera;
-import com.ansdoship.pixeldungeonclasses.noosa.Group;
-import com.ansdoship.pixeldungeonclasses.noosa.Image;
-import com.ansdoship.pixeldungeonclasses.noosa.Tilemap;
+import com.ansdoship.pixeldungeonclasses.noosa.*;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.Emitter;
-import com.ansdoship.pixeldungeonclasses.utils.Bundle;
-import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
-import com.ansdoship.pixeldungeonclasses.utils.Point;
-import com.ansdoship.pixeldungeonclasses.utils.Random;
-import com.ansdoship.pixeldungeonclasses.utils.Rect;
+import com.ansdoship.pixeldungeonclasses.utils.*;
 
 import java.util.ArrayList;
 
@@ -66,6 +60,21 @@ public class CavesBossLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
+	}
+
+	@Override
+	public void playLevelMusic() {
+		if (locked){
+			Music.INSTANCE.play(Assets.Music.CAVES_BOSS, true);
+			//if wall isn't broken
+		} else if (map[14 + 13*width()] == Terrain.SIGN){
+			Music.INSTANCE.stop();
+		} else {
+			Music.INSTANCE.playTracks(
+					new String[]{Assets.Music.CAVES_1, Assets.Music.CAVES_2, Assets.Music.CAVES_2},
+					new float[]{1, 1, 0.5f},
+					false);
+		}
 	}
 
 	@Override
@@ -280,6 +289,13 @@ public class CavesBossLevel extends Level {
 		} while (!openSpace[boss.pos] || map[boss.pos] == Terrain.EMPTY_SP || Actor.findChar(boss.pos) != null);
 		GameScene.add( boss );
 
+		Game.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				Music.INSTANCE.play(Assets.Music.CAVES_BOSS, true);
+			}
+		});
+
 	}
 
 	@Override
@@ -301,6 +317,13 @@ public class CavesBossLevel extends Level {
 		if (customArenaVisuals != null) customArenaVisuals.updateState();
 
 		Dungeon.observe();
+
+		Game.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				Music.INSTANCE.stop();
+			}
+		});
 
 	}
 

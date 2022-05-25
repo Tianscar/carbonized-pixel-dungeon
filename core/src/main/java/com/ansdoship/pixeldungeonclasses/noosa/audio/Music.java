@@ -29,14 +29,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public enum Music {
-	
+
 	INSTANCE;
-	
+
 	private com.badlogic.gdx.audio.Music player;
-	
+
 	private String lastPlayed;
 	private boolean looping;
-	
+
 	private boolean enabled = true;
 	private float volume = 1f;
 
@@ -44,20 +44,20 @@ public enum Music {
 	float[] trackChances;
 	private final ArrayList<String> trackQueue = new ArrayList<>();
 	boolean shuffle = false;
-	
+
 	public synchronized void play( String assetName, boolean looping ) {
 
 		//iOS cannot play ogg, so we use an mp3 alternative instead
 		if (assetName != null && Game.platform.isiOS()){
 			assetName = assetName.replace(".ogg", ".mp3");
 		}
-		
+
 		if (isPlaying() && lastPlayed != null && lastPlayed.equals( assetName )) {
 			return;
 		}
-		
+
 		stop();
-		
+
 		lastPlayed = assetName;
 		trackList = null;
 
@@ -124,7 +124,19 @@ public enum Music {
 	private com.badlogic.gdx.audio.Music.OnCompletionListener trackLooper = new com.badlogic.gdx.audio.Music.OnCompletionListener() {
 		@Override
 		public void onCompletion(com.badlogic.gdx.audio.Music music) {
-			playNextTrack(music);
+			//we do this in a separate thread to avoid graphics hitching while the music is prepared
+			//FIXME this fixes graphics stutter but there's still some audio stutter, perhaps keep more than 1 player alive?
+			if (!Game.platform.isDesktop()) {
+				new Thread() {
+					@Override
+					public void run() {
+						playNextTrack(music);
+					}
+				}.start();
+			} else {
+				//don't use a separate thread on desktop, causes errors and makes no performance difference(?)
+				playNextTrack(music);
+			}
 		}
 	};
 
@@ -165,18 +177,19 @@ public enum Music {
 			player = null;
 		}
 	}
-	
-	public synchronized void mute() {
+
+	public synchronized void end() {
 		lastPlayed = null;
+		trackList = null;
 		stop();
 	}
-	
+
 	public synchronized void pause() {
 		if (player != null) {
 			player.pause();
 		}
 	}
-	
+
 	public synchronized void resume() {
 		if (player != null) {
 			player.play();
@@ -191,18 +204,18 @@ public enum Music {
 			player = null;
 		}
 	}
-	
+
 	public synchronized void volume( float value ) {
 		volume = value;
 		if (player != null) {
 			player.setVolume( value );
 		}
 	}
-	
+
 	public synchronized boolean isPlaying() {
 		return player != null && player.isPlaying();
 	}
-	
+
 	public synchronized void enable( boolean value ) {
 		enabled = value;
 		if (isPlaying() && !value) {
@@ -211,14 +224,14 @@ public enum Music {
 		if (!isPlaying() && value) {
 			if (trackList != null){
 				playTracks(trackList, trackChances, shuffle);
-			} else {
+			} else if (lastPlayed != null) {
 				play(lastPlayed, looping);
 			}
 		}
 	}
-	
+
 	public synchronized boolean isEnabled() {
 		return enabled;
 	}
-	
+
 }

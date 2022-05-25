@@ -25,7 +25,7 @@ import com.ansdoship.pixeldungeonclasses.noosa.Game;
 
 public class NewsImpl {
 
-	private static NewsService newsChecker = Game.version.contains("INDEV") ? new DebugNews() : new ShatteredNews();
+	private static NewsService newsChecker = Game.version.contains("INDEV") ? new DebugNews() : new CarbonizedNews();
 
 	public static NewsService getNewsService(){
 		return newsChecker;

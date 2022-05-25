@@ -37,14 +37,12 @@ import com.ansdoship.carbonizedpixeldungeon.levels.rooms.standard.ImpShopRoom;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.tiles.CustomTilemap;
+import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Group;
 import com.ansdoship.pixeldungeonclasses.noosa.Tilemap;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.tweeners.AlphaTweener;
-import com.ansdoship.pixeldungeonclasses.utils.Bundle;
-import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
-import com.ansdoship.pixeldungeonclasses.utils.Point;
-import com.ansdoship.pixeldungeonclasses.utils.Random;
-import com.ansdoship.pixeldungeonclasses.utils.Rect;
+import com.ansdoship.pixeldungeonclasses.utils.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,6 +52,21 @@ public class CityBossLevel extends Level {
 	{
 		color1 = 0x4b6636;
 		color2 = 0xf2f2f2;
+	}
+
+	@Override
+	public void playLevelMusic() {
+		if (locked){
+			Music.INSTANCE.play(Assets.Music.CITY_BOSS, true);
+			//if top door isn't unlocked
+		} else if (map[topDoor] == Terrain.LOCKED_DOOR){
+			Music.INSTANCE.stop();
+		} else {
+			Music.INSTANCE.playTracks(
+					new String[]{Assets.Music.CITY_1, Assets.Music.CITY_2, Assets.Music.CITY_2},
+					new float[]{1, 1, 0.5f},
+					false);
+		}
 	}
 
 	private static int WIDTH = 15;
@@ -289,6 +302,13 @@ public class CityBossLevel extends Level {
 		set( bottomDoor, Terrain.LOCKED_DOOR );
 		GameScene.updateMap( bottomDoor );
 		Dungeon.observe();
+
+		Game.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				Music.INSTANCE.play(Assets.Music.CITY_BOSS, true);
+			}
+		});
 	}
 
 	@Override
@@ -305,6 +325,13 @@ public class CityBossLevel extends Level {
 			spawnShop();
 		}
 		Dungeon.observe();
+
+		Game.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				Music.INSTANCE.stop();
+			}
+		});
 	}
 
 	private void spawnShop(){

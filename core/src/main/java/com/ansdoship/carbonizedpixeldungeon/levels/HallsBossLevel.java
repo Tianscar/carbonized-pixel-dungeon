@@ -37,9 +37,12 @@ import com.ansdoship.carbonizedpixeldungeon.levels.painters.Painter;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.tiles.CustomTilemap;
+import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Group;
 import com.ansdoship.pixeldungeonclasses.noosa.Tilemap;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
@@ -50,6 +53,21 @@ public class HallsBossLevel extends Level {
 		color2 = 0xa68521;
 
 		viewDistance = Math.min(4, viewDistance);
+	}
+
+	@Override
+	public void playLevelMusic() {
+		if (locked){
+			Music.INSTANCE.play(Assets.Music.HALLS_BOSS, true);
+			//if exit isn't unlocked
+		} else if (map[exit] != Terrain.EXIT){
+			Music.INSTANCE.stop();
+		} else {
+			Music.INSTANCE.playTracks(
+					new String[]{Assets.Music.HALLS_1, Assets.Music.HALLS_2, Assets.Music.HALLS_2},
+					new float[]{1, 1, 0.5f},
+					false);
+		}
 	}
 
 	private static final int WIDTH = 32;
@@ -230,6 +248,13 @@ public class HallsBossLevel extends Level {
 		}
 
 		Dungeon.observe();
+
+		Game.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				Music.INSTANCE.stop();
+			}
+		});
 	}
 
 	@Override

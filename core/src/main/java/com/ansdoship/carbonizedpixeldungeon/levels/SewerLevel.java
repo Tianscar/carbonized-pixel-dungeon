@@ -43,6 +43,7 @@ import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Group;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.Emitter;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.PixelParticle;
 import com.ansdoship.pixeldungeonclasses.utils.ColorMath;
@@ -54,6 +55,13 @@ public class SewerLevel extends RegularLevel {
 	{
 		color1 = 0x48763c;
 		color2 = 0x59994a;
+	}
+
+	public void playLevelMusic(){
+		Music.INSTANCE.playTracks(
+				new String[]{Assets.Music.SEWERS_1, Assets.Music.SEWERS_2, Assets.Music.SEWERS_2},
+				new float[]{1, 1, 0.5f},
+				false);
 	}
 	
 	@Override

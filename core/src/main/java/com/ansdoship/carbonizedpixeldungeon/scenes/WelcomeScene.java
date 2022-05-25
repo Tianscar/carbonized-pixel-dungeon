@@ -40,7 +40,7 @@ import com.ansdoship.pixeldungeonclasses.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
 
-	private static final int LATEST_UPDATE = CarbonizedPixelDungeon.v0_0_4;
+	private static final int LATEST_UPDATE = CarbonizedPixelDungeon.v0_0_5;
 
 	@Override
 	public void create() {

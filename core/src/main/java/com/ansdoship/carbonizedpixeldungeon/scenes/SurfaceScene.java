@@ -86,7 +86,7 @@ public class SurfaceScene extends PixelScene {
 		super.create();
 
 		Music.INSTANCE.playTracks(
-				new String[]{Assets.Music.THEME},
+				new String[]{Assets.Music.SURFACE},
 				new float[]{1},
 				false);
 		

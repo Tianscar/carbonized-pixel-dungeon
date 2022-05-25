@@ -42,6 +42,8 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_5_changes(changeInfos);
+		add_v0_0_4p2_changes(changeInfos);
 		add_v0_0_4p1_changes(changeInfos);
 		add_v0_0_4_changes(changeInfos);
 		add_v0_0_3p2_changes(changeInfos);
@@ -52,6 +54,38 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_5_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.5", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
+				"_-_ 2022年5月26日更新\n" +
+						"_-_ 距离碳化的像素地牢v0.0.4更新2天\n" +
+						"\n" +
+						"v0.0.5版本将后续版本的破碎的像素地牢的BGM全部加入，并实装了游戏新闻界面！"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.NEWS), "游戏新闻界面实装！",
+				"_现在游戏新闻界面会显示碳化的像素地牢的游戏新闻了！_\n\n" +
+						"这个功能会从cbpd.tianscar.com拉来博客文章，然后在游戏中显示。它还会在有新文章时通知玩家。\n\n" +
+						"感谢Evan的Atom订阅代码和Hexo博客框架！我以后会尽量保持游戏新闻的更新的！"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "新的BGM！",
+				"_所有场景的都有BGM了！_\n\n" +
+						"这些BGM来自后续版本的破碎的像素地牢。"));
+	}
+
+	public static void add_v0_0_4p2_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.4p2", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 正常游戏中有Debug物品的Bug\n" +
+						"_-_ 菜单界面饱食度显示错误的Bug"));
 	}
 
 	public static void add_v0_0_4p1_changes( ArrayList<ChangeInfo> changeInfos ) {
@@ -234,7 +268,7 @@ public class v0_0_X_Changes {
 				"\n" +
 				"这个版本没有添加任何新的元素，仅仅修改了界面和标题界面的BGM。但是，如果不出意外，接下来的几个版本会对游戏机制进行大改。"));
 
-		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "新的BGM",
+		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "新的BGM！",
 				"_标题界面的BGM已经更换！_\n\n" +
 						"这首曲子由Progressive Tune厂牌的Jason创作。"));
 

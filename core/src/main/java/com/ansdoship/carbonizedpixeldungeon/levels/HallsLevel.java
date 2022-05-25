@@ -51,6 +51,7 @@ import com.ansdoship.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.ansdoship.pixeldungeonclasses.glwrap.Blending;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Group;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.PixelParticle;
 import com.ansdoship.pixeldungeonclasses.utils.PointF;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
@@ -65,6 +66,14 @@ public class HallsLevel extends RegularLevel {
 		
 		color1 = 0x801500;
 		color2 = 0xa68521;
+	}
+
+	@Override
+	public void playLevelMusic() {
+		Music.INSTANCE.playTracks(
+				new String[]{Assets.Music.HALLS_1, Assets.Music.HALLS_2, Assets.Music.HALLS_2},
+				new float[]{1, 1, 0.5f},
+				false);
 	}
 
 	@Override

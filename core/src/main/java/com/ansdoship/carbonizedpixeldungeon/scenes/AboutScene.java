@@ -66,7 +66,8 @@ public class AboutScene extends PixelScene {
 		CreditsBlock tians = new CreditsBlock(true, TIANS_COLOR,
 				"Carbonized Pixel Dungeon",
 				new ItemSprite( ItemSpriteSheet.CARBON_STEEL ),
-				"Developed by: _Tianscar_\nBased on Shattered Pixel Dungeon's open source",
+				"Developed by: _Tianscar_\nBased on Shattered Pixel Dungeon's open source\n" +
+						"Inspired by Cocoa's ARranged Pixel Dungeon",
 				"cbpd.tianscar.com",
 				"https://cbpd.tianscar.com");
 		if (landscape()){
@@ -105,7 +106,7 @@ public class AboutScene extends PixelScene {
 				"ShatteredPixel.com",
 				shpxLink);
 		if (landscape()){
-			shpx.setRect(tians.left(), tians.bottom() + 12, colWidth, 0);
+			shpx.setRect(tians.left(), tians.bottom() + 13, colWidth, 0);
 		} else {
 			shpx.setRect(tians.left(), ptr.bottom() + 12, colWidth, 0);
 		}
@@ -125,7 +126,7 @@ public class AboutScene extends PixelScene {
 		}
 		content.add(alex);
 
-		addLine(alex.top() - 4, content);
+		addLine((landscape() ? alex.top() : shpx.top()) - 4, content);
 
 		CreditsBlock charlie = new CreditsBlock(false, Window.SHPX_COLOR,
 				"Sound Effects:",

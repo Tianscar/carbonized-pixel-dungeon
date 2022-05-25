@@ -45,6 +45,7 @@ import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Group;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.PixelParticle;
 import com.ansdoship.pixeldungeonclasses.utils.PointF;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
@@ -56,6 +57,14 @@ public class CavesLevel extends RegularLevel {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
+	}
+
+	@Override
+	public void playLevelMusic() {
+		Music.INSTANCE.playTracks(
+				new String[]{Assets.Music.CAVES_1, Assets.Music.CAVES_2, Assets.Music.CAVES_2},
+				new float[]{1, 1, 0.5f},
+				false);
 	}
 	
 	@Override

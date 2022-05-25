@@ -322,6 +322,7 @@ public class Hero extends Char {
 		info.exp = bundle.getInt( EXPERIENCE );
 		info.hp = bundle.getInt( Char.TAG_HP );
 		info.ht = bundle.getInt( Char.TAG_HT );
+		info.hunger = bundle.getInt( HUNGER );
 		info.shld = bundle.getInt( Char.TAG_SHLD );
 		info.heroClass = bundle.getEnum( CLASS, HeroClass.class );
 		info.subClass = bundle.getEnum( SUBCLASS, HeroSubClass.class );
@@ -381,7 +382,7 @@ public class Hero extends Char {
 
 	@Override
 	public void hitSound(float pitch) {
-		if (belongings.weapon() instanceof MissileWeapon) {
+		if (belongings.weapon() instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
 			belongings.weapon().hitSound(pitch);
 		}
 		else if (canWep1Attack && canWep2Attack) {
@@ -460,7 +461,7 @@ public class Hero extends Char {
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
 		
-		if (wep instanceof MissileWeapon){
+		if (wep instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow){
 			if (Dungeon.level.adjacent( pos, target.pos )) {
 				accuracy *= (0.5f + 0.2f*pointsInTalent(Talent.POINT_BLANK));
 			} else {
@@ -468,7 +469,7 @@ public class Hero extends Char {
 			}
 		}
 
-		if (wep instanceof MissileWeapon) {
+		if (wep instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
 			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
 		}
 		else if (canWep1Attack && canWep2Attack) {
@@ -564,7 +565,7 @@ public class Hero extends Char {
 		KindOfWeapon wep2 = belongings.weapon2();
 		int dmg;
 
-		if (wep instanceof MissileWeapon) {
+		if (wep instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
 			dmg = wep.damageRoll( this );
 		}
 		else if (canWep1Attack && canWep2Attack) {
@@ -616,7 +617,7 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack() {
-		if (belongings.weapon() instanceof MissileWeapon) {
+		if (belongings.weapon() instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
 			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
 		}
 		else if (canWep1Attack && canWep2Attack) {
@@ -684,7 +685,7 @@ public class Hero extends Char {
 		KindOfWeapon wep = belongings.weapon();
 		KindOfWeapon wep2 = belongings.weapon2();
 
-		if (wep instanceof MissileWeapon) {
+		if (wep instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
 			return wep.delayFactor( this );
 		}
 		else if (canWep1Attack && canWep2Attack) {
@@ -1226,7 +1227,7 @@ public class Hero extends Char {
 		KindOfWeapon wep = belongings.weapon();
 		KindOfWeapon wep2 = belongings.weapon2();
 
-		if (wep instanceof MissileWeapon) {
+		if (wep instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
 			damage = wep.proc( this, enemy, damage );
 		}
 		else if (canWep1Attack && canWep2Attack) {

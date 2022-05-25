@@ -34,7 +34,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ShatteredNews extends NewsService {
+public class CarbonizedNews extends NewsService {
 
 	@Override
 	public void checkForArticles(boolean useMetered, boolean preferHTTPS, NewsResultCallback callback) {
@@ -46,9 +46,9 @@ public class ShatteredNews extends NewsService {
 
 		Net.HttpRequest httpGet = new Net.HttpRequest(Net.HttpMethods.GET);
 		if (preferHTTPS) {
-			httpGet.setUrl("https://shatteredpixel.com/feed_by_tag/SHPD_INGAME.xml");
+			httpGet.setUrl("https://cbpd.tianscar.com/atom.xml");
 		} else {
-			httpGet.setUrl("http://shatteredpixel.com/feed_by_tag/SHPD_INGAME.xml");
+			httpGet.setUrl("http://cbpd.tianscar.com/atom.xml");
 		}
 
 		Gdx.net.sendHttpRequest(httpGet, new Net.HttpResponseListener() {
@@ -60,7 +60,8 @@ public class ShatteredNews extends NewsService {
 
 				SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-				for (XmlReader.Element xmlArticle : xmlDoc.getChildrenByName("entry")){
+				for (XmlReader.Element xmlArticle : xmlDoc.getChildrenByName("entry")) {
+					boolean ingame = true;
 					NewsArticle article = new NewsArticle();
 					article.title = xmlArticle.get("title");
 					try {
@@ -68,7 +69,7 @@ public class ShatteredNews extends NewsService {
 					} catch (ParseException e) {
 						Game.reportException(e);
 					}
-					article.summary = xmlArticle.get("summary");
+					article.summary = xmlArticle.get("summary").replaceAll("<p>", "").replaceAll("</p>", "");
 					article.URL = xmlArticle.getChildByName("link").getAttribute("href");
 					if (!preferHTTPS) {
 						article.URL = article.URL.replace("https://", "http://");
@@ -77,9 +78,13 @@ public class ShatteredNews extends NewsService {
 					Pattern versionCodeMatcher = Pattern.compile("v[0-9]+");
 					try {
 						Array<XmlReader.Element> properties = xmlArticle.getChildrenByName("category");
-						for (XmlReader.Element prop : properties){
+						for (XmlReader.Element prop : properties) {
 							String propVal = prop.getAttribute("term");
-							if (propVal.startsWith("SHPD_ICON")){
+							if (propVal.startsWith("NOT_INGAME")) {
+								ingame = false;
+								break;
+							}
+							if (propVal.startsWith("ICON")){
 								Matcher m = versionCodeMatcher.matcher(propVal);
 								if (m.find()) {
 									int iconGameVer = Integer.parseInt(m.group().substring(1));
@@ -93,7 +98,7 @@ public class ShatteredNews extends NewsService {
 						article.icon = null;
 					}
 
-					articles.add(article);
+					if (ingame) articles.add(article);
 				}
 				callback.onArticlesFound(articles);
 			}

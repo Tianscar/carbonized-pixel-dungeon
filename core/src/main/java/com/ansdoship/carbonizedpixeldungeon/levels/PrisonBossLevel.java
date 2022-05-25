@@ -49,16 +49,13 @@ import com.ansdoship.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.ansdoship.carbonizedpixeldungeon.ui.TargetHealthIndicator;
 import com.ansdoship.carbonizedpixeldungeon.utils.BArray;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
+import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Group;
 import com.ansdoship.pixeldungeonclasses.noosa.Tilemap;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.tweeners.AlphaTweener;
-import com.ansdoship.pixeldungeonclasses.utils.Bundlable;
-import com.ansdoship.pixeldungeonclasses.utils.Bundle;
-import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
-import com.ansdoship.pixeldungeonclasses.utils.Point;
-import com.ansdoship.pixeldungeonclasses.utils.Random;
-import com.ansdoship.pixeldungeonclasses.utils.Rect;
+import com.ansdoship.pixeldungeonclasses.utils.*;
 
 import java.util.ArrayList;
 
@@ -70,6 +67,20 @@ public class PrisonBossLevel extends Level {
 		
 		//the player should be able to see all of Tengu's arena
 		viewDistance = 12;
+	}
+
+	@Override
+	public void playLevelMusic() {
+		if (state == State.START){
+			Music.INSTANCE.stop();
+		} else if (state == State.WON) {
+			Music.INSTANCE.playTracks(
+					new String[]{Assets.Music.PRISON_1, Assets.Music.PRISON_2, Assets.Music.PRISON_2},
+					new float[]{1, 1, 0.5f},
+					false);
+		} else {
+			Music.INSTANCE.play(Assets.Music.PRISON_BOSS, true);
+		}
 	}
 	
 	public enum State {
@@ -395,6 +406,13 @@ public class PrisonBossLevel extends Level {
 				tengu.notice();
 				
 				state = State.FIGHT_START;
+
+				Game.runOnRenderThread(new Callback() {
+					@Override
+					public void call() {
+						Music.INSTANCE.play(Assets.Music.PRISON_BOSS, true);
+					}
+				});
 				break;
 				
 			case FIGHT_START:
@@ -486,6 +504,13 @@ public class PrisonBossLevel extends Level {
 				Sample.INSTANCE.play(Assets.Sounds.BLAST);
 				
 				state = State.WON;
+
+				Game.runOnRenderThread(new Callback() {
+					@Override
+					public void call() {
+						Music.INSTANCE.stop();
+					}
+				});
 				break;
 		}
 	}

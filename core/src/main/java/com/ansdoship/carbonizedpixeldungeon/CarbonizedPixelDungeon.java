@@ -33,6 +33,7 @@ import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
 
 public class CarbonizedPixelDungeon extends Game {
 
+	public static final int v0_0_5   = 12;
 	public static final int v0_0_4   = 9;
 	
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {

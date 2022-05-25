@@ -260,9 +260,8 @@ public class PDSettings extends GameSettings {
 		put(KEY_SYSTEMFONT, value);
 	}
 	
-	public static boolean systemFont(){
-		return getBoolean(KEY_SYSTEMFONT,
-				(language() == Languages.KOREAN || language() == Languages.CHINESE || language() == Languages.TR_CHINESE || language() == Languages.JAPANESE));
+	public static boolean systemFont() {
+		return getBoolean(KEY_SYSTEMFONT, false);
 	}
 
 	//Connectivity
@@ -295,7 +294,7 @@ public class PDSettings extends GameSettings {
 	}
 
 	public static boolean betas(){
-		return getBoolean(KEY_BETAS, Game.version.contains("BETA") || Game.version.contains("RC"));
+		return getBoolean(KEY_BETAS, Game.version.contains("ALPHA") || Game.version.contains("BETA") || Game.version.contains("RC"));
 	}
 
 	public static void WiFi(boolean value){
