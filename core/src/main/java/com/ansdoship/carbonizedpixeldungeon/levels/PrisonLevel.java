@@ -46,6 +46,7 @@ import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.ansdoship.pixeldungeonclasses.noosa.Group;
 import com.ansdoship.pixeldungeonclasses.noosa.Halo;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.Emitter;
 import com.ansdoship.pixeldungeonclasses.utils.PointF;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
@@ -58,26 +59,33 @@ public class PrisonLevel extends RegularLevel {
 		color1 = 0x6a723d;
 		color2 = 0x88924c;
 	}
-	
+
+	public void playLevelMusic() {
+		Music.INSTANCE.playTracks(
+				new String[]{Assets.Music.PRISON_1, Assets.Music.PRISON_2, Assets.Music.PRISON_2},
+				new float[]{1, 1, 0.5f},
+				false);
+	}
+
 	@Override
 	protected ArrayList<Room> initRooms() {
 		return Wandmaker.Quest.spawnRoom(super.initRooms());
 	}
-	
+
 	@Override
 	protected int standardRooms(boolean forceMax) {
 		if (forceMax) return 6;
 		//5 to 6, average 5.5
 		return 5+Random.chances(new float[]{1, 1});
 	}
-	
+
 	@Override
 	protected int specialRooms(boolean forceMax) {
 		if (forceMax) return 3;
 		//1 to 3, average 2.0
 		return 1+Random.chances(new float[]{1, 3, 1});
 	}
-	
+
 	@Override
 	protected Painter painter() {
 		return new PrisonPainter()
@@ -85,17 +93,17 @@ public class PrisonLevel extends RegularLevel {
 				.setGrass(feeling == Feeling.GRASS ? 0.80f : 0.20f, 3)
 				.setTraps(nTraps(), trapClasses(), trapChances());
 	}
-	
+
 	@Override
 	public String tilesTex() {
 		return Assets.Environment.TILES_PRISON;
 	}
-	
+
 	@Override
 	public String waterTex() {
 		return Assets.Environment.WATER_PRISON;
 	}
-	
+
 	@Override
 	protected Class<?>[] trapClasses() {
 		return new Class[]{
@@ -133,7 +141,7 @@ public class PrisonLevel extends RegularLevel {
 				return super.tileDesc( tile );
 		}
 	}
-	
+
 	@Override
 	public Group addVisuals() {
 		super.addVisuals();
@@ -148,24 +156,24 @@ public class PrisonLevel extends RegularLevel {
 			}
 		}
 	}
-	
+
 	public static class Torch extends Emitter {
-		
+
 		private int pos;
-		
+
 		public Torch( int pos ) {
 			super();
-			
+
 			this.pos = pos;
-			
+
 			PointF p = DungeonTilemap.tileCenterToWorld( pos );
 			pos( p.x - 1, p.y + 2, 2, 0 );
-			
+
 			pour( FlameParticle.FACTORY, 0.15f );
-			
+
 			add( new Halo( 12, 0xFFFFCC, 0.4f ).point( p.x, p.y + 1 ) );
 		}
-		
+
 		@Override
 		public void update() {
 			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
