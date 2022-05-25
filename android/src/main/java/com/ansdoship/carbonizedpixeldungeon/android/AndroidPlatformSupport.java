@@ -213,6 +213,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 					typeFace = 1;
 					break;
 				case CHINESE:
+				case TR_CHINESE:
 				default:
 					typeFace = 2;
 			}

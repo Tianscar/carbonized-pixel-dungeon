@@ -381,7 +381,10 @@ public class Hero extends Char {
 
 	@Override
 	public void hitSound(float pitch) {
-		if (canWep1Attack && canWep2Attack) {
+		if (belongings.weapon() instanceof MissileWeapon) {
+			belongings.weapon().hitSound(pitch);
+		}
+		else if (canWep1Attack && canWep2Attack) {
 			belongings.weapon().hitSound(pitch);
 			belongings.weapon2().hitSound(pitch);
 		}
@@ -390,10 +393,12 @@ public class Hero extends Char {
 		}
 		else if (canWep2Attack) {
 			belongings.weapon2().hitSound(pitch);
-		} else if (RingOfForce.getBuffedBonus(this, RingOfForce.Force.class) > 0) {
+		}
+		else if (RingOfForce.getBuffedBonus(this, RingOfForce.Force.class) > 0) {
 			//pitch deepens by 2.5% (additive) per point of strength, down to 75%
 			super.hitSound( pitch * GameMath.gate( 0.75f, 1.25f - 0.025f*STR(), 1f) );
-		} else {
+		}
+		else {
 			super.hitSound(pitch * 1.1f);
 		}
 	}
@@ -463,7 +468,10 @@ public class Hero extends Char {
 			}
 		}
 
-		if (canWep1Attack && canWep2Attack) {
+		if (wep instanceof MissileWeapon) {
+			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
+		}
+		else if (canWep1Attack && canWep2Attack) {
 			return (int) (((attackSkill * accuracy * wep.accuracyFactor( this ) +
 					attackSkill * accuracy * wep2.accuracyFactor( this ))) * 0.5f);
 		}
@@ -472,7 +480,8 @@ public class Hero extends Char {
 		}
 		else if (canWep2Attack) {
 			return (int)(attackSkill * accuracy * wep2.accuracyFactor( this ));
-		} else {
+		}
+		else {
 			return (int)(attackSkill * accuracy);
 		}
 	}
@@ -555,17 +564,20 @@ public class Hero extends Char {
 		KindOfWeapon wep2 = belongings.weapon2();
 		int dmg;
 
-		if (canWep1Attack && canWep2Attack) {
+		if (wep instanceof MissileWeapon) {
+			dmg = wep.damageRoll( this );
+		}
+		else if (canWep1Attack && canWep2Attack) {
 			dmg = (int) ((wep.damageRoll( this ) + wep2.damageRoll( this )) / 1.5f);
-			if (wep instanceof MeleeWeapon && wep2 instanceof MeleeWeapon) dmg += RingOfForce.armedDamageBonus(this);
+			dmg += RingOfForce.armedDamageBonus(this);
 		}
 		else if (canWep1Attack) {
 			dmg = wep.damageRoll( this );
-			if (wep instanceof MeleeWeapon) dmg += RingOfForce.armedDamageBonus(this);
+			dmg += RingOfForce.armedDamageBonus(this);
 		}
 		else if (canWep2Attack) {
 			dmg = wep2.damageRoll( this );
-			if (wep2 instanceof MeleeWeapon) dmg += RingOfForce.armedDamageBonus(this);
+			dmg += RingOfForce.armedDamageBonus(this);
 		}
 		else {
 			dmg = RingOfForce.damageRoll(this);
@@ -603,20 +615,22 @@ public class Hero extends Char {
 		
 	}
 
-	public boolean canSurpriseAttack(){
-		if (canWep1Attack && canWep2Attack) {
-			if ((belongings.weapon() == null || !(belongings.weapon() instanceof Weapon)) &&
-					(belongings.weapon2() == null || !(belongings.weapon2() instanceof Weapon))) return true;
+	public boolean canSurpriseAttack() {
+		if (belongings.weapon() instanceof MissileWeapon) {
+			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
+		}
+		else if (canWep1Attack && canWep2Attack) {
+			if (!(belongings.weapon() instanceof Weapon) && !(belongings.weapon2() instanceof Weapon)) return true;
 			if (STR() < ((Weapon)belongings.weapon()).STRReq() || STR() < ((Weapon)belongings.weapon2()).STRReq()) return false;
 			if (belongings.weapon() instanceof Flail || belongings.weapon2() instanceof Flail) return false;
 		}
 		else if (canWep1Attack) {
-			if (belongings.weapon() == null || !(belongings.weapon() instanceof Weapon)) return true;
+			if (!(belongings.weapon() instanceof Weapon)) return true;
 			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
 			if (belongings.weapon() instanceof Flail) return false;
 		}
 		else if (canWep2Attack) {
-			if (belongings.weapon2() == null || !(belongings.weapon2() instanceof Weapon)) return true;
+			if (!(belongings.weapon2() instanceof Weapon)) return true;
 			if (STR() < ((Weapon)belongings.weapon2()).STRReq()) return false;
 			if (belongings.weapon2() instanceof Flail) return false;
 		}
@@ -644,13 +658,16 @@ public class Hero extends Char {
 		if (wep instanceof MeleeWeapon && wep2 instanceof MeleeWeapon) {
 			canWep1Attack = wep.canReach(this, enemy.pos);
 			canWep2Attack = wep2.canReach(this, enemy.pos);
-		} else if (wep != null) {
+		}
+		else if (wep != null) {
 			canWep1Attack = wep.canReach(this, enemy.pos);
 			canWep2Attack = false;
-		} else if (wep2 != null) {
+		}
+		else if (wep2 != null) {
 			canWep1Attack = false;
 			canWep2Attack = wep2.canReach(this, enemy.pos);
-		} else {
+		}
+		else {
 			canWep1Attack = false;
 			canWep2Attack = false;
 		}
@@ -667,13 +684,19 @@ public class Hero extends Char {
 		KindOfWeapon wep = belongings.weapon();
 		KindOfWeapon wep2 = belongings.weapon2();
 
-		if (canWep1Attack && canWep2Attack) {
-			return (wep.delayFactor( this ) + wep2.delayFactor( this )) / 1.5f;
-		} else if (canWep1Attack) {
+		if (wep instanceof MissileWeapon) {
 			return wep.delayFactor( this );
-		} else if (canWep2Attack) {
+		}
+		else if (canWep1Attack && canWep2Attack) {
+			return (wep.delayFactor( this ) + wep2.delayFactor( this )) / 1.5f;
+		}
+		else if (canWep1Attack) {
+			return wep.delayFactor( this );
+		}
+		else if (canWep2Attack) {
 			return wep2.delayFactor( this );
-		} else {
+		}
+		else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
 			//But there's going to be that one guy who gets a furor+force ring combo
 			//This is for that one guy, you shall get your fists of fury!
@@ -1203,7 +1226,10 @@ public class Hero extends Char {
 		KindOfWeapon wep = belongings.weapon();
 		KindOfWeapon wep2 = belongings.weapon2();
 
-		if (canWep1Attack && canWep2Attack) {
+		if (wep instanceof MissileWeapon) {
+			damage = wep.proc( this, enemy, damage );
+		}
+		else if (canWep1Attack && canWep2Attack) {
 			damage = (int) ((wep.proc( this, enemy, damage ) + wep2.proc( this, enemy, damage )) * 0.5f);
 		}
 		else if (canWep1Attack) {

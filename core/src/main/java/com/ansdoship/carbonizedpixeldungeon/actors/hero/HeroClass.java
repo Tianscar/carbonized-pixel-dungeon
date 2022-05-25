@@ -50,6 +50,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfInvisibility;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
+import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfForce;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.*;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfMagicMissile;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
@@ -148,6 +149,8 @@ public enum HeroClass {
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
+		new RingOfForce().identify().collect();
+		new ScrollOfUpgrade().quantity(5).identify().collect();
 	}
 
 	private static void initMage( Hero hero ) {

@@ -126,7 +126,7 @@ public class WelcomeScene extends PixelScene {
 				protected void onClick() {
 					super.onClick();
 					updateVersion(previousVersion);
-					CarbonizedPixelDungeon.switchScene(ChangesScene.class);
+					CarbonizedPixelDungeon.switchScene(NewChangesScene.class);
 				}
 			};
 			okay.setRect(title.x, buttonY, (title.width()/2)-2, 20);
@@ -156,7 +156,7 @@ public class WelcomeScene extends PixelScene {
 				message += "\n";
 				//message += "\n" + Messages.get(this, "patch_balance");
 				message += "\n" + Messages.get(this, "patch_bugfixes");
-				//message += "\n" + Messages.get(this, "patch_translations");
+				message += "\n" + Messages.get(this, "patch_translations");
 
 			}
 		} else {

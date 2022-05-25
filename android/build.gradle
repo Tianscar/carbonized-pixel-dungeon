@@ -18,7 +18,7 @@ android {
         targetSdkVersion appAndroidTargetSDK
 
         resConfigs "en_US", "cs", "tr", "ca", "ko", "pl", "it", "ja",
-                "eo", "ru", "zh_CN", "de", "fr", "es", "pt", "fi", "hu", "in"
+                "eo", "ru", "zh_CN", "zh_TW", "de", "fr", "es", "pt", "fi", "hu", "in"
     }
 
     buildTypes {

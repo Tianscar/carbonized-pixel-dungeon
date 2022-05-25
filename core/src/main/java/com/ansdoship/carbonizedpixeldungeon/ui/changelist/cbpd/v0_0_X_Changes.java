@@ -42,14 +42,31 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_4p1_changes(changeInfos);
 		add_v0_0_4_changes(changeInfos);
 		add_v0_0_3p2_changes(changeInfos);
 		add_v0_0_3p1_changes(changeInfos);
 		add_v0_0_3_changes(changeInfos);
+		add_v0_0_2p3_changes(changeInfos);
 		add_v0_0_2p2_changes(changeInfos);
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_4p1_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.4p1", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ v0.0.2p3版本没有在改动界面显示的Bug\n" +
+						"_-_ 改动界面的部分文本Bug\n" +
+						"_-_ 投掷武器的伤害Bug"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"添加了新的语言：繁体中文！"));
 	}
 
 	public static void add_v0_0_4_changes( ArrayList<ChangeInfo> changeInfos ) {
@@ -70,7 +87,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了：\n" +
-						"_-_ 镐子只有在主武器栏位才能完成杀蝙蝠任务的Bug"));
+						"_-_ 镐子只有在主武器栏位才能完成击杀蝙蝠任务的Bug"));
 	}
 
 	public static void add_v0_0_3p2_changes( ArrayList<ChangeInfo> changeInfos ) {
@@ -90,7 +107,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
 						 "尝试修复了：\n" +
-								"_-_ 正常游戏中有Debug物品的Bug" +
+								"_-_ 正常游戏中有Debug物品的Bug\n" +
 								"_-_ 空手无法攻击的Bug"));
 	}
 
@@ -111,13 +128,24 @@ public class v0_0_X_Changes {
 						"_-_ 对部分其他界面进行了小的调整/改进"));
 	}
 
-	public static void add_v0_0_2p2_changes( ArrayList<ChangeInfo> changeInfos ) {
-		ChangeInfo changes = new ChangeInfo("v0.0.2p2", false, "");
+	public static void add_v0_0_2p3_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.2p3", false, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SAI, null), "武器双持改动",
 				"现在双持武器的伤害和消耗回合数都降低为相加的2/3。"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 双持4倍伤害的的Bug\n" +
+						"_-_ 副武器不触发防御音效的Bug"));
+	}
+
+	public static void add_v0_0_2p2_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.2p2", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了：\n" +
 						"_-_ 无法伏击的Bug"));
@@ -153,8 +181,8 @@ public class v0_0_X_Changes {
 						"v0.1.0之前的版本为Beta测试版本，大概率会有很多Bug，平衡性也无法得到保证。"));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SAI, null), "新机制：武器双持",
-				"现在可以同时装备两把单手武器（双持）了！\n\n" +
-						"同时装备两把单手武器，能够发挥出两把武器相加100%的防御力，伤害、命中率和消耗的回合数都是两把武器相加的50%，而且攻击距离取最大值！也能触发两次角斗士的连击！\n\n" +
+				"现在可以同时装备两把单手武器了！\n\n" +
+						"同时装备两把单手武器，能够发挥出两把武器相加100%的防御力和伤害，命中率和消耗的回合数都是两把武器相加的50%，而且攻击距离取最大值！也能触发两次角斗士的连击！\n\n" +
 						"以下为单手武器:\n" +
 						"_暗杀之刃_" +
 						"，_小刀_" +
