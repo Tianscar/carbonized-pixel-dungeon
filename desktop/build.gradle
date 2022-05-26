@@ -48,6 +48,8 @@ task release(dependsOn: compileForRelease, type: Jar) {
         attributes 'Specification-Version': appVersionName
         attributes 'Implementation-Version': appVersionCode
     }
+
+    archiveName('cbpd-v' + appVersionName + '.jar');
 }
 
 dependencies {
