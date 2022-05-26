@@ -42,6 +42,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_5p1_changes(changeInfos);
 		add_v0_0_5_changes(changeInfos);
 		add_v0_0_4p2_changes(changeInfos);
 		add_v0_0_4p1_changes(changeInfos);
@@ -54,6 +55,18 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_5p1_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.5p1", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SAI, null), "武器双持改动",
+				"现在双持武器的消耗回合数降低为相加的一半。"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 新闻界面链接跳转的Bug"));
 	}
 
 	public static void add_v0_0_5_changes( ArrayList<ChangeInfo> changeInfos ) {

@@ -372,6 +372,18 @@ public class WndBag extends WndTabbed {
 			bg.y = y;
 			
 			super.layout();
+
+			if (status != null) {
+				status.measure();
+				if (status.width > (width - SLOT_MARGIN)) {
+					status.scale.set(PixelScene.align(0.8f));
+				} else {
+					status.scale.set(1f);
+				}
+				status.x = x;
+				status.y = y;
+				PixelScene.align(status);
+			}
 		}
 		
 		@Override

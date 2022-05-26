@@ -689,7 +689,7 @@ public class Hero extends Char {
 			return wep.delayFactor( this );
 		}
 		else if (canWep1Attack && canWep2Attack) {
-			return (wep.delayFactor( this ) + wep2.delayFactor( this )) / 1.5f;
+			return (wep.delayFactor( this ) + wep2.delayFactor( this )) * 0.5f;
 		}
 		else if (canWep1Attack) {
 			return wep.delayFactor( this );
