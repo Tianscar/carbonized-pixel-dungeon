@@ -33,8 +33,8 @@ import java.util.regex.Pattern;
 
 public class GitHubUpdates extends UpdateService {
 
-	private static Pattern descPattern = Pattern.compile("(.*?)(\r\n|\n|\r)(\r\n|\n|\r)---", Pattern.DOTALL + Pattern.MULTILINE);
-	private static Pattern versionCodePattern = Pattern.compile("internal version number: ([0-9]*)", Pattern.CASE_INSENSITIVE);
+	private static Pattern descPattern = Pattern.compile("<!-- DESC_BEGIN -->(.*?)<!-- DESC_END -->", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+	private static Pattern versionCodePattern = Pattern.compile("VERSION_CODE: ([0-9]*)", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public boolean isUpdateable() {
@@ -89,7 +89,7 @@ public class GitHubUpdates extends UpdateService {
 						update.versionCode = latestVersionCode;
 						Matcher m = descPattern.matcher(latestRelease.getString("body"));
 						m.find();
-						update.desc = m.group(1);
+						update.desc = m.group(1).trim().replaceAll("-", "_-_");
 						update.URL = latestRelease.getString("html_url");
 
 						callback.onUpdateAvailable(update);

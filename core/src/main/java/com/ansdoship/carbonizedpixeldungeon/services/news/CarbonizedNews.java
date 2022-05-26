@@ -69,7 +69,7 @@ public class CarbonizedNews extends NewsService {
 					} catch (ParseException e) {
 						Game.reportException(e);
 					}
-					article.summary = xmlArticle.get("summary").replaceAll("<p>", "").replaceAll("</p>", "");
+					article.summary = xmlArticle.get("summary").trim().replaceAll("-", "_-_").replaceAll("<p>", "").replaceAll("</p>", "");;
 					article.URL = xmlArticle.getChildByName("link").getAttribute("href");
 					if (!preferHTTPS) {
 						article.URL = article.URL.replace("https://", "http://");
