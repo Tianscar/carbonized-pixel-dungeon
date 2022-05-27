@@ -80,6 +80,10 @@ public class GuardianTrap extends Trap {
 
 			weapon.enchant(null);
 			weapon.degrade(weapon.level());
+			if (weapon2 != null) {
+				weapon2.enchant(null);
+				weapon2.degrade(weapon2.level());
+			}
 		}
 
 		@Override

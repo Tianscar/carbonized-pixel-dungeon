@@ -82,6 +82,14 @@ public class CursingTrap extends Trap {
 				canCurse.add(weapon);
 		}
 
+		KindOfWeapon weapon2 = hero.belongings.weapon2();
+		if (weapon2 instanceof Weapon && !(weapon2 instanceof MagesStaff)){
+			if (((Weapon) weapon2).enchantment == null)
+				priorityCurse.add(weapon2);
+			else
+				canCurse.add(weapon2);
+		}
+
 		Armor armor = hero.belongings.armor();
 		if (armor != null){
 			if (armor.glyph == null)

@@ -41,6 +41,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Pickaxe;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.ansdoship.carbonizedpixeldungeon.journal.Catalog;
@@ -61,7 +62,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 
 	@Override
 	protected boolean usableOnItem(Item item) {
-		return item instanceof MeleeWeapon ||
+		return (item instanceof MeleeWeapon && !(item instanceof Pickaxe)) ||
 				(item instanceof MissileWeapon && !(item instanceof Dart)) ||
 				(item instanceof Potion && !(item instanceof Elixir || item instanceof Brew || item instanceof AlchemicalCatalyst)) ||
 				item instanceof Scroll ||

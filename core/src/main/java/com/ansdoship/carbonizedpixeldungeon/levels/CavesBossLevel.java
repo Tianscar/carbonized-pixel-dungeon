@@ -322,6 +322,7 @@ public class CavesBossLevel extends Level {
 			@Override
 			public void call() {
 				Music.INSTANCE.stop();
+				playLevelMusic();
 			}
 		});
 

@@ -180,6 +180,9 @@ public class SurfaceScene extends PixelScene {
 			if (rose.ghostWeapon() != null){
 				roseLevel = Math.max(roseLevel, rose.ghostWeapon().level());
 			}
+			if (rose.ghostWeapon2() != null){
+				roseLevel = Math.max(roseLevel, rose.ghostWeapon2().level());
+			}
 			if (rose.ghostArmor() != null){
 				roseLevel = Math.max(roseLevel, rose.ghostArmor().level());
 			}

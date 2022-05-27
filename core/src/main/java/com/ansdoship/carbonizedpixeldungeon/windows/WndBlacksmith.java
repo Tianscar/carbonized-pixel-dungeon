@@ -169,6 +169,11 @@ public class WndBlacksmith extends Window {
 			slot.enable(true);
 			add( slot );
 		}
+
+		public void enable( boolean value ) {
+			active = value;
+			slot.enable(value);
+		}
 		
 		protected void onClick() {}
 		

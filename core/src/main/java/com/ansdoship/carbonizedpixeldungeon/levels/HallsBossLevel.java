@@ -253,6 +253,7 @@ public class HallsBossLevel extends Level {
 			@Override
 			public void call() {
 				Music.INSTANCE.stop();
+				playLevelMusic();
 			}
 		});
 	}

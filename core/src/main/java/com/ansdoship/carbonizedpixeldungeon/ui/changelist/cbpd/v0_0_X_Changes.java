@@ -22,10 +22,12 @@
 package com.ansdoship.carbonizedpixeldungeon.ui.changelist.cbpd;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.items.artifacts.DriedRose;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.ansdoship.carbonizedpixeldungeon.sprites.StatueSprite;
 import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
 import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeButton;
@@ -42,6 +44,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_5p3_changes(changeInfos);
 		add_v0_0_5p2_changes(changeInfos);
 		add_v0_0_5p1_changes(changeInfos);
 		add_v0_0_5_changes(changeInfos);
@@ -56,6 +59,32 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_5p3_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.5p3", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 新闻界面链接跳转有误的Bug\n" +
+						"_-_ BOSS战结束后要刷新楼层才会播放BGM的Bug\n" +
+						"_-_ 战士天赋无法鉴定副手武器的Bug\n" +
+						"_-_ 角斗士连击标志只显示主手武器的Bug\n" +
+						"_-_ 诅咒陷阱无法诅咒副手武器的Bug\n" +
+						"_-_ 缴械陷阱无法缴械副手武器的Bug\n" +
+						"_-_ 英雄镜像和虹色幻影不计算副手武器的Bug\n" +
+						"_-_ 镐子可以被嬗变的Bug"));
+
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ANKH), "重生十字章增强",
+				"现在未祝福的重生十字章可以保留三个物品了。"));
+
+		changes.addButton( new ChangeButton(new DriedRose(),
+				"现在悲伤幽灵可以双持武器了。"));
+
+		changes.addButton( new ChangeButton(new Image(new StatueSprite()), "活化石像改动",
+				"现在活化石像、装甲石像和石像石像有概率双持武器了。"));
 	}
 
 	public static void add_v0_0_5p2_changes( ArrayList<ChangeInfo> changeInfos ) {
@@ -77,7 +106,7 @@ public class v0_0_X_Changes {
 				"现在双持武器的消耗回合数降低为相加的一半。"));
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了：\n" +
-						"_-_ 新闻界面链接跳转的Bug"));
+						"_-_ 新闻界面链接跳转有误的Bug"));
 	}
 
 	public static void add_v0_0_5_changes( ArrayList<ChangeInfo> changeInfos ) {

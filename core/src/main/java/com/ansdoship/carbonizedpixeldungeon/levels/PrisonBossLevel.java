@@ -509,6 +509,7 @@ public class PrisonBossLevel extends Level {
 					@Override
 					public void call() {
 						Music.INSTANCE.stop();
+						playLevelMusic();
 					}
 				});
 				break;

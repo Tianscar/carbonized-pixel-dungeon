@@ -240,6 +240,7 @@ public enum Talent {
 
 		if (talent == ARMSMASTERS_INTUITION && hero.pointsInTalent(ARMSMASTERS_INTUITION) == 2){
 			if (hero.belongings.weapon() != null) hero.belongings.weapon().identify();
+			if (hero.belongings.weapon2() != null) hero.belongings.weapon2().identify();
 			if (hero.belongings.armor() != null)  hero.belongings.armor.identify();
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 2){

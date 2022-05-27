@@ -201,6 +201,7 @@ public class SewerBossLevel extends SewerLevel {
 				@Override
 				public void call() {
 					Music.INSTANCE.stop();
+					playLevelMusic();
 				}
 			});
 		}

@@ -48,6 +48,10 @@ public class Statue extends Mob {
 	}
 	
 	protected Weapon weapon;
+	protected Weapon weapon2;
+
+	private boolean canWep1Attack = false;
+	private boolean canWep2Attack = false;
 	
 	public Statue() {
 		super();
@@ -55,25 +59,46 @@ public class Statue extends Mob {
 		do {
 			weapon = (MeleeWeapon) Generator.random(Generator.Category.WEAPON);
 		} while (weapon.cursed);
+
+		do {
+			weapon2 = (MeleeWeapon) Generator.random(Generator.Category.WEAPON);
+		} while (weapon2.cursed);
+
+		if (weapon.twoHanded && weapon2.twoHanded) {
+			weapon2 = null;
+		}
+		else if (weapon.twoHanded) {
+			weapon2 = null;
+		}
+		else if (weapon2.twoHanded) {
+			weapon2 = null;
+		}
+		else {
+			if (Random.Int(2) < 1) weapon2 = null;
+		}
 		
 		weapon.enchant( Enchantment.random() );
+		if (weapon2 != null) weapon2.enchant( Enchantment.random() );
 		
 		HP = HT = 15 + Dungeon.depth * 5;
 		defenseSkill = 4 + Dungeon.depth;
 	}
 	
 	private static final String WEAPON	= "weapon";
+	private static final String WEAPON_2= "weapon_2";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( WEAPON, weapon );
+		bundle.put( WEAPON_2, weapon2 );
 	}
 	
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		weapon = (Weapon)bundle.get( WEAPON );
+		weapon2 = (Weapon)bundle.get( WEAPON_2 );
 	}
 	
 	@Override
@@ -86,27 +111,63 @@ public class Statue extends Mob {
 	
 	@Override
 	public int damageRoll() {
+		if (canWep1Attack && canWep2Attack) {
+			return (int) ((weapon.damageRoll(this) + weapon2.damageRoll(this)) / 1.5f);
+		}
+		else if (canWep1Attack) {
+			return weapon.damageRoll(this);
+		}
+		else if (canWep2Attack) {
+			return weapon2.damageRoll(this);
+		}
 		return weapon.damageRoll(this);
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return (int)((9 + Dungeon.depth) * weapon.accuracyFactor(this));
+		int attackSkill = 9 + Dungeon.depth;
+		if (canWep1Attack && canWep2Attack) {
+			return (int) ((attackSkill * weapon.accuracyFactor(this) +
+					attackSkill * weapon2.accuracyFactor(this)) * 0.5f);
+		}
+		else if (canWep1Attack) {
+			return (int) (attackSkill * weapon.accuracyFactor(this));
+		}
+		else if (canWep2Attack) {
+			return (int) (attackSkill * weapon2.accuracyFactor(this));
+		}
+		return (int) (attackSkill * weapon.accuracyFactor(this));
 	}
 	
 	@Override
 	public float attackDelay() {
-		return super.attackDelay()*weapon.delayFactor( this );
+		float attackDelay = super.attackDelay();
+		if (canWep1Attack && canWep2Attack) {
+			return (attackDelay * weapon.delayFactor(this) + attackDelay * weapon2.delayFactor(this)) * 0.5f;
+		}
+		else if (canWep1Attack) {
+			return attackDelay * weapon.delayFactor( this );
+		}
+		else if (canWep2Attack) {
+			return attackDelay * weapon2.delayFactor( this );
+		}
+		return attackDelay * weapon.delayFactor( this );
 	}
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return super.canAttack(enemy) || weapon.canReach(this, enemy.pos);
+		if (weapon.canReach(this, enemy.pos)) canWep1Attack = true;
+		else canWep1Attack = false;
+		if (weapon2 != null && weapon2.canReach(this, enemy.pos)) canWep2Attack = true;
+		else canWep2Attack = false;
+		return super.canAttack(enemy) || canWep1Attack || canWep2Attack;
 	}
 
 	@Override
 	public int drRoll() {
-		return Random.NormalIntRange(0, Dungeon.depth + weapon.defenseFactor(this));
+		int dr = Random.NormalIntRange(0, Dungeon.depth + weapon.defenseFactor(this));
+		if (weapon2 != null) dr += Random.NormalIntRange(0, weapon2.defenseFactor(this));
+		return dr;
 	}
 	
 	@Override
@@ -130,7 +191,15 @@ public class Statue extends Mob {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
-		damage = weapon.proc( this, enemy, damage );
+		if (canWep1Attack && canWep2Attack) {
+			damage = (int) ((weapon.proc( this, enemy, damage ) + weapon2.proc( this, enemy, damage )) * 0.5f);
+		}
+		else if (canWep1Attack) {
+			damage = weapon.proc( this, enemy, damage );
+		}
+		else if (canWep2Attack) {
+			damage = weapon2.proc( this, enemy, damage );
+		}
 		if (!enemy.isAlive() && enemy == Dungeon.hero){
 			Dungeon.fail(getClass());
 			GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );
@@ -147,6 +216,10 @@ public class Statue extends Mob {
 	public void die( Object cause ) {
 		weapon.identify();
 		Dungeon.level.drop( weapon, pos ).sprite.drop();
+		if (weapon2 != null) {
+			weapon2.identify();
+			Dungeon.level.drop( weapon2, pos ).sprite.drop();
+		}
 		super.die( cause );
 	}
 	
@@ -169,7 +242,8 @@ public class Statue extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this, "desc", weapon.name());
+		return weapon2 == null ? Messages.get(this, "desc", weapon.name()) :
+				Messages.get(this, "desc2", weapon.name(), weapon2.name());
 	}
 	
 	{

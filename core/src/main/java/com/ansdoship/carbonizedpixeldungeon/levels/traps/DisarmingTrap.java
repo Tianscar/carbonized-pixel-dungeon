@@ -74,8 +74,14 @@ public class DisarmingTrap extends Trap{
 		if (Dungeon.hero.pos == pos && !Dungeon.hero.flying){
 			Hero hero = Dungeon.hero;
 			KindOfWeapon weapon = hero.belongings.weapon;
+			KindOfWeapon weapon2 = hero.belongings.weapon2;
+			boolean weapon1Available = false;
+			boolean weapon2Available = false;
 
-			if (weapon != null && !weapon.cursed) {
+			if (weapon != null && !weapon.cursed) weapon1Available = true;
+			if (weapon2 != null && !weapon2.cursed) weapon2Available = true;
+
+			if (weapon1Available || weapon2Available) {
 
 				int cell;
 				int tries = 20;
@@ -86,11 +92,19 @@ public class DisarmingTrap extends Trap{
 					PathFinder.buildDistanceMap(pos, Dungeon.level.passable);
 				} while (cell == -1 || PathFinder.distance[cell] < 10 || PathFinder.distance[cell] > 20);
 
-				hero.belongings.weapon = null;
-				Dungeon.quickslot.clearItem(weapon);
-				weapon.updateQuickslot();
+				if (weapon1Available) {
+					hero.belongings.weapon = null;
+					Dungeon.quickslot.clearItem(weapon);
+					weapon.updateQuickslot();
+					Dungeon.level.drop(weapon, cell).seen = true;
+				}
+				if (weapon2Available) {
+					hero.belongings.weapon2 = null;
+					Dungeon.quickslot.clearItem(weapon2);
+					weapon2.updateQuickslot();
+					Dungeon.level.drop(weapon2, cell).seen = true;
+				}
 
-				Dungeon.level.drop(weapon, cell).seen = true;
 				for (int i : PathFinder.NEIGHBOURS9)
 					Dungeon.level.mapped[cell+i] = true;
 				GameScene.updateFog(cell, 1);

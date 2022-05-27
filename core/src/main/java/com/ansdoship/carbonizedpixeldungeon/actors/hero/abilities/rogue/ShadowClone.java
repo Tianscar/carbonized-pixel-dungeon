@@ -206,12 +206,19 @@ public class ShadowClone extends ArmorAbility {
 		@Override
 		public int attackProc( Char enemy, int damage ) {
 			damage = super.attackProc( enemy, damage );
-			if (Random.Int(4) < Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE)
-					&& Dungeon.hero.belongings.weapon() != null){
-				return Dungeon.hero.belongings.weapon().proc( this, enemy, damage );
-			} else {
-				return damage;
+			if (Random.Int(4) < Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE)) {
+				if (Dungeon.hero.belongings.weapon() != null && Dungeon.hero.belongings.weapon2() != null) {
+					return (int) ((Dungeon.hero.belongings.weapon().proc( this, enemy, damage ) +
+												Dungeon.hero.belongings.weapon2().proc( this, enemy, damage )) * 0.5f);
+				}
+				else if (Dungeon.hero.belongings.weapon() != null) {
+					return Dungeon.hero.belongings.weapon().proc( this, enemy, damage );
+				}
+				else if (Dungeon.hero.belongings.weapon2() != null) {
+					return Dungeon.hero.belongings.weapon2().proc( this, enemy, damage );
+				}
 			}
+			return damage;
 		}
 
 		@Override

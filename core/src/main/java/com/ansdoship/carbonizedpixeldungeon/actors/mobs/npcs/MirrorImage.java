@@ -58,6 +58,9 @@ public class MirrorImage extends NPC {
 	private Hero hero;
 	private int heroID;
 	public int armTier;
+
+	private boolean canWep1Attack = false;
+	private boolean canWep2Attack = false;
 	
 	@Override
 	protected boolean act() {
@@ -102,9 +105,17 @@ public class MirrorImage extends NPC {
 	@Override
 	public int damageRoll() {
 		int damage;
-		if (hero.belongings.weapon() != null){
+		if (canWep1Attack && canWep2Attack) {
+			damage = (int) ((hero.belongings.weapon().damageRoll(this) +
+								hero.belongings.weapon2().damageRoll(this)) / 1.5f);
+		}
+		else if (canWep1Attack) {
 			damage = hero.belongings.weapon().damageRoll(this);
-		} else {
+		}
+		else if (canWep2Attack) {
+			damage = hero.belongings.weapon2().damageRoll(this);
+		}
+		else {
 			damage = hero.damageRoll(); //handles ring of force
 		}
 		return (damage+1)/2; //half hero damage, rounded up
@@ -135,16 +146,21 @@ public class MirrorImage extends NPC {
 	
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return super.canAttack(enemy) || (hero.belongings.weapon() != null && hero.belongings.weapon().canReach(this, enemy.pos));
+		if (hero.belongings.weapon() != null && hero.belongings.weapon().canReach(this, enemy.pos)) canWep1Attack = true;
+		else canWep1Attack = false;
+		if (hero.belongings.weapon2() != null && hero.belongings.weapon2().canReach(this, enemy.pos)) canWep2Attack = true;
+		else canWep2Attack = false;
+		return super.canAttack(enemy) || canWep1Attack || canWep2Attack;
 	}
 	
 	@Override
 	public int drRoll() {
-		if (hero != null && hero.belongings.weapon() != null){
-			return Random.NormalIntRange(0, hero.belongings.weapon().defenseFactor(this)/2);
-		} else {
-			return 0;
+		int dr = 0;
+		if (hero != null) {
+			if (hero.belongings.weapon() != null) dr += Random.NormalIntRange(0, hero.belongings.weapon().defenseFactor(this)/2);
+			if (hero.belongings.weapon2() != null) dr += Random.NormalIntRange(0, hero.belongings.weapon2().defenseFactor(this)/2);
 		}
+		return dr;
 	}
 	
 	@Override
@@ -159,8 +175,17 @@ public class MirrorImage extends NPC {
 		if (enemy instanceof Mob) {
 			((Mob)enemy).aggro( this );
 		}
-		if (hero.belongings.weapon() != null){
+		if (canWep1Attack && canWep2Attack) {
+			damage = (int) ((hero.belongings.weapon().proc( this, enemy, damage ) +
+								hero.belongings.weapon2().proc( this, enemy, damage )) * 0.5f);
+		}
+		else if (canWep1Attack) {
 			damage = hero.belongings.weapon().proc( this, enemy, damage );
+		}
+		else if (canWep2Attack) {
+			damage = hero.belongings.weapon2().proc( this, enemy, damage );
+		}
+		if (hero.belongings.weapon() != null || hero.belongings.weapon2() != null) {
 			if (!enemy.isAlive() && enemy == Dungeon.hero){
 				Dungeon.fail(getClass());
 				GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );

@@ -168,7 +168,11 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		Image icon;
 		if (((Hero)target).belongings.weapon() != null){
 			icon = new ItemSprite(((Hero)target).belongings.weapon().image, null);
-		} else {
+		}
+		else if (((Hero)target).belongings.weapon2() != null) {
+			icon = new ItemSprite(((Hero)target).belongings.weapon2().image, null);
+		}
+		else {
 			icon = new ItemSprite(new Item(){ {image = ItemSpriteSheet.WEAPON_HOLDER; }});
 		}
 

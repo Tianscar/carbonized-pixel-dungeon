@@ -330,6 +330,7 @@ public class CityBossLevel extends Level {
 			@Override
 			public void call() {
 				Music.INSTANCE.stop();
+				playLevelMusic();
 			}
 		});
 	}
