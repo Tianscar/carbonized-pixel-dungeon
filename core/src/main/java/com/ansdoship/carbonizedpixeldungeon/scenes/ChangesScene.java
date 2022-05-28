@@ -25,6 +25,8 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Chrome;
 import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.Archs;
 import com.ansdoship.carbonizedpixeldungeon.ui.ExitButton;
 import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
@@ -140,9 +142,11 @@ public class ChangesScene extends PixelScene {
 				@Override
 				public void onClick() {
 					NewChangesScene.changesSelected = 0;
+					NewChangesScene.fromChangesScene = true;
 					CarbonizedPixelDungeon.switchNoFade(NewChangesScene.class);
 				}
 			};
+			selection.icon(new ItemSprite(ItemSpriteSheet.CARBON_STEEL));
 			selection.hardlight(Window.TITLE_COLOR);
 			selection.setRect(0, posY, panel.innerWidth(), 0);
 			content.add(selection);

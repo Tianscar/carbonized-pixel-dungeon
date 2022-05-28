@@ -90,6 +90,7 @@ public class ItemSpriteSheet {
 	
 	public static final int GUIDE_PAGE      = UNCOLLECTIBLE+6;
 	public static final int ALCH_PAGE       = UNCOLLECTIBLE+7;
+	public static final int TP_PAGE         = UNCOLLECTIBLE+8;
 	
 	public static final int TENGU_BOMB      = UNCOLLECTIBLE+9;
 	public static final int TENGU_SHOCKER   = UNCOLLECTIBLE+10;
@@ -102,6 +103,7 @@ public class ItemSpriteSheet {
 		
 		assignItemRect(GUIDE_PAGE,  10, 11);
 		assignItemRect(ALCH_PAGE,   10, 11);
+		assignItemRect(TP_PAGE,     10, 11);
 		
 		assignItemRect(TENGU_BOMB,      10, 10);
 		assignItemRect(TENGU_SHOCKER,   10, 10);
@@ -144,6 +146,7 @@ public class ItemSpriteSheet {
 	public static final int AMULET          = MISC_CONSUMABLE +13;
 	public static final int MASTERY         = MISC_CONSUMABLE +14;
 	public static final int KIT             = MISC_CONSUMABLE +15;
+	public static final int GUIDEBOOK       = MISC_CONSUMABLE +16;
 	static{
 		assignItemRect(ANKH,            10, 16);
 		assignItemRect(STYLUS,          12, 13);
@@ -163,6 +166,7 @@ public class ItemSpriteSheet {
 		assignItemRect(AMULET,          16, 16);
 		assignItemRect(MASTERY,         13, 16);
 		assignItemRect(KIT,             16, 15);
+		assignItemRect(GUIDEBOOK,       13, 16);
 	}
 	
 	private static final int BOMBS          =                               xy(1, 5);   //32 slots
@@ -425,6 +429,10 @@ public class ItemSpriteSheet {
 	public static final int ARTIFACT_ROSE1      = ARTIFACTS+20;
 	public static final int ARTIFACT_ROSE2      = ARTIFACTS+21;
 	public static final int ARTIFACT_ROSE3      = ARTIFACTS+22;
+	public static final int ARTIFACT_VIAL1      = ARTIFACTS+23;
+	public static final int ARTIFACT_VIAL2      = ARTIFACTS+24;
+	public static final int ARTIFACT_VIAL3      = ARTIFACTS+25;
+	public static final int ARTIFACT_VIAL4      = ARTIFACTS+26;
 	static{
 		assignItemRect(ARTIFACT_CLOAK,      9,  15);
 		assignItemRect(ARTIFACT_ARMBAND,    16, 13);
@@ -449,6 +457,10 @@ public class ItemSpriteSheet {
 		assignItemRect(ARTIFACT_ROSE1,      14, 14);
 		assignItemRect(ARTIFACT_ROSE2,      14, 14);
 		assignItemRect(ARTIFACT_ROSE3,      14, 14);
+		assignItemRect(ARTIFACT_VIAL1,      12, 12);
+		assignItemRect(ARTIFACT_VIAL2,      12, 12);
+		assignItemRect(ARTIFACT_VIAL3,      12, 12);
+		assignItemRect(ARTIFACT_VIAL4,      12, 12);
 	}
 
 	                                                                                    //32 free slots
@@ -686,7 +698,7 @@ public class ItemSpriteSheet {
 	public static final int HOLDER      = BAGS+3;
 	public static final int BANDOLIER   = BAGS+4;
 	public static final int HOLSTER     = BAGS+5;
-	public static final int VIAL        = BAGS+6;
+	//public static final int VIAL        = BAGS+6;
 	static{
 		assignItemRect(WATERSKIN,   16, 14);
 		assignItemRect(BACKPACK,    16, 16);
@@ -694,7 +706,7 @@ public class ItemSpriteSheet {
 		assignItemRect(HOLDER,      16, 16);
 		assignItemRect(BANDOLIER,   15, 16);
 		assignItemRect(HOLSTER,     15, 16);
-		assignItemRect(VIAL,        12, 12);
+		//assignItemRect(VIAL,        12, 12);
 	}
 
 	                                                                                    //32 free slots

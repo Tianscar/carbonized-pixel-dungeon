@@ -40,7 +40,7 @@ import com.ansdoship.pixeldungeonclasses.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
 
-	private static final int LATEST_UPDATE = CarbonizedPixelDungeon.v0_0_5;
+	private static final int LATEST_UPDATE = CarbonizedPixelDungeon.v0_0_6;
 
 	@Override
 	public void create() {
@@ -80,8 +80,8 @@ public class WelcomeScene extends PixelScene {
 
 		align(title);
 
-		placeTorch(title.x + 22, title.y + 46);
-		placeTorch(title.x + title.width - 22, title.y + 46);
+		placeTorch(title.x + 28, title.y + 46);
+		placeTorch(title.x + title.width - 28, title.y + 46);
 
 		Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
 			private float time = 0;
@@ -126,6 +126,7 @@ public class WelcomeScene extends PixelScene {
 				protected void onClick() {
 					super.onClick();
 					updateVersion(previousVersion);
+					NewChangesScene.fromChangesScene = false;
 					CarbonizedPixelDungeon.switchScene(NewChangesScene.class);
 				}
 			};

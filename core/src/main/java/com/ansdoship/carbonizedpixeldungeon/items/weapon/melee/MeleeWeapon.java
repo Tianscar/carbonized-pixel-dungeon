@@ -24,13 +24,43 @@ package com.ansdoship.carbonizedpixeldungeon.items.weapon.melee;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.items.journal.Guidebook;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.ansdoship.carbonizedpixeldungeon.journal.Document;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
+import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
+import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class MeleeWeapon extends Weapon {
 	
 	public int tier;
+	public boolean twoHanded = false;
+
+	@Override
+	public boolean doPickUp(Hero hero) {
+		if (super.doPickUp(hero)) {
+			if (!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_DUAL_WIELDING)) {
+				int oneHandedWeapons = 0;
+				if (hero.belongings.weapon instanceof MeleeWeapon && !((MeleeWeapon) hero.belongings.weapon).twoHanded) {
+					oneHandedWeapons += 1;
+				}
+				if (hero.belongings.weapon2 instanceof MeleeWeapon && !((MeleeWeapon) hero.belongings.weapon2).twoHanded) {
+					oneHandedWeapons += 1;
+				}
+				for (MeleeWeapon item : hero.belongings.getAllItems(MeleeWeapon.class)) {
+					if (item != null && !item.twoHanded) oneHandedWeapons += 1;
+				}
+				if (oneHandedWeapons >= 2) {
+					GLog.p(Messages.get(Guidebook.class, "hint"));
+					GameScene.flashForDocument(Document.GUIDE_DUAL_WIELDING);
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	@Override
 	public int min(int lvl) {

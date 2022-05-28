@@ -57,6 +57,7 @@ public class Messages {
 
 	private static String[] prop_files = new String[]{
 			Assets.Messages.ACTORS,
+			Assets.Messages.BIGRAT,
 			Assets.Messages.ITEMS,
 			Assets.Messages.JOURNAL,
 			Assets.Messages.LEVELS,

@@ -33,11 +33,17 @@ import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
 
 public class CarbonizedPixelDungeon extends Game {
 
+	public static final int v0_0_6   = 16;
 	public static final int v0_0_5   = 12;
 	public static final int v0_0_4   = 9;
 	
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
+
+		//CBPD v0.0.6
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.BigRat.class,
+				"com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.RatKing.class" );
 
 		//CBPD v0.0.4
 		Bundle.addAlias(

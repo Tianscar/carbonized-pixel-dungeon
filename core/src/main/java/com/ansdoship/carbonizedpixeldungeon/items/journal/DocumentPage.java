@@ -34,7 +34,7 @@ import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 public abstract class DocumentPage extends Item {
 	
 	{
-		image = ItemSpriteSheet.MASTERY;
+		image = ItemSpriteSheet.GUIDEBOOK;
 	}
 
 	public abstract Document document();
@@ -56,8 +56,12 @@ public abstract class DocumentPage extends Item {
 		if (document() == Document.ALCHEMY_GUIDE){
 			WndJournal.last_index = 1;
 			WndJournal.AlchemyTab.currentPageIdx = document().pageIdx(page());
-		} else {
+		}
+		else if (document() == Document.ADVENTURERS_GUIDE) {
 			WndJournal.last_index = 0;
+		}
+		else if (document() == Document.TELEPORT_GUIDE) {
+			WndJournal.last_index = 2;
 		}
 		document().findPage(page);
 		Sample.INSTANCE.play( Assets.Sounds.ITEM );

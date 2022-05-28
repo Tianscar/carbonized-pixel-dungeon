@@ -39,6 +39,8 @@ import java.util.ArrayList;
 public class NewChangesScene extends PixelScene {
 	
 	public static int changesSelected = 0;
+
+	public static boolean fromChangesScene = false;
 	
 	@Override
 	public void create() {
@@ -135,6 +137,7 @@ public class NewChangesScene extends PixelScene {
 					CarbonizedPixelDungeon.switchNoFade(ChangesScene.class);
 				}
 			};
+			selection.icon(Icons.get(Icons.SHPX));
 			selection.hardlight(Window.TITLE_COLOR);
 			selection.setRect(0, posY, panel.innerWidth(), 0);
 			content.add(selection);
@@ -148,7 +151,7 @@ public class NewChangesScene extends PixelScene {
 				panel.y + panel.marginTop() - 1,
 				panel.innerWidth() + 2,
 				panel.innerHeight() + 2);
-		list.scrollTo(0, 0);
+		list.scrollTo(0, fromChangesScene ? posY - list.height() : 0);
 
 		StyledButton btnBeta = new StyledButton(Chrome.Type.TOAST, "0.0.X"){
 			@Override

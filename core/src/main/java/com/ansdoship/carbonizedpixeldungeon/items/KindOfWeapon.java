@@ -27,8 +27,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.Artifact;
-import com.ansdoship.carbonizedpixeldungeon.items.rings.Ring;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -41,8 +40,6 @@ import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 abstract public class KindOfWeapon extends EquipableItem {
-
-	public boolean twoHanded;
 	
 	protected static final float TIME_TO_EQUIP = 1f;
 
@@ -59,7 +56,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 		boolean equipFull = false;
 		boolean shouldEquip = false;
-		if (twoHanded) {
+		if (this instanceof MeleeWeapon && ((MeleeWeapon) this).twoHanded) {
 			KindOfWeapon tmpWeapon = hero.belongings.weapon;
 			KindOfWeapon tmpWeapon2 = hero.belongings.weapon2;
 			if ((hero.belongings.weapon == null || hero.belongings.weapon.doUnequip( hero, true )) &&
@@ -78,7 +75,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 				hero.belongings.weapon = this;
 				shouldEquip = true;
 			}
-			else if (hero.belongings.weapon.twoHanded) {
+			else if (hero.belongings.weapon instanceof MeleeWeapon && ((MeleeWeapon) hero.belongings.weapon).twoHanded) {
 				if (hero.belongings.weapon.doUnequip( hero, true )) {
 					hero.belongings.weapon = this;
 					shouldEquip = true;

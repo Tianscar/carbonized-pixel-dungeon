@@ -22,6 +22,9 @@
 package com.ansdoship.pixeldungeonclasses.utils;
 
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +42,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -47,35 +52,59 @@ public class Bundle {
 	private static final String CLASS_NAME = "__className";
 
 	public static final String DEFAULT_KEY = "key";
-	
+
 	private static HashMap<String,String> aliases = new HashMap<>();
-	
+
+	/*
+		WARNING: NOT ALL METHODS IN ORG.JSON ARE PRESENT ON ANDROID/IOS!
+		Many methods which work on desktop will cause the game to crash on Android and iOS
+
+		This is because the Android runtime includes its own version of org.json which does not
+		implement all methods. MobiVM uses the Android runtime and so this applies to iOS as well.
+
+		org.json is very fast (~2x faster than libgdx JSON), which is why the game uses it despite
+		this dependency conflict.
+
+		See https://developer.android.com/reference/org/json/package-summary for details on
+		what methods exist in all versions of org.json. This class is also commented in places
+		Where Android/iOS force the use of unusual methods.
+	 */
 	private JSONObject data;
-	
+
 	public Bundle() {
 		this( new JSONObject() );
 	}
-	
+
 	public String toString() {
 		return data.toString();
 	}
-	
+
 	private Bundle( JSONObject data ) {
 		this.data = data;
 	}
-	
+
 	public boolean isNull() {
 		return data == null;
 	}
-	
+
 	public boolean contains( String key ) {
 		return !data.isNull( key );
 	}
-	
+
+	//JSONObject.keyset() doesn't exist on Android/iOS
+	public ArrayList<String> getKeys(){
+		Iterator<String> keys = data.keys();
+		ArrayList<String> result = new ArrayList<>();
+		while (keys.hasNext()){
+			result.add(keys.next());
+		}
+		return result;
+	}
+
 	public boolean getBoolean( String key ) {
 		return data.optBoolean( key );
 	}
-	
+
 	public int getInt( String key ) {
 		return data.optInt( key );
 	}
@@ -83,11 +112,11 @@ public class Bundle {
 	public long getLong( String key ) {
 		return data.optLong( key );
 	}
-	
+
 	public float getFloat( String key ) {
 		return (float)data.optDouble( key, 0.0 );
 	}
-	
+
 	public String getString( String key ) {
 		return data.optString( key );
 	}
@@ -98,24 +127,24 @@ public class Bundle {
 			if (aliases.containsKey( clName )) {
 				clName = aliases.get( clName );
 			}
-			
+
 			return Reflection.forName( clName );
 		}
 		return null;
 	}
-	
+
 	public Bundle getBundle( String key ) {
 		return new Bundle( data.optJSONObject( key ) );
 	}
-	
+
 	private Bundlable get() {
 		if (data == null) return null;
-		
+
 		String clName = getString( CLASS_NAME );
 		if (aliases.containsKey( clName )) {
 			clName = aliases.get( clName );
 		}
-		
+
 		Class<?> cl = Reflection.forName( clName );
 		//Skip none-static inner classes as they can't be instantiated through bundle restoring
 		//Classes which make use of none-static inner classes must manage instantiation manually
@@ -126,14 +155,14 @@ public class Bundle {
 				return object;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public Bundlable get( String key ) {
 		return getBundle( key ).get();
 	}
-	
+
 	public <E extends Enum<E>> E getEnum( String key, Class<E> enumClass ) {
 		try {
 			return Enum.valueOf( enumClass, data.getString( key ) );
@@ -145,7 +174,7 @@ public class Bundle {
 			return enumClass.getEnumConstants()[0];
 		}
 	}
-	
+
 	public int[] getIntArray( String key ) {
 		try {
 			JSONArray array = data.getJSONArray( key );
@@ -160,7 +189,7 @@ public class Bundle {
 			return null;
 		}
 	}
-	
+
 	public float[] getFloatArray( String key ) {
 		try {
 			JSONArray array = data.getJSONArray( key );
@@ -175,7 +204,7 @@ public class Bundle {
 			return null;
 		}
 	}
-	
+
 	public boolean[] getBooleanArray( String key ) {
 		try {
 			JSONArray array = data.getJSONArray( key );
@@ -190,7 +219,7 @@ public class Bundle {
 			return null;
 		}
 	}
-	
+
 	public String[] getStringArray( String key ) {
 		try {
 			JSONArray array = data.getJSONArray( key );
@@ -244,11 +273,11 @@ public class Bundle {
 			return null;
 		}
 	}
-	
+
 	public Collection<Bundlable> getCollection( String key ) {
-		
+
 		ArrayList<Bundlable> list = new ArrayList<>();
-		
+
 		try {
 			JSONArray array = data.getJSONArray( key );
 			for (int i=0; i < array.length(); i++) {
@@ -258,10 +287,10 @@ public class Bundle {
 		} catch (JSONException e) {
 			Game.reportException(e);
 		}
-		
+
 		return list;
 	}
-	
+
 	public void put( String key, boolean value ) {
 		try {
 			data.put( key, value );
@@ -269,7 +298,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, int value ) {
 		try {
 			data.put( key, value );
@@ -285,7 +314,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, float value ) {
 		try {
 			data.put( key, value );
@@ -293,7 +322,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, String value ) {
 		try {
 			data.put( key, value );
@@ -309,7 +338,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, Bundle bundle ) {
 		try {
 			data.put( key, bundle.data );
@@ -317,7 +346,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, Bundlable object ) {
 		if (object != null) {
 			try {
@@ -330,7 +359,7 @@ public class Bundle {
 			}
 		}
 	}
-	
+
 	public void put( String key, Enum<?> value ) {
 		if (value != null) {
 			try {
@@ -340,7 +369,7 @@ public class Bundle {
 			}
 		}
 	}
-	
+
 	public void put( String key, int[] array ) {
 		try {
 			JSONArray jsonArray = new JSONArray();
@@ -352,7 +381,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, float[] array ) {
 		try {
 			JSONArray jsonArray = new JSONArray();
@@ -364,7 +393,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, boolean[] array ) {
 		try {
 			JSONArray jsonArray = new JSONArray();
@@ -376,7 +405,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, String[] array ) {
 		try {
 			JSONArray jsonArray = new JSONArray();
@@ -400,7 +429,7 @@ public class Bundle {
 			Game.reportException(e);
 		}
 	}
-	
+
 	public void put( String key, Collection<? extends Bundlable> collection ) {
 		JSONArray array = new JSONArray();
 		for (Bundlable object : collection) {
@@ -427,7 +456,7 @@ public class Bundle {
 	private static final boolean compressByDefault = true;
 
 	private static final int GZIP_BUFFER = 1024*4; //4 kb
-	
+
 	public static Bundle read( InputStream stream ) throws IOException {
 
 		try {
@@ -440,15 +469,35 @@ public class Bundle {
 			byte[] header = new byte[2];
 			stream.read( header );
 			stream.reset();
-			
+
 			//GZIP header is 0x1f8b
 			if( header[ 0 ] == (byte) 0x1f && header[ 1 ] == (byte) 0x8b ) {
 				stream = new GZIPInputStream( stream, GZIP_BUFFER );
 			}
 
-			//cannot just tokenize the stream directly as that constructor doesn't exist on Android
+			//JSONTokenizer only has a string-based constructor on Android/iOS
 			BufferedReader reader = new BufferedReader( new InputStreamReader( stream ));
-			Object json = new JSONTokener( reader.readLine() ).nextValue();
+			StringBuilder jsonBuilder = new StringBuilder();
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				jsonBuilder.append(line);
+				jsonBuilder.append("\n");
+			}
+			String jsonString = jsonBuilder.toString();
+
+			Object json;
+			try {
+				json = new JSONTokener(jsonString).nextValue();
+			} catch (Exception e){
+				//if the string can't be tokenized, it may be written by v1.1.X, which used libGDX JSON.
+				// Some of these are written in a 'minified' format, some have duplicate keys.
+				// We read them in with the libGDX JSON code, fix duplicates, write as full JSON
+				// and then try to read again with org.json
+				JsonValue gdxJSON = new JsonReader().parse(jsonString);
+				killDuplicateKeysInLibGDXJSON(gdxJSON);
+				json = new JSONTokener(gdxJSON.prettyPrint(JsonWriter.OutputType.json, 0)).nextValue();
+			}
 			reader.close();
 
 			//if the data is an array, put it in a fresh object with the default key
@@ -463,6 +512,24 @@ public class Bundle {
 		}
 	}
 
+	private static void killDuplicateKeysInLibGDXJSON(JsonValue val){
+		HashSet<String> keys = new HashSet<>();
+		while(val != null) {
+			if (val.name != null && keys.contains(val.name)){
+				//delete the duplicate key
+				val.prev.next = val.next;
+				if (val.next != null) val.next.prev = val.prev;
+				val.parent.size--;
+			} else {
+				keys.add(val.name);
+				if (val.child != null){
+					killDuplicateKeysInLibGDXJSON(val.child);
+				}
+			}
+			val = val.next;
+		}
+	}
+
 	public static boolean write( Bundle bundle, OutputStream stream ){
 		return write(bundle, stream, compressByDefault);
 	}
@@ -473,7 +540,8 @@ public class Bundle {
 			if (compressed) writer = new BufferedWriter( new OutputStreamWriter( new GZIPOutputStream(stream, GZIP_BUFFER ) ) );
 			else writer = new BufferedWriter( new OutputStreamWriter( stream ) );
 
-			writer.write( bundle.data.toString() );
+			//JSONObject.write does not exist on Android/iOS
+			writer.write(bundle.data.toString());
 			writer.close();
 
 			return true;
@@ -482,9 +550,9 @@ public class Bundle {
 			return false;
 		}
 	}
-	
+
 	public static void addAlias( Class<?> cl, String alias ) {
 		aliases.put( alias, cl.getName() );
 	}
-	
+
 }

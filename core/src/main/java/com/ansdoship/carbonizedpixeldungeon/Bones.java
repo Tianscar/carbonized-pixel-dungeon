@@ -74,7 +74,12 @@ public class Bones {
 		if (Random.Int(3) != 0) {
 			switch (Random.Int(7)) {
 				case 0:
-					item = hero.belongings.weapon;
+					if (hero.belongings.weapon2 == null) {
+						item = hero.belongings.weapon;
+					}
+					else {
+						item = (Random.Int(2) == 0) ? hero.belongings.weapon : hero.belongings.weapon2;
+					}
 					break;
 				case 1:
 					item = hero.belongings.armor;

@@ -32,7 +32,9 @@ import java.util.LinkedHashMap;
 public enum Document {
 	
 	ADVENTURERS_GUIDE(ItemSpriteSheet.GUIDE_PAGE),
-	ALCHEMY_GUIDE(ItemSpriteSheet.ALCH_PAGE);
+	ALCHEMY_GUIDE(ItemSpriteSheet.ALCH_PAGE),
+
+	TELEPORT_GUIDE(ItemSpriteSheet.TP_PAGE);
 	
 	Document( int sprite ){
 		pageSprite = sprite;
@@ -129,9 +131,12 @@ public enum Document {
 	public static final String GUIDE_EXAMINING      = "Examining";
 	public static final String GUIDE_SURPRISE_ATKS  = "Surprise_Attacks";
 	public static final String GUIDE_IDING          = "Identifying";
+	public static final String GUIDE_DUAL_WIELDING  = "Dual_Wielding";
 	public static final String GUIDE_FOOD           = "Food";
 	public static final String GUIDE_DIEING         = "Dieing";
 	public static final String GUIDE_SEARCHING      = "Searching";
+
+	public static final String GUIDE_SOKOBAN        = "Sokoban";
 
 	//pages and default states
 	static {
@@ -141,6 +146,7 @@ public enum Document {
 		ADVENTURERS_GUIDE.pagesStates.put(GUIDE_EXAMINING,      debug ? READ : FOUND);
 		ADVENTURERS_GUIDE.pagesStates.put(GUIDE_SURPRISE_ATKS,  debug ? READ : FOUND);
 		ADVENTURERS_GUIDE.pagesStates.put(GUIDE_IDING,          debug ? READ : FOUND);
+		ADVENTURERS_GUIDE.pagesStates.put(GUIDE_DUAL_WIELDING,  debug ? READ : FOUND);
 		ADVENTURERS_GUIDE.pagesStates.put(GUIDE_FOOD,           debug ? READ : FOUND);
 		ADVENTURERS_GUIDE.pagesStates.put(GUIDE_DIEING,         debug ? READ : FOUND);
 		//given in sewers
@@ -159,7 +165,7 @@ public enum Document {
 		ALCHEMY_GUIDE.pagesStates.put("Bombs",                debug ? READ : NOT_FOUND);
 		ALCHEMY_GUIDE.pagesStates.put("Weapons",              debug ? READ : NOT_FOUND);
 		//given in prison
-		ALCHEMY_GUIDE.pagesStates.put("Exotic_Potions",       debug? READ : NOT_FOUND);
+		ALCHEMY_GUIDE.pagesStates.put("Exotic_Potions",       debug ? READ : NOT_FOUND);
 		ALCHEMY_GUIDE.pagesStates.put("Exotic_Scrolls",       debug ? READ : NOT_FOUND);
 		ALCHEMY_GUIDE.pagesStates.put("Catalysts",            debug ? READ : NOT_FOUND);
 		ALCHEMY_GUIDE.pagesStates.put("Brews_Elixirs",        debug ? READ : NOT_FOUND);

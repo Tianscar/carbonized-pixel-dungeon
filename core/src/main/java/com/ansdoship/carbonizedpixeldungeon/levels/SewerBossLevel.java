@@ -23,6 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.levels;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Bones;
+import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Goo;
@@ -34,7 +35,7 @@ import com.ansdoship.carbonizedpixeldungeon.levels.builders.FigureEightBuilder;
 import com.ansdoship.carbonizedpixeldungeon.levels.painters.Painter;
 import com.ansdoship.carbonizedpixeldungeon.levels.painters.SewerPainter;
 import com.ansdoship.carbonizedpixeldungeon.levels.rooms.Room;
-import com.ansdoship.carbonizedpixeldungeon.levels.rooms.secret.RatKingRoom;
+import com.ansdoship.carbonizedpixeldungeon.levels.rooms.secret.BigRatRoom;
 import com.ansdoship.carbonizedpixeldungeon.levels.rooms.sewerboss.GooBossRoom;
 import com.ansdoship.carbonizedpixeldungeon.levels.rooms.sewerboss.SewerBossEntranceRoom;
 import com.ansdoship.carbonizedpixeldungeon.levels.rooms.sewerboss.SewerBossExitRoom;
@@ -102,7 +103,7 @@ public class SewerBossLevel extends SewerLevel {
 		GooBossRoom gooRoom = GooBossRoom.randomGooRoom();
 		initRooms.add(gooRoom);
 		((FigureEightBuilder)builder).setLandmarkRoom(gooRoom);
-		initRooms.add(new RatKingRoom());
+		initRooms.add(new BigRatRoom());
 		return initRooms;
 	}
 	
@@ -196,6 +197,14 @@ public class SewerBossLevel extends SewerLevel {
 			
 			set( entrance, Terrain.ENTRANCE );
 			GameScene.updateMap( entrance );
+
+			for (Room room : rooms()) {
+				if (room instanceof BigRatRoom) {
+					Room.Door entrance = ((BigRatRoom) room).entrance();
+					discover(entrance.x + entrance.y * width());
+					break;
+				}
+			}
 
 			Game.runOnRenderThread(new Callback() {
 				@Override

@@ -110,18 +110,25 @@ public class WndJournal extends WndTabbed {
 						if (value) last_index = 1;
 					}
 				},
+				/*new IconTab( new ItemSprite(ItemSpriteSheet.TP_PAGE, null) ) {
+					protected void select( boolean value ) {
+						super.select( value );
+						//alchemyTab.active = alchemyTab.visible = value;
+						if (value) last_index = 2;
+					}
+				},*/
 				new IconTab( Icons.get(Icons.DEPTH) ) {
 					protected void select( boolean value ) {
 						super.select( value );
 						notesTab.active = notesTab.visible = value;
-						if (value) last_index = 2;
+						if (value) last_index = 3;
 					}
 				},
 				new IconTab( new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER, null) ) {
 					protected void select( boolean value ) {
 						super.select( value );
 						catalogTab.active = catalogTab.visible = value;
-						if (value) last_index = 3;
+						if (value) last_index = 4;
 					}
 				}
 		};
@@ -300,13 +307,15 @@ public class WndJournal extends WndTabbed {
 			}
 			switch (page){
 				case Document.GUIDE_INTRO: default:
-					return new ItemSprite(ItemSpriteSheet.MASTERY);
+					return new ItemSprite(ItemSpriteSheet.GUIDEBOOK);
 				case "Examining":
 					return Icons.get(Icons.MAGNIFY);
 				case "Surprise_Attacks":
 					return new ItemSprite( ItemSpriteSheet.ASSASSINS_BLADE );
 				case "Identifying":
 					return new ItemSprite( new ScrollOfIdentify() );
+				case "Dual_Wielding":
+					return new ItemSprite( ItemSpriteSheet.SAI );
 				case "Food":
 					return new ItemSprite( ItemSpriteSheet.PASTY );
 				case "Dieing":

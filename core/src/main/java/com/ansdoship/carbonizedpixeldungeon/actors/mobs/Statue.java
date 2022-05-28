@@ -47,8 +47,8 @@ public class Statue extends Mob {
 		properties.add(Property.INORGANIC);
 	}
 	
-	protected Weapon weapon;
-	protected Weapon weapon2;
+	protected MeleeWeapon weapon;
+	protected MeleeWeapon weapon2;
 
 	private boolean canWep1Attack = false;
 	private boolean canWep2Attack = false;
@@ -97,8 +97,8 @@ public class Statue extends Mob {
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
-		weapon = (Weapon)bundle.get( WEAPON );
-		weapon2 = (Weapon)bundle.get( WEAPON_2 );
+		weapon = (MeleeWeapon) bundle.get( WEAPON );
+		weapon2 = (MeleeWeapon) bundle.get( WEAPON_2 );
 	}
 	
 	@Override

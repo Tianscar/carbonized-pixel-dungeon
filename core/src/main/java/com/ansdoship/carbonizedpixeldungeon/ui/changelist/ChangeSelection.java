@@ -25,6 +25,7 @@ import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.ui.RedButton;
 import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
+import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
 
 import java.util.ArrayList;
@@ -56,6 +57,14 @@ public class ChangeSelection extends Component {
 		};
 		add(this.btnSelect);
 		
+	}
+
+	public Image icon() {
+		return btnSelect.icon();
+	}
+
+	public void icon(Image icon) {
+		btnSelect.icon(icon);
 	}
 
 	public void onClick() {

@@ -82,7 +82,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected float shadowOffset    = 0.25f;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED
+		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, CHARMED,
 	}
 	private int stunStates = 0;
 	
@@ -101,6 +101,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected Emitter chilled;
 	protected Emitter marked;
 	protected Emitter levitation;
+	protected Emitter charmed;
 	protected Emitter healing;
 	
 	protected IceBlock iceBlock;
@@ -357,6 +358,10 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				levitation = emitter();
 				levitation.pour( Speck.factory( Speck.JET ), 0.02f );
 				break;
+			case CHARMED:
+				charmed = emitter();
+				charmed.pour(Speck.factory(Speck.HEART), 0.2f);
+				break;
 			case INVISIBLE:
 				if (invisible != null) {
 					invisible.killAndErase();
@@ -409,6 +414,12 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				if (levitation != null) {
 					levitation.on = false;
 					levitation = null;
+				}
+				break;
+			case CHARMED:
+				if (charmed != null) {
+					charmed.on = false;
+					charmed = null;
 				}
 				break;
 			case INVISIBLE:
@@ -504,6 +515,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		}
 		if (levitation != null) {
 			levitation.visible = visible;
+		}
+		if (charmed != null) {
+			charmed.visible = visible;
 		}
 		if (iceBlock != null) {
 			iceBlock.visible = visible;

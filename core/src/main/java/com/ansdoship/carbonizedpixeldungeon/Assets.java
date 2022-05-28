@@ -103,6 +103,7 @@ public class Assets {
 	//these points to resource bundles, not raw asset files
 	public static class Messages {
 		public static final String ACTORS   = "messages/actors/actors";
+		public static final String BIGRAT   = "messages/actors/bigrat";
 		public static final String ITEMS    = "messages/items/items";
 		public static final String JOURNAL  = "messages/journal/journal";
 		public static final String LEVELS   = "messages/levels/levels";
@@ -283,6 +284,8 @@ public class Assets {
 		public static final String TROLL	= "sprites/blacksmith.png";
 		public static final String IMP		= "sprites/demon.png";
 		public static final String RATKING	= "sprites/ratking.png";
+
+		public static final String BIGRAT   = "sprites/bigrat.png";
 		public static final String BEE      = "sprites/bee.png";
 		public static final String MIMIC    = "sprites/mimic.png";
 		public static final String ROT_LASH = "sprites/rot_lasher.png";

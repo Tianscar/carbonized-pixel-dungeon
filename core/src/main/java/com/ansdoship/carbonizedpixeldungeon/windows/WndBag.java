@@ -36,6 +36,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.bags.PotionBandolier;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.ScrollHolder;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -203,14 +204,14 @@ public class WndBag extends WndTabbed {
 		// Equipped items
 		Belongings stuff = Dungeon.hero.belongings;
 		placeItem( stuff.weapon != null ? stuff.weapon : new Placeholder( ItemSpriteSheet.WEAPON2_HOLDER ) );
-		if ( stuff.weapon == null || !stuff.weapon.twoHanded ) {
+		if (!(stuff.weapon instanceof MeleeWeapon) || !((MeleeWeapon) stuff.weapon).twoHanded) {
 			placeItem( stuff.weapon2 != null ? stuff.weapon2 : new Placeholder( ItemSpriteSheet.WEAPON_HOLDER ) );
 		}
 		placeItem( stuff.armor != null ? stuff.armor : new Placeholder( ItemSpriteSheet.ARMOR_HOLDER ) );
 		placeItem( stuff.artifact != null ? stuff.artifact : new Placeholder( ItemSpriteSheet.ARTIFACT_HOLDER ) );
 		placeItem( stuff.misc != null ? stuff.misc : new Placeholder( ItemSpriteSheet.SOMETHING ) );
 		placeItem( stuff.ring != null ? stuff.ring : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
-		if ( stuff.weapon != null && stuff.weapon.twoHanded ) {
+		if ( stuff.weapon instanceof MeleeWeapon && ((MeleeWeapon) stuff.weapon).twoHanded ) {
 			if (container == Dungeon.hero.belongings.backpack) placeItem(container);
 		}
 

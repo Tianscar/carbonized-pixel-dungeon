@@ -22,6 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.ui.changelist.cbpd;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.BigRat;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.DriedRose;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.ChangesScene;
@@ -44,6 +45,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_6_changes(changeInfos);
 		add_v0_0_5p3_changes(changeInfos);
 		add_v0_0_5p2_changes(changeInfos);
 		add_v0_0_5p1_changes(changeInfos);
@@ -59,6 +61,30 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_6_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.6", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
+				"_-_ 2022年5月28日更新\n" +
+						"_-_ 距离碳化的像素地牢v0.0.5更新2天\n" +
+						"\n" +
+						"v0.0.6版本将会是一个里程碑式的更新！\n\n" +
+						"添加了新的生物：大佬鼠！（代替了原来的老鼠王）\n\n" +
+						"新的冒险手册页面：武器双持！\n\n" +
+						"并且会在接下来的几个patch版本添加新的地区：仓库番（类似发芽的像素地牢的推羊关）！\n\n" +
+						"敬请期待！"));
+
+		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.GUIDEBOOK, null), "新的冒险手册页面！",
+				"在玩家得到第二把单手武器时，冒险手册会有相关的提示！"));
+
+		changes.addButton( new ChangeButton(new Image(Assets.Sprites.BIGRAT, 0, 2, 16, 16), Messages.get(BigRat.class, "name"),
+				"新生物：大佬鼠将代替老鼠王在地牢第五层出现！\n\n" +
+						"它不会接受矮人王冠，而是会在一定次数的对话后给英雄一些阳春草种子！\n\n" +
+						"如果你使用简体中文或繁体中文进行游戏，它会从一个一共50多条的词库里随机挑选一部分来与你对话！\n（注：大佬鼠的原型为群友Catand，词库也是他写的，_全是骚话_）"));
 	}
 
 	public static void add_v0_0_5p3_changes( ArrayList<ChangeInfo> changeInfos ) {
@@ -84,7 +110,7 @@ public class v0_0_X_Changes {
 				"现在悲伤幽灵可以双持武器了。"));
 
 		changes.addButton( new ChangeButton(new Image(new StatueSprite()), "活化石像改动",
-				"现在活化石像、装甲石像和石像石像有概率双持武器了。"));
+				"现在活化石像、装甲石像和石像守卫有概率双持武器了。"));
 	}
 
 	public static void add_v0_0_5p2_changes( ArrayList<ChangeInfo> changeInfos ) {

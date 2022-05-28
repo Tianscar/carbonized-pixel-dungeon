@@ -300,6 +300,7 @@ public class TitleScene extends PixelScene {
 							Updates.launchUpdate(Updates.updateData());
 						} else if (index == 1){
 							NewChangesScene.changesSelected = 0;
+							NewChangesScene.fromChangesScene = false;
 							CarbonizedPixelDungeon.switchNoFade( NewChangesScene.class );
 						}
 					}
@@ -307,6 +308,7 @@ public class TitleScene extends PixelScene {
 
 			} else {
 				NewChangesScene.changesSelected = 0;
+				NewChangesScene.fromChangesScene = false;
 				CarbonizedPixelDungeon.switchNoFade( NewChangesScene.class );
 			}
 		}

@@ -39,7 +39,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Piranha;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Senior;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Statue;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Wraith;
-import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.RatKing;
+import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.BigRat;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
@@ -103,7 +103,7 @@ public class DistortionTrap extends Trap{
 			switch (summoned){
 				case 1:
 					if (Dungeon.depth != 5 && Random.Int(100) == 0){
-						mob = new RatKing();
+						mob = new BigRat();
 						break;
 					}
 				case 3: case 5 : default:

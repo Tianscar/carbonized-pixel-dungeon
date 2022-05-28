@@ -15,7 +15,7 @@ import com.ansdoship.pixeldungeonclasses.utils.Callback;
 public class Guidebook extends Item {
 
 	{
-		image = ItemSpriteSheet.MASTERY;
+		image = ItemSpriteSheet.GUIDEBOOK;
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class GitHubUpdates extends UpdateService {
 						update.versionCode = latestVersionCode;
 						Matcher m = descPattern.matcher(latestRelease.getString("body"));
 						m.find();
-						update.desc = m.group(1).trim().replaceAll("-", "_-_");
+						update.desc = m.group(1).trim().replaceAll("- ", "_-_ ");
 						update.URL = latestRelease.getString("html_url");
 
 						callback.onUpdateAvailable(update);
