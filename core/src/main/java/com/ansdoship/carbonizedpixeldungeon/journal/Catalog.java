@@ -93,7 +93,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfTransfusion;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfWarding;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.AssassinsBlade;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.BattleAxe;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Crossbow;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Dirk;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Flail;
@@ -118,6 +118,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Sword;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WarHammer;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Whip;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.LightCrossbow;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 
 import java.util.ArrayList;
@@ -162,6 +163,7 @@ public enum Catalog {
 		WEAPONS.seen.put( Quarterstaff.class,               false);
 		WEAPONS.seen.put( Dirk.class,                       false);
 		WEAPONS.seen.put( Sword.class,                      false);
+		WEAPONS.seen.put( LightCrossbow.class,              false);
 		WEAPONS.seen.put( Mace.class,                       false);
 		WEAPONS.seen.put( Scimitar.class,                   false);
 		WEAPONS.seen.put( RoundShield.class,                false);

@@ -461,7 +461,19 @@ public class Hero extends Char {
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
 		
-		if (wep instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow){
+		if (wep instanceof MissileWeapon) {
+			if (Dungeon.level.adjacent( pos, target.pos )) {
+				accuracy *= (0.5f + 0.2f*pointsInTalent(Talent.POINT_BLANK));
+			} else {
+				accuracy *= 1.5f;
+			}
+			if (((MissileWeapon) wep).shooter != null) {
+				if (((MissileWeapon) wep).shooter.cursed) {
+					accuracy *= 0.5f;
+				}
+			}
+		}
+		else if (belongings.weapon() instanceof SpiritBow) {
 			if (Dungeon.level.adjacent( pos, target.pos )) {
 				accuracy *= (0.5f + 0.2f*pointsInTalent(Talent.POINT_BLANK));
 			} else {
@@ -469,7 +481,11 @@ public class Hero extends Char {
 			}
 		}
 
-		if (wep instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
+		if (wep instanceof MissileWeapon) {
+			if (((MissileWeapon) wep).shooter != null) return (int)(attackSkill * accuracy * ((MissileWeapon) wep).shooter.accuracyFactor( this ));
+			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
+		}
+		else if (belongings.weapon() instanceof SpiritBow) {
 			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
 		}
 		else if (canWep1Attack && canWep2Attack) {
@@ -617,7 +633,11 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack() {
-		if (belongings.weapon() instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
+		if (belongings.weapon() instanceof MissileWeapon) {
+			if (((MissileWeapon)belongings.weapon()).shooter != null) return STR() >= ((MissileWeapon)belongings.weapon()).shooter.STRReq();
+			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
+		}
+		else if (belongings.weapon() instanceof SpiritBow) {
 			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
 		}
 		else if (canWep1Attack && canWep2Attack) {

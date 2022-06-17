@@ -112,7 +112,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfTransfusion;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfWarding;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.AssassinsBlade;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.BattleAxe;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Crossbow;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Dirk;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Flail;
@@ -138,6 +138,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Sword;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WarHammer;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Whip;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.LightCrossbow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.Bolas;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.ForceCube;
@@ -339,7 +340,8 @@ public class Generator {
 					HandAxe.class,
 					Spear.class,
 					Quarterstaff.class,
-					Dirk.class
+					Dirk.class,
+					LightCrossbow.class
 			};
 			WEP_T2.probs = new float[]{ 6, 5, 5, 4, 4 };
 			

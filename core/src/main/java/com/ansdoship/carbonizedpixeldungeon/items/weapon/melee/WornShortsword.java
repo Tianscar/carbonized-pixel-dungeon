@@ -37,4 +37,14 @@ public class WornShortsword extends MeleeWeapon {
 		bones = false;
 	}
 
+	@Override
+	public int max(int lvl) {
+		return 12;
+	}
+
+	@Override
+	public int STRReq(int lvl) {
+		return super.STRReq(lvl) + 1;
+	}
+
 }

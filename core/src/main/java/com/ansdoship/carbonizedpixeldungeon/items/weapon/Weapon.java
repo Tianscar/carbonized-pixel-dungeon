@@ -93,9 +93,9 @@ abstract public class Weapon extends KindOfWeapon {
 	
 	public Augment augment = Augment.NONE;
 	
-	private static final int USES_TO_ID = 20;
-	private float usesLeftToID = USES_TO_ID;
-	private float availableUsesToID = USES_TO_ID/2f;
+	protected static final int USES_TO_ID = 20;
+	protected float usesLeftToID = USES_TO_ID;
+	protected float availableUsesToID = USES_TO_ID/2f;
 	
 	public Enchantment enchantment;
 	public boolean curseInfusionBonus = false;

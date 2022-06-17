@@ -142,6 +142,8 @@ public class Assets {
 		public static final String HALLS_1      = "music/halls_1.ogg";
 		public static final String HALLS_2      = "music/halls_2.ogg";
 		public static final String HALLS_BOSS   = "music/halls_boss.ogg";
+
+		public static final String SOKOBAN  	= "music/sokoban.ogg";
 	}
 
 	public static class Sounds {

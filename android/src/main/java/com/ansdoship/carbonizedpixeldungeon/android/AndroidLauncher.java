@@ -21,28 +21,31 @@
 
 package com.ansdoship.carbonizedpixeldungeon.android;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.TextView;
-
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.utils.GdxNativesLoader;
 
 public class AndroidLauncher extends Activity {
 	
-	@SuppressLint("SetTextI18n")
+	//@SuppressLint("SetTextI18n")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+		GdxNativesLoader.load();
+		FreeType.initFreeType();
+
+		Intent intent = new Intent(this, AndroidGame.class);
+		startActivity(intent);
+		finish();
+
+		/*
 		try {
 			GdxNativesLoader.load();
 			FreeType.initFreeType();
-			
+
 			Intent intent = new Intent(this, AndroidGame.class);
 			startActivity(intent);
 			finish();
@@ -59,5 +62,7 @@ public class AndroidLauncher extends Activity {
 			text.setPadding(10, 10, 10, 10);
 			setContentView(text);
 		}
+
+		 */
 	}
 }

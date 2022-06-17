@@ -23,13 +23,10 @@ package com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.darts;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.VelvetPouch;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Crossbow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.plants.Plant;
@@ -38,8 +35,6 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndBag;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
-import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
-import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 import java.util.ArrayList;
 
@@ -75,9 +70,9 @@ public class Dart extends MissileWeapon {
 	
 	@Override
 	public int min(int lvl) {
-		if (bow != null){
+		if (shooter != null){
 			return  4 +                    //4 base
-					bow.buffedLvl() + lvl; //+1 per level or bow level
+					shooter.missileAddMin() + lvl; //+1 per level or bow level
 		} else {
 			return  1 +     //1 base, down from 2
 					lvl;    //scaling unchanged
@@ -86,75 +81,12 @@ public class Dart extends MissileWeapon {
 
 	@Override
 	public int max(int lvl) {
-		if (bow != null){
+		if (shooter != null){
 			return  12 +                       //12 base
-					3*bow.buffedLvl() + 2*lvl; //+3 per bow level, +2 per level (default scaling +2)
+					shooter.missileAddMax() + 2*lvl; //+3 per bow level, +2 per level (default scaling +2)
 		} else {
 			return  2 +     //2 base, down from 5
 					2*lvl;  //scaling unchanged
-		}
-	}
-	
-	private static Crossbow bow;
-	
-	private void updateCrossbow(){
-		if (Dungeon.hero.belongings.weapon() instanceof Crossbow){
-			bow = (Crossbow) Dungeon.hero.belongings.weapon();
-		} else {
-			bow = null;
-		}
-	}
-
-	public boolean crossbowHasEnchant( Char owner ){
-		return bow != null && bow.enchantment != null && owner.buff(MagicImmune.class) == null;
-	}
-	
-	@Override
-	public boolean hasEnchant(Class<? extends Enchantment> type, Char owner) {
-		if (bow != null && bow.hasEnchant(type, owner)){
-			return true;
-		} else {
-			return super.hasEnchant(type, owner);
-		}
-	}
-	
-	@Override
-	public int proc(Char attacker, Char defender, int damage) {
-		if (bow != null){
-			damage = bow.proc(attacker, defender, damage);
-		}
-
-		return super.proc(attacker, defender, damage);
-	}
-	
-	@Override
-	protected void onThrow(int cell) {
-		updateCrossbow();
-		super.onThrow(cell);
-	}
-
-	@Override
-	public void throwSound() {
-		updateCrossbow();
-		if (bow != null) {
-			Sample.INSTANCE.play(Assets.Sounds.ATK_CROSSBOW, 1, Random.Float(0.87f, 1.15f));
-		} else {
-			super.throwSound();
-		}
-	}
-	
-	@Override
-	public String info() {
-		updateCrossbow();
-		if (bow != null && !bow.isIdentified()){
-			int level = bow.level();
-			//temporarily sets the level of the bow to 0 for IDing purposes
-			bow.level(0);
-			String info = super.info();
-			bow.level(level);
-			return info;
-		} else {
-			return super.info();
 		}
 	}
 	

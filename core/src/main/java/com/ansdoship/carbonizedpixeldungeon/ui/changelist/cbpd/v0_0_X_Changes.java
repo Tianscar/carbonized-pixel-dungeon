@@ -45,6 +45,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_6p1_changes(changeInfos);
 		add_v0_0_6_changes(changeInfos);
 		add_v0_0_5p3_changes(changeInfos);
 		add_v0_0_5p2_changes(changeInfos);
@@ -61,6 +62,22 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_6p1_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.6p1", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 冒险手册闪退的Bug\n" +
+						"_-_ 背包界面物品文字重叠的Bug"));
+
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.CROSSBOW), "十字弩重制！",
+				"添加了新的武器种类：_远程武器_！\n\n" +
+						"远程武器需要装填弹药，并且一般需要装备，才能进行射击，能大幅提升弹药的攻击力！但是受诅咒的远程武器会严重影响命中率。\n\n" +
+						"现版本远程武器只有_2阶_的_轻型十字弩_（单手）和_4阶_的_十字弩_（双手）"));
 	}
 
 	public static void add_v0_0_6_changes( ArrayList<ChangeInfo> changeInfos ) {

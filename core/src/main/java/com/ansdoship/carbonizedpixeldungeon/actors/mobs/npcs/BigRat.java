@@ -21,6 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs;
 
+import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
@@ -29,8 +30,10 @@ import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.messages.Languages;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.plants.Sungrass;
+import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.BigRatSprite;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
@@ -138,11 +141,13 @@ public class BigRat extends NPC {
 			state = WANDERING;
 		} else if (count >= 4 && !seedGiven) {
 			seedGiven = true;
+			Item seeds = new Sungrass.Seed().quantity(Random.Int(1, 4));
 			yell( Messages.get(this, (lang == Languages.CHINESE || lang == Languages.TR_CHINESE) ?
 					("seed_" + Random.Int(1, 4)) : "seed") );
-			Item seeds = new Sungrass.Seed().quantity(Random.Int(1, 4));
-			if (seeds.doPickUp( Dungeon.hero )) {
+			if (seeds.collect( Dungeon.hero.belongings.backpack )) {
+				GameScene.pickUp( seeds, Dungeon.hero.pos );
 				GLog.i( Messages.get(Dungeon.hero, "you_now_have", seeds.name()) );
+				Sample.INSTANCE.play( Assets.Sounds.ITEM );
 			} else {
 				Dungeon.level.drop(seeds, Dungeon.hero.pos).sprite.drop();
 			}

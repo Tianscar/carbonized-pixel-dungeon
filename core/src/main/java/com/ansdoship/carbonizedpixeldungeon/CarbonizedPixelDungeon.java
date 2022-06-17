@@ -42,8 +42,8 @@ public class CarbonizedPixelDungeon extends Game {
 
 		//CBPD v0.0.6
 		Bundle.addAlias(
-				com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.BigRat.class,
-				"com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.RatKing.class" );
+				com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Crossbow" );
 
 		//CBPD v0.0.4
 		Bundle.addAlias(

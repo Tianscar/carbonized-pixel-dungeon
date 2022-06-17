@@ -121,14 +121,14 @@ public class WndJournal extends WndTabbed {
 					protected void select( boolean value ) {
 						super.select( value );
 						notesTab.active = notesTab.visible = value;
-						if (value) last_index = 3;
+						if (value) last_index = 2;
 					}
 				},
 				new IconTab( new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER, null) ) {
 					protected void select( boolean value ) {
 						super.select( value );
 						catalogTab.active = catalogTab.visible = value;
-						if (value) last_index = 4;
+						if (value) last_index = 3;
 					}
 				}
 		};

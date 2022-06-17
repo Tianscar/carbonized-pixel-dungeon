@@ -128,8 +128,8 @@ public class ItemSlot extends Button {
 		}
 		
 		if (extra != null) {
-			extra.x = x + (width - extra.width());
-			extra.y = y;
+			extra.x = (status == null || (status.width() + extra.width() < width())) ? x + (width - extra.width()) : x;
+			extra.y = (status == null || (status.width() + extra.width() < width())) ? y : y + status.height() - 1;
 			PixelScene.align(extra);
 		}
 

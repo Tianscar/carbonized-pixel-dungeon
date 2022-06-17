@@ -414,6 +414,7 @@ public class WndRanking extends WndTabbed {
 
 		QuickSlotButton(Item item){
 			super(item);
+			showExtraInfo(false);
 			this.item = item;
 		}
 

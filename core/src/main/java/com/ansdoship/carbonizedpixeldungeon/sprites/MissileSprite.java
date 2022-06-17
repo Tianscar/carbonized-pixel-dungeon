@@ -24,7 +24,7 @@ package com.ansdoship.carbonizedpixeldungeon.sprites;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Crossbow;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.Bolas;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.HeavyBoomerang;
@@ -149,7 +149,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		}
 		
 		float speed = SPEED;
-		if (item instanceof Dart && Dungeon.hero.belongings.weapon() instanceof Crossbow){
+		if (item instanceof MissileWeapon && ((MissileWeapon) item).shooter != null){
 			speed *= 3f;
 			
 		} else if (item instanceof SpiritBow.SpiritArrow

@@ -208,9 +208,11 @@ public class SpiritBow extends Weapon {
 		int damage = augment.damageFactor(super.damageRoll(owner));
 		
 		if (owner instanceof Hero) {
-			int exStr = ((Hero)owner).STR() - STRReq();
-			if (exStr > 0) {
-				damage += Random.IntRange( 0, exStr );
+			if (shooter == null) {
+				int exStr = ((Hero)owner).STR() - STRReq();
+				if (exStr > 0) {
+					damage += Random.IntRange( 0, exStr );
+				}
 			}
 		}
 

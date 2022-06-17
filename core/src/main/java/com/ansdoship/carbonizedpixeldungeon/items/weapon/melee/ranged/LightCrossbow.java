@@ -19,27 +19,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.ansdoship.carbonizedpixeldungeon.items.weapon.melee;
+package com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
-public class Crossbow extends MeleeWeapon {
+public class LightCrossbow extends Crossbow {
 	
 	{
-		image = ItemSpriteSheet.CROSSBOW;
-		hitSound = Assets.Sounds.HIT;
-		hitSoundPitch = 1f;
+		image = ItemSpriteSheet.LIGHT_CROSSBOW;
 		
-		//check Dart.class for additional properties
-		
-		tier = 4;
-		twoHanded = true;
+		tier = 2;
+		twoHanded = false;
 	}
-	
+
 	@Override
-	public int max(int lvl) {
-		return  4*(tier+1) +    //20 base, down from 25
-				lvl*(tier);     //+4 per level, down from +5
+	protected int initialCharges() {
+		return 2;
 	}
+
 }
