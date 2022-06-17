@@ -196,10 +196,7 @@ abstract public class MissileWeapon extends Weapon {
 	@Override
 	public float accuracyFactor(Char owner) {
 		float accFactor;
-		if (shooter != null) {
-			accFactor = shooter.accuracyFactor(owner);
-			if (shooter.cursed) accFactor /= 1.5f;
-		}
+		if (shooter != null) accFactor = shooter.accuracyFactor(owner);
 		else accFactor = super.accuracyFactor(owner);
 		if (owner instanceof Hero && owner.buff(Momentum.class) != null && owner.buff(Momentum.class).freerunning()){
 			accFactor *= 1f + 0.2f*((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM);
