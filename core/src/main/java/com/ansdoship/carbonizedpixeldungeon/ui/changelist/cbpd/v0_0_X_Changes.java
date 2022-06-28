@@ -80,7 +80,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了：\n" +
-						"_-_ 玩家死后仍能进入存档的Bug\n" +
+						"_-_ 玩家死后仍然活着的Bug\n" +
 						"_-_ 启动界面的相关Bug"));
 	}
 
