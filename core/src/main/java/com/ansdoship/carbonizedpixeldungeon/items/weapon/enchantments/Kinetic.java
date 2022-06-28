@@ -31,39 +31,39 @@ import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 
 public class Kinetic extends Weapon.Enchantment {
-	
+
 	private static ItemSprite.Glowing YELLOW = new ItemSprite.Glowing( 0xFFFF00 );
-	
+
 	@Override
 	public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
-		
+
 		int conservedDamage = 0;
 		if (attacker.buff(ConservedDamage.class) != null) {
 			conservedDamage = attacker.buff(ConservedDamage.class).damageBonus();
 			attacker.buff(ConservedDamage.class).detach();
 		}
-		
+
 		if (damage > (defender.HP + defender.shielding())){
 			int extraDamage = damage - (defender.HP + defender.shielding());
 
 			Buff.affect(attacker, ConservedDamage.class).setBonus(extraDamage);
 		}
-		
+
 		return damage + conservedDamage;
 	}
-	
+
 	@Override
 	public ItemSprite.Glowing glowing() {
 		return YELLOW;
 	}
-	
+
 	public static class ConservedDamage extends Buff {
-		
+
 		@Override
 		public int icon() {
 			return BuffIndicator.WEAPON;
 		}
-		
+
 		@Override
 		public void tintIcon(Image icon) {
 			if (preservedDamage >= 10){
@@ -74,44 +74,49 @@ public class Kinetic extends Weapon.Enchantment {
 				icon.hardlight(1f, 1f, 1f - preservedDamage*.2f);
 			}
 		}
-		
+
+		@Override
+		public String iconTextDisplay() {
+			return Integer.toString(damageBonus());
+		}
+
 		private float preservedDamage;
-		
+
 		public void setBonus(int bonus){
 			preservedDamage = bonus;
 		}
-		
+
 		public int damageBonus(){
 			return (int)Math.ceil(preservedDamage);
 		}
-		
+
 		@Override
 		public boolean act() {
 			preservedDamage -= Math.max(preservedDamage*.025f, 0.1f);
 			if (preservedDamage <= 0) detach();
-			
+
 			spend(TICK);
 			return true;
 		}
-		
+
 		@Override
 		public String toString() {
 			return Messages.get(this, "name");
 		}
-		
+
 		@Override
 		public String desc() {
 			return Messages.get(this, "desc", damageBonus());
 		}
-		
+
 		private static final String PRESERVED_DAMAGE = "preserve_damage";
-		
+
 		@Override
 		public void storeInBundle(Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(PRESERVED_DAMAGE, preservedDamage);
 		}
-		
+
 		@Override
 		public void restoreFromBundle(Bundle bundle) {
 			super.restoreFromBundle(bundle);

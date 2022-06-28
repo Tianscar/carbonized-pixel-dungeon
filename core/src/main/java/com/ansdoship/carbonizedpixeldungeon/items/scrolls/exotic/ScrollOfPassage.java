@@ -32,21 +32,21 @@ import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 
 public class ScrollOfPassage extends ExoticScroll {
-	
+
 	{
 		icon = ItemSpriteSheet.Icons.SCROLL_PASSAGE;
 	}
-	
+
 	@Override
 	public void doRead() {
 
 		identify();
-		
-		if (Dungeon.bossLevel()) {
-			
+
+		if (Dungeon.level.locked) {
+
 			GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
 			return;
-			
+
 		}
 
 		TimekeepersHourglass.timeFreeze timeFreeze = Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);

@@ -31,23 +31,24 @@ import com.ansdoship.carbonizedpixeldungeon.items.Generator;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.ansdoship.carbonizedpixeldungeon.sprites.GolemSprite;
+import com.ansdoship.carbonizedpixeldungeon.utils.BArray;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class Golem extends Mob {
-	
+
 	{
 		spriteClass = GolemSprite.class;
-		
+
 		HP = HT = 120;
 		defenseSkill = 15;
-		
+
 		EXP = 12;
 		maxLvl = 22;
 
 		loot = Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR);
-		lootChance = 0.125f; //initially, see rollToDropLoot
+		lootChance = 0.125f; //initially, see lootChance()
 
 		properties.add(Property.INORGANIC);
 		properties.add(Property.LARGE);
@@ -60,28 +61,31 @@ public class Golem extends Mob {
 	public int damageRoll() {
 		return Random.NormalIntRange( 25, 30 );
 	}
-	
+
 	@Override
 	public int attackSkill( Char target ) {
 		return 28;
 	}
-	
+
 	@Override
 	public int drRoll() {
 		return Random.NormalIntRange(0, 12);
 	}
 
 	@Override
-	public void rollToDropLoot() {
-		Imp.Quest.process( this );
-
+	public float lootChance() {
 		//each drop makes future drops 1/2 as likely
 		// so loot chance looks like: 1/8, 1/16, 1/32, 1/64, etc.
-		lootChance *= Math.pow(1/2f, Dungeon.LimitedDrops.GOLEM_EQUIP.count);
+		return super.lootChance() * (float)Math.pow(1/2f, Dungeon.LimitedDrops.GOLEM_EQUIP.count);
+	}
+
+	@Override
+	public void rollToDropLoot() {
+		Imp.Quest.process( this );
 		super.rollToDropLoot();
 	}
 
-	protected Item createLoot() {
+	public Item createLoot() {
 		Dungeon.LimitedDrops.GOLEM_EQUIP.count++;
 		//uses probability tables for demon halls
 		if (loot == Generator.Category.WEAPON){
@@ -145,8 +149,8 @@ public class Golem extends Mob {
 		int bestPos = enemy.pos;
 		for (int i : PathFinder.NEIGHBOURS8){
 			if (Dungeon.level.passable[pos + i]
-				&& Actor.findChar(pos+i) == null
-				&& Dungeon.level.trueDistance(pos+i, enemy.pos) > Dungeon.level.trueDistance(bestPos, enemy.pos)){
+					&& Actor.findChar(pos+i) == null
+					&& Dungeon.level.trueDistance(pos+i, enemy.pos) > Dungeon.level.trueDistance(bestPos, enemy.pos)){
 				bestPos = pos+i;
 			}
 		}
@@ -164,6 +168,16 @@ public class Golem extends Mob {
 		}
 
 		enemyTeleCooldown = 20;
+	}
+
+	private boolean canTele(int target){
+		if (enemyTeleCooldown > 0) return false;
+		PathFinder.buildDistanceMap(target, BArray.not(Dungeon.level.solid, null), Dungeon.level.distance(pos, target)+1);
+		//zaps can go around blocking terrain, but not through it
+		if (PathFinder.distance[pos] == Integer.MAX_VALUE){
+			return false;
+		}
+		return true;
 	}
 
 	private class Wandering extends Mob.Wandering{
@@ -201,8 +215,8 @@ public class Golem extends Mob {
 
 				int oldPos = pos;
 
-				if (enemyTeleCooldown <= 0 && distance(enemy) >= 1 && Random.Int(100/distance(enemy)) == 0
-						&& !Char.hasProp(enemy, Property.IMMOVABLE)){
+				if (distance(enemy) >= 1 && Random.Int(100/distance(enemy)) == 0
+						&& !Char.hasProp(enemy, Property.IMMOVABLE) && canTele(target)){
 					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
 						sprite.zap( enemy.pos );
 						return false;
@@ -215,7 +229,7 @@ public class Golem extends Mob {
 					spend( 1 / speed() );
 					return moveSprite( oldPos,  pos );
 
-				} else if (enemyTeleCooldown <= 0 && !Char.hasProp(enemy, Property.IMMOVABLE)) {
+				} else if (!Char.hasProp(enemy, Property.IMMOVABLE) && canTele(target)) {
 					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
 						sprite.zap( enemy.pos );
 						return false;

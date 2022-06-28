@@ -21,30 +21,24 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items.weapon.enchantments;
 
-import com.ansdoship.carbonizedpixeldungeon.Badges;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.Statistics;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.PinCushion;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.SoulMark;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
-import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
-import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class Corrupting extends Weapon.Enchantment {
-	
+
 	private static ItemSprite.Glowing BLACK = new ItemSprite.Glowing( 0x440066 );
-	
+
 	@Override
 	public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		int level = Math.max( 0, weapon.buffedLvl() );
-		
+
 		// lvl 0 - 20%
 		// lvl 1 ~ 23%
 		// lvl 2 ~ 26%
@@ -55,41 +49,20 @@ public class Corrupting extends Weapon.Enchantment {
 				&& defender.buff(Corruption.class) == null
 				&& defender instanceof Mob
 				&& defender.isAlive()){
-			
+
 			Mob enemy = (Mob) defender;
 			Hero hero = (attacker instanceof Hero) ? (Hero) attacker : Dungeon.hero;
-			
-			enemy.HP = enemy.HT;
-			for (Buff buff : enemy.buffs()) {
-				if (buff.type == Buff.buffType.NEGATIVE
-						&& !(buff instanceof SoulMark)) {
-					buff.detach();
-				} else if (buff instanceof PinCushion){
-					buff.detach();
-				}
-			}
-			if (enemy.alignment == Char.Alignment.ENEMY){
-				enemy.rollToDropLoot();
-			}
-			
-			Buff.affect(enemy, Corruption.class);
-			
-			Statistics.enemiesSlain++;
-			Badges.validateMonstersSlain();
-			Statistics.qualifiedForNoKilling = false;
-			if (enemy.EXP > 0 && hero.lvl <= enemy.maxLvl) {
-				hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(enemy, "exp", enemy.EXP));
-				hero.earnExp(enemy.EXP, enemy.getClass());
-			} else {
-				hero.earnExp(0, enemy.getClass());
-			}
-			
+
+			Corruption.corruptionHeal(enemy);
+
+			AllyBuff.affectAndLoot(enemy, hero, Corruption.class);
+
 			return 0;
 		}
-		
+
 		return damage;
 	}
-	
+
 	@Override
 	public ItemSprite.Glowing glowing() {
 		return BLACK;

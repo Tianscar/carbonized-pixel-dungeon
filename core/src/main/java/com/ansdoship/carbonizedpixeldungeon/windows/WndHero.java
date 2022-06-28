@@ -39,6 +39,7 @@ import com.ansdoship.carbonizedpixeldungeon.ui.ScrollPane;
 import com.ansdoship.carbonizedpixeldungeon.ui.StatusPane;
 import com.ansdoship.carbonizedpixeldungeon.ui.TalentsPane;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
+import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
 import com.ansdoship.pixeldungeonclasses.noosa.Group;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
@@ -49,7 +50,7 @@ import java.util.Locale;
 public class WndHero extends WndTabbed {
 	
 	private static final int WIDTH		= 120;
-	private static final int HEIGHT		= 120;
+	private static final int HEIGHT		= 128;
 	
 	private StatsTab stats;
 	private TalentsTab talents;
@@ -75,26 +76,41 @@ public class WndHero extends WndTabbed {
 		buffs.setRect(0, 0, WIDTH, HEIGHT);
 		buffs.setupList();
 		
-		add( new LabeledTab( Messages.get(this, "stats") ) {
+		add( new IconTab( Icons.get(Icons.RANKINGS) ) {
 			protected void select( boolean value ) {
 				super.select( value );
 				if (selected) lastIdx = 0;
 				stats.visible = stats.active = selected;
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndHero.class, "stats"));
+			}
 		} );
-		add( new LabeledTab( Messages.get(this, "talents") ) {
+		add( new IconTab( Icons.get(Icons.TALENT) ) {
 			protected void select( boolean value ) {
 				super.select( value );
 				if (selected) lastIdx = 1;
 				if (selected) StatusPane.talentBlink = 0;
 				talents.visible = talents.active = selected;
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndHero.class, "talents"));
+			}
 		} );
-		add( new LabeledTab( Messages.get(this, "buffs") ) {
+		add( new IconTab( Icons.get(Icons.BUFFS) ) {
 			protected void select( boolean value ) {
 				super.select( value );
 				if (selected) lastIdx = 2;
 				buffs.visible = buffs.active = selected;
+			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndHero.class, "buffs"));
 			}
 		} );
 
@@ -109,7 +125,7 @@ public class WndHero extends WndTabbed {
 
 	private class StatsTab extends Group {
 		
-		private static final int GAP = 6;
+		private static final int GAP = 4;
 		
 		private float pos;
 		
@@ -133,16 +149,31 @@ public class WndHero extends WndTabbed {
 					super.onClick();
 					CarbonizedPixelDungeon.scene().addToFront(new WndHeroInfo(hero.heroClass));
 				}
+
+				@Override
+				protected String hoverText() {
+					return Messages.titleCase(Messages.get(WndKeyBindings.class, "hero_info"));
+				}
 			};
 			infoButton.setRect(title.right(), 0, 16, 16);
 			add(infoButton);
 
-			pos = title.bottom() + 2*GAP;
+			ColorBlock sep = new ColorBlock(1, 1, 0xFF000000);
+			sep.size(WIDTH, 1);
+			sep.y = title.bottom() + 2;
+			add(sep);
+
+			pos = sep.y + GAP;
 
 			int strBonus = hero.STR() - hero.STR;
 			if (strBonus > 0)           statSlot( Messages.get(this, "str"), hero.STR + " + " + strBonus );
 			else if (strBonus < 0)      statSlot( Messages.get(this, "str"), hero.STR + " - " + -strBonus );
 			else                        statSlot( Messages.get(this, "str"), hero.STR() );
+			statSlot( Messages.get(this, "con"), hero.CON );
+			statSlot( Messages.get(this, "dex"), hero.DEX );
+			statSlot( Messages.get(this, "int"), hero.INT );
+			statSlot( Messages.get(this, "wis"), hero.WIS );
+			statSlot( Messages.get(this, "cha"), hero.CHA );
 			if (hero.shielding() > 0)   statSlot( Messages.get(this, "health"), hero.HP + "+" + hero.shielding() + "/" + hero.HT );
 			else                        statSlot( Messages.get(this, "health"), (hero.HP) + "/" + hero.HT );
 			statSlot( Messages.get(this, "hunger"), hero.hunger() + "/" + Hero.MAX_HUNGER );
@@ -158,11 +189,11 @@ public class WndHero extends WndTabbed {
 
 		private void statSlot( String label, String value ) {
 			
-			RenderedTextBlock txt = PixelScene.renderTextBlock( label, 8 );
+			RenderedTextBlock txt = PixelScene.renderTextBlock( label, 7 );
 			txt.setPos(0, pos);
 			add( txt );
 			
-			txt = PixelScene.renderTextBlock( value, 8 );
+			txt = PixelScene.renderTextBlock( value, 7 );
 			txt.setPos(WIDTH * 0.6f, pos);
 			PixelScene.align(txt);
 			add( txt );
@@ -177,6 +208,7 @@ public class WndHero extends WndTabbed {
 		public float height() {
 			return pos;
 		}
+
 	}
 
 	public class TalentsTab extends Component {

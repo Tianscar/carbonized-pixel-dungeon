@@ -68,14 +68,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.armor.ClassArmor;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Brimstone;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Viscosity;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.AlchemistsToolkit;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.CapeOfThorns;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.DriedRose;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.EtherealChains;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.HornOfPlenty;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.TalismanOfForesight;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
+import com.ansdoship.carbonizedpixeldungeon.items.artifacts.*;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.MagicalHolster;
 import com.ansdoship.carbonizedpixeldungeon.items.journal.Guidebook;
 import com.ansdoship.carbonizedpixeldungeon.items.keys.CrystalKey;
@@ -87,6 +80,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.Potion;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfExperience;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfMight;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfDivineInspiration;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfAccuracy;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfEvasion;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfForce;
@@ -96,6 +90,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfMight;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfTenacity;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfMagicMapping;
+import com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfLivingEarth;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
@@ -155,6 +150,11 @@ public class Hero extends Char {
 	public static final int MAX_HUNGER = 450;
 
 	public static final int STARTING_STR = 10;
+	public static final int STARTING_CON = 10;
+	public static final int STARTING_DEX = 10;
+	public static final int STARTING_INT = 10;
+	public static final int STARTING_WIS = 10;
+	public static final int STARTING_CHA = 10;
 	
 	private static final float TIME_TO_REST		    = 1f;
 	private static final float TIME_TO_SEARCH	    = 2f;
@@ -183,6 +183,11 @@ public class Hero extends Char {
 	public Belongings belongings;
 	
 	public int STR;
+	public int CON;
+	public int DEX;
+	public int INT;
+	public int WIS;
+	public int CHA;
 	
 	public float awareness;
 	
@@ -205,6 +210,11 @@ public class Hero extends Char {
 		HP = HT = 20;
 		hunger = 0;
 		STR = STARTING_STR;
+		CON = STARTING_CON;
+		DEX = STARTING_DEX;
+		INT = STARTING_INT;
+		WIS = STARTING_WIS;
+		CHA = STARTING_CHA;
 		
 		belongings = new Belongings( this );
 		
@@ -215,8 +225,10 @@ public class Hero extends Char {
 		int curHT = HT;
 		
 		HT = 20 + 5*(lvl-1) + HTBoost;
-		float multiplier = RingOfMight.HTMultiplier(this);
-		HT = Math.round(multiplier * HT);
+		float conMultiplier = 0.1f * CON();
+		HT = Math.round(conMultiplier * HT);
+		float ringMultiplier = RingOfMight.HTMultiplier(this);
+		HT = Math.round(ringMultiplier * HT);
 		
 		if (buff(ElixirOfMight.HTBoost.class) != null){
 			HT += buff(ElixirOfMight.HTBoost.class).boost();
@@ -254,6 +266,26 @@ public class Hero extends Char {
 		return STR + strBonus;
 	}
 
+	public int CON() {
+		return CON;// TODO
+	}
+
+	public int DEX() {
+		return DEX;// TODO
+	}
+
+	public int INT() {
+		return INT;// TODO
+	}
+
+	public int WIS() {
+		return WIS;// TODO
+	}
+
+	public int CHA() {
+		return CHA;// TODO
+	}
+
 	private static final String CLASS       = "class";
 	private static final String SUBCLASS    = "subClass";
 	private static final String ABILITY     = "armorAbility";
@@ -261,6 +293,11 @@ public class Hero extends Char {
 	private static final String ATTACK		= "attackSkill";
 	private static final String DEFENSE		= "defenseSkill";
 	private static final String STRENGTH	= "STR";
+	private static final String CONSTITUTION= "CON";
+	private static final String DEXTERITY   = "DEX";
+	private static final String INTELLIGENCE= "INT";
+	private static final String WISDOM      = "WIS";
+	private static final String CHARISMA    = "CHA";
 	private static final String LEVEL		= "lvl";
 	private static final String EXPERIENCE	= "exp";
 	private static final String HTBOOST     = "htboost";
@@ -280,6 +317,11 @@ public class Hero extends Char {
 		bundle.put( DEFENSE, defenseSkill );
 		
 		bundle.put( STRENGTH, STR );
+		bundle.put( CONSTITUTION, CON );
+		bundle.put( DEXTERITY, DEX );
+		bundle.put( INTELLIGENCE, INT );
+		bundle.put( WISDOM, WIS );
+		bundle.put( CHARISMA, CHA );
 		
 		bundle.put( LEVEL, lvl );
 		bundle.put( EXPERIENCE, exp );
@@ -310,6 +352,11 @@ public class Hero extends Char {
 		defenseSkill = bundle.getInt( DEFENSE );
 		
 		STR = bundle.getInt( STRENGTH );
+		CON = bundle.getInt( CONSTITUTION );
+		DEX = bundle.getInt( DEXTERITY );
+		INT = bundle.getInt( INTELLIGENCE );
+		WIS = bundle.getInt( WISDOM );
+		CHA = bundle.getInt( CHARISMA );
 
 		hunger = bundle.getInt( HUNGER );
 
@@ -318,10 +365,15 @@ public class Hero extends Char {
 	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
 		info.level = bundle.getInt( LEVEL );
-		info.str = bundle.getInt( STRENGTH );
+		info.STR = bundle.getInt( STRENGTH );
+		info.CON = bundle.getInt( CONSTITUTION );
+		info.DEX = bundle.getInt( DEXTERITY );
+		info.INT = bundle.getInt( INTELLIGENCE );
+		info.WIS = bundle.getInt( WISDOM );
+		info.CHA = bundle.getInt( CHARISMA );
 		info.exp = bundle.getInt( EXPERIENCE );
-		info.hp = bundle.getInt( Char.TAG_HP );
-		info.ht = bundle.getInt( Char.TAG_HT );
+		info.HP = bundle.getInt( Char.TAG_HP );
+		info.HT = bundle.getInt( Char.TAG_HT );
 		info.hunger = bundle.getInt( HUNGER );
 		info.shld = bundle.getInt( Char.TAG_SHLD );
 		info.heroClass = bundle.getEnum( CLASS, HeroClass.class );
@@ -360,14 +412,27 @@ public class Hero extends Char {
 	}
 
 	public int talentPointsAvailable(int tier){
-		if (lvl < Talent.tierLevelThresholds[tier]
-			|| (tier == 3 && subClass == HeroSubClass.NONE)
-			|| (tier == 4 && armorAbility == null)){
+		if (lvl < (Talent.tierLevelThresholds[tier] - 1)
+				|| (tier == 3 && subClass == HeroSubClass.NONE)
+				|| (tier == 4 && armorAbility == null)) {
 			return 0;
 		} else if (lvl >= Talent.tierLevelThresholds[tier+1]){
-			return Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier);
+			return Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier) + bonusTalentPoints(tier);
 		} else {
-			return 1 + lvl - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier);
+			return 1 + lvl - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier) + bonusTalentPoints(tier);
+		}
+	}
+
+	public int bonusTalentPoints(int tier){
+		if (lvl < (Talent.tierLevelThresholds[tier]-1)
+				|| (tier == 3 && subClass == HeroSubClass.NONE)
+				|| (tier == 4 && armorAbility == null)) {
+			return 0;
+		} else if (buff(PotionOfDivineInspiration.DivineInspirationTracker.class) != null
+				&& buff(PotionOfDivineInspiration.DivineInspirationTracker.class).isBoosted(tier)) {
+			return 2;
+		} else {
+			return 0;
 		}
 	}
 	
@@ -1328,6 +1393,18 @@ public class Hero extends Char {
 			GLog.w( Messages.get(this, "pain_resist") );
 		}
 
+		Endure.EndureTracker endure = buff(Endure.EndureTracker.class);
+		if (!(src instanceof Char)){
+			//reduce damage here if it isn't coming from a character (if it is we already reduced it)
+			if (endure != null){
+				dmg = endure.adjustDamageTaken(dmg);
+			}
+			//the same also applies to challenge scroll damage reduction
+			if (buff(ScrollOfChallenge.ChallengeArena.class) != null){
+				dmg *= 0.67f;
+			}
+		}
+
 		CapeOfThorns.Thorns thorns = buff( CapeOfThorns.Thorns.class );
 		if (thorns != null) {
 			dmg = thorns.proc(dmg, (src instanceof Char ? (Char)src : null),  this);
@@ -1622,6 +1699,9 @@ public class Hero extends Char {
 		
 		AlchemistsToolkit.kitEnergy kit = buff(AlchemistsToolkit.kitEnergy.class);
 		if (kit != null) kit.gainCharge(percent);
+
+		MasterThievesArmband.Thievery armband = buff(MasterThievesArmband.Thievery.class);
+		if (armband != null) armband.gainCharge(percent);
 		
 		Berserk berserk = buff(Berserk.class);
 		if (berserk != null) berserk.recover(percent);
@@ -1880,12 +1960,12 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public void move( int step ) {
+	public void move(int step, boolean travelling) {
 		boolean wasHighGrass = Dungeon.level.map[step] == Terrain.HIGH_GRASS;
 
-		super.move( step );
-		
-		if (!flying) {
+		super.move( step, travelling);
+
+		if (!flying && travelling) {
 			if (Dungeon.level.water[pos]) {
 				Sample.INSTANCE.play( Assets.Sounds.WATER, 1, Random.Float( 0.8f, 1.25f ) );
 			} else if (Dungeon.level.map[pos] == Terrain.EMPTY_SP) {

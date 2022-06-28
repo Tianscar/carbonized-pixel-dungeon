@@ -22,6 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.desktop;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -35,13 +36,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DesktopPlatformSupport extends PlatformSupport {
+
+	private final DesktopWindowListener windowListener;
+
+	public DesktopPlatformSupport(DesktopWindowListener windowListener) {
+		this.windowListener = windowListener;
+	}
 	
 	@Override
 	public void updateDisplaySize() {
-		//FIXME we still set window resolution when game becomes maximized =/
-		if (!PDSettings.fullscreen()) {
-			PDSettings.windowResolution( new Point( Game.width, Game.height ) );
-		}
+		windowListener.updateDisplaySize(Game.width, Game.height);
 	}
 	
 	@Override
@@ -65,7 +69,7 @@ public class DesktopPlatformSupport extends PlatformSupport {
 	}
 	/* FONT SUPPORT */
 	
-	//custom pixel font, for use with Latin and Cyrillic languages
+	//custom pixel fonts, for use with Latin and Cyrillic languages
 	private static FreeTypeFontGenerator basicFontGenerator;
 	//droid sans fallback, for asian fonts
 	private static FreeTypeFontGenerator asianFontGenerator;
@@ -83,14 +87,16 @@ public class DesktopPlatformSupport extends PlatformSupport {
 		fonts = new HashMap<>();
 
 		if (systemfont) {
-			basicFontGenerator = asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			basicFontGenerator = asianFontGenerator = fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
 		} else {
 			basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
-			asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel.ttf"));
+			fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
 		}
 		
 		fonts.put(basicFontGenerator, new HashMap<>());
 		fonts.put(asianFontGenerator, new HashMap<>());
+		fonts.put(fallbackFontGenerator, new HashMap<>());
 		
 		packer = new PixmapPacker(pageSize, pageSize, Pixmap.Format.RGBA8888, 1, false);
 	}
@@ -105,31 +111,6 @@ public class DesktopPlatformSupport extends PlatformSupport {
 			return asianFontGenerator;
 		} else {
 			return basicFontGenerator;
-		}
-	}
-	
-	//splits on newlines, underscores, and chinese/japaneses characters
-	private Pattern regularsplitter = Pattern.compile(
-			"(?<=\n)|(?=\n)|(?<=_)|(?=_)|" +
-					"(?<=\\p{InHiragana})|(?=\\p{InHiragana})|" +
-					"(?<=\\p{InKatakana})|(?=\\p{InKatakana})|" +
-					"(?<=\\p{InCJK_Unified_Ideographs})|(?=\\p{InCJK_Unified_Ideographs})|" +
-					"(?<=\\p{InCJK_Symbols_and_Punctuation})|(?=\\p{InCJK_Symbols_and_Punctuation})");
-	
-	//additionally splits on words, so that each word can be arranged individually
-	private Pattern regularsplitterMultiline = Pattern.compile(
-			"(?<= )|(?= )|(?<=\n)|(?=\n)|(?<=_)|(?=_)|" +
-					"(?<=\\p{InHiragana})|(?=\\p{InHiragana})|" +
-					"(?<=\\p{InKatakana})|(?=\\p{InKatakana})|" +
-					"(?<=\\p{InCJK_Unified_Ideographs})|(?=\\p{InCJK_Unified_Ideographs})|" +
-					"(?<=\\p{InCJK_Symbols_and_Punctuation})|(?=\\p{InCJK_Symbols_and_Punctuation})");
-	
-	@Override
-	public String[] splitforTextBlock(String text, boolean multiline) {
-		if (multiline) {
-			return regularsplitterMultiline.split(text);
-		} else {
-			return regularsplitter.split(text);
 		}
 	}
 

@@ -35,6 +35,7 @@ import com.ansdoship.carbonizedpixeldungeon.ui.StyledButton;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndChallenges;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndHeroInfo;
+import com.ansdoship.carbonizedpixeldungeon.windows.WndKeyBindings;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndMessage;
 import com.ansdoship.pixeldungeonclasses.gltextures.TextureCache;
 import com.ansdoship.pixeldungeonclasses.input.PointerEvent;
@@ -136,6 +137,11 @@ public class HeroSelectScene extends PixelScene {
 				super.onClick();
 				CarbonizedPixelDungeon.scene().addToFront(new WndHeroInfo(GamesInProgress.selectedClass));
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndKeyBindings.class, "hero_info"));
+			}
 		};
 		infoButton.visible = false;
 		infoButton.setSize(21, 21);
@@ -177,6 +183,11 @@ public class HeroSelectScene extends PixelScene {
 					visible = true;
 				}
 				super.update();
+			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndChallenges.class, "title"));
 			}
 		};
 		challengeButton.setRect(heroBtnleft + 16, Camera.main.height-HeroBtn.HEIGHT-16, 21, 21);
@@ -265,7 +276,7 @@ public class HeroSelectScene extends PixelScene {
 	}
 
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		if (btnExit.visible){
 			CarbonizedPixelDungeon.switchScene(TitleScene.class);
 		} else {

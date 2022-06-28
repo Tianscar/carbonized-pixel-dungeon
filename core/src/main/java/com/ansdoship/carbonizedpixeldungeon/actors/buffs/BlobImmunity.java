@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2021 Evan Debenham
+ * Copyright (C) 2014-2022 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,21 +21,9 @@
 
 package com.ansdoship.carbonizedpixeldungeon.actors.buffs;
 
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Blizzard;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.ConfusionGas;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.CorrosiveGas;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Electricity;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Fire;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Freezing;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Inferno;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.ParalyticGas;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Regrowth;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.SmokeScreen;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.StenchGas;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.StormCloud;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.ToxicGas;
-import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Web;
+import com.ansdoship.carbonizedpixeldungeon.actors.blobs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Tengu;
+//import com.ansdoship.carbonizedpixeldungeon.levels.rooms.special.MagicalFireRoom;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 
@@ -69,6 +57,7 @@ public class BlobImmunity extends FlavourBuff {
 		immunities.add( CorrosiveGas.class );
 		immunities.add( Electricity.class );
 		immunities.add( Fire.class );
+		//immunities.add( MagicalFireRoom.EternalFire.class );
 		immunities.add( Freezing.class );
 		immunities.add( Inferno.class );
 		immunities.add( ParalyticGas.class );

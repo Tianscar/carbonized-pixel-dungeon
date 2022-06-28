@@ -21,22 +21,16 @@
 
 package com.ansdoship.carbonizedpixeldungeon.ui;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.PDAction;
-import com.ansdoship.carbonizedpixeldungeon.Statistics;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Hunger;
+import com.ansdoship.carbonizedpixeldungeon.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.journal.Document;
+import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.HeroSprite;
-import com.ansdoship.carbonizedpixeldungeon.windows.WndGame;
-import com.ansdoship.carbonizedpixeldungeon.windows.WndHero;
-import com.ansdoship.carbonizedpixeldungeon.windows.WndJournal;
-import com.ansdoship.carbonizedpixeldungeon.windows.WndStory;
+import com.ansdoship.carbonizedpixeldungeon.windows.*;
 import com.ansdoship.pixeldungeonclasses.input.GameAction;
 import com.ansdoship.pixeldungeonclasses.noosa.BitmapText;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
@@ -74,7 +68,14 @@ public class StatusPane extends Component {
 	private int lastLvl = -1;
 
 	private BitmapText level;
-	private BitmapText depth;
+
+	private Image depthIcon;
+	private BitmapText depthText;
+	private Button depthButton;
+
+	private Image challengeIcon;
+	private BitmapText challengeText;
+	private Button challengeButton;
 
 	private DangerIndicator danger;
 	private BuffIndicator buffs;
@@ -99,12 +100,76 @@ public class StatusPane extends Component {
 				Camera.main.panTo( Dungeon.hero.sprite.center(), 5f );
 				GameScene.show( new WndHero() );
 			}
-			
+
 			@Override
 			public GameAction keyAction() {
 				return PDAction.HERO_INFO;
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndKeyBindings.class, "hero_info"));
+			}
 		}.setRect( 0, 1, 30, 30 ));
+
+		depthIcon = Icons.get(Dungeon.level.feeling);
+		add(depthIcon);
+
+		depthText = new BitmapText( Integer.toString( Dungeon.depth ), PixelScene.pixelFont);
+		depthText.hardlight( 0xCACFC2 );
+		depthText.measure();
+		add( depthText );
+
+		depthButton = new Button(){
+			@Override
+			protected String hoverText() {
+				switch (Dungeon.level.feeling) {
+					case CHASM:     return Messages.get(GameScene.class, "chasm");
+					case WATER:     return Messages.get(GameScene.class, "water");
+					case GRASS:     return Messages.get(GameScene.class, "grass");
+					case DARK:      return Messages.get(GameScene.class, "dark");
+					case LARGE:     return Messages.get(GameScene.class, "large");
+					case TRAPS:     return Messages.get(GameScene.class, "traps");
+					case SECRETS:   return Messages.get(GameScene.class, "secrets");
+					case NONE:      return Messages.get(GameScene.class, "none");
+				}
+				return null;
+			}
+
+			@Override
+			protected void onClick() {
+				super.onClick();
+				int tmp_index = WndJournal.last_index;
+				WndJournal wndJournal = new WndJournal();
+				wndJournal.select(2);
+				WndJournal.last_index = tmp_index;
+				GameScene.show( wndJournal );
+			}
+		};
+		add(depthButton);
+
+		if (Challenges.activeChallenges() > 0){
+			challengeIcon = Icons.get(Icons.CHAL_COUNT);
+			add(challengeIcon);
+
+			challengeText = new BitmapText( Integer.toString( Challenges.activeChallenges() ), PixelScene.pixelFont);
+			challengeText.hardlight( 0xCACFC2 );
+			challengeText.measure();
+			add( challengeText );
+
+			challengeButton = new Button(){
+				@Override
+				protected void onClick() {
+					GameScene.show(new WndChallenges(Dungeon.challenges, false));
+				}
+
+				@Override
+				protected String hoverText() {
+					return Messages.get(WndChallenges.class, "title");
+				}
+			};
+			add(challengeButton);
+		}
 
 		btnJournal = new JournalButton();
 		add( btnJournal );
@@ -150,11 +215,6 @@ public class StatusPane extends Component {
 		level = new BitmapText( PixelScene.pixelFont);
 		level.hardlight( 0xFFFFAA );
 		add( level );
-
-		depth = new BitmapText( Integer.toString( Dungeon.depth ), PixelScene.pixelFont);
-		depth.hardlight( 0xCACFC2 );
-		depth.measure();
-		add( depth );
 
 		danger = new DangerIndicator();
 		add( danger );
@@ -204,17 +264,37 @@ public class StatusPane extends Component {
 
 		bossHP.setPos( 6 + (width - bossHP.width())/2, 20);
 
-		depth.x = width - 35.5f - depth.width() / 2f;
-		depth.y = 8f - depth.baseLine() / 2f;
-		PixelScene.align(depth);
-
 		danger.setPos( width - danger.width(), 20 );
 
 		buffs.setPos( 31, 9 + 3 );
 
-		btnJournal.setPos( width - 42, 1 );
-
 		btnMenu.setPos( width - btnMenu.width(), 1 );
+
+		btnJournal.setPos( width - btnJournal.width() - btnMenu.width() + 2, 1 );
+
+		depthIcon.x = btnJournal.left() - 7 + (7 - depthIcon.width())/2f - 0.1f;
+		depthIcon.y = y + 2;
+		PixelScene.align(depthIcon);
+
+		depthText.scale.set(PixelScene.align(0.67f));
+		depthText.x = depthIcon.x + (depthIcon.width() - depthText.width())/2f;
+		depthText.y = depthIcon.y + depthIcon.height();
+		PixelScene.align(depthText);
+
+		depthButton.setRect(depthIcon.x, depthIcon.y, depthIcon.width(), depthIcon.height() + depthText.height());
+
+		if (challengeIcon != null){
+			challengeIcon.x = btnJournal.left() - 14 + (7 - challengeIcon.width())/2f - 0.1f;
+			challengeIcon.y = y + 2;
+			PixelScene.align(challengeIcon);
+
+			challengeText.scale.set(PixelScene.align(0.67f));
+			challengeText.x = challengeIcon.x + (challengeIcon.width() - challengeText.width())/2f;
+			challengeText.y = challengeIcon.y + challengeIcon.height();
+			PixelScene.align(challengeText);
+
+			challengeButton.setRect(challengeIcon.x, challengeIcon.y, challengeIcon.width(), challengeIcon.height() + challengeText.height());
+		}
 		
 		version.scale.set(PixelScene.align(0.5f));
 		version.measure();
@@ -265,10 +345,7 @@ public class StatusPane extends Component {
 		if (Dungeon.hero.lvl != lastLvl) {
 
 			if (lastLvl != -1) {
-				Emitter emitter = (Emitter)recycle( Emitter.class );
-				emitter.revive();
-				emitter.pos( 27, 27 );
-				emitter.burst( Speck.factory( Speck.STAR ), 12 );
+				showStarParticles();
 			}
 
 			lastLvl = Dungeon.hero.lvl;
@@ -312,7 +389,7 @@ public class StatusPane extends Component {
 		public JournalButton() {
 			super();
 
-			width = bg.width + 13; //includes the depth display to the left
+			width = bg.width + 4;
 			height = bg.height + 4;
 		}
 		
@@ -340,7 +417,7 @@ public class StatusPane extends Component {
 		protected void layout() {
 			super.layout();
 
-			bg.x = x + 13;
+			bg.x = x + 2;
 			bg.y = y + 2;
 			
 			journalIcon.x = bg.x + (bg.width() - journalIcon.width())/2f;
@@ -414,6 +491,11 @@ public class StatusPane extends Component {
 			}
 		}
 
+		@Override
+		protected String hoverText() {
+			return Messages.titleCase(Messages.get(WndKeyBindings.class, "journal"));
+		}
+
 	}
 
 	private static class MenuButton extends Button {
@@ -458,5 +540,24 @@ public class StatusPane extends Component {
 		protected void onClick() {
 			GameScene.show( new WndGame() );
 		}
+
+		@Override
+		public GameAction keyAction() {
+			return GameAction.BACK;
+		}
+
+		@Override
+		protected String hoverText() {
+			return Messages.titleCase(Messages.get(WndKeyBindings.class, "menu"));
+		}
+
 	}
+
+	public void showStarParticles(){
+		Emitter emitter = (Emitter)recycle( Emitter.class );
+		emitter.revive();
+		emitter.pos( avatar.center() );
+		emitter.burst( Speck.factory( Speck.STAR ), 12 );
+	}
+
 }

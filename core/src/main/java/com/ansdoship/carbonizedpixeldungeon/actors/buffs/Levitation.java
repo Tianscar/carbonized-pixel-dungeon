@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2021 Evan Debenham
+ * Copyright (C) 2014-2022 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,10 @@
 package com.ansdoship.carbonizedpixeldungeon.actors.buffs;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
+import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 
@@ -50,7 +52,10 @@ public class Levitation extends FlavourBuff {
 	public void detach() {
 		target.flying = false;
 		super.detach();
-		Dungeon.level.occupyCell(target );
+		//only press tiles if we're current in the game screen
+		if (CarbonizedPixelDungeon.scene() instanceof GameScene) {
+			Dungeon.level.occupyCell(target );
+		}
 	}
 	
 	@Override

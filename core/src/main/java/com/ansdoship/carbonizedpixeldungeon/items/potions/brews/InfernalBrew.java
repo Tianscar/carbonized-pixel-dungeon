@@ -32,14 +32,14 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 
 public class InfernalBrew extends Brew {
-	
+
 	{
 		image = ItemSpriteSheet.BREW_INFERNAL;
 	}
-	
+
 	@Override
 	public void shatter(int cell) {
-		
+
 		if (Dungeon.level.heroFOV[cell]) {
 			splash( cell );
 			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
@@ -48,24 +48,24 @@ public class InfernalBrew extends Brew {
 		
 		GameScene.add( Blob.seed( cell, 1000, Inferno.class ) );
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients
 		return quantity * (30 + 40);
 	}
-	
+
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
-		
+
 		{
 			inputs =  new Class[]{PotionOfLiquidFlame.class, AlchemicalCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 6;
-			
+
+			cost = 4;
+
 			output = InfernalBrew.class;
 			outQuantity = 1;
 		}
-		
+
 	}
 }

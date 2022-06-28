@@ -30,7 +30,6 @@ import com.ansdoship.carbonizedpixeldungeon.items.Generator;
 import com.ansdoship.carbonizedpixeldungeon.items.Heap;
 import com.ansdoship.carbonizedpixeldungeon.items.Honeypot;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
-import com.ansdoship.carbonizedpixeldungeon.items.MerchantsBeacon;
 import com.ansdoship.carbonizedpixeldungeon.items.Stylus;
 import com.ansdoship.carbonizedpixeldungeon.items.Torch;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.LeatherArmor;
@@ -49,6 +48,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
+import com.ansdoship.carbonizedpixeldungeon.items.spells.Alchemize;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfAugmentation;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.darts.TippedDart;
@@ -188,8 +188,7 @@ public class ShopRoom extends SpecialRoom {
 		
 		itemsToSpawn.add( TippedDart.randomTipped(2) );
 
-		itemsToSpawn.add( new MerchantsBeacon() );
-
+		itemsToSpawn.add( new Alchemize().quantity(Random.IntRange(2, 3)));
 
 		itemsToSpawn.add(ChooseBag(Dungeon.hero.belongings));
 

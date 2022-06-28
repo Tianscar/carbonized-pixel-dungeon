@@ -29,6 +29,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.Recipe;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.darts.Dart;
+import com.ansdoship.carbonizedpixeldungeon.journal.Document;
 import com.ansdoship.carbonizedpixeldungeon.journal.Journal;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -280,6 +281,11 @@ public class AlchemyScene extends PixelScene {
 				
 				});
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Document.ALCHEMY_GUIDE.title());
+			}
 		};
 		btnGuide.setRect(0, 0, 20, 20);
 		add(btnGuide);
@@ -312,7 +318,7 @@ public class AlchemyScene extends PixelScene {
 	}
 	
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		Game.switchScene(GameScene.class);
 	}
 	

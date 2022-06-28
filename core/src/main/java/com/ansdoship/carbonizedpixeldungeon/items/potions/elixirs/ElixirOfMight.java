@@ -42,75 +42,75 @@ public class ElixirOfMight extends Elixir {
 
 		unique = true;
 	}
-	
+
 	@Override
 	public void apply( Hero hero ) {
 		identify();
-		
+
 		hero.STR++;
-		
+
 		Buff.affect(hero, HTBoost.class).reset();
 		HTBoost boost = Buff.affect(hero, HTBoost.class);
 		boost.reset();
-		
+
 		hero.updateHT( true );
 		hero.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "msg_1", boost.boost() ));
 		GLog.p( Messages.get(this, "msg_2") );
 
 		Badges.validateStrengthAttained();
 	}
-	
+
 	public String desc() {
 		return Messages.get(this, "desc", HTBoost.boost(Dungeon.hero.HT));
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients
 		return quantity * (50 + 40);
 	}
-	
+
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
-		
+
 		{
 			inputs =  new Class[]{PotionOfStrength.class, AlchemicalCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 5;
-			
+
+			cost = 6;
+
 			output = ElixirOfMight.class;
 			outQuantity = 1;
 		}
-		
+
 	}
-	
+
 	public static class HTBoost extends Buff {
-		
+
 		{
 			type = buffType.POSITIVE;
 		}
-		
+
 		private int left;
-		
+
 		public void reset(){
 			left = 5;
 		}
-		
+
 		public int boost(){
 			return Math.round(left*boost(target.HT)/5f);
 		}
-		
+
 		public static int boost(int HT){
 			return Math.round(4 + HT/20f);
 		}
-		
+
 		public void onLevelUp(){
 			left --;
 			if (left <= 0){
 				detach();
 			}
 		}
-		
+
 		@Override
 		public int icon() {
 			return BuffIndicator.HEALING;
@@ -125,25 +125,30 @@ public class ElixirOfMight extends Elixir {
 		public float iconFadePercent() {
 			return (5f - left) / 5f;
 		}
-		
+
+		@Override
+		public String iconTextDisplay() {
+			return Integer.toString(left);
+		}
+
 		@Override
 		public String toString() {
 			return Messages.get(this, "name");
 		}
-		
+
 		@Override
 		public String desc() {
 			return Messages.get(this, "desc", boost(), left);
 		}
-		
+
 		private static String LEFT = "left";
-		
+
 		@Override
 		public void storeInBundle(Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( LEFT, left );
 		}
-		
+
 		@Override
 		public void restoreFromBundle(Bundle bundle) {
 			super.restoreFromBundle(bundle);

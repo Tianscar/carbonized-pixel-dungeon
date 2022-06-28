@@ -31,11 +31,8 @@ import com.ansdoship.carbonizedpixeldungeon.scenes.InterlevelScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.StartScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.HeroSprite;
-import com.ansdoship.carbonizedpixeldungeon.ui.ActionIndicator;
-import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
-import com.ansdoship.carbonizedpixeldungeon.ui.RedButton;
-import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
-import com.ansdoship.carbonizedpixeldungeon.ui.Window;
+import com.ansdoship.carbonizedpixeldungeon.ui.*;
+import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Button;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
@@ -48,7 +45,7 @@ public class WndGameInProgress extends Window {
 	
 	private static final int WIDTH    = 120;
 	
-	private int GAP	  = 6;
+	private int GAP	  = 4;
 	
 	private float pos;
 	
@@ -87,40 +84,53 @@ public class WndGameInProgress extends Window {
 		debug.setRect(0, 0, title.imIcon.width(), title.imIcon.height);
 		add(debug);
 		
-		if (info.challenges > 0) GAP -= 2;
-		
-		pos = title.bottom() + GAP;
-		
 		if (info.challenges > 0) {
-			RedButton btnChallenges = new RedButton( Messages.get(this, "challenges") ) {
+			IconButton btnChallenges = new IconButton( Icons.get(Icons.CHALLENGE_ON) ) {
 				@Override
 				protected void onClick() {
 					Game.scene().add( new WndChallenges( info.challenges, false ) );
 				}
-			};
-			btnChallenges.icon(Icons.get(Icons.CHALLENGE_ON));
-			float btnW = btnChallenges.reqWidth() + 2;
-			btnChallenges.setRect( (WIDTH - btnW)/2, pos, btnW , 18 );
-			add( btnChallenges );
-			
-			pos = btnChallenges.bottom() + GAP;
-		}
-		
-		pos += GAP;
 
-		int strBonus = info.strBonus;
-		if (strBonus > 0)           statSlot( Messages.get(this, "str"), info.str + " + " + strBonus );
-		else if (strBonus < 0)      statSlot( Messages.get(this, "str"), info.str + " - " + -strBonus );
-		else                        statSlot( Messages.get(this, "str"), info.str );
-		if (info.shld > 0)  statSlot( Messages.get(this, "health"), info.hp + "+" + info.shld + "/" + info.ht );
-		else                statSlot( Messages.get(this, "health"), (info.hp) + "/" + info.ht );
+				@Override
+				protected String hoverText() {
+					return Messages.titleCase(Messages.get(WndGameInProgress.this, "challenges"));
+				}
+			};
+			btnChallenges.setRect( WIDTH - 16, pos, 16, 16 );
+			title.setSize(title.width() - 16, title.height());
+			add( btnChallenges );
+		}
+
+		ColorBlock sep1 = new ColorBlock(1, 1, 0xFF000000);
+		sep1.size(WIDTH, 1);
+		sep1.y = title.bottom() + 2;
+		add(sep1);
+
+		pos = sep1.y + GAP;
+
+		int strBonus = info.STRBonus;
+		if (strBonus > 0)           statSlot( Messages.get(this, "str"), info.STR + " + " + strBonus );
+		else if (strBonus < 0)      statSlot( Messages.get(this, "str"), info.STR + " - " + -strBonus );
+		else                        statSlot( Messages.get(this, "str"), info.STR );
+		statSlot( Messages.get(this, "con"), info.CON );
+		statSlot( Messages.get(this, "dex"), info.DEX );
+		statSlot( Messages.get(this, "int"), info.INT );
+		statSlot( Messages.get(this, "wis"), info.WIS );
+		statSlot( Messages.get(this, "cha"), info.CHA );
+		if (info.shld > 0)  statSlot( Messages.get(this, "health"), info.HP + "+" + info.shld + "/" + info.HT );
+		else                statSlot( Messages.get(this, "health"), (info.HP) + "/" + info.HT );
 		statSlot( Messages.get(this, "hunger"), info.hunger + "/" + Hero.MAX_HUNGER );
 		statSlot( Messages.get(this, "exp"), info.exp + "/" + Hero.maxExp(info.level) );
 		
 		pos += GAP;
 		statSlot( Messages.get(this, "gold"), info.goldCollected );
 		statSlot( Messages.get(this, "depth"), info.maxDepth );
-		
+
+		ColorBlock sep2 = new ColorBlock(1, 1, 0xFF000000);
+		sep2.size(WIDTH, 1);
+		sep2.y = pos;
+		add(sep2);
+
 		pos += GAP;
 		
 		RedButton cont = new RedButton(Messages.get(this, "continue")){
@@ -172,11 +182,11 @@ public class WndGameInProgress extends Window {
 	
 	private void statSlot( String label, String value ) {
 		
-		RenderedTextBlock txt = PixelScene.renderTextBlock( label, 8 );
+		RenderedTextBlock txt = PixelScene.renderTextBlock( label, 7 );
 		txt.setPos(0, pos);
 		add( txt );
 		
-		txt = PixelScene.renderTextBlock( value, 8 );
+		txt = PixelScene.renderTextBlock( value, 7 );
 		txt.setPos(WIDTH * 0.6f, pos);
 		PixelScene.align(txt);
 		add( txt );

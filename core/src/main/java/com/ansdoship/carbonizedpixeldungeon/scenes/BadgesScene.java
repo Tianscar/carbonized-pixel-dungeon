@@ -87,7 +87,7 @@ public class BadgesScene extends PixelScene {
 	}
 
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		CarbonizedPixelDungeon.switchNoFade( TitleScene.class );
 	}
 

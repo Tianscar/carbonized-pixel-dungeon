@@ -44,13 +44,13 @@ public class BigRatSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (PDSettings.language() == Languages.CHINESE || PDSettings.language() == Languages.TR_CHINESE) add(State.CHARMED);
+		if (PDSettings.language() == Languages.CHINESE || PDSettings.language() == Languages.TR_CHINESE) add(State.HEARTS);
 	}
 
 	@Override
 	public void die() {
 		super.die();
-		remove(State.CHARMED);
+		remove(State.HEARTS);
 	}
 
 	public void resetAnims(){

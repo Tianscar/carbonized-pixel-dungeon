@@ -29,54 +29,48 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Paralysis;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.effects.Splash;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfStormClouds;
+import com.ansdoship.carbonizedpixeldungeon.levels.traps.GeyserTrap;
 import com.ansdoship.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class AquaBlast extends TargetedSpell {
-	
+
 	{
 		image = ItemSpriteSheet.AQUA_BLAST;
+		usesTargeting = true;
 	}
-	
+
 	@Override
 	protected void affectTarget(Ballistica bolt, Hero hero) {
 		int cell = bolt.collisionPos;
-		
-		Splash.at(cell, 0x00AAFF, 10);
-		
-		for (int i : PathFinder.NEIGHBOURS9){
-			if (i == 0 || Random.Int(5) != 0){
-				Dungeon.level.setCellToWater(false, cell+i);
-			}
+
+		GeyserTrap geyser = new GeyserTrap();
+		geyser.pos = cell;
+		if (bolt.path.size() > bolt.dist+1) {
+			geyser.centerKnockBackDirection = bolt.path.get(bolt.dist + 1);
 		}
-		
-		Char target = Actor.findChar(cell);
-		
-		if (target != null && target != hero){
-			//just enough to skip their current turn
-			Buff.affect(target, Paralysis.class, target.cooldown());
-		}
+		geyser.activate();
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((60 + 40) / 12f));
+		return Math.round(quantity * ((60 + 40) / 8f));
 	}
-	
+
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
-		
+
 		{
 			inputs =  new Class[]{PotionOfStormClouds.class, ArcaneCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 4;
-			
+
+			cost = 2;
+
 			output = AquaBlast.class;
-			outQuantity = 12;
+			outQuantity = 8;
 		}
-		
+
 	}
 }

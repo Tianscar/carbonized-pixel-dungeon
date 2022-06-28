@@ -37,36 +37,36 @@ import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 
 public class Dewdrop extends Item {
-	
+
 	{
 		image = ItemSpriteSheet.DEWDROP;
-		
+
 		stackable = true;
 		dropsDownHeap = true;
 	}
-	
+
 	@Override
-	public boolean doPickUp( Hero hero ) {
-		
+	public boolean doPickUp(Hero hero, int pos) {
+
 		Waterskin flask = hero.belongings.getItem( Waterskin.class );
-		
+
 		if (flask != null && !flask.isFull()){
 
 			flask.collectDew( this );
-			GameScene.pickUp( this, hero.pos );
+			GameScene.pickUp( this, pos );
 
 		} else {
 
-			int terr = Dungeon.level.map[hero.pos];
+			int terr = Dungeon.level.map[pos];
 			if (!consumeDew(1, hero, terr == Terrain.ENTRANCE|| terr == Terrain.EXIT || terr == Terrain.UNLOCKED_EXIT)){
 				return false;
 			}
-			
+
 		}
-		
+
 		Sample.INSTANCE.play( Assets.Sounds.DEWDROP );
 		hero.spendAndNext( TIME_TO_PICK_UP );
-		
+
 		return true;
 	}
 

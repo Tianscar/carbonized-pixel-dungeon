@@ -3,9 +3,9 @@ package com.ansdoship.carbonizedpixeldungeon.actors.mobs;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ChampionEnemy;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.ansdoship.carbonizedpixeldungeon.effects.Pushing;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.ansdoship.carbonizedpixeldungeon.sprites.SpectralNecromancerSprite;
@@ -116,8 +116,8 @@ public class SpectralNecromancer extends Necromancer {
 		Dungeon.level.occupyCell( wraith );
 		((SpectralNecromancerSprite)sprite).finishSummoning();
 
-		if (buff(Corruption.class) != null){
-			Buff.affect(wraith, Corruption.class);
+		for (Buff b : buffs(AllyBuff.class)){
+			Buff.affect( wraith, b.getClass());
 		}
 		for (Buff b : buffs(ChampionEnemy.class)){
 			Buff.affect( wraith, b.getClass());

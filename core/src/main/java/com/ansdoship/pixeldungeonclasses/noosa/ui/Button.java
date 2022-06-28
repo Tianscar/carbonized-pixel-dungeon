@@ -21,20 +21,23 @@
 
 package com.ansdoship.pixeldungeonclasses.noosa.ui;
 
-import com.ansdoship.pixeldungeonclasses.input.GameAction;
-import com.ansdoship.pixeldungeonclasses.input.KeyBindings;
-import com.ansdoship.pixeldungeonclasses.input.KeyEvent;
-import com.ansdoship.pixeldungeonclasses.input.PointerEvent;
+import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.ui.Tooltip;
+import com.ansdoship.pixeldungeonclasses.input.*;
+import com.ansdoship.pixeldungeonclasses.noosa.Camera;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.PointerArea;
 import com.ansdoship.pixeldungeonclasses.utils.Signal;
 
+import java.util.ArrayList;
+
 public class Button extends Component {
 
 	public static float longClick = 0.5f;
-	
+
 	protected PointerArea hotArea;
-	
+	protected Tooltip hoverTip;
+
 	protected boolean pressed;
 	protected float pressTime;
 	protected boolean processed;
@@ -57,36 +60,67 @@ public class Button extends Component {
 			@Override
 			protected void onClick( PointerEvent event ) {
 				if (!processed) {
-					Button.this.onClick();
+					killTooltip();
+					switch (event.button){
+						case PointerEvent.LEFT: default:
+							Button.this.onClick();
+							break;
+						case PointerEvent.RIGHT:
+							Button.this.onRightClick();
+							break;
+						case PointerEvent.MIDDLE:
+							Button.this.onMiddleClick();
+							break;
+					}
+
 				}
+			}
+
+			@Override
+			protected void onHoverStart(PointerEvent event) {
+				Button.this.onHoverStart();
+			}
+
+			@Override
+			protected void onHoverEnd(PointerEvent event) {
+				Button.this.onHoverEnd();
 			}
 		};
 		add( hotArea );
-		
+
 		KeyEvent.addKeyListener( keyListener = new Signal.Listener<KeyEvent>() {
 			@Override
 			public boolean onSignal ( KeyEvent event ) {
-				if ( active && event.pressed && KeyBindings.getActionForKey( event ) == keyAction()){
-					onClick();
+				if ( active && KeyBindings.getActionForKey( event ) == keyAction()){
+					if (event.pressed){
+						pressed = true;
+						pressTime = 0;
+						processed = false;
+						Button.this.onPointerDown();
+					} else {
+						Button.this.onPointerUp();
+						if (pressed && !processed) onClick();
+						pressed = false;
+					}
 					return true;
 				}
 				return false;
 			}
 		});
 	}
-	
+
 	private Signal.Listener<KeyEvent> keyListener;
-	
+
 	public GameAction keyAction(){
 		return null;
 	}
-	
+
 	@Override
 	public void update() {
 		super.update();
-		
+
 		hotArea.active = visible;
-		
+
 		if (pressed) {
 			if ((pressTime += Game.elapsed) >= longClick) {
 				pressed = false;
@@ -95,20 +129,79 @@ public class Button extends Component {
 					hotArea.reset();
 					processed = true;
 					onPointerUp();
-					
+
 					Game.vibrate( 50 );
 				}
 			}
 		}
 	}
-	
+
 	protected void onPointerDown() {}
 	protected void onPointerUp() {}
-	protected void onClick() {}
+	protected void onClick() {} //left click, default key type
+	protected void onRightClick() {
+		onClick();
+	}
+	protected void onMiddleClick() {}
 	protected boolean onLongClick() {
 		return false;
 	}
-	
+
+	protected String hoverText() {
+		return null;
+	}
+
+	protected void onHoverStart() {
+		String text = hoverText();
+		if (text != null){
+			if (keyAction() != null){
+				ArrayList<Integer> bindings = KeyBindings.getBoundKeysForAction(keyAction());
+				if (!bindings.isEmpty()){
+					int key = bindings.get(0);
+					//prefer controller buttons if we are using a controller
+					if (ControllerHandler.controllerPointerActive()){
+						for (int code : bindings){
+							if (ControllerHandler.icControllerKey(code)){
+								key = code;
+								break;
+							}
+						}
+					}
+					text += " _(" + KeyBindings.getKeyName(key) + ")_";
+				}
+			}
+			hoverTip = new Tooltip(Button.this, text, 80, 0);
+			CarbonizedPixelDungeon.scene().addToFront(hoverTip);
+			hoverTip.camera = camera();
+			alignTooltip(hoverTip);
+		}
+	}
+
+	protected void onHoverEnd() {
+		killTooltip();
+	}
+
+	//TODO might be nice for more flexibility here
+	private void alignTooltip( Tooltip tip ){
+		tip.setPos(x, y-tip.height()-1);
+		Camera cam = camera();
+		//shift left if there's no room on the right
+		if (tip.right() > (cam.width+cam.scroll.x)){
+			tip.setPos(tip.left() - (tip.right() - (cam.width+cam.scroll.x)), tip.top());
+		}
+		//move to the bottom if there's no room on top
+		if (tip.top() < 0){
+			tip.setPos(tip.left(), bottom()+1);
+		}
+	}
+
+	public void killTooltip(){
+		if (hoverTip != null){
+			hoverTip.killAndErase();
+			hoverTip = null;
+		}
+	}
+
 	@Override
 	protected void layout() {
 		hotArea.x = x;
@@ -116,11 +209,11 @@ public class Button extends Component {
 		hotArea.width = width;
 		hotArea.height = height;
 	}
-	
+
 	@Override
 	public synchronized void destroy () {
 		super.destroy();
 		KeyEvent.removeKeyListener( keyListener );
 	}
-	
+
 }

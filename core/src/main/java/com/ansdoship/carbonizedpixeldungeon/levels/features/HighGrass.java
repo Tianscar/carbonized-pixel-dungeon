@@ -21,41 +21,39 @@
 
 package com.ansdoship.carbonizedpixeldungeon.levels.features;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
+import com.ansdoship.carbonizedpixeldungeon.actors.mobs.ArmoredStatue;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.LeafParticle;
 import com.ansdoship.carbonizedpixeldungeon.items.Dewdrop;
 import com.ansdoship.carbonizedpixeldungeon.items.Generator;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Camouflage;
+import com.ansdoship.carbonizedpixeldungeon.items.artifacts.DriedRose;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.SandalsOfNature;
 import com.ansdoship.carbonizedpixeldungeon.items.food.Berry;
 import com.ansdoship.carbonizedpixeldungeon.levels.Level;
 import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
-import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class HighGrass {
-	
+
 	//prevents items dropped from grass, from trampling that same grass.
 	//yes this is a bit ugly, oh well.
 	private static boolean freezeTrample = false;
 
 	public static void trample( Level level, int pos ) {
-		
+
 		if (freezeTrample) return;
-		
+
 		Char ch = Actor.findChar(pos);
-		
+
 		if (level.map[pos] == Terrain.FURROWED_GRASS){
 			if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.HUNTRESS){
 				//Do nothing
@@ -63,7 +61,7 @@ public class HighGrass {
 			} else {
 				Level.set(pos, Terrain.GRASS);
 			}
-			
+
 		} else {
 			if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.HUNTRESS){
 				Level.set(pos, Terrain.FURROWED_GRASS);
@@ -71,9 +69,9 @@ public class HighGrass {
 			} else {
 				Level.set(pos, Terrain.GRASS);
 			}
-			
+
 			int naturalismLevel = 0;
-			
+
 			if (ch != null) {
 				SandalsOfNature.Naturalism naturalism = ch.buff( SandalsOfNature.Naturalism.class );
 				if (naturalism != null) {
@@ -108,37 +106,44 @@ public class HighGrass {
 
 				}
 			}
-			
+
 			if (naturalismLevel >= 0) {
 				// Seed, scales from 1/25 to 1/5
 				if (Random.Int(25 - (naturalismLevel * 5)) == 0) {
 					level.drop(Generator.random(Generator.Category.SEED), pos).sprite.drop();
 				}
-				
+
 				// Dew, scales from 1/6 to 1/3
 				if (Random.Int(24 - naturalismLevel*3) <= 3) {
 					level.drop(new Dewdrop(), pos).sprite.drop();
 				}
 			}
-			
+
+			//Camouflage
 			if (ch instanceof Hero) {
 				Hero hero = (Hero) ch;
-				
-				//Camouflage
-				//FIXME doesn't work with sad ghost
 				if (hero.belongings.armor() != null && hero.belongings.armor().hasGlyph(Camouflage.class, hero)) {
-					Buff.prolong(hero, Invisibility.class, 3 + hero.belongings.armor.buffedLvl()/2);
-					Sample.INSTANCE.play( Assets.Sounds.MELD );
+					Camouflage.activate(hero, hero.belongings.armor.buffedLvl());
+				}
+			} else if (ch instanceof DriedRose.GhostHero){
+				DriedRose.GhostHero ghost = (DriedRose.GhostHero) ch;
+				if (ghost.armor() != null && ghost.armor().hasGlyph(Camouflage.class, ghost)){
+					Camouflage.activate(ghost, ghost.armor().buffedLvl());
+				}
+			} else if (ch instanceof ArmoredStatue){
+				ArmoredStatue statue = (ArmoredStatue) ch;
+				if (statue.armor() != null && statue.armor().hasGlyph(Camouflage.class, statue)){
+					Camouflage.activate(statue, statue.armor().buffedLvl());
 				}
 			}
-			
+
 		}
-		
+
 		freezeTrample = false;
-		
+
 		if (CarbonizedPixelDungeon.scene() instanceof GameScene) {
 			GameScene.updateMap(pos);
-			
+
 			CellEmitter.get(pos).burst(LeafParticle.LEVEL_SPECIFIC, 4);
 			if (Dungeon.level.heroFOV[pos]) Dungeon.observe();
 		}

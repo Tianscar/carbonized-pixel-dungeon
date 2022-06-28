@@ -25,14 +25,7 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Amok;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Blindness;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Charm;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Haste;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Sleep;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Terror;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -168,6 +161,7 @@ public class SmokeBomb extends ArmorAbility {
 			immunities.add( Amok.class );
 			immunities.add( Charm.class );
 			immunities.add( Sleep.class );
+			immunities.add( AllyBuff.class );
 		}
 
 	}

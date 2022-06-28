@@ -25,27 +25,27 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Hunger;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.LostInventory;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
+import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 
 public class PotionOfCleansing extends ExoticPotion {
-	
+
 	{
 		icon = ItemSpriteSheet.Icons.POTION_CLEANSE;
 	}
-	
+
 	@Override
 	public void apply( Hero hero ) {
 		identify();
-		
+
 		cleanse( hero );
 	}
-	
+
 	@Override
 	public void shatter(int cell) {
 		if (Actor.findChar(cell) == null){
@@ -56,17 +56,21 @@ public class PotionOfCleansing extends ExoticPotion {
 				splash(cell);
 				identify();
 			}
-			
+
 			if (Actor.findChar(cell) != null){
 				cleanse(Actor.findChar(cell));
 			}
 		}
 	}
-	
+
 	public static void cleanse(Char ch){
+		cleanse(ch, Cleanse.DURATION);
+	}
+
+	public static void cleanse(Char ch, float duration){
 		for (Buff b : ch.buffs()){
 			if (b.type == Buff.buffType.NEGATIVE
-					&& !(b instanceof Corruption)
+					&& !(b instanceof AllyBuff)
 					&& !(b instanceof LostInventory)){
 				b.detach();
 			}
@@ -74,5 +78,37 @@ public class PotionOfCleansing extends ExoticPotion {
 				((Hunger) b).satisfy(Hunger.STARVING);
 			}
 		}
+		Buff.affect(ch, Cleanse.class, duration);
+	}
+
+	public static class Cleanse extends FlavourBuff {
+
+		public static final float DURATION = 5f;
+
+		@Override
+		public int icon() {
+			return BuffIndicator.IMMUNITY;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(1f, 0f, 2f);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+		}
+
+		@Override
+		public String toString() {
+			return Messages.get(this, "name");
+		}
+
+		@Override
+		public String desc() {
+			return Messages.get(this, "desc", dispTurns(visualcooldown()));
+		}
+
 	}
 }

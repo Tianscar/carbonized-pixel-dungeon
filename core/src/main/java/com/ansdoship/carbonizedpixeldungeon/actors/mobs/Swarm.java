@@ -24,11 +24,7 @@ package com.ansdoship.carbonizedpixeldungeon.actors.mobs;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Burning;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ChampionEnemy;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Poison;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.effects.Pushing;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfHealing;
@@ -43,49 +39,49 @@ public class Swarm extends Mob {
 
 	{
 		spriteClass = SwarmSprite.class;
-		
+
 		HP = HT = 50;
 		defenseSkill = 5;
 
 		EXP = 3;
 		maxLvl = 9;
-		
+
 		flying = true;
 
 		loot = new PotionOfHealing();
-		lootChance = 0.1667f; //by default, see rollToDropLoot()
+		lootChance = 0.1667f; //by default, see lootChance()
 	}
-	
+
 	private static final float SPLIT_DELAY	= 1f;
-	
+
 	int generation	= 0;
-	
+
 	private static final String GENERATION	= "generation";
-	
+
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( GENERATION, generation );
 	}
-	
+
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		generation = bundle.getInt( GENERATION );
 		if (generation > 0) EXP = 0;
 	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 1, 4 );
 	}
-	
+
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
 
 		if (HP >= damage + 2) {
 			ArrayList<Integer> candidates = new ArrayList<>();
-			
+
 			int[] neighbours = {pos + 1, pos - 1, pos + Dungeon.level.width(), pos - Dungeon.level.width()};
 			for (int n : neighbours) {
 				if (!Dungeon.level.solid[n] && Actor.findChar( n ) == null
@@ -93,9 +89,9 @@ public class Swarm extends Mob {
 					candidates.add( n );
 				}
 			}
-	
+
 			if (candidates.size() > 0) {
-				
+
 				Swarm clone = split();
 				clone.HP = (HP - damage) / 2;
 				clone.pos = Random.element( candidates );
@@ -105,19 +101,19 @@ public class Swarm extends Mob {
 				Actor.addDelayed( new Pushing( clone, pos, clone.pos ), -1 );
 
 				Dungeon.level.occupyCell(clone);
-				
+
 				HP -= clone.HP;
 			}
 		}
-		
+
 		return super.defenseProc(enemy, damage);
 	}
-	
+
 	@Override
 	public int attackSkill( Char target ) {
 		return 10;
 	}
-	
+
 	private Swarm split() {
 		Swarm clone = new Swarm();
 		clone.generation = generation + 1;
@@ -128,24 +124,23 @@ public class Swarm extends Mob {
 		if (buff( Poison.class ) != null) {
 			Buff.affect( clone, Poison.class ).set(2);
 		}
-		if (buff(Corruption.class ) != null) {
-			Buff.affect( clone, Corruption.class);
+		for (Buff b : buffs(AllyBuff.class)){
+			Buff.affect( clone, b.getClass());
 		}
 		for (Buff b : buffs(ChampionEnemy.class)){
 			Buff.affect( clone, b.getClass());
 		}
 		return clone;
 	}
-	
+
 	@Override
-	public void rollToDropLoot() {
+	public float lootChance() {
 		lootChance = 1f/(6 * (generation+1) );
-		lootChance *= (5f - Dungeon.LimitedDrops.SWARM_HP.count) / 5f;
-		super.rollToDropLoot();
+		return super.lootChance() * (5f - Dungeon.LimitedDrops.SWARM_HP.count) / 5f;
 	}
-	
+
 	@Override
-	protected Item createLoot(){
+	public Item createLoot(){
 		Dungeon.LimitedDrops.SWARM_HP.count++;
 		return super.createLoot();
 	}

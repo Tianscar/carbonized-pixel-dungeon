@@ -21,25 +21,109 @@
 
 package com.ansdoship.carbonizedpixeldungeon.desktop;
 
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
+import com.ansdoship.pixeldungeonclasses.utils.Point;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener;
-import com.ansdoship.carbonizedpixeldungeon.PDSettings;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWWindowPosCallback;
 
 public class DesktopWindowListener implements Lwjgl3WindowListener {
+
+	private final int[] windowSizeRecords = new int[4];
+	private final int[] windowPosRecords = new int[4];
+
+	public DesktopWindowListener() {
+		Point p = PDSettings.windowResolution();
+		windowSizeRecords[0] = p.x;
+		windowSizeRecords[1] = p.y;
+		windowSizeRecords[2] = windowSizeRecords[0];
+		windowSizeRecords[3] = windowSizeRecords[1];
+		p = PDSettings.windowPosition();
+		windowPosRecords[0] = p.x;
+		windowPosRecords[1] = p.y;
+		windowPosRecords[2] = windowPosRecords[0];
+		windowPosRecords[3] = windowPosRecords[1];
+	}
 	
 	@Override
-	public void created ( Lwjgl3Window lwjgl3Window ) { }
+	public void created ( Lwjgl3Window lwjgl3Window ) {
+		long window = lwjgl3Window.getWindowHandle();
+		lwjgl3Window.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				if (PDSettings.fullscreen()) {
+					Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+				}
+				GLFW.glfwSetWindowPosCallback(window, new GLFWWindowPosCallback() {
+					@Override
+					public void invoke(long window, int xpos, int ypos) {
+						updateDisplayPos(xpos, ypos);
+					}
+				});
+				GLFW.glfwShowWindow(window);
+			}
+		});
+	}
 	
 	@Override
 	public void maximized ( boolean b ) {
 		PDSettings.windowMaximized( b );
+		if (b) {
+			rollbackWindowSize();
+			rollbackWindowPos();
+		}
 	}
 	
 	@Override
-	public void iconified ( boolean b ) { }
+	public void iconified ( boolean b ) {
+		PDSettings.windowIconified( b );
+	}
 	public void focusLost () { }
 	public void focusGained () { }
 	public boolean closeRequested () { return true; }
 	public void filesDropped ( String[] strings ) { }
 	public void refreshRequested () { }
+
+	public void updateDisplaySize(int width, int height) {
+		if (!PDSettings.fullscreen() && !PDSettings.windowMaximized()) {
+			PDSettings.windowResolution( new Point( width, height ) );
+			recordWindowSize(width, height);
+		}
+	}
+
+	public void updateDisplayPos(int xpos, int ypos) {
+		if (!PDSettings.fullscreen() && !PDSettings.windowMaximized()) {
+			PDSettings.windowPosition( new Point(xpos, ypos) );
+			recordWindowPos(xpos, ypos);
+		}
+	}
+
+	private void rollbackWindowSize() {
+		PDSettings.windowResolution(new Point(windowSizeRecords[0], windowSizeRecords[1]));
+		windowSizeRecords[2] = windowSizeRecords[0];
+		windowSizeRecords[3] = windowSizeRecords[1];
+	}
+
+	private void recordWindowSize(int width, int height) {
+		windowSizeRecords[0] = windowSizeRecords[2];
+		windowSizeRecords[1] = windowSizeRecords[3];
+		windowSizeRecords[2] = width;
+		windowSizeRecords[3] = height;
+	}
+
+	private void rollbackWindowPos() {
+		PDSettings.windowPosition(new Point(windowPosRecords[0], windowPosRecords[1]));
+		windowPosRecords[2] = windowPosRecords[0];
+		windowPosRecords[3] = windowPosRecords[1];
+	}
+
+	private void recordWindowPos(int xpos, int ypos) {
+		windowPosRecords[0] = windowPosRecords[2];
+		windowPosRecords[1] = windowPosRecords[3];
+		windowPosRecords[2] = xpos;
+		windowPosRecords[3] = ypos;
+	}
+
 }

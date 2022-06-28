@@ -26,9 +26,8 @@ import com.ansdoship.carbonizedpixeldungeon.ui.RedButton;
 import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
+import com.ansdoship.pixeldungeonclasses.noosa.PointerArea;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
-
-import java.util.ArrayList;
 
 public class ChangeSelection extends Component {
 
@@ -50,8 +49,11 @@ public class ChangeSelection extends Component {
 		add(this.title);
 
 		this.btnSelect = new RedButton(text) {
+			{
+				hotArea.blockLevel = PointerArea.NEVER_BLOCK;
+			}
 			@Override
-			protected void onClick() {
+			public void onClick() {
 				ChangeSelection.this.onClick();
 			}
 		};
@@ -84,7 +86,7 @@ public class ChangeSelection extends Component {
 				posY
 		);
 		PixelScene.align( title );
-		posY += title.height() + 2;
+		posY += title.height() + 4;
 
 		float posX = x;
 		btnSelect.setRect(posX, posY, width(), BTN_HEIGHT);
@@ -97,4 +99,5 @@ public class ChangeSelection extends Component {
 		line.x = x;
 		line.y = y+2;
 	}
+
 }

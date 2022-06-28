@@ -22,6 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.darts;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.effects.Lightning;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
@@ -33,16 +34,16 @@ import com.ansdoship.pixeldungeonclasses.utils.Random;
 import java.util.ArrayList;
 
 public class ShockingDart extends TippedDart {
-	
+
 	{
 		image = ItemSpriteSheet.SHOCKING_DART;
 	}
-	
+
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		
-		defender.damage(Random.NormalIntRange(8, 12), this);
-		
+
+		defender.damage(Random.NormalIntRange(5 + Dungeon.depth/4, 10 + Dungeon.depth/4), this);
+
 		CharSprite s = defender.sprite;
 		if (s != null && s.parent != null) {
 			ArrayList<Lightning.Arc> arcs = new ArrayList<>();
@@ -51,7 +52,7 @@ public class ShockingDart extends TippedDart {
 			s.parent.add(new Lightning(arcs, null));
 			Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
 		}
-		
+
 		return super.proc(attacker, defender, damage);
 	}
 }

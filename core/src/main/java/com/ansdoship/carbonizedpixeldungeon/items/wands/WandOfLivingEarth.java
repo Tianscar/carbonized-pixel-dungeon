@@ -26,9 +26,9 @@ import com.ansdoship.carbonizedpixeldungeon.Challenges;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Amok;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.NPC;
@@ -48,21 +48,21 @@ import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class WandOfLivingEarth extends DamageWand {
-	
+
 	{
 		image = ItemSpriteSheet.WAND_LIVING_EARTH;
 	}
-	
+
 	@Override
 	public int min(int lvl) {
 		return 4;
 	}
-	
+
 	@Override
 	public int max(int lvl) {
 		return 6 + 2*lvl;
 	}
-	
+
 	@Override
 	public void onZap(Ballistica bolt) {
 		Char ch = Actor.findChar(bolt.collisionPos);
@@ -96,7 +96,7 @@ public class WandOfLivingEarth extends DamageWand {
 			wandProc(guardian, chargesPerCast());
 			Sample.INSTANCE.play( Assets.Sounds.HIT_MAGIC, 1, 0.9f * Random.Float(0.87f, 1.15f) );
 
-		//shooting the guardian at a location
+			//shooting the guardian at a location
 		} else if ( guardian == null && buff != null && buff.armor >= buff.armorToGuardian()){
 
 			//create a new guardian
@@ -118,7 +118,7 @@ public class WandOfLivingEarth extends DamageWand {
 				for (int n : PathFinder.NEIGHBOURS9) {
 					int c = bolt.collisionPos + n;
 					if (passable[c] && Actor.findChar( c ) == null
-						&& (closest == -1 || (Dungeon.level.trueDistance(c, curUser.pos) < (Dungeon.level.trueDistance(closest, curUser.pos))))) {
+							&& (closest == -1 || (Dungeon.level.trueDistance(c, curUser.pos) < (Dungeon.level.trueDistance(closest, curUser.pos))))) {
 						closest = c;
 					}
 				}
@@ -146,7 +146,7 @@ public class WandOfLivingEarth extends DamageWand {
 			buff.detach();
 			Sample.INSTANCE.play( Assets.Sounds.HIT_MAGIC, 1, 0.9f * Random.Float(0.87f, 1.15f) );
 
-		//shooting at a location/enemy with no guardian being shot
+			//shooting at a location/enemy with no guardian being shot
 		} else {
 
 			if (ch != null) {
@@ -156,7 +156,7 @@ public class WandOfLivingEarth extends DamageWand {
 				wandProc(ch, chargesPerCast());
 				ch.damage(damage, this);
 				Sample.INSTANCE.play( Assets.Sounds.HIT_MAGIC, 1, 0.8f * Random.Float(0.87f, 1.15f) );
-				
+
 				if (guardian == null) {
 					curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + buffedLvl() / 2);
 				} else {
@@ -173,7 +173,7 @@ public class WandOfLivingEarth extends DamageWand {
 		}
 
 	}
-	
+
 	@Override
 	public void fx(Ballistica bolt, Callback callback) {
 		MagicMissile.boltFromChar(curUser.sprite.parent,
@@ -183,7 +183,7 @@ public class WandOfLivingEarth extends DamageWand {
 				callback);
 		Sample.INSTANCE.play(Assets.Sounds.ZAP);
 	}
-	
+
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
 		EarthGuardian guardian = null;
@@ -193,7 +193,7 @@ public class WandOfLivingEarth extends DamageWand {
 				break;
 			}
 		}
-		
+
 		int armor = Math.round(damage*0.33f);
 
 		if (guardian != null){
@@ -204,7 +204,7 @@ public class WandOfLivingEarth extends DamageWand {
 			Buff.affect(attacker, RockArmor.class).addArmor( buffedLvl(), armor);
 		}
 	}
-	
+
 	@Override
 	public void staffFx(MagesStaff.StaffParticle particle) {
 		if (Random.Int(10) == 0){
@@ -255,6 +255,11 @@ public class WandOfLivingEarth extends DamageWand {
 		@Override
 		public float iconFadePercent() {
 			return Math.max(0, (armorToGuardian() - armor) / (float)armorToGuardian());
+		}
+
+		@Override
+		public String iconTextDisplay() {
+			return Integer.toString(armor);
 		}
 
 		@Override
@@ -346,11 +351,11 @@ public class WandOfLivingEarth extends DamageWand {
 			} else {
 				return Messages.get(this, "desc", wandLevel, 3 + 3*wandLevel);
 			}
-			
+
 		}
-		
+
 		{
-			immunities.add( Corruption.class );
+			immunities.add( AllyBuff.class );
 		}
 
 		private static final String DEFENSE = "defense";

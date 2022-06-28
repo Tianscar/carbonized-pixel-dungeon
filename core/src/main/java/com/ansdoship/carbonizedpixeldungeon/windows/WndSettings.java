@@ -86,6 +86,11 @@ public class WndSettings extends WndTabbed {
 				display.visible = display.active = value;
 				if (value) last_index = 0;
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndSettings.class, "display"));
+			}
 		});
 
 		ui = new UITab();
@@ -99,6 +104,11 @@ public class WndSettings extends WndTabbed {
 				super.select(value);
 				ui.visible = ui.active = value;
 				if (value) last_index = 1;
+			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndSettings.class, "ui"));
 			}
 		});
 
@@ -114,6 +124,11 @@ public class WndSettings extends WndTabbed {
 				data.visible = data.active = value;
 				if (value) last_index = 2;
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndSettings.class, "data"));
+			}
 		});
 
 		audio = new AudioTab();
@@ -127,6 +142,11 @@ public class WndSettings extends WndTabbed {
 				super.select(value);
 				audio.visible = audio.active = value;
 				if (value) last_index = 3;
+			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndSettings.class, "audio"));
 			}
 		});
 
@@ -155,6 +175,11 @@ public class WndSettings extends WndTabbed {
 						icon.hardlight(1.5f, 0.75f, 0f);
 						break;
 				}
+			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndSettings.class, "langs"));
 			}
 
 		};
@@ -190,6 +215,7 @@ public class WndSettings extends WndTabbed {
 		ColorBlock sep1;
 		CheckBox chkFullscreen;
 		OptionSlider optScale;
+		OptionSlider optSplashScreen;
 		CheckBox chkSaver;
 		RedButton btnOrientation;
 		ColorBlock sep2;
@@ -219,6 +245,20 @@ public class WndSettings extends WndTabbed {
 				chkFullscreen.enable(false);
 			}
 			add(chkFullscreen);
+
+			optSplashScreen = new OptionSlider(Messages.get(this, "splash_screen"),
+					Messages.get(this, "disable" ),
+					Messages.get( this, "full" ),
+					0, 2) {
+				@Override
+				protected void onChange() {
+					if (getSelectedValue() != PDSettings.splashScreen()) {
+						PDSettings.splashScreen(getSelectedValue());
+					}
+				}
+			};
+			optSplashScreen.setSelectedValue(PDSettings.splashScreen());
+			add(optSplashScreen);
 
 			if ((int)Math.ceil(2* Game.density) < PixelScene.maxDefaultZoom) {
 				optScale = new OptionSlider(Messages.get(this, "scale"),
@@ -334,9 +374,19 @@ public class WndSettings extends WndTabbed {
 				bottom = btnOrientation.bottom();
 			}
 
-			if (optScale != null){
-				optScale.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
-				bottom = optScale.bottom();
+			if (width > 200 && optScale != null) {
+				optSplashScreen.setRect(0, bottom + GAP, width/2-1, SLIDER_HEIGHT);
+				optScale.setRect(optSplashScreen.right() + GAP, bottom + GAP, width/2-1, SLIDER_HEIGHT);
+				bottom = optSplashScreen.bottom();
+			}
+			else {
+				optSplashScreen.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
+				bottom = optSplashScreen.bottom();
+
+				if (optScale != null){
+					optScale.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
+					bottom = optScale.bottom();
+				}
 			}
 
 			sep2.size(width, 1);
@@ -871,7 +921,7 @@ public class WndSettings extends WndTabbed {
 							index += 2;
 						}
 
-						Window credits = new Window(0, 0, 0, Chrome.get(Chrome.Type.TOAST));
+						Window credits = new Window(0, 0, Chrome.get(Chrome.Type.TOAST));
 
 						int w = PixelScene.landscape() ? 120 : 80;
 						if (totalCredits >= 25) w *= 1.5f;

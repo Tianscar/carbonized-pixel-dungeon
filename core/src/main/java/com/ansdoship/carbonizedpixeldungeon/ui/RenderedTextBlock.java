@@ -27,6 +27,8 @@ import com.ansdoship.pixeldungeonclasses.noosa.RenderedText;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class RenderedTextBlock extends Component {
 
@@ -107,15 +109,29 @@ public class RenderedTextBlock extends Component {
 		return maxWidth;
 	}
 
+	private static final HashSet<String> noEsc = new HashSet<>(
+			Arrays.asList(new String[]{
+					"_"
+			})
+	);
+
 	private synchronized void build(){
 		if (tokens == null) return;
 		
 		clear();
 		words = new ArrayList<>();
 		boolean highlighting = false;
-		for (String str : tokens){
-			
-			if (str.equals("_") && highlightingEnabled){
+		boolean privAvailable, nextAvailable;
+		for (int i = 0; i < tokens.length; i ++){
+
+			String str = tokens[i];
+			privAvailable = i > 0;
+			nextAvailable = i < (tokens.length - 1);
+
+			if (str.equals("\\") && nextAvailable && noEsc.contains(tokens[i+1])) {
+				//prevent the escape character to be rendered
+			}
+			else if (str.equals("_") && !(privAvailable && tokens[i-1].equals("\\")) && highlightingEnabled){
 				highlighting = !highlighting;
 			} else if (str.equals("\n")){
 				words.add(NEWLINE);

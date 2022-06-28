@@ -34,11 +34,11 @@ import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 
 public class ShockingBrew extends Brew {
-	
+
 	{
 		image = ItemSpriteSheet.BREW_SHOCKING;
 	}
-	
+
 	@Override
 	public void shatter(int cell) {
 		if (Dungeon.level.heroFOV[cell]) {
@@ -46,14 +46,14 @@ public class ShockingBrew extends Brew {
 			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 			Sample.INSTANCE.play(Assets.Sounds.LIGHTNING);
 		}
-		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), 2 );
+		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), 3 );
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 				GameScene.add(Blob.seed(i, 20, Electricity.class));
 			}
 		}
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients
@@ -65,12 +65,12 @@ public class ShockingBrew extends Brew {
 		{
 			inputs =  new Class[]{PotionOfParalyticGas.class, AlchemicalCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 8;
-			
+
+			cost = 6;
+
 			output = ShockingBrew.class;
 			outQuantity = 1;
 		}
-		
+
 	}
 }

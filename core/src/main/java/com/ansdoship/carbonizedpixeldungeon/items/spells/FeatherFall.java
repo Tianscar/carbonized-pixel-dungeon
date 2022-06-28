@@ -33,29 +33,29 @@ import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 
 public class FeatherFall extends Spell {
-	
+
 	{
 		image = ItemSpriteSheet.FEATHER_FALL;
 	}
-	
+
 	@Override
 	protected void onCast(Hero hero) {
 		Buff.append(hero, FeatherBuff.class, 30f);
 		hero.sprite.operate(hero.pos);
 		Sample.INSTANCE.play(Assets.Sounds.READ );
 		hero.sprite.emitter().burst( Speck.factory( Speck.JET ), 20);
-		
+
 		GLog.p(Messages.get(this, "light"));
-		
+
 		detach( curUser.belongings.backpack );
 		updateQuickslot();
 		hero.spendAndNext( 1f );
 	}
-	
+
 	public static class FeatherBuff extends FlavourBuff {
 		//does nothing, just waits to be triggered by chasm falling
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
@@ -67,12 +67,12 @@ public class FeatherFall extends Spell {
 		{
 			inputs =  new Class[]{PotionOfLevitation.class, ArcaneCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 6;
-			
+
+			cost = 8;
+
 			output = FeatherFall.class;
 			outQuantity = 2;
 		}
-		
+
 	}
 }

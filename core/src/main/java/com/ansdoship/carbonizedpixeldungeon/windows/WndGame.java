@@ -55,7 +55,7 @@ public class WndGame extends Window {
 		addButton( curBtn = new RedButton( Messages.get(this, "settings") ) {
 			@Override
 			protected void onClick() {
-				hide();
+				//hide();
 				GameScene.show(new WndSettings());
 			}
 		});
@@ -78,7 +78,7 @@ public class WndGame extends Window {
 			addButton( curBtn = new RedButton( Messages.get(this, "challenges") ) {
 				@Override
 				protected void onClick() {
-					hide();
+					//hide();
 					GameScene.show( new WndChallenges( Dungeon.challenges, false ) );
 				}
 			} );

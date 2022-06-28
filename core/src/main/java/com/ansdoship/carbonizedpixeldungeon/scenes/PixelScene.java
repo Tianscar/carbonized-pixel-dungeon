@@ -28,20 +28,19 @@ import com.ansdoship.carbonizedpixeldungeon.effects.BadgeBanner;
 import com.ansdoship.carbonizedpixeldungeon.messages.Languages;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
+import com.ansdoship.carbonizedpixeldungeon.ui.Tooltip;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
 import com.ansdoship.pixeldungeonclasses.gltextures.TextureCache;
 import com.ansdoship.pixeldungeonclasses.glwrap.Blending;
+import com.ansdoship.pixeldungeonclasses.input.ControllerHandler;
 import com.ansdoship.pixeldungeonclasses.input.PointerEvent;
-import com.ansdoship.pixeldungeonclasses.noosa.BitmapText;
+import com.ansdoship.pixeldungeonclasses.noosa.*;
 import com.ansdoship.pixeldungeonclasses.noosa.BitmapText.Font;
-import com.ansdoship.pixeldungeonclasses.noosa.Camera;
-import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
-import com.ansdoship.pixeldungeonclasses.noosa.Game;
-import com.ansdoship.pixeldungeonclasses.noosa.Gizmo;
-import com.ansdoship.pixeldungeonclasses.noosa.Scene;
-import com.ansdoship.pixeldungeonclasses.noosa.Visual;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
+import com.ansdoship.pixeldungeonclasses.noosa.ui.Cursor;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.GameMath;
+import com.ansdoship.pixeldungeonclasses.utils.PointF;
 import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
 import java.util.ArrayList;
@@ -96,7 +95,7 @@ public class PixelScene extends Scene {
 		defaultZoom = PDSettings.scale();
 
 		if (defaultZoom < Math.ceil( Game.density * 2 ) || defaultZoom > maxDefaultZoom){
-			defaultZoom = (int)GameMath.gate(2, (int)Math.ceil( Game.density * 2.5 ), maxDefaultZoom);
+			defaultZoom = (int)GameMath.gate(2, (int)Math.ceil( Game.density * 2.5f ), maxDefaultZoom);
 		}
 
 		minZoom = 1;
@@ -110,10 +109,10 @@ public class PixelScene extends Scene {
 
 		// 3x5 (6)
 		pixelFont = Font.colorMarked(
-			TextureCache.get( Assets.Fonts.PIXELFONT), 0x00000000, BitmapText.Font.LATIN_FULL );
+				TextureCache.get( Assets.Fonts.PIXELFONT), 0x00000000, BitmapText.Font.LATIN_FULL );
 		pixelFont.baseLine = 6;
 		pixelFont.tracking = -1;
-		
+
 		//set up the texture size which rendered text will use for any new glyphs.
 		int renderedTextPageSize;
 		if (defaultZoom <= 3){
@@ -131,13 +130,58 @@ public class PixelScene extends Scene {
 			renderedTextPageSize *= 2;
 		}
 		Game.platform.setupFontGenerators(renderedTextPageSize, PDSettings.systemFont());
-		
+
+		Tooltip.resetLastUsedTime();
+
+		Cursor.setCustomCursor(Cursor.Type.DEFAULT, defaultZoom);
+
 	}
-	
+
+	private static PointF virtualCursorPos;
+
+	@Override
+	public void update() {
+		super.update();
+		//20% deadzone
+		if (Math.abs(ControllerHandler.rightStickPosition.x) >= 0.2f
+				|| Math.abs(ControllerHandler.rightStickPosition.y) >= 0.2f) {
+			if (!ControllerHandler.controllerPointerActive()) {
+				ControllerHandler.setControllerPointer(true);
+				virtualCursorPos = PointerEvent.currentHoverPos();
+			}
+			//cursor moves 500 scaled pixels per second at full speed, 100 at minimum speed
+			virtualCursorPos.x += defaultZoom * 500 * Game.elapsed * ControllerHandler.rightStickPosition.x;
+			virtualCursorPos.y += defaultZoom * 500 * Game.elapsed * ControllerHandler.rightStickPosition.y;
+			virtualCursorPos.x = GameMath.gate(0, virtualCursorPos.x, Game.width);
+			virtualCursorPos.y = GameMath.gate(0, virtualCursorPos.y, Game.height);
+			PointerEvent.addPointerEvent(new PointerEvent((int) virtualCursorPos.x, (int) virtualCursorPos.y, 10_000, PointerEvent.Type.HOVER, PointerEvent.NONE));
+		}
+	}
+
+	private Image cursor = null;
+
+	@Override
+	public synchronized void draw() {
+		super.draw();
+
+		//cursor is separate from the rest of the scene, always appears above
+		if (ControllerHandler.controllerPointerActive()){
+			if (cursor == null){
+				cursor = new Image(Cursor.Type.CONTROLLER.file);
+			}
+
+			cursor.x = (virtualCursorPos.x / defaultZoom) - cursor.width()/2f;
+			cursor.y = (virtualCursorPos.y / defaultZoom) - cursor.height()/2f;
+			cursor.camera = uiCamera;
+			align(cursor);
+			cursor.draw();
+		}
+	}
+
 	//FIXME this system currently only works for a subset of windows
 	private static ArrayList<Class<?extends Window>> savedWindows = new ArrayList<>();
 	private static Class<?extends PixelScene> savedClass = null;
-	
+
 	public synchronized void saveWindows(){
 		if (members == null) return;
 
@@ -149,7 +193,7 @@ public class PixelScene extends Scene {
 			}
 		}
 	}
-	
+
 	public synchronized void restoreWindows(){
 		if (getClass().equals(savedClass)){
 			for (Class<?extends Window> w : savedWindows){
@@ -167,6 +211,9 @@ public class PixelScene extends Scene {
 	public void destroy() {
 		super.destroy();
 		PointerEvent.clearListeners();
+		if (cursor != null){
+			cursor.destroy();
+		}
 	}
 
 	public static RenderedTextBlock renderTextBlock(int size ){
@@ -209,53 +256,69 @@ public class PixelScene extends Scene {
 			fadeIn( 0xFF000000, false );
 		}
 	}
-	
+
 	protected void fadeIn( int color, boolean light ) {
 		add( new Fader( color, light ) );
 	}
-	
+
 	public static void showBadge( Badges.Badge badge ) {
-		BadgeBanner banner = BadgeBanner.show( badge.image );
-		banner.camera = uiCamera;
-		banner.x = align( banner.camera, (banner.camera.width - banner.width) / 2 );
-		banner.y = align( banner.camera, (banner.camera.height - banner.height) / 3 );
-		Scene s = Game.scene();
-		if (s != null) s.add( banner );
+		Game.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				BadgeBanner banner = BadgeBanner.show( badge.image );
+				banner.camera = uiCamera;
+				float offset = Camera.main.centerOffset.y;
+				banner.x = align( banner.camera, (banner.camera.width - banner.width) / 2 );
+				banner.y = align( uiCamera, (uiCamera.height - banner.height) / 2 - banner.height/2 - 16 - offset );
+				Scene s = Game.scene();
+				if (s != null) s.add( banner );
+			}
+		});
 	}
-	
+
 	protected static class Fader extends ColorBlock {
-		
+
 		private static float FADE_TIME = 1f;
-		
+
 		private boolean light;
-		
+
 		private float time;
-		
+
+		private static Fader INSTANCE;
+
 		public Fader( int color, boolean light ) {
 			super( uiCamera.width, uiCamera.height, color );
-			
+
 			this.light = light;
-			
+
 			camera = uiCamera;
-			
+
 			alpha( 1f );
 			time = FADE_TIME;
+
+			if (INSTANCE != null){
+				INSTANCE.killAndErase();
+			}
+			INSTANCE = this;
 		}
-		
+
 		@Override
 		public void update() {
-			
+
 			super.update();
-			
+
 			if ((time -= Game.elapsed) <= 0) {
 				alpha( 0f );
 				parent.remove( this );
 				destroy();
+				if (INSTANCE == this) {
+					INSTANCE = null;
+				}
 			} else {
 				alpha( time / FADE_TIME );
 			}
 		}
-		
+
 		@Override
 		public void draw() {
 			if (light) {
@@ -267,29 +330,29 @@ public class PixelScene extends Scene {
 			}
 		}
 	}
-	
+
 	private static class PixelCamera extends Camera {
-		
+
 		public PixelCamera( float zoom ) {
 			super(
-				(int)(Game.width - Math.ceil( Game.width / zoom ) * zoom) / 2,
-				(int)(Game.height - Math.ceil( Game.height / zoom ) * zoom) / 2,
-				(int)Math.ceil( Game.width / zoom ),
-				(int)Math.ceil( Game.height / zoom ), zoom );
+					(int)(Game.width - Math.ceil( Game.width / zoom ) * zoom) / 2,
+					(int)(Game.height - Math.ceil( Game.height / zoom ) * zoom) / 2,
+					(int)Math.ceil( Game.width / zoom ),
+					(int)Math.ceil( Game.height / zoom ), zoom );
 			fullScreen = true;
 		}
-		
+
 		@Override
 		protected void updateMatrix() {
 			float sx = align( this, scroll.x + shakeX );
 			float sy = align( this, scroll.y + shakeY );
-			
+
 			matrix[0] = +zoom * invW2;
 			matrix[5] = -zoom * invH2;
-			
+
 			matrix[12] = -1 + x * invW2 - sx * matrix[0];
 			matrix[13] = +1 - y * invH2 - sy * matrix[5];
-			
+
 		}
 	}
 }

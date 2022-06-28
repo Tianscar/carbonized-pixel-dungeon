@@ -109,15 +109,15 @@ public class GnollTrickster extends Gnoll {
 			super.aggro(ch);
 		}
 	}
-	
+
 	@Override
-	protected Item createLoot() {
+	public Item createLoot() {
 		MissileWeapon drop = (MissileWeapon)super.createLoot();
 		//half quantity, rounded up
 		drop.quantity((drop.quantity()+1)/2);
 		return drop;
 	}
-	
+
 	@Override
 	public void die( Object cause ) {
 		super.die( cause );

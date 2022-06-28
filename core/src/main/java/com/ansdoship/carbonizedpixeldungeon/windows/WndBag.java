@@ -41,12 +41,9 @@ import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
-import com.ansdoship.carbonizedpixeldungeon.ui.ItemSlot;
-import com.ansdoship.carbonizedpixeldungeon.ui.QuickSlotButton;
-import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
-import com.ansdoship.carbonizedpixeldungeon.ui.Window;
+import com.ansdoship.carbonizedpixeldungeon.ui.*;
 import com.ansdoship.pixeldungeonclasses.gltextures.TextureCache;
+import com.ansdoship.pixeldungeonclasses.input.GameAction;
 import com.ansdoship.pixeldungeonclasses.input.KeyBindings;
 import com.ansdoship.pixeldungeonclasses.input.KeyEvent;
 import com.ansdoship.pixeldungeonclasses.noosa.BitmapText;
@@ -134,9 +131,10 @@ public class WndBag extends WndTabbed {
 
 		resize( windowWidth, windowHeight );
 
+		int i = 1;
 		for (Bag b : Dungeon.hero.belongings.getBags()) {
 			if (b != null) {
-				BagTab tab = new BagTab( b );
+				BagTab tab = new BagTab( b, i++ );
 				add( tab );
 				tab.select( b == bag );
 			}
@@ -235,16 +233,55 @@ public class WndBag extends WndTabbed {
 			placeItem( null );
 		}
 	}
-	
+
 	protected void placeItem( final Item item ) {
 
 		count++;
-		
+
 		int x = col * (slotWidth + SLOT_MARGIN);
 		int y = TITLE_HEIGHT + row * (slotHeight + SLOT_MARGIN);
-		
-		add( new ItemButton( item ).setPos( x, y ) );
-		
+
+		InventorySlot slot = new InventorySlot( item ){
+			@Override
+			protected void onClick() {
+				if (lastBag != item && !lastBag.contains(item) && !item.isEquipped(Dungeon.hero)){
+
+					hide();
+
+				} else if (selector != null) {
+
+					hide();
+					selector.onSelect( item );
+
+				} else {
+
+					Game.scene().addToFront(new WndUseItem( WndBag.this, item ) );
+
+				}
+			}
+
+			@Override
+			protected boolean onLongClick() {
+				if (selector == null && item.defaultAction != null) {
+					hide();
+					Dungeon.quickslot.setSlot( 0 , item );
+					QuickSlotButton.refresh();
+					return true;
+				} else if (selector != null) {
+					Game.scene().addToFront(new WndInfoItem(item));
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+		slot.setRect( x, y, slotWidth, slotHeight );
+		add(slot);
+
+		if (item == null || (selector != null && !selector.itemSelectable(item))){
+			slot.enable(false);
+		}
+
 		if (++col >= nCols) {
 			col = 0;
 			row++;
@@ -302,17 +339,39 @@ public class WndBag extends WndTabbed {
 			return Icons.get( Icons.BACKPACK );
 		}
 	}
-	
+
 	private class BagTab extends IconTab {
 
 		private Bag bag;
-		
-		public BagTab( Bag bag ) {
+		private int index;
+
+		public BagTab( Bag bag, int index ) {
 			super( icon(bag) );
-			
+
 			this.bag = bag;
+			this.index = index;
 		}
-		
+
+		@Override
+		public GameAction keyAction() {
+			switch (index){
+				case 1: default:
+					return PDAction.BAG_1;
+				case 2:
+					return PDAction.BAG_2;
+				case 3:
+					return PDAction.BAG_3;
+				case 4:
+					return PDAction.BAG_4;
+				case 5:
+					return PDAction.BAG_5;
+			}
+		}
+
+		@Override
+		protected String hoverText() {
+			return Messages.titleCase(bag.name());
+		}
 	}
 	
 	public static class Placeholder extends Item {
@@ -334,132 +393,6 @@ public class WndBag extends WndTabbed {
 		@Override
 		public boolean isEquipped( Hero hero ) {
 			return true;
-		}
-	}
-	
-	private class ItemButton extends ItemSlot {
-		
-		private static final int NORMAL		= 0x9953564D;
-		private static final int EQUIPPED	= 0x9991938C;
-		
-		private Item item;
-		private ColorBlock bg;
-		
-		public ItemButton( Item item ) {
-			
-			super( item );
-
-			this.item = item;
-			if (item instanceof Gold || item instanceof Bag) {
-				bg.visible = false;
-			}
-			
-			width = slotWidth;
-			height = slotHeight;
-		}
-		
-		@Override
-		protected void createChildren() {
-			bg = new ColorBlock( 1, 1, NORMAL );
-			add( bg );
-			
-			super.createChildren();
-		}
-		
-		@Override
-		protected void layout() {
-			bg.size(width, height);
-			bg.x = x;
-			bg.y = y;
-			
-			super.layout();
-
-			if (status != null) {
-				status.measure();
-				if (status.width > (width - SLOT_MARGIN)) {
-					status.scale.set(PixelScene.align(0.8f));
-				} else {
-					status.scale.set(1f);
-				}
-				status.x = x;
-				status.y = y;
-				PixelScene.align(status);
-			}
-		}
-		
-		@Override
-		public void item( Item item ) {
-			
-			super.item( item );
-			if (item != null) {
-
-				bg.texture( TextureCache.createSolid( item.isEquipped( Dungeon.hero ) ? EQUIPPED : NORMAL ) );
-				if (item.cursed && item.cursedKnown) {
-					bg.ra = +0.3f;
-					bg.ga = -0.15f;
-				} else if (!item.isIdentified()) {
-					if ((item instanceof EquipableItem || item instanceof Wand) && item.cursedKnown){
-						bg.ba = 0.3f;
-					} else {
-						bg.ra = 0.3f;
-						bg.ba = 0.3f;
-					}
-				}
-				
-				if (item.name() == null) {
-					enable( false );
-				} else if (selector != null && !selector.itemSelectable(item)) {
-					enable(false);
-				} else if (Dungeon.hero.buff(LostInventory.class) != null
-						&& !item.keptThoughLostInvent){
-					enable(false);
-				}
-			} else {
-				bg.color( NORMAL );
-			}
-		}
-		
-		@Override
-		protected void onPointerDown() {
-			bg.brightness( 1.5f );
-			Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
-		}
-		
-		protected void onPointerUp() {
-			bg.brightness( 1.0f );
-		}
-		
-		@Override
-		protected void onClick() {
-			if (lastBag != item && !lastBag.contains(item) && !item.isEquipped(Dungeon.hero)){
-
-				hide();
-
-			} else if (selector != null) {
-				
-				hide();
-				selector.onSelect( item );
-				
-			} else {
-				
-				Game.scene().addToFront(new WndUseItem( WndBag.this, item ) );
-				
-			}
-		}
-		
-		@Override
-		protected boolean onLongClick() {
-			if (selector == null && item.defaultAction != null) {
-				hide();
-				Dungeon.quickslot.setSlot( 0 , item );
-				QuickSlotButton.refresh();
-				return true;
-			} else if (selector != null) {
-				Game.scene().addToFront(new WndInfoItem(item));
-				return true;
-			} else {
-				return false;
-			}
 		}
 	}
 

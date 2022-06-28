@@ -4,8 +4,8 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.NPC;
 import com.ansdoship.carbonizedpixeldungeon.effects.MagicMissile;
@@ -38,17 +38,17 @@ public class WandOfWarding extends Wand {
 	}
 
 	private boolean wardAvailable = true;
-	
+
 	@Override
 	public boolean tryToZap(Hero owner, int target) {
-		
+
 		int currentWardEnergy = 0;
 		for (Char ch : Actor.chars()){
 			if (ch instanceof Ward){
 				currentWardEnergy += ((Ward) ch).tier;
 			}
 		}
-		
+
 		int maxWardEnergy = 0;
 		for (Buff buff : curUser.buffs()){
 			if (buff instanceof Wand.Charger){
@@ -57,9 +57,9 @@ public class WandOfWarding extends Wand {
 				}
 			}
 		}
-		
+
 		wardAvailable = (currentWardEnergy < maxWardEnergy);
-		
+
 		Char ch = Actor.findChar(target);
 		if (ch instanceof Ward){
 			if (!wardAvailable && ((Ward) ch).tier <= 3){
@@ -72,10 +72,10 @@ public class WandOfWarding extends Wand {
 				return false;
 			}
 		}
-		
+
 		return super.tryToZap(owner, target);
 	}
-	
+
 	@Override
 	public void onZap(Ballistica bolt) {
 
@@ -95,7 +95,7 @@ public class WandOfWarding extends Wand {
 		if (!Dungeon.level.passable[target]){
 			GLog.w( Messages.get(this, "bad_location"));
 			Dungeon.level.pressCell(target);
-			
+
 		} else if (ch != null){
 			if (ch instanceof Ward){
 				if (wardAvailable) {
@@ -108,7 +108,7 @@ public class WandOfWarding extends Wand {
 				GLog.w( Messages.get(this, "bad_location"));
 				Dungeon.level.pressCell(target);
 			}
-			
+
 		} else {
 			Ward ward = new Ward();
 			ward.pos = target;
@@ -128,7 +128,7 @@ public class WandOfWarding extends Wand {
 				curUser.sprite,
 				bolt.collisionPos,
 				callback);
-		
+
 		if (bolt.dist > 10){
 			m.setSpeed(bolt.dist*20);
 		}
@@ -356,14 +356,14 @@ public class WandOfWarding extends Wand {
 			((WardSprite)sprite).updateTier(tier);
 			sprite.place(pos);
 		}
-		
+
 		@Override
 		public void destroy() {
 			super.destroy();
 			Dungeon.observe();
 			GameScene.updateFog(pos, viewDistance+1);
 		}
-		
+
 		@Override
 		public boolean canInteract(Char c) {
 			return true;
@@ -398,9 +398,9 @@ public class WandOfWarding extends Wand {
 		public String description() {
 			return Messages.get(this, "desc_" + tier, 2+wandLevel, 8 + 4*wandLevel, tier );
 		}
-		
+
 		{
-			immunities.add( Corruption.class );
+			immunities.add( AllyBuff.class );
 		}
 
 		private static final String TIER = "tier";
@@ -423,7 +423,7 @@ public class WandOfWarding extends Wand {
 			wandLevel = bundle.getInt(WAND_LEVEL);
 			totalZaps = bundle.getInt(TOTAL_ZAPS);
 		}
-		
+
 		{
 			properties.add(Property.IMMOVABLE);
 		}

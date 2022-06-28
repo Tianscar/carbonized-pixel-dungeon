@@ -24,6 +24,8 @@ package com.ansdoship.carbonizedpixeldungeon.items.spells;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Paralysis;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
@@ -33,66 +35,52 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 
 public class PhaseShift extends TargetedSpell {
-	
+
 	{
 		image = ItemSpriteSheet.PHASE_SHIFT;
+
+		usesTargeting = true;
 	}
-	
+
 	@Override
 	protected void affectTarget(Ballistica bolt, Hero hero) {
 		final Char ch = Actor.findChar(bolt.collisionPos);
-		
-		if (ch == hero){
-			ScrollOfTeleportation.teleportHero(curUser);
-		} else if (ch != null) {
-			int count = 20;
-			int pos;
-			do {
-				pos = Dungeon.level.randomRespawnCell( hero );
-				if (count-- <= 0) {
-					break;
+
+		if (ch != null) {
+			if (ScrollOfTeleportation.teleportChar(ch)){
+
+				if (ch instanceof Mob) {
+					if (((Mob) ch).state == ((Mob) ch).HUNTING) ((Mob) ch).state = ((Mob) ch).WANDERING;
+					((Mob) ch).beckon(Dungeon.level.randomDestination( ch ));
 				}
-			} while (pos == -1 || Dungeon.level.secret[pos]);
-			
-			if (pos == -1 || Dungeon.bossLevel()) {
-				
-				GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
-				
-			} else if (ch.properties().contains(Char.Property.IMMOVABLE)) {
-				
-				GLog.w( Messages.get(this, "tele_fail") );
-				
-			} else  {
-				
-				ch.pos = pos;
-				if (ch instanceof Mob && ((Mob) ch).state == ((Mob) ch).HUNTING){
-					((Mob) ch).state = ((Mob) ch).WANDERING;
+				if (!Char.hasProp(ch, Char.Property.BOSS) && !Char.hasProp(ch, Char.Property.MINIBOSS)) {
+					Buff.affect(ch, Paralysis.class, Paralysis.DURATION);
 				}
-				ch.sprite.place(ch.pos);
-				ch.sprite.visible = Dungeon.level.heroFOV[pos];
-				
+
 			}
+		} else {
+			GLog.w( Messages.get(this, "no_target") );
 		}
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
 		return Math.round(quantity * ((30 + 40) / 8f));
 	}
-	
+
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
-		
+
 		{
 			inputs =  new Class[]{ScrollOfTeleportation.class, ArcaneCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 6;
-			
+
+			cost = 4;
+
 			output = PhaseShift.class;
 			outQuantity = 8;
 		}
-		
+
 	}
-	
+
 }

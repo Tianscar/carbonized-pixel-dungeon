@@ -44,17 +44,17 @@ import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 
 public class BeaconOfReturning extends Spell {
-	
+
 	{
 		image = ItemSpriteSheet.RETURN_BEACON;
 	}
-	
+
 	public int returnDepth	= -1;
 	public int returnPos;
-	
+
 	@Override
 	protected void onCast(final Hero hero) {
-		
+
 		if (returnDepth == -1){
 			setBeacon(hero);
 		} else {
@@ -72,45 +72,45 @@ public class BeaconOfReturning extends Spell {
 					}
 				}
 			});
-			
+
 		}
 	}
-	
+
 	//we reset return depth when beacons are dropped to prevent
 	//having two stacks of beacons with different return locations
-	
+
 	@Override
 	protected void onThrow(int cell) {
 		returnDepth = -1;
 		super.onThrow(cell);
 	}
-	
+
 	@Override
 	public void doDrop(Hero hero) {
 		returnDepth = -1;
 		super.doDrop(hero);
 	}
-	
+
 	private void setBeacon(Hero hero ){
 		returnDepth = Dungeon.depth;
 		returnPos = hero.pos;
-		
+
 		hero.spend( 1f );
 		hero.busy();
-		
+
 		GLog.i( Messages.get(this, "set") );
-		
+
 		hero.sprite.operate( hero.pos );
 		Sample.INSTANCE.play( Assets.Sounds.BEACON );
 		updateQuickslot();
 	}
-	
+
 	private void returnBeacon( Hero hero ){
-		if (Dungeon.bossLevel()) {
+		if (Dungeon.level.locked) {
 			GLog.w( Messages.get(this, "preventing") );
 			return;
 		}
-		
+
 		for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
 			Char ch = Actor.findChar(hero.pos + PathFinder.NEIGHBOURS8[i]);
 			if (ch != null && ch.alignment == Char.Alignment.ENEMY) {
@@ -118,7 +118,7 @@ public class BeaconOfReturning extends Spell {
 				return;
 			}
 		}
-		
+
 		if (returnDepth == Dungeon.depth) {
 			if (!Dungeon.level.passable[returnPos] && !Dungeon.level.avoid[returnPos]){
 				returnPos = Dungeon.level.entrance;
@@ -145,7 +145,7 @@ public class BeaconOfReturning extends Spell {
 			if (timeFreeze != null) timeFreeze.disarmPressedTraps();
 			Swiftthistle.TimeBubble timeBubble = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 			if (timeBubble != null) timeBubble.disarmPressedTraps();
-			
+
 			InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 			InterlevelScene.returnDepth = returnDepth;
 			InterlevelScene.returnPos = returnPos;
@@ -153,7 +153,7 @@ public class BeaconOfReturning extends Spell {
 		}
 		detach(hero.belongings.backpack);
 	}
-	
+
 	@Override
 	public String desc() {
 		String desc = super.desc();
@@ -162,17 +162,17 @@ public class BeaconOfReturning extends Spell {
 		}
 		return desc;
 	}
-	
+
 	private static final ItemSprite.Glowing WHITE = new ItemSprite.Glowing( 0xFFFFFF );
-	
+
 	@Override
 	public ItemSprite.Glowing glowing() {
 		return returnDepth != -1 ? WHITE : null;
 	}
-	
+
 	private static final String DEPTH	= "depth";
 	private static final String POS		= "pos";
-	
+
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
@@ -181,14 +181,14 @@ public class BeaconOfReturning extends Spell {
 			bundle.put( POS, returnPos );
 		}
 	}
-	
+
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		returnDepth	= bundle.getInt( DEPTH );
 		returnPos	= bundle.getInt( POS );
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
@@ -200,12 +200,12 @@ public class BeaconOfReturning extends Spell {
 		{
 			inputs =  new Class[]{ScrollOfPassage.class, ArcaneCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 10;
-			
+
+			cost = 6;
+
 			output = BeaconOfReturning.class;
 			outQuantity = 5;
 		}
-		
+
 	}
 }

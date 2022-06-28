@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2021 Evan Debenham
+ * Copyright (C) 2014-2022 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,16 @@
 
 package com.ansdoship.carbonizedpixeldungeon.actors.buffs;
 
+import com.ansdoship.carbonizedpixeldungeon.Dungeon;
+import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 
 public class Foresight extends FlavourBuff {
 
-	public static final float DURATION = 600f;
+	public static final float DURATION = 400f;
+
+	public static final int DISTANCE = 8;
 
 	{
 		type = buffType.POSITIVE;
@@ -36,6 +40,20 @@ public class Foresight extends FlavourBuff {
 	@Override
 	public int icon() {
 		return BuffIndicator.FORESIGHT;
+	}
+
+	@Override
+	public boolean attachTo(Char target) {
+		if (super.attachTo(target)){
+			//this way we get a nice VFX sweep on initial activation
+			if (target == Dungeon.hero){
+				Dungeon.level.mapped[target.pos] = false;
+				Dungeon.hero.search(false);
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

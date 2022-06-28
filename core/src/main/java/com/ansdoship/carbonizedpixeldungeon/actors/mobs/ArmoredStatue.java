@@ -23,8 +23,12 @@ package com.ansdoship.carbonizedpixeldungeon.actors.mobs;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.ansdoship.carbonizedpixeldungeon.items.Generator;
+import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.AntiMagic;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Brimstone;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.StatueSprite;
@@ -70,9 +74,39 @@ public class ArmoredStatue extends Statue {
 		return super.drRoll() + Random.NormalIntRange( armor.DRMin(), armor.DRMax());
 	}
 
+	//used in some glyph calculations
+	public Armor armor(){
+		return armor;
+	}
+
+	@Override
+	public boolean isImmune(Class effect) {
+		if (effect == Burning.class
+				&& armor != null
+				&& armor.hasGlyph(Brimstone.class, this)){
+			return true;
+		}
+		return super.isImmune(effect);
+	}
+
 	@Override
 	public int defenseProc(Char enemy, int damage) {
+		damage = super.defenseProc(enemy, damage);
 		return armor.proc(enemy, this, damage);
+	}
+
+	@Override
+	public void damage(int dmg, Object src) {
+		//TODO improve this when I have proper damage source logic
+		if (armor != null && armor.hasGlyph(AntiMagic.class, this)
+				&& AntiMagic.RESISTS.contains(src.getClass())){
+			dmg -= AntiMagic.drRoll(armor.buffedLvl());
+		}
+
+		super.damage( dmg, src );
+
+		//for the rose status indicator
+		Item.updateQuickslot();
 	}
 
 	@Override

@@ -28,28 +28,19 @@ import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.HeroSprite;
-import com.ansdoship.carbonizedpixeldungeon.ui.BadgesGrid;
-import com.ansdoship.carbonizedpixeldungeon.ui.BadgesList;
-import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
-import com.ansdoship.carbonizedpixeldungeon.ui.ItemSlot;
-import com.ansdoship.carbonizedpixeldungeon.ui.RedButton;
-import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
-import com.ansdoship.carbonizedpixeldungeon.ui.TalentsPane;
-import com.ansdoship.carbonizedpixeldungeon.ui.Window;
-import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
-import com.ansdoship.pixeldungeonclasses.noosa.Game;
-import com.ansdoship.pixeldungeonclasses.noosa.Group;
-import com.ansdoship.pixeldungeonclasses.noosa.Image;
+import com.ansdoship.carbonizedpixeldungeon.ui.*;
+import com.ansdoship.pixeldungeonclasses.noosa.*;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Button;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class WndRanking extends WndTabbed {
 	
 	private static final int WIDTH			= 115;
-	private static final int HEIGHT			= 146;
+	private static final int HEIGHT			= 150;
 	
 	private static Thread thread;
 	private String error = null;
@@ -115,9 +106,13 @@ public class WndRanking extends WndTabbed {
 	}
 	
 	private void createControls() {
-		
-		String[] labels =
-			{Messages.get(this, "stats"), Messages.get(this, "items"), Messages.get(this, "badges")};
+
+		Icons[] icons =
+				{Icons.RANKINGS, Icons.BACKPACK_LRG, Icons.BADGES};
+		String[] tooltips =
+			{Messages.titleCase(Messages.get(this, "stats")),
+					Messages.titleCase(Messages.get(this, "items")),
+							Messages.titleCase(Messages.get(this, "badges"))};
 		Group[] pages =
 			{new StatsTab(), new ItemsTab(), new BadgesTab()};
 		
@@ -125,22 +120,27 @@ public class WndRanking extends WndTabbed {
 			
 			add( pages[i] );
 			
-			Tab tab = new RankingTab( labels[i], pages[i] );
+			Tab tab = new RankingTab( tooltips[i], icons[i], pages[i] );
 			add( tab );
 		}
+
+		((ItemsTab)pages[1]).updateList();
 
 		layoutTabs();
 		
 		select( 0 );
 	}
 
-	private class RankingTab extends LabeledTab {
+	private class RankingTab extends IconTab {
 		
 		private Group page;
+
+		private String tooltip;
 		
-		public RankingTab( String label, Group page ) {
-			super( label );
+		public RankingTab( String tooltip, Icons icon, Group page ) {
+			super( Icons.get(icon) );
 			this.page = page;
+			this.tooltip = tooltip;
 		}
 		
 		@Override
@@ -149,6 +149,11 @@ public class WndRanking extends WndTabbed {
 			if (page != null) {
 				page.visible = page.active = selected;
 			}
+		}
+
+		@Override
+		protected String hoverText() {
+			return tooltip;
 		}
 	}
 	
@@ -167,10 +172,8 @@ public class WndRanking extends WndTabbed {
 			title.color(Window.TITLE_COLOR);
 			title.setRect( 0, 0, WIDTH, 0 );
 			add( title );
-			
-			float pos = title.bottom() + GAP;
 
-			RedButton btnTalents = new RedButton( Messages.get(this, "talents") ){
+			IconButton btnTalents = new IconButton( Icons.get(Icons.TALENT) ){
 				@Override
 				protected void onClick() {
 					//removes talents from upper tiers
@@ -192,29 +195,49 @@ public class WndRanking extends WndTabbed {
 						}
 					});
 				}
+
+				@Override
+				protected String hoverText() {
+					return Messages.get(StatsTab.this, "talents");
+				}
 			};
-			btnTalents.icon(Icons.get(Icons.TALENT));
-			btnTalents.setRect( (WIDTH - btnTalents.reqWidth()+2)/2, pos, btnTalents.reqWidth()+2 , 16 );
+			btnTalents.setSize(16 , 16);
+
+			title.setSize(title.width() - btnTalents.width(), title.height());
+
+			btnTalents.setPos(WIDTH - 18, 0);
+			PixelScene.align(btnTalents);
 			add(btnTalents);
 
-			pos = btnTalents.bottom();
+			ColorBlock sep = new ColorBlock(1, 1, 0xFF000000);
+			sep.size(WIDTH, 1);
+			sep.y = title.bottom() + 1;
+			add(sep);
+
+			float pos = btnTalents.bottom();
 
 			if (Dungeon.challenges > 0) {
-				RedButton btnChallenges = new RedButton( Messages.get(this, "challenges") ) {
+				IconButton btnChallenges = new IconButton( Icons.get(Icons.CHALLENGE_ON) ) {
 					@Override
 					protected void onClick() {
 						Game.scene().add( new WndChallenges( Dungeon.challenges, false ) );
 					}
+
+					@Override
+					protected String hoverText() {
+						return Messages.get(StatsTab.this, "challenges");
+					}
 				};
 
-				btnChallenges.icon(Icons.get(Icons.CHALLENGE_ON));
-				btnChallenges.setSize( btnChallenges.reqWidth()+2, 16 );
+				btnChallenges.icon();
+				btnChallenges.setSize( 16, 16 );
+
+				title.setSize(title.width() - btnChallenges.width(), title.height());
+
+				btnChallenges.setPos(WIDTH - 18, 0);
+				btnTalents.setPos(btnChallenges.left() - 18, btnChallenges.top());
+				PixelScene.align(btnChallenges);
 				add( btnChallenges );
-
-				float left = (WIDTH - btnTalents.width() - btnChallenges.width())/3f;
-
-				btnTalents.setPos(left, btnTalents.top());
-				btnChallenges.setPos(btnTalents.right() + left, btnTalents.top());
 			}
 
 			pos += GAP;
@@ -223,7 +246,14 @@ public class WndRanking extends WndTabbed {
 			if (strBonus > 0)       pos = statSlot(this, Messages.get(this, "str"), Dungeon.hero.STR + " + " + strBonus, pos);
 			else if (strBonus < 0)  pos = statSlot(this, Messages.get(this, "str"), Dungeon.hero.STR + " - " + -strBonus, pos );
 			else                    pos = statSlot(this, Messages.get(this, "str"), Integer.toString(Dungeon.hero.STR), pos);
-			pos = statSlot( this, Messages.get(this, "health"), Integer.toString( Dungeon.hero.HT ), pos );
+			pos = statSlot( this, Messages.get(this, "con"), Integer.toString(Dungeon.hero.CON), pos );
+			pos = statSlot( this, Messages.get(this, "dex"), Integer.toString(Dungeon.hero.DEX), pos );
+			pos = statSlot( this, Messages.get(this, "int"), Integer.toString(Dungeon.hero.INT), pos );
+			pos = statSlot( this, Messages.get(this, "wis"), Integer.toString(Dungeon.hero.WIS), pos );
+			pos = statSlot( this, Messages.get(this, "cha"), Integer.toString(Dungeon.hero.CHA), pos );
+			if (Dungeon.hero.shielding() > 0)   pos = statSlot( this, Messages.get(this, "health"), Dungeon.hero.HP + "+" +
+					Dungeon.hero.shielding() + "/" + Dungeon.hero.HT, pos );
+			else                        pos = statSlot( this, Messages.get(this, "health"), (Dungeon.hero.HP) + "/" + Dungeon.hero.HT, pos );
 			
 			pos += GAP;
 			
@@ -244,11 +274,11 @@ public class WndRanking extends WndTabbed {
 		
 		private float statSlot( Group parent, String label, String value, float pos ) {
 			
-			RenderedTextBlock txt = PixelScene.renderTextBlock( label, 7 );
+			RenderedTextBlock txt = PixelScene.renderTextBlock( label, 6 );
 			txt.setPos(0, pos);
 			parent.add( txt );
 			
-			txt = PixelScene.renderTextBlock( value, 7 );
+			txt = PixelScene.renderTextBlock( value, 6 );
 			txt.setPos(WIDTH * 0.7f, pos);
 			PixelScene.align(txt);
 			parent.add( txt );
@@ -258,12 +288,24 @@ public class WndRanking extends WndTabbed {
 	}
 	
 	private class ItemsTab extends Group {
-		
+
 		private float pos;
+
+		private ScrollPane list;
+		private ArrayList<ItemButton> itemButtons = new ArrayList<>();
+		private ArrayList<QuickSlotButton> quickSlotButtons = new ArrayList<>();
 		
 		public ItemsTab() {
 			super();
-			
+
+			list = new ScrollPane(new Component());
+			add(list);
+		}
+
+		private void updateList() {
+			list.content().setSize(WIDTH, HEIGHT+21);
+			list.setRect(0, 0, WIDTH, HEIGHT);
+
 			Belongings stuff = Dungeon.hero.belongings;
 			if (stuff.weapon != null) {
 				addItem( stuff.weapon );
@@ -284,36 +326,57 @@ public class WndRanking extends WndTabbed {
 				addItem( stuff.ring );
 			}
 
+			ColorBlock sep = new ColorBlock(1, 1, 0xFF000000);
+			sep.size(WIDTH, 1);
+			sep.y = 127;
+			list.content().add(sep);
+
 			pos = 0;
-			float slotWidth = (WIDTH - QuickSlot.SIZE + 1) / (float)QuickSlot.SIZE;
-			for (int i = 0; i < QuickSlot.SIZE; i++){
+			float slotWidth = (WIDTH - 5) / 6f;
+			for (int i = 0; i < 6; i++){
 				if (Dungeon.quickslot.getItem(i) != null){
 					QuickSlotButton slot = new QuickSlotButton(Dungeon.quickslot.getItem(i));
 
-					slot.setRect( pos, 126, slotWidth, QuickSlotButton.HEIGHT );
+					slot.setRect( pos, 130, slotWidth, QuickSlotButton.HEIGHT );
 					PixelScene.align(slot);
 
-					add(slot);
+					list.content().add(slot);
+					quickSlotButtons.add(slot);
+					pos += slotWidth + 1;
+
+				}
+			}
+			pos = 0;
+			for (int i = 6; i < QuickSlot.SIZE; i ++) {
+				if (Dungeon.quickslot.getItem(i) != null){
+					QuickSlotButton slot = new QuickSlotButton(Dungeon.quickslot.getItem(i));
+
+					slot.setRect( pos, 151, slotWidth, QuickSlotButton.HEIGHT );
+					PixelScene.align(slot);
+
+					list.content().add(slot);
+					quickSlotButtons.add(slot);
 					pos += slotWidth + 1;
 
 				}
 			}
 		}
-		
+
 		private void addItem( Item item ) {
 			ItemButton slot = new ItemButton( item );
 			slot.setRect( 0, pos, width, ItemButton.HEIGHT );
-			add( slot );
-			
+			list.content().add( slot );
+			itemButtons.add(slot);
+
 			pos += slot.height() + 1;
 		}
 	}
-	
+
 	private class BadgesTab extends Group {
-		
+
 		public BadgesTab() {
 			super();
-			
+
 			camera = WndRanking.this.camera;
 
 			Component badges;
@@ -352,6 +415,8 @@ public class WndRanking extends WndTabbed {
 				bg.ra = 0.1f;
 				bg.ba = 0.1f;
 			}
+
+			hotArea.blockLevel = PointerArea.NEVER_BLOCK;
 		}
 		
 		@Override
@@ -360,7 +425,11 @@ public class WndRanking extends WndTabbed {
 			bg = new ColorBlock( WIDTH, HEIGHT, 0x9953564D );
 			add( bg );
 			
-			slot = new ItemSlot();
+			slot = new ItemSlot() {
+				{
+					hotArea.blockLevel = PointerArea.NEVER_BLOCK;
+				}
+			};
 			add( slot );
 			
 			name = PixelScene.renderTextBlock( 7 );
@@ -416,6 +485,7 @@ public class WndRanking extends WndTabbed {
 			super(item);
 			showExtraInfo(false);
 			this.item = item;
+			hotArea.blockLevel = PointerArea.NEVER_BLOCK;
 		}
 
 		@Override

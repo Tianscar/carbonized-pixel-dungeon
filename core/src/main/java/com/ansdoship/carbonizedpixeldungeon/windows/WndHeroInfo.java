@@ -84,6 +84,11 @@ public class WndHeroInfo extends WndTabbed {
 				super.select(value);
 				heroInfo.visible = heroInfo.active = value;
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndHeroInfo.class, "info"));
+			}
 		});
 
 		talentInfo = new TalentInfoTab(cl);
@@ -97,9 +102,14 @@ public class WndHeroInfo extends WndTabbed {
 				super.select(value);
 				talentInfo.visible = talentInfo.active = value;
 			}
+
+			@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndHeroInfo.class, "talents"));
+			}
 		});
 
-		if (Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_2)) {
+		if (Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_2) || Game.platform.isDebug()) {
 			subclassInfo = new SubclassInfoTab(cl);
 			add(subclassInfo);
 			subclassInfo.setSize(WIDTH, MIN_HEIGHT);
@@ -111,10 +121,15 @@ public class WndHeroInfo extends WndTabbed {
 					super.select(value);
 					subclassInfo.visible = subclassInfo.active = value;
 				}
+
+				@Override
+				protected String hoverText() {
+					return Messages.titleCase(Messages.get(WndHeroInfo.class, "subclasses"));
+				}
 			});
 		}
 
-		if (Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_4)) {
+		if (Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_4) || Game.platform.isDebug()) {
 			abilityInfo = new ArmorAbilityInfoTab(cl);
 			add(abilityInfo);
 			abilityInfo.setSize(WIDTH, MIN_HEIGHT);
@@ -125,6 +140,11 @@ public class WndHeroInfo extends WndTabbed {
 				protected void select(boolean value) {
 					super.select(value);
 					abilityInfo.visible = abilityInfo.active = value;
+				}
+
+				@Override
+				protected String hoverText() {
+					return Messages.titleCase(Messages.get(WndHeroInfo.class, "abilities"));
 				}
 			});
 		}
@@ -162,7 +182,7 @@ public class WndHeroInfo extends WndTabbed {
 			switch (cls){
 				case WARRIOR: default:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
-							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
+							new ItemSprite(ItemSpriteSheet.SHORTSWORD),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case MAGE:
@@ -172,7 +192,7 @@ public class WndHeroInfo extends WndTabbed {
 					break;
 				case ROGUE:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.ARTIFACT_CLOAK),
-							Icons.get(Icons.DEPTH),
+							Icons.get(Icons.STAIRS),
 							new ItemSprite(ItemSpriteSheet.DAGGER),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;

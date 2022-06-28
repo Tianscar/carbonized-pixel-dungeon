@@ -26,45 +26,45 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.ansdoship.carbonizedpixeldungeon.windows.WndSupportPrompt;
+import com.ansdoship.carbonizedpixeldungeon.windows.WndFeedback;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 import java.io.IOException;
 
 public class SkeletonKey extends Key {
-	
+
 	{
 		image = ItemSpriteSheet.SKELETON_KEY;
 	}
-	
+
 	public SkeletonKey() {
 		this( 0 );
 	}
-	
+
 	public SkeletonKey( int depth ) {
 		super();
 		this.depth = depth;
 	}
 
 	@Override
-	public boolean doPickUp(Hero hero) {
+	public boolean doPickUp(Hero hero, int pos) {
 		if(!PDSettings.supportNagged()){
 			try {
 				Dungeon.saveAll();
 				Game.runOnRenderThread(new Callback() {
 					@Override
 					public void call() {
-						CarbonizedPixelDungeon.scene().add(new WndSupportPrompt());
+						CarbonizedPixelDungeon.scene().add(new WndFeedback(true));
 					}
 				});
 			} catch (IOException e) {
 				CarbonizedPixelDungeon.reportException(e);
 			}
-			
+
 		}
-		
-		return super.doPickUp(hero);
+
+		return super.doPickUp(hero, pos);
 	}
 
 }

@@ -33,10 +33,7 @@ import com.ansdoship.carbonizedpixeldungeon.services.updates.Updates;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.ansdoship.carbonizedpixeldungeon.ui.Archs;
-import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
-import com.ansdoship.carbonizedpixeldungeon.ui.StyledButton;
-import com.ansdoship.carbonizedpixeldungeon.ui.Window;
+import com.ansdoship.carbonizedpixeldungeon.ui.*;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndSettings;
 import com.ansdoship.pixeldungeonclasses.glwrap.Blending;
@@ -79,9 +76,6 @@ public class TitleScene extends PixelScene {
 		title.y = 2 + (topRegion - title.height()) / 2f;
 
 		align(title);
-
-		placeTorch(title.x + 28, title.y + 46);
-		placeTorch(title.x + title.width - 28, title.y + 46);
 
 		Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
 			private float time = 0;
@@ -206,7 +200,16 @@ public class TitleScene extends PixelScene {
 		version.y = h - version.height() - 2;
 		add( version );
 
+		if (Game.platform.isDesktop() || Game.platform.isAndroid()) {
+			ExitButton btnExit = new ExitButton();
+			btnExit.setPos( w - btnExit.width(), 0 );
+			add( btnExit );
+		}
+
 		fadeIn();
+
+		placeTorch(title.x + 28, title.y + 46);
+		placeTorch(title.x + title.width - 28, title.y + 46);
 	}
 	
 	private void placeTorch( float x, float y ) {

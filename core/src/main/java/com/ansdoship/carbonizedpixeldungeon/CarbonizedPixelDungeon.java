@@ -24,7 +24,7 @@ package com.ansdoship.carbonizedpixeldungeon;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.TitleScene;
-import com.ansdoship.carbonizedpixeldungeon.scenes.WelcomeScene;
+import com.ansdoship.carbonizedpixeldungeon.scenes.SplashScene;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
@@ -38,12 +38,15 @@ public class CarbonizedPixelDungeon extends Game {
 	public static final int v0_0_4   = 9;
 	
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {
-		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
+		super( sceneClass == null ? SplashScene.class : sceneClass, platform );
 
 		//CBPD v0.0.6
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow.class,
 				"com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Crossbow" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.BigRat.class,
+				"com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.RatKing" );
 
 		//CBPD v0.0.4
 		Bundle.addAlias(
@@ -131,7 +134,7 @@ public class CarbonizedPixelDungeon extends Game {
 		Sample.INSTANCE.enable( PDSettings.soundFx() );
 		Sample.INSTANCE.volume( PDSettings.SFXVol()* PDSettings.SFXVol()/100f );
 
-		Sample.INSTANCE.load( Assets.Sounds.all );
+		Sample.INSTANCE.load( Assets.Sounds.ALL );
 		
 	}
 

@@ -99,7 +99,11 @@ public class Messages {
 		return get(o.getClass(), k, args);
 	}
 
-	public static String get(Class c, String k, Object...args){
+	public static String get(Class c, String k, Object... args) {
+		return get(c, k, new StringBuilder(), args);
+	}
+
+	private static String get(Class c, String k, StringBuilder missingTexts, Object...args){
 		String key;
 		if (c != null){
 			key = c.getName().replace("com.ansdoship.carbonizedpixeldungeon.", "");
@@ -107,7 +111,8 @@ public class Messages {
 		} else
 			key = k;
 
-		String value = getFromBundle(key.toLowerCase(Locale.ENGLISH));
+		key = key.toLowerCase(Locale.ENGLISH);
+		String value = getFromBundle(key);
 		if (value != null){
 			if (args.length > 0) return format(value, args);
 			else return value;
@@ -115,10 +120,12 @@ public class Messages {
 			//this is so child classes can inherit properties from their parents.
 			//in cases where text is commonly grabbed as a utility from classes that aren't mean to be instantiated
 			//(e.g. flavourbuff.dispTurns()) using .class directly is probably smarter to prevent unnecessary recursive calls.
-			if (c != null && c.getSuperclass() != null){
-				return get(c.getSuperclass(), k, args);
+			if (missingTexts.length() < 1) missingTexts.append("!!!NO TEXT FOUND:\n");
+			if (c != null && c.getSuperclass() != null && c.getSuperclass().getName().startsWith("com.ansdoship.carbonizedpixeldungeon.")){
+				missingTexts.append(key).append(";");
+				return get(c.getSuperclass(), k, missingTexts, args);
 			} else {
-				return "!!!NO TEXT FOUND!!!";
+				return missingTexts.append(key).append("!!!").toString().replaceAll("_", "\\\\_");
 			}
 		}
 	}

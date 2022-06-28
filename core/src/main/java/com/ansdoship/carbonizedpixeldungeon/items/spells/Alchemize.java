@@ -37,10 +37,12 @@ public class Alchemize extends Spell implements AlchemyScene.AlchemyProvider {
 	
 	@Override
 	protected void onCast(Hero hero) {
+		/*
 		if (hero.visibleEnemies() > hero.mindVisionEnemies.size()) {
 			GLog.i( Messages.get(this, "enemy_near") );
 			return;
 		}
+		 */
 		detach( curUser.belongings.backpack );
 		updateQuickslot();
 		AlchemyScene.setProvider(this);
@@ -60,7 +62,7 @@ public class Alchemize extends Spell implements AlchemyScene.AlchemyProvider {
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((40 + 40) / 4f));
+		return Math.round(quantity * ((40 + 40) / 8f));
 	}
 	
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
@@ -69,10 +71,10 @@ public class Alchemize extends Spell implements AlchemyScene.AlchemyProvider {
 			inputs =  new Class[]{ArcaneCatalyst.class, AlchemicalCatalyst.class};
 			inQuantity = new int[]{1, 1};
 			
-			cost = 6;
+			cost = 3;
 			
 			output = Alchemize.class;
-			outQuantity = 4;
+			outQuantity = 8;
 		}
 		
 	}

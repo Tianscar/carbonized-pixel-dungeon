@@ -39,9 +39,9 @@ import com.ansdoship.pixeldungeonclasses.noosa.particles.Emitter;
 import java.util.ArrayList;
 
 public class TengusMask extends Item {
-	
+
 	private static final String AC_WEAR	= "WEAR";
-	
+
 	{
 		stackable = false;
 		image = ItemSpriteSheet.MASK;
@@ -50,61 +50,61 @@ public class TengusMask extends Item {
 
 		unique = true;
 	}
-	
+
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
 		actions.add( AC_WEAR );
 		return actions;
 	}
-	
+
 	@Override
 	public void execute( Hero hero, String action ) {
 
 		super.execute( hero, action );
 
 		if (action.equals( AC_WEAR )) {
-			
+
 			curUser = hero;
 
 			GameScene.show( new WndChooseSubclass( this, hero ) );
-			
+
 		}
 	}
-	
+
 	@Override
-	public boolean doPickUp( Hero hero ) {
+	public boolean doPickUp(Hero hero, int pos) {
 		Badges.validateMastery();
-		return super.doPickUp( hero );
+		return super.doPickUp( hero, pos );
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	public void choose( HeroSubClass way ) {
-		
+
 		detach( curUser.belongings.backpack );
-		
+
 		curUser.spend( Actor.TICK );
 		curUser.busy();
-		
+
 		curUser.subClass = way;
 		Talent.initSubclassTalents(curUser);
-		
+
 		curUser.sprite.operate( curUser.pos );
 		Sample.INSTANCE.play( Assets.Sounds.MASTERY );
-		
+
 		Emitter e = curUser.sprite.centerEmitter();
 		e.pos(e.x-2, e.y-6, 4, 4);
 		e.start(Speck.factory(Speck.MASK), 0.05f, 20);
 		GLog.p( Messages.get(this, "used"));
-		
+
 	}
 }

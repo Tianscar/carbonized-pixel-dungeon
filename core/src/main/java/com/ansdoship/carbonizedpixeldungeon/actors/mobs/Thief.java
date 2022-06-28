@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.actors.mobs;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Terror;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
@@ -40,20 +40,20 @@ import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class Thief extends Mob {
-	
+
 	public Item item;
-	
+
 	{
 		spriteClass = ThiefSprite.class;
-		
+
 		HP = HT = 20;
 		defenseSkill = 12;
-		
+
 		EXP = 5;
 		maxLvl = 11;
 
 		loot = Random.oneOf(Generator.Category.RING, Generator.Category.ARTIFACT);
-		lootChance = 0.03f; //initially, see rollToDropLoot
+		lootChance = 0.03f; //initially, see lootChance()
 
 		WANDERING = new Wandering();
 		FLEEING = new Fleeing();
@@ -90,7 +90,14 @@ public class Thief extends Mob {
 	public float attackDelay() {
 		return super.attackDelay()*0.5f;
 	}
-	
+
+	@Override
+	public float lootChance() {
+		//each drop makes future drops 1/3 as likely
+		// so loot chance looks like: 1/33, 1/100, 1/300, 1/900, etc.
+		return super.lootChance() * (float)Math.pow(1/3f, Dungeon.LimitedDrops.THEIF_MISC.count);
+	}
+
 	@Override
 	public void rollToDropLoot() {
 		if (item != null) {
@@ -99,14 +106,11 @@ public class Thief extends Mob {
 			if (item instanceof Honeypot.ShatteredPot) ((Honeypot.ShatteredPot)item).dropPot( this, pos );
 			item = null;
 		}
-		//each drop makes future drops 1/3 as likely
-		// so loot chance looks like: 1/33, 1/100, 1/300, 1/900, etc.
-		lootChance *= Math.pow(1/3f, Dungeon.LimitedDrops.THEIF_MISC.count);
 		super.rollToDropLoot();
 	}
 
 	@Override
-	protected Item createLoot() {
+	public Item createLoot() {
 		Dungeon.LimitedDrops.THEIF_MISC.count++;
 		return super.createLoot();
 	}
@@ -124,7 +128,7 @@ public class Thief extends Mob {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
-		
+
 		if (alignment == Alignment.ENEMY && item == null
 				&& enemy instanceof Hero && steal( (Hero)enemy )) {
 			state = FLEEING;
@@ -177,18 +181,18 @@ public class Thief extends Mob {
 
 		return desc;
 	}
-	
+
 	private class Wandering extends Mob.Wandering {
-		
+
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			super.act(enemyInFOV, justAlerted);
-			
+
 			//if an enemy is just noticed and the thief posses an item, run, don't fight.
 			if (state == HUNTING && item != null){
 				state = FLEEING;
 			}
-			
+
 			return true;
 		}
 	}
@@ -196,7 +200,8 @@ public class Thief extends Mob {
 	private class Fleeing extends Mob.Fleeing {
 		@Override
 		protected void nowhereToRun() {
-			if (buff( Terror.class ) == null && buff( Corruption.class ) == null) {
+			if (buff( Terror.class ) == null
+					&& buffs( AllyBuff.class ).isEmpty() ) {
 				if (enemySeen) {
 					sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Mob.class, "rage"));
 					state = HUNTING;

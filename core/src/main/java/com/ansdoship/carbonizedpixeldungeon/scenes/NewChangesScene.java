@@ -32,6 +32,7 @@ import com.ansdoship.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
 import com.ansdoship.pixeldungeonclasses.noosa.NinePatch;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
 
 import java.util.ArrayList;
@@ -153,7 +154,7 @@ public class NewChangesScene extends PixelScene {
 				panel.innerHeight() + 2);
 		list.scrollTo(0, fromChangesScene ? posY - list.height() : 0);
 
-		StyledButton btnBeta = new StyledButton(Chrome.Type.TOAST, "0.0.X"){
+		StyledButton btnBeta = new StyledButton(Chrome.Type.TOAST, "0.0.X") {
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -162,8 +163,18 @@ public class NewChangesScene extends PixelScene {
 					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
+			@Override
+			protected void onPointerDown() {
+				bg.brightness( 1.2f );
+				Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
+			}
+			@Override
+			protected void onPointerUp() {
+				bg.resetColor();
+			}
 		};
 		if (changesSelected != 0) btnBeta.textColor( 0xBBBBBB );
+		btnBeta.active = changesSelected != 0;
 		btnBeta.setRect(list.left()-4f, list.bottom(), panel.width(), changesSelected == 0 ? 19 : 15);
 		addToBack(btnBeta);
 
@@ -175,7 +186,7 @@ public class NewChangesScene extends PixelScene {
 	}
 	
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
 	}
 

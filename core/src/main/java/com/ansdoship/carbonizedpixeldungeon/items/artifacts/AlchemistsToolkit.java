@@ -71,7 +71,7 @@ public class AlchemistsToolkit extends Artifact {
 			if (!isEquipped(hero))                                          GLog.i( Messages.get(this, "need_to_equip") );
 			else if (cursed)                                                GLog.w( Messages.get(this, "cursed") );
 			else if (!alchemyReady)                                         GLog.i( Messages.get(this, "not_ready") );
-			else if (hero.visibleEnemies() > hero.mindVisionEnemies.size()) GLog.i( Messages.get(this, "enemy_near") );
+			//else if (hero.visibleEnemies() > hero.mindVisionEnemies.size()) GLog.i( Messages.get(this, "enemy_near") );
 			else {
 				
 				AlchemyScene.setProvider(hero.buff(kitEnergy.class));

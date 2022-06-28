@@ -34,6 +34,7 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.BitmapText;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Button;
+import com.ansdoship.pixeldungeonclasses.utils.Rect;
 
 public class ItemSlot extends Button {
 
@@ -42,17 +43,19 @@ public class ItemSlot extends Button {
 	public static final int FADED       = 0x999999;
 	public static final int WARNING		= 0xFF8800;
 	public static final int ENHANCED	= 0x3399FF;
-	
+
 	private static final float ENABLED	= 1.0f;
 	private static final float DISABLED	= 0.3f;
-	
+
+	private Rect margin = new Rect();
+
 	protected ItemSprite sprite;
 	protected Item       item;
 	protected BitmapText status;
 	protected BitmapText extra;
 	protected Image      itemIcon;
 	protected BitmapText level;
-	
+
 	private static final String TXT_STRENGTH	= ":%d";
 	private static final String TXT_TYPICAL_STR	= "%d?";
 
@@ -77,71 +80,76 @@ public class ItemSlot extends Button {
 	public static final Item REMAINS = new Item() {
 		public int image() { return ItemSpriteSheet.REMAINS; }
 	};
-	
+
 	public ItemSlot() {
 		super();
 		sprite.visible(false);
 		enable(false);
 	}
-	
+
 	public ItemSlot( Item item ) {
 		this();
 		item( item );
 	}
-		
+
 	@Override
 	protected void createChildren() {
-		
+
 		super.createChildren();
-		
+
 		sprite = new ItemSprite();
 		add(sprite);
-		
+
 		status = new BitmapText( PixelScene.pixelFont);
 		add(status);
-		
+
 		extra = new BitmapText( PixelScene.pixelFont);
 		add(extra);
-		
+
 		level = new BitmapText( PixelScene.pixelFont);
 		add(level);
 	}
-	
+
 	@Override
 	protected void layout() {
 		super.layout();
-		
-		sprite.x = x + (width - sprite.width) / 2f;
-		sprite.y = y + (height - sprite.height) / 2f;
+
+		sprite.x = x + margin.left + (width - sprite.width - (margin.left + margin.right)) / 2f;
+		sprite.y = y + margin.top + (height - sprite.height - (margin.top + margin.bottom)) / 2f;
 		PixelScene.align(sprite);
-		
+
 		if (status != null) {
 			status.measure();
-			if (status.width > width){
+			if (status.width > width - (margin.left + margin.right)){
 				status.scale.set(PixelScene.align(0.8f));
 			} else {
 				status.scale.set(1f);
 			}
-			status.x = x;
-			status.y = y;
+			status.x = x + margin.left;
+			status.y = y + margin.top;
 			PixelScene.align(status);
 		}
-		
+
 		if (extra != null) {
-			extra.x = (status == null || (status.width() + extra.width() < width())) ? x + (width - extra.width()) : x;
-			extra.y = (status == null || (status.width() + extra.width() < width())) ? y : y + status.height() - 1;
+			extra.x = x + (width - extra.width()) - margin.right;
+			extra.y = y + margin.top;
 			PixelScene.align(extra);
+
+			if ((status.width() + extra.width()) > width){
+				extra.x = x;
+				extra.y = status.y + status.height() - 1;
+			}
 		}
 
 		if (itemIcon != null){
-			itemIcon.x = x + width - (ItemSpriteSheet.Icons.SIZE + itemIcon.width())/2f;
-			itemIcon.y = y + (ItemSpriteSheet.Icons.SIZE - itemIcon.height)/2f;
+			itemIcon.x = x + width - (ItemSpriteSheet.Icons.SIZE + itemIcon.width())/2f - margin.right;
+			itemIcon.y = y + (ItemSpriteSheet.Icons.SIZE - itemIcon.height)/2f + margin.top;
 			PixelScene.align(itemIcon);
 		}
-		
+
 		if (level != null) {
-			level.x = x + (width - level.width());
-			level.y = y + (height - level.baseLine() - 1);
+			level.x = x + (width - level.width()) - margin.right;
+			level.y = y + (height - level.baseLine() - 1) - margin.bottom;
 			PixelScene.align(level);
 		}
 
@@ -154,12 +162,11 @@ public class ItemSlot extends Button {
 		sprite.view(ItemSpriteSheet.SOMETHING, null);
 		layout();
 	}
-	
+
 	public void item( Item item ) {
 		if (this.item == item) {
 			if (item != null) {
-				sprite.frame(item.image());
-				sprite.glow(item.glowing());
+				sprite.view( item );
 			}
 			updateText();
 			return;
@@ -173,9 +180,9 @@ public class ItemSlot extends Button {
 			sprite.visible(false);
 
 			updateText();
-			
+
 		} else {
-			
+
 			enable(true);
 			sprite.visible(true);
 
@@ -247,11 +254,11 @@ public class ItemSlot extends Button {
 
 		layout();
 	}
-	
+
 	public void enable( boolean value ) {
-		
+
 		active = value;
-		
+
 		float alpha = value ? ENABLED : DISABLED;
 		sprite.alpha( alpha );
 		status.alpha( alpha );
@@ -268,5 +275,19 @@ public class ItemSlot extends Button {
 			remove(extra);
 		}
 
+	}
+
+	public void setMargins( int left, int top, int right, int bottom){
+		margin.set(left, top, right, bottom);
+		layout();
+	}
+
+	@Override
+	protected String hoverText() {
+		if (item != null && item.name() != null) {
+			return Messages.titleCase(item.name());
+		} else {
+			return super.hoverText();
+		}
 	}
 }

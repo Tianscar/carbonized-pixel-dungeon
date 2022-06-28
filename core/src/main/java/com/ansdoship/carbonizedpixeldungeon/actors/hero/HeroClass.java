@@ -43,6 +43,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.BrokenSeal;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.Waterskin;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.ClothArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.LeatherArmor;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.ansdoship.carbonizedpixeldungeon.items.food.Food;
@@ -56,7 +57,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Gloves;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Shortsword;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -80,10 +81,7 @@ public enum HeroClass {
 		hero.heroClass = this;
 		Talent.initClassTalents(hero);
 
-		Item i = new ClothArmor().identify();
-		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
-
-		i = new Food();
+		Item i = new Food();
 		if (!Challenges.isItemBlocked(i)) i.collect();
 
 		new VelvetPouch().collect();
@@ -112,6 +110,8 @@ public enum HeroClass {
 				break;
 		}
 
+		hero.updateHT(true);
+
 		for (int s = 0; s < QuickSlot.SIZE; s++){
 			if (Dungeon.quickslot.getItem(s) == null){
 				Dungeon.quickslot.setSlot(s, waterskin);
@@ -136,8 +136,14 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
-		hero.STR += 1;
-		(hero.belongings.weapon = new WornShortsword()).identify();
+		hero.STR += 2;
+		hero.CON += 1;
+		hero.DEX -= 1;
+
+		Item i = new LeatherArmor().identify();
+		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (LeatherArmor)i;
+
+		(hero.belongings.weapon = new Shortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
 		Dungeon.quickslot.setSlot(0, stones);
@@ -151,6 +157,11 @@ public enum HeroClass {
 	}
 
 	private static void initMage( Hero hero ) {
+		hero.INT += 2;
+
+		Item i = new ClothArmor().identify();
+		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
+
 		MagesStaff staff;
 
 		staff = new MagesStaff(new WandOfMagicMissile());
@@ -165,6 +176,12 @@ public enum HeroClass {
 	}
 
 	private static void initRogue( Hero hero ) {
+		hero.WIS += 1;
+		hero.DEX += 1;
+
+		Item i = new ClothArmor().identify();
+		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
+
 		(hero.belongings.weapon = new Dagger()).identify();
 
 		CloakOfShadows cloak = new CloakOfShadows();
@@ -182,6 +199,13 @@ public enum HeroClass {
 	}
 
 	private static void initHuntress( Hero hero ) {
+		hero.CON -= 1;
+		hero.WIS += 1;
+		hero.DEX += 1;
+		hero.CHA += 1;
+
+		Item i = new ClothArmor().identify();
+		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
 
 		(hero.belongings.weapon = new Gloves()).identify();
 		SpiritBow bow = new SpiritBow();

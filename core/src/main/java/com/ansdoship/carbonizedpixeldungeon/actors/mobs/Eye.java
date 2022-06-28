@@ -42,21 +42,21 @@ import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class Eye extends Mob {
-	
+
 	{
 		spriteClass = EyeSprite.class;
-		
+
 		HP = HT = 100;
 		defenseSkill = 20;
 		viewDistance = Light.DISTANCE;
-		
+
 		EXP = 13;
 		maxLvl = 26;
-		
+
 		flying = true;
 
 		HUNTING = new Hunting();
-		
+
 		loot = new Dewdrop();
 		lootChance = 1f;
 
@@ -72,12 +72,12 @@ public class Eye extends Mob {
 	public int attackSkill( Char target ) {
 		return 30;
 	}
-	
+
 	@Override
 	public int drRoll() {
 		return Random.NormalIntRange(0, 10);
 	}
-	
+
 	private Ballistica beam;
 	private int beamTarget = -1;
 	private int beamCooldown;
@@ -128,7 +128,7 @@ public class Eye extends Mob {
 		} else {
 
 			spend( attackDelay() );
-			
+
 			beam = new Ballistica(pos, beamTarget, Ballistica.STOP_SOLID);
 			if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[beam.collisionPos] ) {
 				sprite.zap( beam.collisionPos );
@@ -147,7 +147,7 @@ public class Eye extends Mob {
 		if (beamCharged) dmg /= 4;
 		super.damage(dmg, src);
 	}
-	
+
 	//used so resistances can differentiate between melee and magical attacks
 	public static class DeathGaze{}
 
@@ -202,7 +202,7 @@ public class Eye extends Mob {
 
 	//generates an average of 1 dew, 0.25 seeds, and 0.25 stones
 	@Override
-	protected Item createLoot() {
+	public Item createLoot() {
 		Item loot;
 		switch(Random.Int(4)){
 			case 0: case 1: default:
@@ -251,7 +251,7 @@ public class Eye extends Mob {
 	{
 		resistances.add( WandOfDisintegration.class );
 	}
-	
+
 	{
 		//immunities.add( Terror.class );
 	}

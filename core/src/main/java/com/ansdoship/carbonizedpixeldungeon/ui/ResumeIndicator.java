@@ -23,7 +23,9 @@ package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.PDAction;
+import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
+import com.ansdoship.carbonizedpixeldungeon.windows.WndKeyBindings;
 import com.ansdoship.pixeldungeonclasses.input.GameAction;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 
@@ -34,12 +36,12 @@ public class ResumeIndicator extends Tag {
 	public ResumeIndicator() {
 		super(0xCDD5C0);
 
-		setSize( 24, 24 );
+		setSize( SIZE, SIZE );
 
 		visible = false;
 
 	}
-	
+
 	@Override
 	public GameAction keyAction() {
 		return PDAction.TAG_RESUME;
@@ -57,14 +59,22 @@ public class ResumeIndicator extends Tag {
 	protected void layout() {
 		super.layout();
 
-		icon.x = x+1 + (width - icon.width) / 2f;
+		if (!flipped)   icon.x = x + (SIZE - icon.width()) / 2f + 1;
+		else            icon.x = x + width - (SIZE + icon.width()) / 2f - 1;
 		icon.y = y + (height - icon.height) / 2f;
 		PixelScene.align(icon);
 	}
 
 	@Override
 	protected void onClick() {
-		Dungeon.hero.resume();
+		if (Dungeon.hero.ready) {
+			Dungeon.hero.resume();
+		}
+	}
+
+	@Override
+	protected String hoverText() {
+		return Messages.titleCase(Messages.get(WndKeyBindings.class, "tag_resume"));
 	}
 
 	@Override

@@ -28,24 +28,34 @@ import com.ansdoship.carbonizedpixeldungeon.actors.blobs.CorrosiveGas;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 
 public class PotionOfCorrosiveGas extends ExoticPotion {
-	
+
 	{
 		icon = ItemSpriteSheet.Icons.POTION_CORROGAS;
 	}
-	
+
 	@Override
 	public void shatter( int cell ) {
-		
+
 		if (Dungeon.level.heroFOV[cell]) {
 			identify();
-			
+
 			splash( cell );
 			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 			Sample.INSTANCE.play( Assets.Sounds.GAS );
 		}
-		
-		GameScene.add( Blob.seed( cell, 200, CorrosiveGas.class ).setStrength( 1 + Dungeon.depth/5));
+
+		int centerVolume = 25;
+		for (int i : PathFinder.NEIGHBOURS8){
+			if (!Dungeon.level.solid[cell+i]){
+				GameScene.add( Blob.seed( cell+i, 25, CorrosiveGas.class ).setStrength( 2 + Dungeon.depth/5));
+			} else {
+				centerVolume += 25;
+			}
+		}
+
+		GameScene.add( Blob.seed( cell, centerVolume, CorrosiveGas.class ).setStrength( 2 + Dungeon.depth/5));
 	}
 }

@@ -83,14 +83,16 @@ public class IOSPlatformSupport extends PlatformSupport {
 		fonts = new HashMap<>();
 
 		if (systemfont) {
-			basicFontGenerator = asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			basicFontGenerator = asianFontGenerator = fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
 		} else {
 			basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
-			asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel.ttf"));
+			fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
 		}
 
 		fonts.put(basicFontGenerator, new HashMap<>());
 		fonts.put(asianFontGenerator, new HashMap<>());
+		fonts.put(fallbackFontGenerator, new HashMap<>());
 
 		packer = new PixmapPacker(pageSize, pageSize, Pixmap.Format.RGBA8888, 1, false);
 	}
@@ -105,31 +107,6 @@ public class IOSPlatformSupport extends PlatformSupport {
 			return asianFontGenerator;
 		} else {
 			return basicFontGenerator;
-		}
-	}
-
-	//splits on newlines, underscores, and chinese/japaneses characters
-	private Pattern regularsplitter = Pattern.compile(
-			"(?<=\n)|(?=\n)|(?<=_)|(?=_)|" +
-					"(?<=\\p{InHiragana})|(?=\\p{InHiragana})|" +
-					"(?<=\\p{InKatakana})|(?=\\p{InKatakana})|" +
-					"(?<=\\p{InCJK_Unified_Ideographs})|(?=\\p{InCJK_Unified_Ideographs})|" +
-					"(?<=\\p{InCJK_Symbols_and_Punctuation})|(?=\\p{InCJK_Symbols_and_Punctuation})");
-
-	//additionally splits on words, so that each word can be arranged individually
-	private Pattern regularsplitterMultiline = Pattern.compile(
-			"(?<= )|(?= )|(?<=\n)|(?=\n)|(?<=_)|(?=_)|" +
-					"(?<=\\p{InHiragana})|(?=\\p{InHiragana})|" +
-					"(?<=\\p{InKatakana})|(?=\\p{InKatakana})|" +
-					"(?<=\\p{InCJK_Unified_Ideographs})|(?=\\p{InCJK_Unified_Ideographs})|" +
-					"(?<=\\p{InCJK_Symbols_and_Punctuation})|(?=\\p{InCJK_Symbols_and_Punctuation})");
-
-	@Override
-	public String[] splitforTextBlock(String text, boolean multiline) {
-		if (multiline) {
-			return regularsplitterMultiline.split(text);
-		} else {
-			return regularsplitter.split(text);
 		}
 	}
 

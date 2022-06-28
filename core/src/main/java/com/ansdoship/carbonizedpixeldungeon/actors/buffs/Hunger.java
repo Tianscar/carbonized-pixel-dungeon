@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2021 Evan Debenham
+ * Copyright (C) 2014-2022 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.Artifact;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.HornOfPlenty;
 import com.ansdoship.carbonizedpixeldungeon.items.journal.Guidebook;
+import com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
 import com.ansdoship.carbonizedpixeldungeon.journal.Document;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
@@ -38,8 +39,8 @@ public class Hunger extends Buff implements Hero.Doom {
 
 	private static final float STEP	= 10f;
 
-	public static final float HUNGRY	= Hero.MAX_HUNGER / 1.5f;
-	public static final float STARVING	= Hero.MAX_HUNGER;
+	public static final float HUNGRY	= 300f;
+	public static final float STARVING	= 450f;
 
 	private float level;
 	private float partialDamage;
@@ -64,7 +65,9 @@ public class Hunger extends Buff implements Hero.Doom {
 	@Override
 	public boolean act() {
 
-		if (Dungeon.level.locked || target.buff(WellFed.class) != null){
+		if (Dungeon.level.locked
+				|| target.buff(WellFed.class) != null
+				|| target.buff(ScrollOfChallenge.ChallengeArena.class) != null){
 			spend(STEP);
 			return true;
 		}
@@ -81,7 +84,7 @@ public class Hunger extends Buff implements Hero.Doom {
 					target.damage( (int)partialDamage, this);
 					partialDamage -= (int)partialDamage;
 				}
-				
+
 			} else {
 
 				float newLevel = level + STEP;
@@ -106,7 +109,7 @@ public class Hunger extends Buff implements Hero.Doom {
 				level = newLevel;
 
 			}
-			
+
 			spend( target.buff( Shadows.class ) == null ? STEP : STEP * 1.5f );
 
 		} else {

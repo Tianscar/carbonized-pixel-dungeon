@@ -26,6 +26,7 @@ import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.ui.Archs;
 import com.ansdoship.carbonizedpixeldungeon.ui.ExitButton;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndSettings;
+import com.ansdoship.pixeldungeonclasses.input.KeyEvent;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 
@@ -48,6 +49,7 @@ public class SettingsScene extends PixelScene {
 				//super.onBackPressed();
 			}
 		};
+		KeyEvent.removeKeyListener(wndSettings);
 		add(wndSettings);
 
 		ExitButton btnExit = new ExitButton();
@@ -62,7 +64,7 @@ public class SettingsScene extends PixelScene {
 	}
 	
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		if (wndSettings != null) {
 			wndSettings.hide();
 			wndSettings = null;

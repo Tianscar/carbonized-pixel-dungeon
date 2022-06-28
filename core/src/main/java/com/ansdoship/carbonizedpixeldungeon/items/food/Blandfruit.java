@@ -21,7 +21,6 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items.food;
 
-import com.ansdoship.carbonizedpixeldungeon.Challenges;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
@@ -43,7 +42,6 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfToxicGas;
 import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.plants.Plant.Seed;
-import com.ansdoship.carbonizedpixeldungeon.plants.Sungrass;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -74,10 +72,10 @@ public class Blandfruit extends Food {
 		if ( super.isSimilar(item) ){
 			Blandfruit other = (Blandfruit) item;
 			if (potionAttrib == null && other.potionAttrib == null) {
-					return true;
+				return true;
 			} else if (potionAttrib != null && other.potionAttrib != null
 					&& potionAttrib.isSimilar(other.potionAttrib)){
-					return true;
+				return true;
 			}
 		}
 		return false;
@@ -133,9 +131,9 @@ public class Blandfruit extends Food {
 		} else {
 			String desc = Messages.get(this, "desc_cooked") + "\n\n";
 			if (potionAttrib instanceof PotionOfFrost
-				|| potionAttrib instanceof PotionOfLiquidFlame
-				|| potionAttrib instanceof PotionOfToxicGas
-				|| potionAttrib instanceof PotionOfParalyticGas) {
+					|| potionAttrib instanceof PotionOfLiquidFlame
+					|| potionAttrib instanceof PotionOfToxicGas
+					|| potionAttrib instanceof PotionOfParalyticGas) {
 				desc += Messages.get(this, "desc_throw");
 			} else {
 				desc += Messages.get(this, "desc_eat");
@@ -183,12 +181,12 @@ public class Blandfruit extends Food {
 	}
 
 	public static final String POTIONATTRIB = "potionattrib";
-	
+
 	@Override
 	protected void onThrow(int cell) {
 		if (Dungeon.level.map[cell] == Terrain.WELL || Dungeon.level.pit[cell]) {
 			super.onThrow( cell );
-			
+
 		} else if (potionAttrib instanceof PotionOfLiquidFlame ||
 				potionAttrib instanceof PotionOfToxicGas ||
 				potionAttrib instanceof PotionOfParalyticGas ||
@@ -198,12 +196,12 @@ public class Blandfruit extends Food {
 
 			potionAttrib.shatter( cell );
 			Dungeon.level.drop(new Chunks(), cell).sprite.drop();
-			
+
 		} else {
 			super.onThrow( cell );
 		}
 	}
-	
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -211,7 +209,7 @@ public class Blandfruit extends Food {
 			imbuePotion(potionAttrib);
 		}
 	}
-	
+
 	@Override
 	public void storeInBundle(Bundle bundle){
 		super.storeInBundle(bundle);
@@ -230,14 +228,14 @@ public class Blandfruit extends Food {
 	public ItemSprite.Glowing glowing() {
 		return potionGlow;
 	}
-	
+
 	public static class CookFruit extends Recipe {
-		
+
 		@Override
 		//also sorts ingredients if it can
 		public boolean testIngredients(ArrayList<Item> ingredients) {
 			if (ingredients.size() != 2) return false;
-			
+
 			if (ingredients.get(0) instanceof Blandfruit){
 				if (!(ingredients.get(1) instanceof Seed)){
 					return false;
@@ -253,44 +251,39 @@ public class Blandfruit extends Food {
 			} else {
 				return false;
 			}
-			
+
 			Blandfruit fruit = (Blandfruit) ingredients.get(0);
 			Seed seed = (Seed) ingredients.get(1);
-			
-			if (fruit.quantity() >= 1 && fruit.potionAttrib == null
-				&& seed.quantity() >= 1){
 
-				if (Dungeon.isChallenged(Challenges.NO_HEALING)
-						&& seed instanceof Sungrass.Seed){
-					return false;
-				}
+			if (fruit.quantity() >= 1 && fruit.potionAttrib == null
+					&& seed.quantity() >= 1){
 
 				return true;
 			}
-			
+
 			return false;
 		}
-		
+
 		@Override
 		public int cost(ArrayList<Item> ingredients) {
-			return 3;
+			return 2;
 		}
-		
+
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
 			if (!testIngredients(ingredients)) return null;
-			
+
 			ingredients.get(0).quantity(ingredients.get(0).quantity() - 1);
 			ingredients.get(1).quantity(ingredients.get(1).quantity() - 1);
-			
-			
+
+
 			return new Blandfruit().cook((Seed) ingredients.get(1));
 		}
-		
+
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			if (!testIngredients(ingredients)) return null;
-			
+
 			return new Blandfruit().cook((Seed) ingredients.get(1));
 		}
 	}

@@ -24,6 +24,7 @@ package com.ansdoship.carbonizedpixeldungeon.actors.mobs;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Amok;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
@@ -36,17 +37,17 @@ import java.util.HashSet;
 
 //FIXME the AI for these things is becoming a complete mess, should refactor
 public class Bee extends Mob {
-	
+
 	{
 		spriteClass = BeeSprite.class;
-		
+
 		viewDistance = 4;
 
 		EXP = 0;
-		
+
 		flying = true;
 		state = WANDERING;
-		
+
 		//only applicable when the bee is charmed with elixir of honeyed healing
 		intelligentAlly = true;
 	}
@@ -57,12 +58,12 @@ public class Bee extends Mob {
 	private int potPos;
 	//-1 for no owner
 	private int potHolder;
-	
+
 	private static final String LEVEL	    = "level";
 	private static final String POTPOS	    = "potpos";
 	private static final String POTHOLDER	= "potholder";
 	private static final String ALIGMNENT   = "alignment";
-	
+
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
@@ -71,7 +72,7 @@ public class Bee extends Mob {
 		bundle.put( POTHOLDER, potHolder );
 		bundle.put( ALIGMNENT, alignment);
 	}
-	
+
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
@@ -80,10 +81,10 @@ public class Bee extends Mob {
 		potHolder = bundle.getInt( POTHOLDER );
 		if (bundle.contains(ALIGMNENT)) alignment = bundle.getEnum( ALIGMNENT, Alignment.class);
 	}
-	
+
 	public void spawn( int level ) {
 		this.level = level;
-		
+
 		HT = (2 + level) * 4;
 		defenseSkill = 9 + level;
 	}
@@ -95,25 +96,25 @@ public class Bee extends Mob {
 		else
 			this.potHolder = potHolder.id();
 	}
-	
+
 	public int potPos(){
 		return potPos;
 	}
-	
+
 	public int potHolderID(){
 		return potHolder;
 	}
-	
+
 	@Override
 	public int attackSkill( Char target ) {
 		return defenseSkill;
 	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( HT / 10, HT / 4 );
 	}
-	
+
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
@@ -126,7 +127,8 @@ public class Bee extends Mob {
 	@Override
 	public void add(Buff buff) {
 		super.add(buff);
-		if (buff instanceof Corruption){
+		//TODO maybe handle honeyed bees with their own ally buff?
+		if (buff instanceof AllyBuff){
 			intelligentAlly = false;
 			setPotInfo(-1, null);
 		}
@@ -137,20 +139,20 @@ public class Bee extends Mob {
 		//if the pot is no longer present, default to regular AI behaviour
 		if (alignment == Alignment.ALLY || (potHolder == -1 && potPos == -1)){
 			return super.chooseEnemy();
-		
-		//if something is holding the pot, target that
+
+			//if something is holding the pot, target that
 		}else if (Actor.findById(potHolder) != null){
 			return (Char) Actor.findById(potHolder);
-			
-		//if the pot is on the ground
+
+			//if the pot is on the ground
 		}else {
-			
+
 			//try to find a new enemy in these circumstances
 			if (enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING
 					|| Dungeon.level.distance(enemy.pos, potPos) > 3
 					|| (alignment == Alignment.ALLY && enemy.alignment == Alignment.ALLY)
 					|| (buff( Amok.class ) == null && enemy.isInvulnerable(getClass()))){
-				
+
 				//find all mobs near the pot
 				HashSet<Char> enemies = new HashSet<>();
 				for (Mob mob : Dungeon.level.mobs) {
@@ -162,7 +164,7 @@ public class Bee extends Mob {
 						enemies.add(mob);
 					}
 				}
-				
+
 				if (!enemies.isEmpty()){
 					return Random.element(enemies);
 				} else {
@@ -172,18 +174,18 @@ public class Bee extends Mob {
 						return null;
 					}
 				}
-				
+
 			} else {
 				return enemy;
 			}
 
-			
+
 		}
 	}
 
 	@Override
 	protected boolean getCloser(int target) {
-		if (alignment == Alignment.ALLY && enemy == null && buff(Corruption.class) == null){
+		if (alignment == Alignment.ALLY && enemy == null && buffs(AllyBuff.class).isEmpty()){
 			target = Dungeon.hero.pos;
 		} else if (enemy != null && Actor.findById(potHolder) == enemy) {
 			target = enemy.pos;
@@ -191,10 +193,10 @@ public class Bee extends Mob {
 			this.target = target = potPos;
 		return super.getCloser( target );
 	}
-	
+
 	@Override
 	public String description() {
-		if (alignment == Alignment.ALLY && buff(Corruption.class) == null){
+		if (alignment == Alignment.ALLY && buffs(AllyBuff.class).isEmpty()){
 			return Messages.get(this, "desc_honey");
 		} else {
 			return super.description();

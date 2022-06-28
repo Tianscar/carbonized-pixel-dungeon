@@ -102,12 +102,22 @@ public class WndJournal extends WndTabbed {
 						guideTab.active = guideTab.visible = value;
 						if (value) last_index = 0;
 					}
+
+					@Override
+					protected String hoverText() {
+						return Messages.titleCase(Messages.get(WndJournal.class, "guide"));
+					}
 				},
 				new IconTab( new ItemSprite(ItemSpriteSheet.ALCH_PAGE, null) ) {
 					protected void select( boolean value ) {
 						super.select( value );
 						alchemyTab.active = alchemyTab.visible = value;
 						if (value) last_index = 1;
+					}
+
+					@Override
+					protected String hoverText() {
+						return Messages.titleCase(Messages.get(WndJournal.class, "alchemy"));
 					}
 				},
 				/*new IconTab( new ItemSprite(ItemSpriteSheet.TP_PAGE, null) ) {
@@ -117,11 +127,16 @@ public class WndJournal extends WndTabbed {
 						if (value) last_index = 2;
 					}
 				},*/
-				new IconTab( Icons.get(Icons.DEPTH) ) {
+				new IconTab( Icons.get(Icons.STAIRS) ) {
 					protected void select( boolean value ) {
 						super.select( value );
 						notesTab.active = notesTab.visible = value;
 						if (value) last_index = 2;
+					}
+
+					@Override
+					protected String hoverText() {
+						return Messages.titleCase(Messages.get(WndJournal.class, "notes"));
 					}
 				},
 				new IconTab( new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER, null) ) {
@@ -129,6 +144,11 @@ public class WndJournal extends WndTabbed {
 						super.select( value );
 						catalogTab.active = catalogTab.visible = value;
 						if (value) last_index = 3;
+					}
+
+					@Override
+					protected String hoverText() {
+						return Messages.titleCase(Messages.get(WndJournal.class, "catalog"));
 					}
 				}
 		};
@@ -363,7 +383,14 @@ public class WndJournal extends WndTabbed {
 					@Override
 					protected void onClick() {
 						currentPageIdx = idx;
+						for (RedButton b : pageButtons) b.active = true;
+						pageButtons[currentPageIdx].active = false;
 						updateList();
+					}
+
+					@Override
+					protected String hoverText() {
+						return Document.ALCHEMY_GUIDE.pageTitle(idx);
 					}
 				};
 				if (Document.ALCHEMY_GUIDE.isPageFound(i)) {
@@ -372,6 +399,7 @@ public class WndJournal extends WndTabbed {
 					pageButtons[i].icon(new ItemSprite(ItemSpriteSheet.SOMETHING, null));
 					pageButtons[i].enable(false);
 				}
+				if (idx == currentPageIdx) pageButtons[i].active = false;
 				add( pageButtons[i] );
 			}
 			
@@ -550,7 +578,7 @@ public class WndJournal extends WndTabbed {
 				pos += Math.max(ITEM_HEIGHT, title.height());
 			}
 			for(Notes.Record rec : keys){
-				ListItem item = new ListItem( Icons.get(Icons.DEPTH),
+				ListItem item = new ListItem( Icons.get(Icons.STAIRS),
 						Messages.titleCase(rec.desc()), rec.depth() );
 				item.setRect( 0, pos, width(), ITEM_HEIGHT );
 				content.add( item );
@@ -575,7 +603,7 @@ public class WndJournal extends WndTabbed {
 				pos += Math.max(ITEM_HEIGHT, title.height());
 			}
 			for (Notes.Record rec : landmarks) {
-				ListItem item = new ListItem( Icons.get(Icons.DEPTH),
+				ListItem item = new ListItem( Icons.get(Icons.STAIRS),
 						Messages.titleCase(rec.desc()), rec.depth() );
 				item.setRect( 0, pos, width(), ITEM_HEIGHT );
 				content.add( item );
@@ -620,10 +648,34 @@ public class WndJournal extends WndTabbed {
 					@Override
 					protected void onClick() {
 						currentItemIdx = idx;
+						for (RedButton b : itemButtons) b.active = true;
+						itemButtons[currentItemIdx].active = false;
 						updateList();
+					}
+
+					@Override
+					protected String hoverText() {
+						if (idx == WEAPON_IDX) {
+							return Catalog.WEAPONS.title();
+						} else if (idx == ARMOR_IDX){
+							return Catalog.ARMOR.title();
+						} else if (idx == WAND_IDX){
+							return Catalog.WANDS.title();
+						} else if (idx == RING_IDX){
+							return Catalog.RINGS.title();
+						} else if (idx == ARTIF_IDX){
+							return Catalog.ARTIFACTS.title();
+						} else if (idx == POTION_IDX){
+							return Catalog.POTIONS.title();
+						} else if (idx == SCROLL_IDX) {
+							return Catalog.SCROLLS.title();
+						} else {
+							return null;
+						}
 					}
 				};
 				itemButtons[i].icon(new ItemSprite(ItemSpriteSheet.SOMETHING + spriteIndexes[i], null));
+				if (idx == currentItemIdx) itemButtons[currentItemIdx].active = false;
 				add( itemButtons[i] );
 			}
 			

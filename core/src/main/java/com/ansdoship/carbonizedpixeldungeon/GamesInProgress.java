@@ -125,11 +125,16 @@ public class GamesInProgress {
 		info.challenges = challenges;
 		
 		info.level = hero.lvl;
-		info.str = hero.STR;
-		info.strBonus = hero.STR() - hero.STR;
+		info.STR = hero.STR;
+		info.CON = hero.CON;
+		info.DEX = hero.DEX;
+		info.INT = hero.INT;
+		info.WIS = hero.WIS;
+		info.CHA = hero.CHA;
+		info.STRBonus = hero.STR() - hero.STR;
 		info.exp = hero.exp;
-		info.hp = hero.HP;
-		info.ht = hero.HT;
+		info.HP = hero.HP;
+		info.HT = hero.HT;
 		info.hunger = hero.hunger();
 		info.shld = hero.shielding();
 		info.heroClass = hero.heroClass;
@@ -158,11 +163,16 @@ public class GamesInProgress {
 		public int challenges;
 		
 		public int level;
-		public int str;
-		public int strBonus;
+		public int STR;
+		public int STRBonus;
+		public int CON;
+		public int DEX;
+		public int INT;
+		public int WIS;
+		public int CHA;
 		public int exp;
-		public int hp;
-		public int ht;
+		public int HP;
+		public int HT;
 		public int hunger;
 		public int shld;
 		public HeroClass heroClass;

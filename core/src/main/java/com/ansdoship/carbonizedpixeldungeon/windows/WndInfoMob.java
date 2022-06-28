@@ -31,28 +31,28 @@ import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
 
 public class WndInfoMob extends WndTitledMessage {
-	
+
 	public WndInfoMob( Mob mob ) {
 
 		super( new MobTitle( mob ), mob.info() );
-		
+
 	}
-	
+
 	private static class MobTitle extends Component {
 
 		private static final int GAP	= 2;
-		
+
 		private CharSprite image;
 		private RenderedTextBlock name;
 		private HealthBar health;
 		private BuffIndicator buffs;
-		
+
 		public MobTitle( Mob mob ) {
-			
+
 			name = PixelScene.renderTextBlock( Messages.titleCase( mob.name() ), 9 );
 			name.hardlight( TITLE_COLOR );
 			add( name );
-			
+
 			image = mob.sprite();
 			add( image );
 
@@ -63,10 +63,10 @@ public class WndInfoMob extends WndTitledMessage {
 			buffs = new BuffIndicator( mob );
 			add( buffs );
 		}
-		
+
 		@Override
 		protected void layout() {
-			
+
 			image.x = 0;
 			image.y = Math.max( 0, name.height() + health.height() - image.height() );
 

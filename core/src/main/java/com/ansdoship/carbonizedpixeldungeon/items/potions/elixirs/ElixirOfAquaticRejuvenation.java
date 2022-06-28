@@ -38,11 +38,11 @@ import com.ansdoship.pixeldungeonclasses.utils.GameMath;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class ElixirOfAquaticRejuvenation extends Elixir {
-	
+
 	{
 		image = ItemSpriteSheet.ELIXIR_AQUA;
 	}
-	
+
 	@Override
 	public void apply(Hero hero) {
 		if (Dungeon.isChallenged(Challenges.NO_HEALING)){
@@ -52,29 +52,29 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 			Talent.onHealingPotionUsed( hero );
 		}
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients
 		return quantity * (30 + 50);
 	}
-	
+
 	public static class AquaHealing extends Buff {
-		
+
 		{
 			type = buffType.POSITIVE;
 			announced = true;
 		}
-		
+
 		private int left;
-		
+
 		public void set( int amount ){
 			if (amount > left) left = amount;
 		}
-		
+
 		@Override
 		public boolean act() {
-			
+
 			if (!target.flying && Dungeon.level.water[target.pos] && target.HP < target.HT){
 				float healAmt = GameMath.gate( 1, target.HT/50f, left );
 				healAmt = Math.min(healAmt, target.HT - target.HP);
@@ -87,7 +87,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 				left -= healAmt;
 				target.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
 			}
-			
+
 			if (left <= 0){
 				detach();
 			} else {
@@ -95,7 +95,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 			}
 			return true;
 		}
-		
+
 		@Override
 		public int icon() {
 			return BuffIndicator.HEALING;
@@ -111,45 +111,50 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 			float max = Math.round(target.HT * 1.5f);
 			return Math.max(0, (max - left) / max);
 		}
-		
+
+		@Override
+		public String iconTextDisplay() {
+			return Integer.toString(left);
+		}
+
 		@Override
 		public String toString() {
 			return Messages.get(this, "name");
 		}
-		
+
 		@Override
 		public String desc() {
 			return Messages.get(this, "desc", left);
 		}
-		
+
 		private static final String LEFT = "left";
-		
+
 		@Override
 		public void storeInBundle( Bundle bundle ) {
 			super.storeInBundle( bundle );
 			bundle.put( LEFT, left );
 		}
-		
+
 		@Override
 		public void restoreFromBundle( Bundle bundle ) {
 			super.restoreFromBundle( bundle );
 			left = bundle.getInt( LEFT );
-			
+
 		}
 	}
-	
+
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
-		
+
 		{
 			inputs =  new Class[]{PotionOfHealing.class, GooBlob.class};
 			inQuantity = new int[]{1, 1};
-			
+
 			cost = 6;
-			
+
 			output = ElixirOfAquaticRejuvenation.class;
 			outQuantity = 1;
 		}
-		
+
 	}
-	
+
 }

@@ -66,23 +66,28 @@ public class AboutScene extends PixelScene {
 		CreditsBlock tians = new CreditsBlock(true, TIANS_COLOR,
 				"Carbonized Pixel Dungeon",
 				new ItemSprite( ItemSpriteSheet.CARBON_STEEL ),
-				"Developed by: _Tianscar_\nBased on Shattered Pixel Dungeon's open source\n" +
-						"Inspired by Cocoa's ARranged Pixel Dungeon",
+				"Developed by: _Tianscar_\nBased on ShatteredPD's open source\n" +
+						"Inspired by: " +
+						"\nCocoa's ARranged Pixel Dungeon, " +
+						"\nDachhack's Sprouted Pixel Dungeon, " +
+						"\nTypedScroll's Overgrown Pixel Dungeon, " +
+						"\ndreamdream2020's Scorched Pixel Dungeon",
 				"cbpd.tianscar.com",
 				"https://cbpd.tianscar.com");
 		if (landscape()){
-			tians.setRect((w - fullWidth)/2f - 6, 6, 120, 0);
+			tians.setRect((w - fullWidth)/2f - 6, 7, 120, 0);
 		} else {
-			tians.setRect((w - fullWidth)/2f, 2, 120, 0);
+			tians.setRect((w - fullWidth)/2f, 7, 120, 0);
 		}
 		content.add(tians);
 
 		CreditsBlock ptr = new CreditsBlock(false, TIANS_COLOR,
 				"Music:",
 				Icons.PTR.get(),
-				"Progressive Tune/Jason",
-				"progressive-tune.github.io/ptr",
-				"https://progressive-tune.github.io/ptr");
+				"Progressive Tune" +
+						"\n_theme.ogg_ by _Jason_",
+				"progressive-tune.github.io",
+				"https://progressive-tune.github.io/ptr", true);
 		ptr.setSize(colWidth/2f, 0);
 		if (landscape()){
 			ptr.setPos(tians.right() + colWidth/4f, tians.top() + (tians.height() - ptr.height())/2f);
@@ -128,14 +133,14 @@ public class AboutScene extends PixelScene {
 
 		addLine((landscape() ? alex.top() : shpx.top()) - 4, content);
 
-		CreditsBlock charlie = new CreditsBlock(false, Window.SHPX_COLOR,
+		CreditsBlock celesti = new CreditsBlock(false, Window.SHPX_COLOR,
 				"Sound Effects:",
-				Icons.CHARLIE.get(),
-				"Charlie",
+				Icons.CELESTI.get(),
+				"Celesti",
 				"s9menine.itch.io",
 				"https://s9menine.itch.io");
-		charlie.setRect(alex.right(), alex.top(), colWidth/2f, 0);
-		content.add(charlie);
+		celesti.setRect(alex.right(), alex.top(), colWidth/2f, 0);
+		content.add(celesti);
 
 		CreditsBlock kristjan = new CreditsBlock(false, Window.SHPX_COLOR,
 				"Music:",
@@ -158,7 +163,7 @@ public class AboutScene extends PixelScene {
 		if (landscape()){
 			wata.setRect(shpx.left(), kristjan.bottom() + 8, colWidth, 0);
 		} else {
-			wata.setRect(shpx.left(), kristjan.bottom() + 8, colWidth, 0);
+			wata.setRect(shpx.left(), kristjan.bottom() + 12, colWidth, 0);
 		}
 		content.add(wata);
 
@@ -167,7 +172,7 @@ public class AboutScene extends PixelScene {
 		CreditsBlock cube = new CreditsBlock(false, WATA_COLOR,
 				"Music:",
 				Icons.CUBE_CODE.get(),
-				"Cube Code",
+				"Cube\\_Code",
 				null,
 				null);
 		cube.setSize(colWidth/2f, 0);
@@ -191,7 +196,7 @@ public class AboutScene extends PixelScene {
 		if (landscape()){
 			gdx.setRect(wata.left(), wata.bottom() + 8, colWidth, 0);
 		} else {
-			gdx.setRect(wata.left(), cube.bottom() + 8, colWidth, 0);
+			gdx.setRect(wata.left(), cube.bottom() + 12, colWidth, 0);
 		}
 		content.add(gdx);
 
@@ -226,15 +231,13 @@ public class AboutScene extends PixelScene {
 				Window.TITLE_COLOR,
 				null,
 				null,
-				"ShatteredPD is community-translated via _Transifex_! Thank you so much to all of Shattered's volunteer translators!",
+				"Shattered Pixel Dungeon is community-translated via _Transifex_! Thank you so much to all of Shattered's volunteer translators!",
 				"www.transifex.com/shattered-pixel/",
 				"https://www.transifex.com/shattered-pixel/shattered-pixel-dungeon/");
-		transifex.setRect((Camera.main.width - colWidth)/2f, purigro.bottom() + 12, colWidth, 0);
+		transifex.setRect((Camera.main.width - colWidth)/2f, (landscape() ? gdx.bottom() : purigro.bottom()) + (landscape() ? 8 : 12), colWidth, 0);
 		content.add(transifex);
 
 		addLine(transifex.top() - 4, content);
-
-		addLine(transifex.bottom() + 4, content);
 
 		//*** Freesound Credits ***
 
@@ -242,7 +245,7 @@ public class AboutScene extends PixelScene {
 				Window.TITLE_COLOR,
 				null,
 				null,
-				"Shattered Pixel Dungeon uses the following sound samples from _freesound.org_:\n\n" +
+				"Carbonized Pixel Dungeon uses the following sound samples from _freesound.org_:\n\n" +
 
 				"Creative Commons Attribution License:\n" +
 				"_SFX ATTACK SWORD 001.wav_ by _JoelAudio_\n" +
@@ -266,10 +269,29 @@ public class AboutScene extends PixelScene {
 				"_Lemon,Squeeze,Squishy,Fruit.wav_ by _Filipe Chagas_",
 				"www.freesound.org",
 				"https://www.freesound.org");
-		freesound.setRect(transifex.left()-10, transifex.bottom() + 8, colWidth+20, 0);
+		freesound.setRect(transifex.left()-10, transifex.bottom() + (landscape() ? 8: 12), colWidth+20, 0);
 		content.add(freesound);
 
-		content.setSize( fullWidth, freesound.bottom()+10 );
+		addLine(freesound.top() - 4, content);
+
+		//*** Maoken Credits ***
+
+		CreditsBlock maoken = new CreditsBlock(true,
+				Window.TITLE_COLOR,
+				null,
+				null,
+				"Carbonized Pixel Dungeon uses the following fonts from _maoken.com_:\n\n" +
+
+						"SIL Open Font License:\n" +
+						"_fusion-pixel.ttf_ by _TakWolf_",
+				"www.maoken.com",
+				"https://www.maoken.com");
+		maoken.setRect(transifex.left()-10, freesound.bottom() + (landscape() ? 8 : 12), colWidth+20, 0);
+		content.add(maoken);
+
+		addLine(maoken.top() - 4, content);
+
+		content.setSize( fullWidth, maoken.bottom()+10 );
 
 		list.setRect( 0, 0, w, h );
 		list.scrollTo(0, 0);
@@ -278,11 +300,11 @@ public class AboutScene extends PixelScene {
 		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
 		add( btnExit );
 
-		//fadeIn();
+		fadeIn();
 	}
 	
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		CarbonizedPixelDungeon.switchScene(TitleScene.class);
 	}
 
@@ -295,6 +317,7 @@ public class AboutScene extends PixelScene {
 	private static class CreditsBlock extends Component {
 
 		boolean large;
+		boolean bodyAlign;
 		RenderedTextBlock title;
 		Image avatar;
 		Flare flare;
@@ -304,11 +327,17 @@ public class AboutScene extends PixelScene {
 		ColorBlock linkUnderline;
 		PointerArea linkButton;
 
+		private CreditsBlock(boolean large, int highlight, String title, Image avatar, String body, String linkText, String linkUrl) {
+			this(large, highlight, title, avatar, body, linkText, linkUrl, false);
+		}
+
 		//many elements can be null, but body is assumed to have content.
-		private CreditsBlock(boolean large, int highlight, String title, Image avatar, String body, String linkText, String linkUrl){
+		private CreditsBlock(boolean large, int highlight, String title, Image avatar, String body, String linkText, String linkUrl,
+							 boolean bodyAlign) {
 			super();
 
 			this.large = large;
+			this.bodyAlign = bodyAlign;
 
 			if (title != null) {
 				this.title = PixelScene.renderTextBlock(title, large ? 8 : 6);
@@ -328,7 +357,7 @@ public class AboutScene extends PixelScene {
 
 			this.body = PixelScene.renderTextBlock(body, 6);
 			if (highlight != -1) this.body.setHightlighting(true, highlight);
-			if (large) this.body.align(RenderedTextBlock.CENTER_ALIGN);
+			if (large || bodyAlign) this.body.align(RenderedTextBlock.CENTER_ALIGN);
 			add(this.body);
 
 			if (linkText != null && linkUrl != null){
@@ -365,7 +394,7 @@ public class AboutScene extends PixelScene {
 				topY += title.height() + (large ? 2 : 1);
 			}
 
-			if (large){
+			if (large || bodyAlign){
 
 				if (avatar != null){
 					avatar.x = x + (width()-avatar.width())/2f;

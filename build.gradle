@@ -12,10 +12,11 @@ allprojects {
 
     ext {
         appName = 'Carbonized Pixel Dungeon'
+        appVendor = 'AnsdoShip'
         appPackageName = 'com.ansdoship.carbonizedpixeldungeon'
 
-        appVersionCode = 18
-        appVersionName = '0.0.6p2-ALPHA'
+        appVersionCode = 19
+        appVersionName = '0.0.6p3-ALPHA'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
@@ -24,7 +25,7 @@ allprojects {
         appAndroidTargetSDK = 31
 
         gdxVersion = '1.11.0'
-        gdxControllersVersion = '2.2.1'
+        gdxControllersVersion = '2.2.2'
         robovmVersion = '2.3.14'
     }
     version = appVersionName

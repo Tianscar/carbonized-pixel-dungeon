@@ -32,26 +32,26 @@ import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 
 public abstract class DocumentPage extends Item {
-	
+
 	{
 		image = ItemSpriteSheet.GUIDEBOOK;
 	}
 
 	public abstract Document document();
-	
+
 	private String page;
-	
+
 	public void page( String page ){
 		this.page = page;
 	}
-	
+
 	public String page(){
 		return page;
 	}
-	
+
 	@Override
-	public final boolean doPickUp(Hero hero) {
-		GameScene.pickUpJournal(this, hero.pos);
+	public final boolean doPickUp(Hero hero, int pos) {
+		GameScene.pickUpJournal(this, pos);
 		GameScene.flashForDocument(page());
 		if (document() == Document.ALCHEMY_GUIDE){
 			WndJournal.last_index = 1;
@@ -78,15 +78,15 @@ public abstract class DocumentPage extends Item {
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	private static final String PAGE = "page";
-	
+
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( PAGE, page() );
 	}
-	
+
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);

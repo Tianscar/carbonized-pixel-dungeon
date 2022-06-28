@@ -91,7 +91,7 @@ public class v0_9_X_Changes {
 		changes.hardlight(CharSprite.WARNING);
 		changeInfos.add(changes);
 
-		changes.addButton(new ChangeButton(Icons.get(Icons.DEPTH), "Dungeon Changes",
+		changes.addButton(new ChangeButton(Icons.get(Icons.STAIRS), "Dungeon Changes",
 				"I'm making some slight tweaks to level sizes and layouts, to make the game overall a little shorter, and to put a bit more emphasis on the final region:\n\n" +
 				"_-_ Standard room count down by roughly 10/20/15/15/5%, for each region\n" +
 				"_-_ Connection room frequency down by ~25%\n\n" +
@@ -398,7 +398,7 @@ public class v0_9_X_Changes {
 				"The second talent tier is similar to the first, but talent powers are much less focused on the early game. Expect effects that are useful all game long.\n\n" +
 				"Look forward to tier 3 of the talent system coming in v0.9.2, which will span levels 13-20."));
 
-		changes.addButton(new ChangeButton(Icons.get(Icons.DEPTH), "Levelgen Improvements!",
+		changes.addButton(new ChangeButton(Icons.get(Icons.STAIRS), "Levelgen Improvements!",
 				"_The game's level generation system has received a number of improvements!:_\n\n" +
 				"_-_ A new region specific room has been added to each dungeon region, 5 in total.\n" +
 				"_-_ Three new level feelings have been added: large, secrets, and traps.\n" +

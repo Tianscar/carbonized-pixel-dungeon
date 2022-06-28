@@ -27,20 +27,20 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
 public class AdrenalineDart extends TippedDart {
-	
+
 	{
 		image = ItemSpriteSheet.ADRENALINE_DART;
 	}
-	
+
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		
-		Buff.prolong( defender, Adrenaline.class, Adrenaline.DURATION);
-		
+
+		Buff.prolong( defender, Adrenaline.class, 3*Adrenaline.DURATION);
+
 		if (attacker.alignment == defender.alignment){
 			return 0;
 		}
-		
+
 		return super.proc(attacker, defender, damage);
 	}
 }

@@ -36,17 +36,17 @@ public class ArmoredBrute extends Brute {
 
 	{
 		spriteClass = ShieldedSprite.class;
-		
+
 		//see rollToDropLoot
 		loot = Generator.Category.ARMOR;
 		lootChance = 1f;
 	}
-	
+
 	@Override
 	public int drRoll() {
 		return Random.NormalIntRange(6, 10);
 	}
-	
+
 	@Override
 	protected void triggerEnrage () {
 		Buff.affect(this, ArmoredRage.class).setShield(HT/2 + 1);
@@ -56,36 +56,36 @@ public class ArmoredBrute extends Brute {
 		spend( TICK );
 		hasRaged = true;
 	}
-	
+
 	@Override
-	protected Item createLoot () {
+	public Item createLoot() {
 		if (Random.Int( 4 ) == 0) {
 			return new PlateArmor().random();
 		}
 		return new ScaleArmor().random();
 	}
-	
+
 	//similar to regular brute rate, but deteriorates much slower. 60 turns to death total.
 	public static class ArmoredRage extends Brute.BruteRage {
-		
+
 		@Override
 		public boolean act() {
-			
+
 			if (target.HP > 0){
 				detach();
 				return true;
 			}
-			
+
 			absorbDamage( 1 );
-			
+
 			if (shielding() <= 0){
 				target.die(null);
 			}
-			
+
 			spend( 3*TICK );
-			
+
 			return true;
 		}
-		
+
 	}
 }

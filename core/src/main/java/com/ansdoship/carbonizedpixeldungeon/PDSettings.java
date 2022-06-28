@@ -53,6 +53,7 @@ public class PDSettings extends GameSettings {
 	public static final String KEY_POWER_SAVER 	= "power_saver";
 	public static final String KEY_SCALE		= "scale";
 	public static final String KEY_ZOOM			= "zoom";
+	public static final String KEY_SPLASH_SCREEN= "splash_screen";
 	public static final String KEY_BRIGHTNESS	= "brightness";
 	public static final String KEY_GRID 	    = "visual_grid";
 	
@@ -105,6 +106,14 @@ public class PDSettings extends GameSettings {
 	public static int zoom() {
 		return getInt( KEY_ZOOM, 0 );
 	}
+
+	public static void splashScreen( int value ) {
+		put( KEY_SPLASH_SCREEN, value );
+	}
+
+	public static int splashScreen() {
+		return getInt( KEY_SPLASH_SCREEN, 1 );
+	}
 	
 	public static void brightness( int value ) {
 		put( KEY_BRIGHTNESS, value );
@@ -141,7 +150,7 @@ public class PDSettings extends GameSettings {
 	
 	public static boolean flipToolbar(){ return getBoolean(KEY_FLIPTOOLBAR, false); }
 	
-	public static void flipTags( boolean value) {
+	public static void flipTags( boolean value ) {
 		put(KEY_FLIPTAGS, value );
 	}
 	
@@ -318,7 +327,10 @@ public class PDSettings extends GameSettings {
 	public static final String KEY_WINDOW_WIDTH     = "window_width";
 	public static final String KEY_WINDOW_HEIGHT    = "window_height";
 	public static final String KEY_WINDOW_MAXIMIZED = "window_maximized";
-	
+	public static final String KEY_WINDOW_ICONIFIED = "window_iconified";
+	public static final String KEY_WINDOW_POS_X     = "window_pos_x";
+	public static final String KEY_WINDOW_POS_Y     = "window_pos_y";
+
 	public static void windowResolution( Point p ){
 		put(KEY_WINDOW_WIDTH, p.x);
 		put(KEY_WINDOW_HEIGHT, p.y);
@@ -326,8 +338,8 @@ public class PDSettings extends GameSettings {
 	
 	public static Point windowResolution(){
 		return new Point(
-				getInt( KEY_WINDOW_WIDTH, 800, 720, Integer.MAX_VALUE ),
-				getInt( KEY_WINDOW_HEIGHT, 600, 400, Integer.MAX_VALUE )
+				getInt( KEY_WINDOW_WIDTH, 800, 640, Integer.MAX_VALUE ),
+				getInt( KEY_WINDOW_HEIGHT, 600, 480, Integer.MAX_VALUE )
 		);
 	}
 	
@@ -337,6 +349,26 @@ public class PDSettings extends GameSettings {
 	
 	public static boolean windowMaximized(){
 		return getBoolean( KEY_WINDOW_MAXIMIZED, false );
+	}
+
+	public static void windowIconified( boolean value ){
+		put( KEY_WINDOW_ICONIFIED, value );
+	}
+
+	public static boolean windowIconified(){
+		return getBoolean( KEY_WINDOW_ICONIFIED, false );
+	}
+
+	public static void windowPosition( Point p ) {
+		put(KEY_WINDOW_POS_X, p.x);
+		put(KEY_WINDOW_POS_Y, p.y);
+	}
+
+	public static Point windowPosition(){
+		return new Point(
+				getInt( KEY_WINDOW_POS_X, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE ),
+				getInt( KEY_WINDOW_POS_Y, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE )
+		);
 	}
 
 }

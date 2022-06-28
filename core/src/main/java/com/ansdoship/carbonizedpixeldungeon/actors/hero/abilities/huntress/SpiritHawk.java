@@ -25,11 +25,7 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Blindness;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.BlobImmunity;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -153,7 +149,7 @@ public class SpiritHawk extends ArmorAbility {
 			attacksAutomatically = false;
 
 			immunities.addAll(new BlobImmunity().immunities());
-			immunities.add(Corruption.class);
+			immunities.add(AllyBuff.class);
 		}
 
 		@Override
@@ -162,7 +158,7 @@ public class SpiritHawk extends ArmorAbility {
 		}
 
 		private int dodgesUsed = 0;
-		private float timeRemaining = 60f;
+		private float timeRemaining = 100f;
 
 		@Override
 		public int defenseSkill(Char enemy) {

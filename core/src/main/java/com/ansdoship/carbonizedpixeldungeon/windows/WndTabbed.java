@@ -29,6 +29,7 @@ import com.ansdoship.carbonizedpixeldungeon.ui.Window;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.NinePatch;
+import com.ansdoship.pixeldungeonclasses.noosa.PointerArea;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Button;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
@@ -91,10 +92,12 @@ public class WndTabbed extends Window {
 		camera.y = (int)(Game.height - camera.screenHeight()) / 2;
 		camera.y += yOffset * camera.zoom;
 
+		/*
 		shadow.boxRect(
 				camera.x / camera.zoom,
 				camera.y / camera.zoom,
 				chrome.width(), chrome.height );
+		 */
 		// <- super.resize(...)
 		
 		for (Tab tab : tabs) {
@@ -137,6 +140,10 @@ public class WndTabbed extends Window {
 		protected float selectedHeight;
 		protected float normalHeight;
 
+		{
+			hotArea.blockLevel = PointerArea.ALWAYS_BLOCK;
+		}
+
 		@Override
 		public Component setSize(float width, float height) {
 			selectedHeight = height + 4;
@@ -172,6 +179,8 @@ public class WndTabbed extends Window {
 		protected void select( boolean value ) {
 			
 			active = !(selected = value);
+
+			if (!active) killTooltip();
 			
 			if (bg != null) {
 				remove( bg );
@@ -182,11 +191,21 @@ public class WndTabbed extends Window {
 			
 			layout();
 		}
-		
+
 		@Override
 		protected void onClick() {
-			Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
 			WndTabbed.this.onClick( this );
+		}
+
+		@Override
+		protected void onPointerDown() {
+			bg.brightness( 1.2f );
+			Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
+		}
+
+		@Override
+		protected void onPointerUp() {
+			bg.resetColor();
 		}
 	}
 	

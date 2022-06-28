@@ -49,6 +49,14 @@ public class DesktopLauncher {
 		if (!DesktopLaunchValidator.verifyValidJVMState(args)){
 			return;
 		}
+
+		//detection for FreeBSD (which is equivalent to linux for us)
+		if (System.getProperty("os.name").contains("FreeBSD")) {
+			SharedLibraryLoader.isLinux = true;
+			//this overrides incorrect values set in SharedLibraryLoader's static initializer
+			SharedLibraryLoader.isIos = false;
+			SharedLibraryLoader.is64Bit = System.getProperty("os.arch").contains("64") || System.getProperty("os.arch").startsWith("armv8");
+		}
 		
 		final String title;
 		if (DesktopLauncher.class.getPackage().getSpecificationTitle() == null){
@@ -133,15 +141,22 @@ public class DesktopLauncher {
 		PDSettings.set( new Lwjgl3Preferences( PDSettings.DEFAULT_PREFS_FILE, basePath) );
 		FileUtils.setDefaultFileProperties( Files.FileType.External, basePath );
 		
-		config.setWindowSizeLimits( 720, 400, -1, -1 );
+		config.setWindowSizeLimits( 640, 480, -1, -1 );
 		Point p = PDSettings.windowResolution();
 		config.setWindowedMode( p.x, p.y );
 
+		p = PDSettings.windowPosition();
+		if (p.x != Integer.MIN_VALUE && p.y != Integer.MIN_VALUE) config.setWindowPosition( p.x, p.y );
+
+		PDSettings.windowIconified(false);
 		config.setMaximized(PDSettings.windowMaximized());
 
-		if (PDSettings.fullscreen()) {
+		/*
+		//going fullscreen on launch is still buggy on macOS, so game enters it slightly later
+		if (SPDSettings.fullscreen() && !SharedLibraryLoader.isMac) {
 			config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		}
+		 */
 		
 		//we set fullscreen/maximized in the listener as doing it through the config seems to be buggy
 		DesktopWindowListener listener = new DesktopWindowListener();
@@ -150,6 +165,6 @@ public class DesktopLauncher {
 		config.setWindowIcon("icons/icon_16.png", "icons/icon_32.png", "icons/icon_64.png",
 				"icons/icon_128.png", "icons/icon_256.png");
 
-		new Lwjgl3Application(new CarbonizedPixelDungeon(new DesktopPlatformSupport()), config);
+		new Lwjgl3Application(new CarbonizedPixelDungeon(new DesktopPlatformSupport(listener)), config);
 	}
 }

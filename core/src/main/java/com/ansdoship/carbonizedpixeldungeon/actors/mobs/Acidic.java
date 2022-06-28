@@ -33,7 +33,7 @@ public class Acidic extends Scorpio {
 
 	{
 		spriteClass = AcidicSprite.class;
-		
+
 		properties.add(Property.ACIDIC);
 
 		loot = new PotionOfExperience();
@@ -54,7 +54,7 @@ public class Acidic extends Scorpio {
 	}
 
 	@Override
-	protected Item createLoot() {
+	public Item createLoot() {
 		return new PotionOfExperience();
 	}
 }

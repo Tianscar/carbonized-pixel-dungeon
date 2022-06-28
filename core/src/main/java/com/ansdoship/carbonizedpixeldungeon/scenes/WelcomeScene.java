@@ -49,7 +49,7 @@ public class WelcomeScene extends PixelScene {
 		final int previousVersion = PDSettings.version();
 
 		if (CarbonizedPixelDungeon.versionCode == previousVersion && !PDSettings.intro()) {
-			CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
+			CarbonizedPixelDungeon.switchScene(TitleScene.class);
 			return;
 		}
 
@@ -79,9 +79,6 @@ public class WelcomeScene extends PixelScene {
 		title.y = 2 + (topRegion - title.height()) / 2f;
 
 		align(title);
-
-		placeTorch(title.x + 28, title.y + 46);
-		placeTorch(title.x + title.width - 28, title.y + 46);
 
 		Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
 			private float time = 0;
@@ -167,6 +164,10 @@ public class WelcomeScene extends PixelScene {
 		float textSpace = okay.top() - topRegion - 4;
 		text.setPos((w - text.width()) / 2f, (topRegion + 2) + (textSpace - text.height())/2);
 		add(text);
+
+		fadeIn();
+		placeTorch(title.x + 28, title.y + 46);
+		placeTorch(title.x + title.width - 28, title.y + 46);
 
 	}
 

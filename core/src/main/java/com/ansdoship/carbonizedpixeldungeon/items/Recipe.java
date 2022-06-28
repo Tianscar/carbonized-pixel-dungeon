@@ -43,46 +43,36 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfToxicE
 import com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ExoticScroll;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.Alchemize;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.AquaBlast;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.ArcaneCatalyst;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.BeaconOfReturning;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.CurseInfusion;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.FeatherFall;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.MagicalInfusion;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.MagicalPorter;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.PhaseShift;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.ReclaimTrap;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.Recycle;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.WildEnergy;
+import com.ansdoship.carbonizedpixeldungeon.items.spells.*;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
 import java.util.ArrayList;
 
 public abstract class Recipe {
-	
+
 	public abstract boolean testIngredients(ArrayList<Item> ingredients);
-	
+
 	public abstract int cost(ArrayList<Item> ingredients);
-	
+
 	public abstract Item brew(ArrayList<Item> ingredients);
-	
+
 	public abstract Item sampleOutput(ArrayList<Item> ingredients);
-	
+
 	//subclass for the common situation of a recipe with static inputs and outputs
 	public static abstract class SimpleRecipe extends Recipe {
-		
+
 		//*** These elements must be filled in by subclasses
 		protected Class<?extends Item>[] inputs; //each class should be unique
 		protected int[] inQuantity;
-		
+
 		protected int cost;
-		
+
 		protected Class<?extends Item> output;
 		protected int outQuantity;
 		//***
-		
+
 		//gets a simple list of items based on inputs
 		public ArrayList<Item> getIngredients() {
 			ArrayList<Item> result = new ArrayList<>();
@@ -93,12 +83,12 @@ public abstract class Recipe {
 			}
 			return result;
 		}
-		
+
 		@Override
 		public final boolean testIngredients(ArrayList<Item> ingredients) {
-			
+
 			int[] needed = inQuantity.clone();
-			
+
 			for (Item ingredient : ingredients){
 				if (!ingredient.isIdentified()) return false;
 				for (int i = 0; i < inputs.length; i++){
@@ -108,26 +98,26 @@ public abstract class Recipe {
 					}
 				}
 			}
-			
+
 			for (int i : needed){
 				if (i > 0){
 					return false;
 				}
 			}
-			
+
 			return true;
 		}
-		
+
 		public final int cost(ArrayList<Item> ingredients){
 			return cost;
 		}
-		
+
 		@Override
 		public final Item brew(ArrayList<Item> ingredients) {
 			if (!testIngredients(ingredients)) return null;
-			
+
 			int[] needed = inQuantity.clone();
-			
+
 			for (Item ingredient : ingredients){
 				for (int i = 0; i < inputs.length; i++) {
 					if (ingredient.getClass() == inputs[i] && needed[i] > 0) {
@@ -141,11 +131,11 @@ public abstract class Recipe {
 					}
 				}
 			}
-			
+
 			//sample output and real output are identical in this case.
 			return sampleOutput(null);
 		}
-		
+
 		//ingredients are ignored, as output doesn't vary
 		public final Item sampleOutput(ArrayList<Item> ingredients){
 			try {
@@ -158,8 +148,8 @@ public abstract class Recipe {
 			}
 		}
 	}
-	
-	
+
+
 	//*******
 	// Static members
 	//*******
@@ -167,14 +157,14 @@ public abstract class Recipe {
 	private static Recipe[] variableRecipes = new Recipe[]{
 			new LiquidMetal.Recipe()
 	};
-	
+
 	private static Recipe[] oneIngredientRecipes = new Recipe[]{
 		new AlchemistsToolkit.upgradeKit(),
 		new Scroll.ScrollToStone(),
 		new ArcaneResin.Recipe(),
 		new StewedMeat.oneMeat()
 	};
-	
+
 	private static Recipe[] twoIngredientRecipes = new Recipe[]{
 		new Blandfruit.CookFruit(),
 		new Bomb.EnhanceBomb(),
@@ -197,14 +187,15 @@ public abstract class Recipe {
 		new CurseInfusion.Recipe(),
 		new FeatherFall.Recipe(),
 		new MagicalInfusion.Recipe(),
-		new MagicalPorter.Recipe(),
 		new PhaseShift.Recipe(),
 		new ReclaimTrap.Recipe(),
 		new Recycle.Recipe(),
 		new WildEnergy.Recipe(),
+		new TelekineticGrab.Recipe(),
+		new SummonElemental.Recipe(),
 		new StewedMeat.twoMeat()
 	};
-	
+
 	private static Recipe[] threeIngredientRecipes = new Recipe[]{
 		new Potion.SeedToPotion(),
 		new ExoticPotion.PotionToExotic(),
@@ -212,7 +203,7 @@ public abstract class Recipe {
 		new StewedMeat.threeMeat(),
 		new MeatPie.Recipe()
 	};
-	
+
 	public static Recipe findRecipe(ArrayList<Item> ingredients){
 
 		for (Recipe recipe : variableRecipes){
@@ -242,15 +233,20 @@ public abstract class Recipe {
 				}
 			}
 		}
-		
+
 		return null;
 	}
 	
 	public static boolean usableInRecipe(Item item){
-		return !item.cursed
-				&& (!(item instanceof EquipableItem)
-					|| (item instanceof AlchemistsToolkit && item.isIdentified())
-					|| item instanceof MissileWeapon);
+		if (item instanceof EquipableItem){
+			//only thrown weapons and wands allowed among equipment items
+			return item.isIdentified() && !item.cursed && (item instanceof MissileWeapon || item instanceof AlchemistsToolkit);
+		} else if (item instanceof Wand) {
+			return item.isIdentified() && !item.cursed;
+		} else {
+			//other items can be unidentified, but not cursed
+			return !item.cursed;
+		}
 	}
 }
 

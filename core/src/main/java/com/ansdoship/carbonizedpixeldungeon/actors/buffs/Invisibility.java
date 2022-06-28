@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2021 Evan Debenham
+ * Copyright (C) 2014-2022 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,8 @@ public class Invisibility extends FlavourBuff {
 	}
 
 	public static void dispel() {
+		if (Dungeon.hero == null) return;
+
 		for ( Buff invis : Dungeon.hero.buffs( Invisibility.class )){
 			invis.detach();
 		}

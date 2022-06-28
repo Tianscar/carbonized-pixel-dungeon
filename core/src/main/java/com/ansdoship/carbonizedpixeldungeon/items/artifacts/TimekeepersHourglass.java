@@ -70,8 +70,9 @@ public class TimekeepersHourglass extends Artifact {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped( hero ) && charge > 0 && !cursed)
+		if (isEquipped( hero ) && !cursed && (charge > 0 || activeBuff != null)) {
 			actions.add(AC_ACTIVATE);
+		}
 		return actions;
 	}
 
@@ -146,7 +147,7 @@ public class TimekeepersHourglass extends Artifact {
 	protected ArtifactBuff passiveBuff() {
 		return new hourglassRecharge();
 	}
-	
+
 	@Override
 	public void charge(Hero target, float amount) {
 		if (charge < chargeCap){
@@ -247,7 +248,7 @@ public class TimekeepersHourglass extends Artifact {
 	}
 
 	public class timeStasis extends ArtifactBuff {
-		
+
 		{
 			type = buffType.POSITIVE;
 			actPriority = BUFF_PRIO-3; //acts after all other buffs, so they are prevented
@@ -262,17 +263,19 @@ public class TimekeepersHourglass extends Artifact {
 
 				int usedCharge = Math.min(charge, 2);
 				//buffs always act last, so the stasis buff should end a turn early.
-				spend((5*usedCharge) - 1);
-				((Hero) target).spendAndNext(5*usedCharge);
+				spend(5*usedCharge);
 
 				//shouldn't punish the player for going into stasis frequently
 				Hunger hunger = Buff.affect(target, Hunger.class);
-				if (hunger != null && !hunger.isStarving())
-					hunger.satisfy(5*usedCharge);
+				if (hunger != null && !hunger.isStarving()) {
+					hunger.satisfy(5 * usedCharge);
+				}
 
 				charge -= usedCharge;
 
 				target.invisible++;
+				target.paralysed++;
+				target.next();
 
 				updateQuickslot();
 
@@ -294,8 +297,8 @@ public class TimekeepersHourglass extends Artifact {
 
 		@Override
 		public void detach() {
-			if (target.invisible > 0)
-				target.invisible --;
+			if (target.invisible > 0) target.invisible--;
+			if (target.paralysed > 0) target.paralysed--;
 			super.detach();
 			activeBuff = null;
 			Dungeon.observe();
@@ -309,7 +312,7 @@ public class TimekeepersHourglass extends Artifact {
 	}
 
 	public class timeFreeze extends ArtifactBuff {
-		
+
 		{
 			type = buffType.POSITIVE;
 		}
@@ -414,7 +417,7 @@ public class TimekeepersHourglass extends Artifact {
 		}
 
 		@Override
-		public boolean doPickUp( Hero hero ) {
+		public boolean doPickUp(Hero hero, int pos) {
 			TimekeepersHourglass hourglass = hero.belongings.getItem( TimekeepersHourglass.class );
 			if (hourglass != null && !hourglass.cursed) {
 				hourglass.upgrade();
@@ -423,6 +426,7 @@ public class TimekeepersHourglass extends Artifact {
 					GLog.p( Messages.get(this, "maxlevel") );
 				else
 					GLog.i( Messages.get(this, "levelup") );
+				GameScene.pickUp(this, pos);
 				hero.spendAndNext(TIME_TO_PICK_UP);
 				return true;
 			} else {

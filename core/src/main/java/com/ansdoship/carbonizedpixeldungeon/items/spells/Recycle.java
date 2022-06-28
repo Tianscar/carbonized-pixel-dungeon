@@ -27,6 +27,7 @@ import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.effects.Transmuting;
 import com.ansdoship.carbonizedpixeldungeon.items.Generator;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.AlchemicalCatalyst;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.Potion;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.brews.Brew;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.elixirs.Elixir;
@@ -35,6 +36,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.Runestone;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.darts.TippedDart;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.plants.Plant;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -42,17 +44,18 @@ import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
 public class Recycle extends InventorySpell {
-	
+
 	{
 		image = ItemSpriteSheet.RECYCLE;
 	}
 
 	@Override
 	protected boolean usableOnItem(Item item) {
-		return (item instanceof Potion && !(item instanceof Elixir || item instanceof Brew)) ||
+		return (item instanceof Potion && !(item instanceof Elixir || item instanceof Brew || item instanceof AlchemicalCatalyst)) ||
 				item instanceof Scroll ||
 				item instanceof Plant.Seed ||
-				item instanceof Runestone;
+				item instanceof Runestone ||
+				item instanceof TippedDart;
 	}
 
 	@Override
@@ -71,11 +74,13 @@ public class Recycle extends InventorySpell {
 				}
 			} else if (item instanceof Plant.Seed) {
 				result = Generator.random(Generator.Category.SEED);
-			} else {
+			} else if (item instanceof Runestone) {
 				result = Generator.random(Generator.Category.STONE);
+			} else {
+				result = TippedDart.randomTipped(1);
 			}
 		} while (result.getClass() == item.getClass() || Challenges.isItemBlocked(result));
-		
+
 		item.detach(curUser.belongings.backpack);
 		GLog.p(Messages.get(this, "recycled", result.name()));
 		if (!result.collect()){
@@ -84,11 +89,11 @@ public class Recycle extends InventorySpell {
 		Transmuting.show(curUser, item, result);
 		curUser.sprite.emitter().start(Speck.factory(Speck.CHANGE), 0.2f, 10);
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((50 + 40) / 8f));
+		return Math.round(quantity * ((50 + 40) / 12f));
 	}
 	
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
@@ -96,12 +101,12 @@ public class Recycle extends InventorySpell {
 		{
 			inputs =  new Class[]{ScrollOfTransmutation.class, ArcaneCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 6;
-			
+
+			cost = 8;
+
 			output = Recycle.class;
-			outQuantity = 8;
+			outQuantity = 12;
 		}
-		
+
 	}
 }

@@ -87,7 +87,7 @@ public class Spinner extends Mob {
 		webCoolDown = bundle.getInt( WEB_COOLDOWN );
 		lastEnemyPos = bundle.getInt( LAST_ENEMY_POS );
 	}
-	
+
 	@Override
 	protected boolean act() {
 		AiState lastState = state;
@@ -106,7 +106,7 @@ public class Spinner extends Mob {
 				}
 			}
 		}
-		
+
 		if (state == FLEEING && buff( Terror.class ) == null &&
 				enemy != null && enemySeen && enemy.buff( Poison.class ) == null) {
 			state = HUNTING;
@@ -125,12 +125,12 @@ public class Spinner extends Mob {
 
 		return damage;
 	}
-	
+
 	private boolean shotWebVisually = false;
 
 	@Override
-	public void move(int step) {
-		if (enemySeen && webCoolDown <= 0 && lastEnemyPos != -1){
+	public void move(int step, boolean travelling) {
+		if (travelling && enemySeen && webCoolDown <= 0 && lastEnemyPos != -1){
 			if (webPos() != -1){
 				if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
 					sprite.zap( webPos() );
@@ -140,14 +140,14 @@ public class Spinner extends Mob {
 				}
 			}
 		}
-		super.move(step);
+		super.move(step, travelling);
 	}
-	
+
 	public int webPos(){
 
 		Char enemy = this.enemy;
 		if (enemy == null) return -1;
-		
+
 		Ballistica b;
 		//aims web in direction enemy is moving, or between self and enemy if they aren't moving
 		if (lastEnemyPos == enemy.pos){
@@ -155,7 +155,7 @@ public class Spinner extends Mob {
 		} else {
 			b = new Ballistica( lastEnemyPos, enemy.pos, Ballistica.WONT_STOP );
 		}
-		
+
 		int collisionIndex = 0;
 		for (int i = 0; i < b.path.size(); i++){
 			if (b.path.get(i) == enemy.pos){
@@ -173,15 +173,15 @@ public class Spinner extends Mob {
 
 		//ensure we aren't shooting the web through walls
 		int projectilePos = new Ballistica( pos, webPos, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID).collisionPos;
-		
+
 		if (webPos != enemy.pos && projectilePos == webPos && Dungeon.level.passable[webPos]){
 			return webPos;
 		} else {
 			return -1;
 		}
-		
+
 	}
-	
+
 	public void shootWeb(){
 		int webPos = webPos();
 		if (webPos != -1){
@@ -191,15 +191,15 @@ public class Spinner extends Mob {
 					break;
 				}
 			}
-			
+
 			//spread to the tile hero was moving towards and the two adjacent ones
 			int leftPos = enemy.pos + PathFinder.CIRCLE8[left(i)];
 			int rightPos = enemy.pos + PathFinder.CIRCLE8[right(i)];
-			
+
 			if (Dungeon.level.passable[leftPos]) GameScene.add(Blob.seed(leftPos, 20, Web.class));
 			if (Dungeon.level.passable[webPos])  GameScene.add(Blob.seed(webPos, 20, Web.class));
 			if (Dungeon.level.passable[rightPos])GameScene.add(Blob.seed(rightPos, 20, Web.class));
-			
+
 			webCoolDown = 10;
 
 			if (Dungeon.level.heroFOV[enemy.pos]){
@@ -208,11 +208,11 @@ public class Spinner extends Mob {
 		}
 		next();
 	}
-	
+
 	private int left(int direction){
 		return direction == 0 ? 7 : direction-1;
 	}
-	
+
 	private int right(int direction){
 		return direction == 7 ? 0 : direction+1;
 	}
@@ -220,7 +220,7 @@ public class Spinner extends Mob {
 	{
 		resistances.add(Poison.class);
 	}
-	
+
 	{
 		immunities.add(Web.class);
 	}

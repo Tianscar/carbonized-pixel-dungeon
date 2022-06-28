@@ -21,9 +21,14 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs;
 
+import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 
 public class Camouflage extends Armor.Glyph {
 
@@ -33,6 +38,13 @@ public class Camouflage extends Armor.Glyph {
 	public int proc(Armor armor, Char attacker, Char defender, int damage) {
 		//no proc effect, see HighGrass.trample
 		return damage;
+	}
+
+	public static void activate(Char ch, int level){
+		Buff.prolong(ch, Invisibility.class, 3 + level/2);
+		if ( Dungeon.level.heroFOV[ch.pos] ) {
+			Sample.INSTANCE.play( Assets.Sounds.MELD );
+		}
 	}
 
 	@Override

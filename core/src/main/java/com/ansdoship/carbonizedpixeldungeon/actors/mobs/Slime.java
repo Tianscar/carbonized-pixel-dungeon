@@ -31,29 +31,29 @@ import com.ansdoship.pixeldungeonclasses.utils.Random;
 import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
 public class Slime extends Mob {
-	
+
 	{
 		spriteClass = SlimeSprite.class;
-		
+
 		HP = HT = 20;
 		defenseSkill = 5;
-		
+
 		EXP = 4;
 		maxLvl = 9;
-		
-		lootChance = 0.2f; //by default, see rollToDropLoot()
+
+		lootChance = 0.2f; //by default, see lootChance()
 	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 2, 5 );
 	}
-	
+
 	@Override
 	public int attackSkill( Char target ) {
 		return 12;
 	}
-	
+
 	@Override
 	public void damage(int dmg, Object src) {
 		if (dmg >= 5){
@@ -64,15 +64,14 @@ public class Slime extends Mob {
 	}
 
 	@Override
-	public void rollToDropLoot() {
+	public float lootChance(){
 		//each drop makes future drops 1/3 as likely
 		// so loot chance looks like: 1/5, 1/15, 1/45, 1/135, etc.
-		lootChance *= Math.pow(1/3f, Dungeon.LimitedDrops.SLIME_WEP.count);
-		super.rollToDropLoot();
+		return super.lootChance() * (float)Math.pow(1/3f, Dungeon.LimitedDrops.SLIME_WEP.count);
 	}
-	
+
 	@Override
-	protected Item createLoot() {
+	public Item createLoot() {
 		Dungeon.LimitedDrops.SLIME_WEP.count++;
 		Generator.Category c = Generator.Category.WEP_T2;
 		MeleeWeapon w = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);

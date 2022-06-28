@@ -21,8 +21,9 @@
 
 package com.ansdoship.carbonizedpixeldungeon.ui;
 
-import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
-import com.ansdoship.carbonizedpixeldungeon.scenes.TitleScene;
+import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
+import com.ansdoship.carbonizedpixeldungeon.windows.WndKeyBindings;
+import com.ansdoship.pixeldungeonclasses.input.GameAction;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 
 public class ExitButton extends IconButton {
@@ -36,10 +37,23 @@ public class ExitButton extends IconButton {
 
 	@Override
 	protected void onClick() {
+		Game.scene().onBackPressed();
+		/*
 		if (Game.scene() instanceof TitleScene) {
 			Game.instance.finish();
 		} else {
 			CarbonizedPixelDungeon.switchNoFade( TitleScene.class );
 		}
+		 */
+	}
+
+	@Override
+	public GameAction keyAction() {
+		return GameAction.BACK;
+	}
+
+	@Override
+	protected String hoverText() {
+		return Messages.titleCase(Messages.get(WndKeyBindings.class, "back"));
 	}
 }

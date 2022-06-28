@@ -47,15 +47,15 @@ public class KeyBindings {
 		hardBindings.put(keyCode, action);
 	}
 
-	public static boolean acceptUnbound = false;
+	public static boolean bindingKey = false;
 
 	public static boolean isKeyBound(int keyCode){
-		if (keyCode <= 0 || keyCode > 255){
+		if (keyCode < 0 || (keyCode > 255 && keyCode < 1000)){
 			return false;
 		}
-		return acceptUnbound || bindings.containsKey( keyCode ) || hardBindings.containsKey( keyCode );
+		return bindingKey || bindings.containsKey( keyCode ) || hardBindings.containsKey( keyCode );
 	}
-	
+
 	public static GameAction getActionForKey(KeyEvent event){
 		if (bindings.containsKey( event.code )){
 			return bindings.get( event.code );
@@ -76,6 +76,17 @@ public class KeyBindings {
 	}
 
 	public static String getKeyName( int keyCode ){
+		if (ControllerHandler.customButtonName(keyCode) != null){
+			return ControllerHandler.customButtonName(keyCode);
+		}
+
+		//custom codes for mouse buttons
+		if (keyCode == 1003){
+			return "Mouse 4";
+		} else if (keyCode == 1004) {
+			return "Mouse 5";
+		}
+
 		if (keyCode == Input.Keys.UNKNOWN){
 			return "None";
 		} else if (keyCode == Input.Keys.PLUS){

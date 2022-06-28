@@ -25,10 +25,7 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Doom;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Roots;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.mage.WildMagic;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.NPC;
@@ -65,7 +62,7 @@ public class WandOfRegrowth extends Wand {
 		//only used for targeting, actual projectile logic is Ballistica.STOP_SOLID
 		collisionProperties = Ballistica.WONT_STOP;
 	}
-	
+
 	private int totChrgUsed = 0;
 	private int chargesOverLimit = 0;
 
@@ -195,14 +192,14 @@ public class WandOfRegrowth extends Wand {
 		}
 
 	}
-	
+
 	private int chargeLimit( int heroLvl ){
 		if (level() >= 10){
 			return Integer.MAX_VALUE;
 		} else {
 			//8 charges at base, plus:
 			//2/3.33/5/7/10/14/20/30/50/110/infinite charges per hero level, based on wand level
-			float lvl = buffedLvl();
+			float lvl = level();
 			return Math.round(8 + heroLvl * (2+lvl) * (1f + (lvl/(10 - lvl))));
 		}
 	}
@@ -292,24 +289,24 @@ public class WandOfRegrowth extends Wand {
 		particle.x -= dst;
 		particle.y += dst;
 	}
-	
+
 	private static final String TOTAL = "totChrgUsed";
 	private static final String OVER = "chargesOverLimit";
-	
+
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( TOTAL, totChrgUsed );
 		bundle.put( OVER, chargesOverLimit);
 	}
-	
+
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		totChrgUsed = bundle.getInt(TOTAL);
 		chargesOverLimit = bundle.getInt(OVER);
 	}
-	
+
 	public static class Dewcatcher extends Plant{
 
 		{
@@ -451,8 +448,13 @@ public class WandOfRegrowth extends Wand {
 		}
 
 		{
-			immunities.add(Corruption.class);
-			immunities.add(Doom.class);
+			immunities.add( Paralysis.class );
+			immunities.add( Amok.class );
+			immunities.add( Sleep.class );
+			immunities.add( Terror.class );
+			immunities.add( Vertigo.class );
+			immunities.add( AllyBuff.class );
+			immunities.add( Doom.class );
 		}
 
 		@Override

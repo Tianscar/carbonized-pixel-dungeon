@@ -105,6 +105,7 @@ import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndResurrect;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndStory;
 import com.ansdoship.pixeldungeonclasses.glwrap.Blending;
+import com.ansdoship.pixeldungeonclasses.input.PointerEvent;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Gizmo;
@@ -324,11 +325,6 @@ public class GameScene extends PixelScene {
 		pane.setSize( uiCamera.width, 0 );
 		add( pane );
 		
-		toolbar = new Toolbar();
-		toolbar.camera = uiCamera;
-		toolbar.setRect( 0,uiCamera.height - toolbar.height(), uiCamera.width, toolbar.height() );
-		add( toolbar );
-		
 		attack = new AttackIndicator();
 		attack.camera = uiCamera;
 		add( attack );
@@ -349,6 +345,11 @@ public class GameScene extends PixelScene {
 		log.camera = uiCamera;
 		log.newLine();
 		add( log );
+
+		toolbar = new Toolbar();
+		toolbar.camera = uiCamera;
+		toolbar.setRect( 0,uiCamera.height - toolbar.height(), uiCamera.width, toolbar.height() );
+		add( toolbar );
 
 		layoutTags();
 
@@ -736,7 +737,7 @@ public class GameScene extends PixelScene {
 	}
 	
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		if (!cancel()) {
 			add( new WndGame() );
 		}
@@ -942,6 +943,10 @@ public class GameScene extends PixelScene {
 		if (scene != null) scene.pane.updateKeys();
 	}
 
+	public static void showlevelUpStars(){
+		if (scene != null) scene.pane.showStarParticles();
+	}
+
 	public static void resetMap() {
 		if (scene != null) {
 			scene.tiles.map(Dungeon.level.map, Dungeon.level.width() );
@@ -995,6 +1000,24 @@ public class GameScene extends PixelScene {
 			cancelCellSelector();
 			scene.addToFront(wnd);
 		}
+	}
+
+	public static boolean showingWindow(){
+		if (scene == null) return false;
+
+		for (Gizmo g : scene.members){
+			if (g instanceof Window) return true;
+		}
+
+		return false;
+	}
+
+	public static boolean interfaceBlockingHero(){
+		if (scene == null) return false;
+
+		if (showingWindow()) return true;
+
+		return false;
 	}
 
 	public static void updateFog(){
@@ -1059,7 +1082,7 @@ public class GameScene extends PixelScene {
 	}
 	
 	public static void handleCell( int cell ) {
-		cellSelector.select( cell );
+		cellSelector.select( cell, PointerEvent.LEFT );
 	}
 	
 	public static void selectCell( CellSelector.Listener listener ) {

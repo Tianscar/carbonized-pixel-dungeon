@@ -31,16 +31,16 @@ public class HolyDart extends TippedDart {
 	{
 		image = ItemSpriteSheet.HOLY_DART;
 	}
-	
+
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		
-		Buff.affect(defender, Bless.class, Bless.DURATION);
-		
+
+		Buff.affect(defender, Bless.class, Math.round(3.33f*Bless.DURATION));
+
 		if (attacker.alignment == defender.alignment){
 			return 0;
 		}
-		
+
 		return super.proc(attacker, defender, damage);
 	}
 }

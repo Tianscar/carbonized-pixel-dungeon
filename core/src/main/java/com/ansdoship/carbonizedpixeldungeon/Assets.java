@@ -217,7 +217,9 @@ public class Assets {
 		public static final String SCAN     = "sounds/scan.mp3";
 		public static final String SHEEP    = "sounds/sheep.mp3";
 
-		public static final String[] all = new String[]{
+		public static final String ANSDOSHIP    = "sounds/ansdoship.mp3";
+
+		public static final String[] ALL = new String[]{
 				CLICK, BADGE, GOLD,
 
 				OPEN, UNLOCK, ITEM, DEWDROP, STEP, WATER, GRASS, TRAMPLE, STURDY,
@@ -228,7 +230,9 @@ public class Assets {
 				DESCEND, EAT, READ, LULLABY, DRINK, SHATTER, ZAP, LIGHTNING, LEVELUP, DEATH,
 				CHALLENGE, CURSED, TRAP, EVOKE, TOMB, ALERT, MELD, BOSS, BLAST, PLANT, RAY, BEACON,
 				TELEPORT, CHARMS, MASTERY, PUFF, ROCKS, BURNING, FALLING, GHOST, SECRET, BONES,
-				BEE, DEGRADE, MIMIC, DEBUFF, CHARGEUP, GAS, CHAINS, SCAN, SHEEP
+				BEE, DEGRADE, MIMIC, DEBUFF, CHARGEUP, GAS, CHAINS, SCAN, SHEEP,
+
+				ANSDOSHIP
 		};
 	}
 
@@ -237,6 +241,8 @@ public class Assets {
 		public static final String MAGE		= "splashes/mage.jpg";
 		public static final String ROGUE	= "splashes/rogue.jpg";
 		public static final String HUNTRESS	= "splashes/huntress.jpg";
+		public static final String GDX = "splashes/gdx.png";
+		public static final String ANSDOSHIP = "splashes/ansdoship.png";
 	}
 
 	public static class Sprites {
@@ -285,8 +291,6 @@ public class Assets {
 		public static final String MAKER	= "sprites/wandmaker.png";
 		public static final String TROLL	= "sprites/blacksmith.png";
 		public static final String IMP		= "sprites/demon.png";
-		public static final String RATKING	= "sprites/ratking.png";
-
 		public static final String BIGRAT   = "sprites/bigrat.png";
 		public static final String BEE      = "sprites/bee.png";
 		public static final String MIMIC    = "sprites/mimic.png";

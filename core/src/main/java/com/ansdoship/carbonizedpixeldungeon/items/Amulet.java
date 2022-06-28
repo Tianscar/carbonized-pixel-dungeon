@@ -33,22 +33,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Amulet extends Item {
-	
+
 	private static final String AC_END = "END";
-	
+
 	{
 		image = ItemSpriteSheet.AMULET;
-		
+
 		unique = true;
 	}
-	
+
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
 		actions.add( AC_END );
 		return actions;
 	}
-	
+
 	@Override
 	public void execute( Hero hero, String action ) {
 
@@ -58,11 +58,11 @@ public class Amulet extends Item {
 			showAmuletScene( false );
 		}
 	}
-	
+
 	@Override
-	public boolean doPickUp( Hero hero ) {
-		if (super.doPickUp( hero )) {
-			
+	public boolean doPickUp(Hero hero, int pos) {
+		if (super.doPickUp( hero, pos )) {
+
 			if (!Statistics.amuletObtained) {
 				Statistics.amuletObtained = true;
 				hero.spend(-TIME_TO_PICK_UP);
@@ -77,13 +77,13 @@ public class Amulet extends Item {
 					}
 				}, -5);
 			}
-			
+
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	private void showAmuletScene( boolean showText ) {
 		try {
 			Dungeon.saveAll();
@@ -105,12 +105,12 @@ public class Amulet extends Item {
 			CarbonizedPixelDungeon.reportException(e);
 		}
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;

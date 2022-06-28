@@ -36,15 +36,15 @@ import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 
 public class Sungrass extends Plant {
-	
+
 	{
 		image = 3;
 		seedClass = Seed.class;
 	}
-	
+
 	@Override
 	public void activate( Char ch ) {
-		
+
 		if (ch == Dungeon.hero) {
 			if (Dungeon.hero.subClass == HeroSubClass.WARDEN) {
 				Buff.affect(ch, Healing.class).setHeal(ch.HT, 0, 1);
@@ -52,12 +52,12 @@ public class Sungrass extends Plant {
 				Buff.affect(ch, Health.class).boost(ch.HT);
 			}
 		}
-		
+
 		if (Dungeon.level.heroFOV[pos]) {
 			CellEmitter.get( pos ).start( ShaftParticle.FACTORY, 0.2f, 3 );
 		}
 	}
-	
+
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_SUNGRASS;
@@ -67,11 +67,11 @@ public class Sungrass extends Plant {
 			bones = true;
 		}
 	}
-	
+
 	public static class Health extends Buff {
-		
+
 		private static final float STEP = 1f;
-		
+
 		private int pos;
 		private float partialHeal;
 		private int level;
@@ -80,22 +80,22 @@ public class Sungrass extends Plant {
 			type = buffType.POSITIVE;
 			announced = true;
 		}
-		
+
 		@Override
 		public boolean act() {
 			if (target.pos != pos) {
 				detach();
 			}
-			
+
 			//for the hero, full heal takes ~50/93/111/120 turns at levels 1/10/20/30
 			partialHeal += (40 + target.HT)/150f;
-			
+
 			if (partialHeal > 1){
 				target.HP += (int)partialHeal;
 				level -= (int)partialHeal;
 				partialHeal -= (int)partialHeal;
 				target.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-				
+
 				if (target.HP >= target.HT) {
 					target.HP = target.HT;
 					if (target instanceof Hero){
@@ -103,7 +103,7 @@ public class Sungrass extends Plant {
 					}
 				}
 			}
-			
+
 			if (level <= 0) {
 				detach();
 				if (target instanceof Hero){
@@ -120,7 +120,7 @@ public class Sungrass extends Plant {
 				pos = target.pos;
 			}
 		}
-		
+
 		@Override
 		public int icon() {
 			return BuffIndicator.HERB_HEALING;
@@ -130,7 +130,12 @@ public class Sungrass extends Plant {
 		public float iconFadePercent() {
 			return Math.max(0, (target.HT - level) / (float)target.HT);
 		}
-		
+
+		@Override
+		public String iconTextDisplay() {
+			return Integer.toString(level);
+		}
+
 		@Override
 		public String toString() {
 			return Messages.get(this, "name");
@@ -152,7 +157,7 @@ public class Sungrass extends Plant {
 			bundle.put( PARTIAL, partialHeal);
 			bundle.put( LEVEL, level);
 		}
-		
+
 		@Override
 		public void restoreFromBundle( Bundle bundle ) {
 			super.restoreFromBundle( bundle );

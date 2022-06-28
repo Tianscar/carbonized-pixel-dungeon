@@ -49,32 +49,32 @@ import java.util.ArrayList;
 public class Succubus extends Mob {
 
 	private int blinkCooldown = 0;
-	
+
 	{
 		spriteClass = SuccubusSprite.class;
-		
+
 		HP = HT = 80;
 		defenseSkill = 25;
 		viewDistance = Light.DISTANCE;
-		
+
 		EXP = 12;
 		maxLvl = 25;
-		
+
 		loot = Generator.Category.SCROLL;
 		lootChance = 0.33f;
 
 		properties.add(Property.DEMONIC);
 	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 25, 30 );
 	}
-	
+
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
-		
+
 		if (enemy.buff(Charm.class) != null ){
 			int shield = (HP - HT) + (5 + damage);
 			if (shield > 0){
@@ -96,28 +96,31 @@ public class Succubus extends Mob {
 				Sample.INSTANCE.play(Assets.Sounds.CHARMS);
 			}
 		}
-		
+
 		return damage;
 	}
-	
+
 	@Override
 	protected boolean getCloser( int target ) {
 		if (fieldOfView[target] && Dungeon.level.distance( pos, target ) > 2 && blinkCooldown <= 0) {
-			
-			blink( target );
-			spend( -1 / speed() );
-			return true;
-			
+
+			if (blink( target )) {
+				spend(-1 / speed());
+				return true;
+			} else {
+				return false;
+			}
+
 		} else {
 
 			blinkCooldown--;
 			return super.getCloser( target );
-			
+
 		}
 	}
-	
-	private void blink( int target ) {
-		
+
+	private boolean blink( int target ) {
+
 		Ballistica route = new Ballistica( pos, target, Ballistica.PROJECTILE);
 		int cell = route.collisionPos;
 
@@ -125,7 +128,7 @@ public class Succubus extends Mob {
 		if (Actor.findChar( cell ) != null && cell != this.pos)
 			cell = route.path.get(route.dist-1);
 
-		if (Dungeon.level.avoid[ cell ] && (!properties().contains(Property.LARGE) || Dungeon.level.openSpace[cell])){
+		if (Dungeon.level.avoid[ cell ] || (properties().contains(Property.LARGE) && !Dungeon.level.openSpace[cell])){
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int n : PathFinder.NEIGHBOURS8) {
 				cell = route.collisionPos + n;
@@ -139,27 +142,28 @@ public class Succubus extends Mob {
 				cell = Random.element(candidates);
 			else {
 				blinkCooldown = Random.IntRange(4, 6);
-				return;
+				return false;
 			}
 		}
-		
+
 		ScrollOfTeleportation.appear( this, cell );
 
 		blinkCooldown = Random.IntRange(4, 6);
+		return true;
 	}
-	
+
 	@Override
 	public int attackSkill( Char target ) {
 		return 40;
 	}
-	
+
 	@Override
 	public int drRoll() {
 		return Random.NormalIntRange(0, 10);
 	}
 
 	@Override
-	protected Item createLoot() {
+	public Item createLoot() {
 		Class<?extends Scroll> loot;
 		do{
 			loot = (Class<? extends Scroll>) Random.oneOf(Generator.Category.SCROLL.classes);

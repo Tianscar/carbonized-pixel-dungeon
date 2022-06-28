@@ -286,7 +286,7 @@ public class SurfaceScene extends PixelScene {
 	}
 	
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 	}
 	
 	private static class Sky extends Visual {

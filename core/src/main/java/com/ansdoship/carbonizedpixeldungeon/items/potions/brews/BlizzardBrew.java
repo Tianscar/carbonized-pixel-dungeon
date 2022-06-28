@@ -32,11 +32,11 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 
 public class BlizzardBrew extends Brew {
-	
+
 	{
 		image = ItemSpriteSheet.BREW_BLIZZARD;
 	}
-	
+
 	@Override
 	public void shatter(int cell) {
 		if (Dungeon.level.heroFOV[cell]) {
@@ -47,7 +47,7 @@ public class BlizzardBrew extends Brew {
 		
 		GameScene.add( Blob.seed( cell, 1000, Blizzard.class ) );
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients
@@ -59,12 +59,12 @@ public class BlizzardBrew extends Brew {
 		{
 			inputs =  new Class[]{PotionOfFrost.class, AlchemicalCatalyst.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 6;
-			
+
+			cost = 3;
+
 			output = BlizzardBrew.class;
 			outQuantity = 1;
 		}
-		
+
 	}
 }

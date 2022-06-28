@@ -51,18 +51,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfToxicE
 import com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ExoticScroll;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.Alchemize;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.AquaBlast;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.ArcaneCatalyst;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.BeaconOfReturning;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.CurseInfusion;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.FeatherFall;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.MagicalInfusion;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.MagicalPorter;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.PhaseShift;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.ReclaimTrap;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.Recycle;
-import com.ansdoship.carbonizedpixeldungeon.items.spells.WildEnergy;
+import com.ansdoship.carbonizedpixeldungeon.items.spells.*;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.Runestone;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
@@ -84,19 +73,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class QuickRecipe extends Component {
-	
+
 	private ArrayList<Item> ingredients;
-	
+
 	private ArrayList<ItemSlot> inputs;
 	private QuickRecipe.arrow arrow;
 	private ItemSlot output;
-	
+
 	public QuickRecipe(Recipe.SimpleRecipe r){
 		this(r, r.getIngredients(), r.sampleOutput(null));
 	}
-	
+
 	public QuickRecipe(Recipe r, ArrayList<Item> inputs, final Item output) {
-		
+
 		ingredients = inputs;
 		int cost = r.cost(inputs);
 		boolean hasInputs = true;
@@ -114,14 +103,14 @@ public class QuickRecipe extends Component {
 					CarbonizedPixelDungeon.scene().addToFront(new WndInfoItem(in));
 				}
 			};
-			
+
 			ArrayList<Item> similar = Dungeon.hero.belongings.getAllSimilar(in);
 			int quantity = 0;
 			for (Item sim : similar) {
 				//if we are looking for a specific item, it must be IDed
 				if (sim.getClass() != in.getClass() || sim.isIdentified()) quantity += sim.quantity();
 			}
-			
+
 			if (quantity < in.quantity()) {
 				curr.sprite.alpha(0.3f);
 				hasInputs = false;
@@ -130,10 +119,10 @@ public class QuickRecipe extends Component {
 			add(curr);
 			this.inputs.add(curr);
 		}
-		
+
 		if (cost > 0) {
 			arrow = new arrow(Icons.get(Icons.ARROW), cost);
-			arrow.hardlightText(0x00CCFF);
+			arrow.hardlightText(0x44CCFF);
 		} else {
 			arrow = new arrow(Icons.get(Icons.ARROW));
 		}
@@ -147,9 +136,12 @@ public class QuickRecipe extends Component {
 			arrow.enable(false);
 		}
 		add(arrow);
-		
+
 		anonymize(output);
 		this.output = new ItemSlot(output){
+			{
+				hotArea.blockLevel = PointerArea.NEVER_BLOCK;
+			}
 			@Override
 			protected void onClick() {
 				CarbonizedPixelDungeon.scene().addToFront(new WndInfoItem(output));
@@ -160,28 +152,28 @@ public class QuickRecipe extends Component {
 		}
 		this.output.showExtraInfo(false);
 		add(this.output);
-		
+
 		layout();
 	}
-	
+
 	@Override
 	protected void layout() {
-		
+
 		height = 16;
 		width = 0;
-		
+
 		for (ItemSlot item : inputs){
 			item.setRect(x + width, y, 16, 16);
 			width += 16;
 		}
-		
+
 		arrow.setRect(x + width, y, 14, 16);
 		width += 14;
-		
+
 		output.setRect(x + width, y, 16, 16);
 		width += 16;
 	}
-	
+
 	//used to ensure that un-IDed items are not spoiled
 	private void anonymize(Item item){
 		if (item instanceof Potion){
@@ -190,19 +182,19 @@ public class QuickRecipe extends Component {
 			((Scroll) item).anonymize();
 		}
 	}
-	
+
 	public class arrow extends IconButton {
-		
+
 		BitmapText text;
-		
+
 		public arrow(){
 			super();
 		}
-		
+
 		public arrow( Image icon ){
 			super( icon );
 		}
-		
+
 		public arrow( Image icon, int count ){
 			super( icon );
 			hotArea.blockLevel = PointerArea.NEVER_BLOCK;
@@ -211,22 +203,27 @@ public class QuickRecipe extends Component {
 			text.measure();
 			add(text);
 		}
-		
+
 		@Override
 		protected void layout() {
 			super.layout();
-			
+
 			if (text != null){
 				text.x = x;
 				text.y = y;
 				PixelScene.align(text);
 			}
 		}
-		
+
+		@Override
+		protected void onPointerUp() {
+			icon.brightness(1f);
+		}
+
 		@Override
 		protected void onClick() {
 			super.onClick();
-			
+
 			//find the window this is inside of and close it
 			Group parent = this.parent;
 			while (parent != null){
@@ -240,12 +237,12 @@ public class QuickRecipe extends Component {
 			
 			((AlchemyScene) CarbonizedPixelDungeon.scene()).populate(ingredients, Dungeon.hero.belongings);
 		}
-		
+
 		public void hardlightText(int color ){
 			if (text != null) text.hardlight(color);
 		}
 	}
-	
+
 	//gets recipes for a particular alchemy guide page
 	//a null entry indicates a break in section
 	public static ArrayList<QuickRecipe> getRecipes( int pageIdx ){
@@ -368,11 +365,11 @@ public class QuickRecipe extends Component {
 				result.add(new QuickRecipe(new ElixirOfArcaneArmor.Recipe()));
 				return result;
 			case 9:
-				result.add(new QuickRecipe(new MagicalPorter.Recipe()));
+				result.add(new QuickRecipe(new TelekineticGrab.Recipe()));
 				result.add(new QuickRecipe(new PhaseShift.Recipe()));
 				result.add(new QuickRecipe(new WildEnergy.Recipe()));
 				result.add(new QuickRecipe(new BeaconOfReturning.Recipe()));
-				result.add(null);
+				result.add(new QuickRecipe(new SummonElemental.Recipe()));
 				result.add(null);
 				result.add(new QuickRecipe(new AquaBlast.Recipe()));
 				result.add(new QuickRecipe(new FeatherFall.Recipe()));
@@ -386,5 +383,5 @@ public class QuickRecipe extends Component {
 				return result;
 		}
 	}
-	
+
 }

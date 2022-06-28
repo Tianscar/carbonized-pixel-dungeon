@@ -39,12 +39,12 @@ import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import java.util.ArrayList;
 
 public class Swiftthistle extends Plant {
-	
+
 	{
 		image = 2;
 		seedClass = Seed.class;
 	}
-	
+
 	@Override
 	public void activate( Char ch ) {
 		if (ch == Dungeon.hero) {
@@ -54,27 +54,27 @@ public class Swiftthistle extends Plant {
 			}
 		}
 	}
-	
+
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_SWIFTTHISTLE;
-			
+
 			plantClass = Swiftthistle.class;
 		}
 	}
-	
+
 	//FIXME lots of copypasta from time freeze here
-	
+
 	public static class TimeBubble extends Buff {
-		
+
 		{
 			type = buffType.POSITIVE;
 			announced = true;
 		}
-		
+
 		private float left;
 		ArrayList<Integer> presses = new ArrayList<>();
-		
+
 		@Override
 		public int icon() {
 			return BuffIndicator.TIME;
@@ -89,21 +89,26 @@ public class Swiftthistle extends Plant {
 		public float iconFadePercent() {
 			return Math.max(0, (6f - left) / 6f);
 		}
-		
+
+		@Override
+		public String iconTextDisplay() {
+			return Integer.toString((int)left);
+		}
+
 		public void reset(){
 			left = 7f;
 		}
-		
+
 		@Override
 		public String toString() {
 			return Messages.get(this, "name");
 		}
-		
+
 		@Override
 		public String desc() {
 			return Messages.get(this, "desc", dispTurns(left));
 		}
-		
+
 		public void processTime(float time){
 			left -= time;
 
@@ -111,9 +116,9 @@ public class Swiftthistle extends Plant {
 			if (left < -0.001f){
 				detach();
 			}
-			
+
 		}
-		
+
 		public void setDelayedPress(int cell){
 			if (!presses.contains(cell)) {
 				presses.add(cell);
@@ -124,7 +129,7 @@ public class Swiftthistle extends Plant {
 			for (int cell : presses) {
 				Dungeon.level.pressCell(cell);
 			}
-			
+
 			presses = new ArrayList<>();
 		}
 
@@ -136,7 +141,7 @@ public class Swiftthistle extends Plant {
 
 			presses = new ArrayList<>();
 		}
-		
+
 		@Override
 		public void detach(){
 			super.detach();
@@ -157,32 +162,32 @@ public class Swiftthistle extends Plant {
 				}
 			}
 		}
-		
+
 		private static final String PRESSES = "presses";
 		private static final String LEFT = "left";
-		
+
 		@Override
 		public void storeInBundle(Bundle bundle) {
 			super.storeInBundle(bundle);
-			
+
 			int[] values = new int[presses.size()];
 			for (int i = 0; i < values.length; i ++)
 				values[i] = presses.get(i);
 			bundle.put( PRESSES , values );
-			
+
 			bundle.put( LEFT, left);
 		}
-		
+
 		@Override
 		public void restoreFromBundle(Bundle bundle) {
 			super.restoreFromBundle(bundle);
-			
+
 			int[] values = bundle.getIntArray( PRESSES );
 			for (int value : values)
 				presses.add(value);
-			
+
 			left = bundle.getFloat(LEFT);
 		}
-		
+
 	}
 }

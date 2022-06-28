@@ -72,7 +72,7 @@ public class Scene extends Group {
 		return Camera.main;
 	}
 	
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		Game.instance.finish();
 	}
 

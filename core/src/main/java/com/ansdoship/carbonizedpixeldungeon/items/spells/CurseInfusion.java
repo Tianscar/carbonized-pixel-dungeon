@@ -29,6 +29,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.EquipableItem;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
 import com.ansdoship.carbonizedpixeldungeon.items.quest.MetalShard;
+import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfMight;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
@@ -40,7 +41,7 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 
 public class CurseInfusion extends InventorySpell {
-	
+
 	{
 		image = ItemSpriteSheet.CURSE_INFUSE;
 	}
@@ -52,10 +53,10 @@ public class CurseInfusion extends InventorySpell {
 
 	@Override
 	protected void onItemSelected(Item item) {
-		
+
 		CellEmitter.get(curUser.pos).burst(ShadowParticle.UP, 5);
 		Sample.INSTANCE.play(Assets.Sounds.CURSED);
-		
+
 		item.cursed = true;
 		if (item instanceof MeleeWeapon || item instanceof SpiritBow) {
 			Weapon w = (Weapon) item;
@@ -79,28 +80,30 @@ public class CurseInfusion extends InventorySpell {
 		} else if (item instanceof Wand){
 			((Wand) item).curseInfusionBonus = true;
 			((Wand) item).updateLevel();
+		} else if (item instanceof RingOfMight){
+			curUser.updateHT(false);
 		}
 		Badges.validateItemLevelAquired(item);
 		updateQuickslot();
 	}
-	
+
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((30 + 100) / 3f));
+		return Math.round(quantity * ((30 + 100) / 4f));
 	}
-	
+
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
-		
+
 		{
 			inputs =  new Class[]{ScrollOfRemoveCurse.class, MetalShard.class};
 			inQuantity = new int[]{1, 1};
-			
-			cost = 4;
-			
+
+			cost = 6;
+
 			output = CurseInfusion.class;
-			outQuantity = 3;
+			outQuantity = 4;
 		}
-		
+
 	}
 }

@@ -46,11 +46,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ArcaneCatalyst extends Spell {
-	
+
 	{
 		image = ItemSpriteSheet.SCROLL_CATALYST;
 	}
-	
+
 	private static HashMap<Class<? extends Scroll>, Float> scrollChances = new HashMap<>();
 	static{
 		scrollChances.put( ScrollOfIdentify.class,      3f );
@@ -65,19 +65,19 @@ public class ArcaneCatalyst extends Spell {
 		scrollChances.put( ScrollOfTerror.class,        2f );
 		scrollChances.put( ScrollOfTransmutation.class, 1f );
 	}
-	
+
 	@Override
 	protected void onCast(Hero hero) {
-		
+
 		detach( curUser.belongings.backpack );
 		updateQuickslot();
-		
+
 		Scroll s = Reflection.newInstance(Random.chances(scrollChances));
 		s.anonymize();
 		curItem = s;
 		s.doRead();
 	}
-	
+
 	@Override
 	public int value() {
 		return 40 * quantity;
@@ -89,7 +89,7 @@ public class ArcaneCatalyst extends Spell {
 		public boolean testIngredients(ArrayList<Item> ingredients) {
 			boolean scroll = false;
 			boolean secondary = false;
-			
+
 			for (Item i : ingredients){
 				if (i instanceof Plant.Seed || i instanceof Runestone){
 					secondary = true;
@@ -99,32 +99,32 @@ public class ArcaneCatalyst extends Spell {
 					scroll = true;
 				}
 			}
-			
+
 			return scroll && secondary;
 		}
-		
+
 		@Override
 		public int cost(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){
 				if (i instanceof Plant.Seed){
-					return 2;
-				} else if (i instanceof Runestone){
 					return 1;
+				} else if (i instanceof Runestone){
+					return 0;
 				}
 			}
-			return 1;
+			return 0;
 		}
-		
+
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
-			
+
 			for (Item i : ingredients){
 				i.quantity(i.quantity()-1);
 			}
-			
+
 			return sampleOutput(null);
 		}
-		
+
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return new ArcaneCatalyst();

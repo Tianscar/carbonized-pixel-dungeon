@@ -23,6 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.ui;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.PDAction;
+import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.pixeldungeonclasses.input.GameAction;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
@@ -39,36 +40,37 @@ public class ActionIndicator extends Tag {
 
 		instance = this;
 
-		setSize( 24, 24 );
+		setSize( SIZE, SIZE );
 		visible = false;
 	}
-	
+
 	@Override
 	public GameAction keyAction() {
 		return PDAction.TAG_ACTION;
 	}
-	
+
 	@Override
 	public void destroy() {
 		super.destroy();
 		instance = null;
 	}
-	
+
 	@Override
 	protected synchronized void layout() {
 		super.layout();
-		
+
 		if (icon != null){
-			icon.x = x + (width - icon.width()) / 2;
-			icon.y = y + (height - icon.height()) / 2;
+			if (!flipped)   icon.x = x + (SIZE - icon.width()) / 2f + 1;
+			else            icon.x = x + width - (SIZE + icon.width()) / 2f - 1;
+			icon.y = y + (height - icon.height()) / 2f;
 			PixelScene.align(icon);
 			if (!members.contains(icon))
 				add(icon);
 		}
 	}
-	
+
 	private boolean needsLayout = false;
-	
+
 	@Override
 	public synchronized void update() {
 		super.update();
@@ -86,7 +88,7 @@ public class ActionIndicator extends Tag {
 		} else {
 			visible = action != null;
 		}
-		
+
 		if (needsLayout){
 			layout();
 			needsLayout = false;
@@ -95,8 +97,19 @@ public class ActionIndicator extends Tag {
 
 	@Override
 	protected void onClick() {
-		if (action != null && Dungeon.hero.ready)
+		if (action != null && Dungeon.hero.ready) {
 			action.doAction();
+		}
+	}
+
+	@Override
+	protected String hoverText() {
+		String text = (action == null ? null : action.actionName());
+		if (text != null){
+			return Messages.titleCase(text);
+		} else {
+			return null;
+		}
 	}
 
 	public static void setAction(Action action){
@@ -117,7 +130,7 @@ public class ActionIndicator extends Tag {
 					instance.icon = null;
 				}
 				if (action != null) {
-					instance.icon = action.getIcon();
+					instance.icon = action.actionIcon();
 					instance.needsLayout = true;
 				}
 			}
@@ -126,7 +139,9 @@ public class ActionIndicator extends Tag {
 
 	public interface Action{
 
-		public Image getIcon();
+		public String actionName();
+
+		public Image actionIcon();
 
 		public void doAction();
 

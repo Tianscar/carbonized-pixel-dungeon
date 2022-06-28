@@ -48,6 +48,7 @@ import com.ansdoship.carbonizedpixeldungeon.ui.changelist.shpd.v1_0_X_Changes;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
 import com.ansdoship.pixeldungeonclasses.noosa.NinePatch;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.ui.Component;
 
 import java.util.ArrayList;
@@ -193,8 +194,18 @@ public class ChangesScene extends PixelScene {
 					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
+			@Override
+			protected void onPointerDown() {
+				bg.brightness( 1.2f );
+				Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
+			}
+			@Override
+			protected void onPointerUp() {
+				bg.resetColor();
+			}
 		};
 		if (changesSelected != 0) btn0_9.textColor( 0xBBBBBB );
+		btn0_9.active = changesSelected != 0;
 		btn0_9.setRect(list.left()-4f, list.bottom(), 34, changesSelected == 0 ? 19 : 15);
 		addToBack(btn0_9);
 
@@ -207,8 +218,18 @@ public class ChangesScene extends PixelScene {
 					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
+			@Override
+			protected void onPointerDown() {
+				bg.brightness( 1.2f );
+				Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
+			}
+			@Override
+			protected void onPointerUp() {
+				bg.resetColor();
+			}
 		};
 		if (changesSelected != 1) btn0_8.textColor( 0xBBBBBB );
+		btn0_8.active = changesSelected != 1;
 		btn0_8.setRect(btn0_9.right()+1, list.bottom(), 23, changesSelected == 1 ? 19 : 15);
 		addToBack(btn0_8);
 		
@@ -221,8 +242,18 @@ public class ChangesScene extends PixelScene {
 					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
+			@Override
+			protected void onPointerDown() {
+				bg.brightness( 1.2f );
+				Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
+			}
+			@Override
+			protected void onPointerUp() {
+				bg.resetColor();
+			}
 		};
 		if (changesSelected != 2) btn0_7.textColor( 0xBBBBBB );
+		btn0_7.active = changesSelected != 2;
 		btn0_7.setRect(btn0_8.right() + 1, btn0_8.top(), 23, changesSelected == 2 ? 19 : 15);
 		addToBack(btn0_7);
 		
@@ -235,8 +266,18 @@ public class ChangesScene extends PixelScene {
 					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
+			@Override
+			protected void onPointerDown() {
+				bg.brightness( 1.2f );
+				Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
+			}
+			@Override
+			protected void onPointerUp() {
+				bg.resetColor();
+			}
 		};
 		if (changesSelected != 3) btn0_6.textColor( 0xBBBBBB );
+		btn0_6.active = changesSelected != 3;
 		btn0_6.setRect(btn0_7.right() + 1, btn0_8.top(), 23, changesSelected == 3 ? 19 : 15);
 		addToBack(btn0_6);
 		
@@ -249,8 +290,18 @@ public class ChangesScene extends PixelScene {
 					CarbonizedPixelDungeon.seamlessResetScene();
 				}
 			}
+			@Override
+			protected void onPointerDown() {
+				bg.brightness( 1.2f );
+				Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
+			}
+			@Override
+			protected void onPointerUp() {
+				bg.resetColor();
+			}
 		};
 		if (changesSelected != 4) btnOld.textColor( 0xBBBBBB );
+		btnOld.active = changesSelected != 4;
 		btnOld.setRect(btn0_6.right() + 1, btn0_8.top(), 34, changesSelected == 4 ? 19 : 15);
 		addToBack(btnOld);
 
@@ -262,7 +313,7 @@ public class ChangesScene extends PixelScene {
 	}
 	
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
 	}
 

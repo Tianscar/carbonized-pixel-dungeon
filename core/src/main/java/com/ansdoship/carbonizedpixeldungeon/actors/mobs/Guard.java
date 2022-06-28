@@ -54,10 +54,10 @@ public class Guard extends Mob {
 		maxLvl = 14;
 
 		loot = Generator.Category.ARMOR;
-		lootChance = 0.2f; //by default, see rollToDropLoot()
+		lootChance = 0.2f; //by default, see lootChance()
 
 		properties.add(Property.UNDEAD);
-		
+
 		HUNTING = new Hunting();
 	}
 
@@ -95,7 +95,7 @@ public class Guard extends Mob {
 					yell(Messages.get(this, "scorpion"));
 					new Item().throwSound();
 					Sample.INSTANCE.play(Assets.Sounds.CHAINS);
-					sprite.parent.add(new Chains(sprite.center(), enemy.sprite.center(), new Callback() {
+					sprite.parent.add(new Chains(sprite.center(), enemy.sprite.destinationCenter(), new Callback() {
 						public void call() {
 							Actor.addDelayed(new Pushing(enemy, enemy.pos, newPosFinal, new Callback() {
 								public void call() {
@@ -137,15 +137,14 @@ public class Guard extends Mob {
 	}
 
 	@Override
-	public void rollToDropLoot() {
+	public float lootChance() {
 		//each drop makes future drops 1/2 as likely
 		// so loot chance looks like: 1/5, 1/10, 1/20, 1/40, etc.
-		lootChance *= Math.pow(1/2f, Dungeon.LimitedDrops.GUARD_ARM.count);
-		super.rollToDropLoot();
+		return super.lootChance() * (float)Math.pow(1/2f, Dungeon.LimitedDrops.GUARD_ARM.count);
 	}
 
 	@Override
-	protected Item createLoot() {
+	public Item createLoot() {
 		Dungeon.LimitedDrops.GUARD_ARM.count++;
 		return super.createLoot();
 	}
@@ -163,25 +162,25 @@ public class Guard extends Mob {
 		super.restoreFromBundle(bundle);
 		chainsUsed = bundle.getBoolean(CHAINSUSED);
 	}
-	
+
 	private class Hunting extends Mob.Hunting{
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
 			enemySeen = enemyInFOV;
-			
+
 			if (!chainsUsed
 					&& enemyInFOV
 					&& !isCharmedBy( enemy )
 					&& !canAttack( enemy )
 					&& Dungeon.level.distance( pos, enemy.pos ) < 5
 
-					
+
 					&& chain(enemy.pos)){
 				return !(sprite.visible || enemy.sprite.visible);
 			} else {
 				return super.act( enemyInFOV, justAlerted );
 			}
-			
+
 		}
 	}
 }

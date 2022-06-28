@@ -33,13 +33,13 @@ import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class MeleeWeapon extends Weapon {
-	
+
 	public int tier;
 	public boolean twoHanded = false;
 
 	@Override
-	public boolean doPickUp(Hero hero) {
-		if (super.doPickUp(hero)) {
+	public boolean doPickUp(Hero hero, int pos) {
+		if (super.doPickUp(hero, pos)) {
 			if (!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_DUAL_WIELDING)) {
 				int oneHandedWeapons = 0;
 				if (hero.belongings.weapon instanceof MeleeWeapon && !((MeleeWeapon) hero.belongings.weapon).twoHanded) {
@@ -77,7 +77,7 @@ public class MeleeWeapon extends Weapon {
 	public int STRReq(int lvl){
 		return STRReq(tier, lvl);
 	}
-	
+
 	@Override
 	public int damageRoll(Char owner) {
 		int damage = augment.damageFactor(super.damageRoll( owner ));
@@ -88,10 +88,10 @@ public class MeleeWeapon extends Weapon {
 				damage += Random.IntRange( 0, exStr );
 			}
 		}
-		
+
 		return damage;
 	}
-	
+
 	@Override
 	public String info() {
 
@@ -138,14 +138,14 @@ public class MeleeWeapon extends Weapon {
 		} else if (!isIdentified() && cursedKnown){
 			info += "\n\n" + Messages.get(Weapon.class, "not_cursed");
 		}
-		
+
 		return info;
 	}
-	
+
 	public String statsInfo(){
 		return Messages.get(this, "stats_desc");
 	}
-	
+
 	@Override
 	public int value() {
 		int price = 20 * tier;

@@ -26,6 +26,7 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
+import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndInfoTalent;
 import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
@@ -127,6 +128,11 @@ public class TalentButton extends Button {
 	protected void onPointerUp() {
 		icon.resetColor();
 		bg.resetColor();
+	}
+
+	@Override
+	protected String hoverText() {
+		return Messages.titleCase(talent.title());
 	}
 
 	public void enable( boolean value ) {

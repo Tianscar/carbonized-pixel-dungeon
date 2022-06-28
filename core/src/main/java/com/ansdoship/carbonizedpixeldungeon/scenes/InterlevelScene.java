@@ -482,7 +482,7 @@ public class InterlevelScene extends PixelScene {
 	}
 	
 	@Override
-	protected void onBackPressed() {
+	public void onBackPressed() {
 		//Do nothing
 	}
 }

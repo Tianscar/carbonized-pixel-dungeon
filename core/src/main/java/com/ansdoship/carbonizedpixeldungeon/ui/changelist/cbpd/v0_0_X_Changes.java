@@ -90,7 +90,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.CROSSBOW), "十字弩重制！",
 				"添加了新的武器种类：_远程武器_！\n\n" +
-						"远程武器需要装填弹药，并且一般需要装备，才能进行射击，能大幅提升弹药的攻击力！但是受诅咒的远程武器命中率会严重下降。\n\n" +
+						"远程武器需要装填弹药，并且一般需要装备，才能进行射击，能大幅提升弹药的攻击力！但是_受诅咒的_远程武器_命中率会严重下降_。\n\n" +
 						"现版本远程武器只有_2阶_的_轻型十字弩_（单手）和_4阶_的_十字弩_（双手）"));
 	}
 
@@ -114,7 +114,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new Image(Assets.Sprites.BIGRAT, 0, 2, 16, 16), Messages.get(BigRat.class, "name"),
 				"新生物：大佬鼠将代替老鼠王在地牢第五层出现！\n\n" +
-						"它不会接受矮人王冠，而是会在一定次数的对话后给英雄一些阳春草种子！\n\n" +
+						"它不会接受_矮人王冠_，而是会在一定次数的对话后给英雄一些_阳春草种子_！\n\n" +
 						"如果你使用简体中文或繁体中文进行游戏，它会从一个一共50多条的词库里随机挑选一部分来与你对话！\n（注：大佬鼠的原型为群友Catand，词库也是他写的，_全是骚话_）"));
 	}
 

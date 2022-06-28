@@ -36,8 +36,8 @@ public class QuickSlot {
 	 * which can happen for a stackable item that has been 'used up', these are refered to a placeholders.
 	 */
 
-	//note that the current max size is coded at 6, due to UI constraints, but it could be much much bigger with no issue.
-	public static int SIZE = 6;
+	//note that the current max size is coded at 9, due to UI constraints, but it could be much much bigger with no issue.
+	public static int SIZE = 9;
 	private Item[] slots = new Item[SIZE];
 
 

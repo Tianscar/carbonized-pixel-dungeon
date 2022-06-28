@@ -25,11 +25,13 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.SmokeParticle;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.ClassArmor;
@@ -113,7 +115,7 @@ public class ShadowClone extends ArmorAbility {
 				hero.spendAndNext(Actor.TICK);
 
 			} else {
-				GLog.w(Messages.get(this, "no_space"));
+				GLog.w(Messages.get(SpiritHawk.class, "no_space"));
 			}
 		}
 
@@ -145,7 +147,7 @@ public class ShadowClone extends ArmorAbility {
 
 			HP = HT = 100;
 
-			immunities.add(Corruption.class);
+			immunities.add(AllyBuff.class);
 		}
 
 		public ShadowAlly(){

@@ -36,12 +36,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AlchemicalCatalyst extends Potion {
-	
+
 	{
 		image = ItemSpriteSheet.POTION_CATALYST;
-		
+
 	}
-	
+
 	private static HashMap<Class<? extends Potion>, Float> potionChances = new HashMap<>();
 	static{
 		potionChances.put(PotionOfHealing.class,        3f);
@@ -56,17 +56,18 @@ public class AlchemicalCatalyst extends Potion {
 		potionChances.put(PotionOfPurity.class,         2f);
 		potionChances.put(PotionOfExperience.class,     1f);
 	}
-	
+
 	@Override
 	public void apply(Hero hero) {
 		Potion p = Reflection.newInstance(Random.chances(potionChances));
+		//Don't allow this to roll healing in pharma
 		while (Dungeon.isChallenged(Challenges.NO_HEALING) && p instanceof PotionOfHealing){
 			p = Reflection.newInstance(Random.chances(potionChances));
 		}
 		p.anonymize();
 		p.apply(hero);
 	}
-	
+
 	@Override
 	public void shatter(int cell) {
 		Potion p = Reflection.newInstance(Random.chances(potionChances));
@@ -74,63 +75,63 @@ public class AlchemicalCatalyst extends Potion {
 		curItem = p;
 		p.shatter(cell);
 	}
-	
+
 	@Override
 	public boolean isKnown() {
 		return true;
 	}
-	
+
 	@Override
 	public int value() {
 		return 40 * quantity;
 	}
-	
+
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe {
-		
+
 		@Override
 		public boolean testIngredients(ArrayList<Item> ingredients) {
 			boolean potion = false;
 			boolean secondary = false;
-			
+
 			for (Item i : ingredients){
 				if (i instanceof Plant.Seed || i instanceof Runestone){
 					secondary = true;
-				//if it is a regular or exotic potion
+					//if it is a regular or exotic potion
 				} else if (ExoticPotion.regToExo.containsKey(i.getClass())
 						|| ExoticPotion.regToExo.containsValue(i.getClass())) {
 					potion = true;
 				}
 			}
-			
+
 			return potion && secondary;
 		}
-		
+
 		@Override
 		public int cost(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){
 				if (i instanceof Plant.Seed){
-					return 1;
+					return 0;
 				} else if (i instanceof Runestone){
-					return 2;
+					return 1;
 				}
 			}
-			return 1;
+			return 0;
 		}
-		
+
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
-			
+
 			for (Item i : ingredients){
 				i.quantity(i.quantity()-1);
 			}
-			
+
 			return sampleOutput(null);
 		}
-		
+
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return new AlchemicalCatalyst();
 		}
 	}
-	
+
 }

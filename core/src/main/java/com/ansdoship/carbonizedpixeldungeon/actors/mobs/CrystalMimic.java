@@ -25,10 +25,7 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Haste;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Terror;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
@@ -184,7 +181,8 @@ public class CrystalMimic extends Mimic {
 	private class Fleeing extends Mob.Fleeing{
 		@Override
 		protected void nowhereToRun() {
-			if (buff( Terror.class ) == null && buff( Corruption.class ) == null) {
+			if (buff( Terror.class ) == null
+					&& buffs( AllyBuff.class ).isEmpty()) {
 				if (enemySeen) {
 					sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Mob.class, "rage"));
 					state = HUNTING;

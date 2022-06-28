@@ -39,9 +39,9 @@ import com.ansdoship.pixeldungeonclasses.utils.Random;
 import java.util.ArrayList;
 
 public class Honeypot extends Item {
-	
+
 	public static final String AC_SHATTER	= "SHATTER";
-	
+
 	{
 		image = ItemSpriteSheet.HONEYPOT;
 
@@ -50,23 +50,23 @@ public class Honeypot extends Item {
 
 		stackable = true;
 	}
-	
+
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
 		actions.add( AC_SHATTER );
 		return actions;
 	}
-	
+
 	@Override
 	public void execute( final Hero hero, String action ) {
 
 		super.execute( hero, action );
 
 		if (action.equals( AC_SHATTER )) {
-			
+
 			hero.sprite.zap( hero.pos );
-			
+
 			detach( hero.belongings.backpack );
 
 			Item item = shatter( hero, hero.pos );
@@ -81,7 +81,7 @@ public class Honeypot extends Item {
 
 		}
 	}
-	
+
 	@Override
 	protected void onThrow( int cell ) {
 		if (Dungeon.level.pit[cell]) {
@@ -90,58 +90,58 @@ public class Honeypot extends Item {
 			Dungeon.level.drop(shatter( null, cell ), cell);
 		}
 	}
-	
+
 	public Item shatter( Char owner, int pos ) {
-		
+
 		if (Dungeon.level.heroFOV[pos]) {
 			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 			Splash.at( pos, 0xffd500, 5 );
 		}
-		
+
 		int newPos = pos;
 		if (Actor.findChar( pos ) != null) {
 			ArrayList<Integer> candidates = new ArrayList<>();
-			
+
 			for (int n : PathFinder.NEIGHBOURS4) {
 				int c = pos + n;
 				if (!Dungeon.level.solid[c] && Actor.findChar( c ) == null) {
 					candidates.add( c );
 				}
 			}
-	
+
 			newPos = candidates.size() > 0 ? Random.element( candidates ) : -1;
 		}
-		
+
 		if (newPos != -1) {
 			Bee bee = new Bee();
 			bee.spawn( Dungeon.depth );
 			bee.setPotInfo( pos, owner );
 			bee.HP = bee.HT;
 			bee.pos = newPos;
-			
+
 			GameScene.add( bee );
 			Actor.addDelayed( new Pushing( bee, pos, newPos ), -1f );
-			
+
 			bee.sprite.alpha( 0 );
 			bee.sprite.parent.add( new AlphaTweener( bee.sprite, 1, 0.15f ) );
-			
+
 			Sample.INSTANCE.play( Assets.Sounds.BEE );
 			return new ShatteredPot();
 		} else {
 			return this;
 		}
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	@Override
 	public int value() {
 		return 30 * quantity;
@@ -156,8 +156,8 @@ public class Honeypot extends Item {
 		}
 
 		@Override
-		public boolean doPickUp(Hero hero) {
-			if ( super.doPickUp(hero) ){
+		public boolean doPickUp(Hero hero, int pos) {
+			if ( super.doPickUp(hero, pos) ){
 				pickupPot( hero );
 				return true;
 			} else {
@@ -182,7 +182,7 @@ public class Honeypot extends Item {
 				updateBee(bee, -1, holder);
 			}
 		}
-		
+
 		public void dropPot( Char holder, int dropPos ){
 			for (Bee bee : findBees(holder)){
 				updateBee(bee, dropPos, null);
@@ -199,7 +199,7 @@ public class Honeypot extends Item {
 			if (bee != null && bee.alignment == Char.Alignment.ENEMY)
 				bee.setPotInfo( cell, holder );
 		}
-		
+
 		//returns up to quantity bees which match the current pot Pos
 		private ArrayList<Bee> findBees( int potPos ){
 			ArrayList<Bee> bees = new ArrayList<>();
@@ -211,10 +211,10 @@ public class Honeypot extends Item {
 					}
 				}
 			}
-			
+
 			return bees;
 		}
-		
+
 		//returns up to quantity bees which match the current pot holder
 		private ArrayList<Bee> findBees( Char potHolder ){
 			ArrayList<Bee> bees = new ArrayList<>();
@@ -226,7 +226,7 @@ public class Honeypot extends Item {
 					}
 				}
 			}
-			
+
 			return bees;
 		}
 
@@ -239,7 +239,7 @@ public class Honeypot extends Item {
 		public boolean isIdentified() {
 			return true;
 		}
-		
+
 		@Override
 		public int value() {
 			return 5 * quantity;

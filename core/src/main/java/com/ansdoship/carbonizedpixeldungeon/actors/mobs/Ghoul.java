@@ -24,9 +24,9 @@ package com.ansdoship.carbonizedpixeldungeon.actors.mobs;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ChampionEnemy;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.ansdoship.carbonizedpixeldungeon.effects.Pushing;
 import com.ansdoship.carbonizedpixeldungeon.items.Gold;
 import com.ansdoship.carbonizedpixeldungeon.levels.features.Chasm;
@@ -39,23 +39,23 @@ import com.ansdoship.pixeldungeonclasses.utils.Random;
 import java.util.ArrayList;
 
 public class Ghoul extends Mob {
-	
+
 	{
 		spriteClass = GhoulSprite.class;
-		
+
 		HP = HT = 45;
 		defenseSkill = 20;
-		
+
 		EXP = 5;
 		maxLvl = 20;
-		
+
 		SLEEPING = new Sleeping();
 		WANDERING = new Wandering();
 		state = SLEEPING;
 
 		loot = Gold.class;
 		lootChance = 0.2f;
-		
+
 		properties.add(Property.UNDEAD);
 	}
 
@@ -84,35 +84,37 @@ public class Ghoul extends Mob {
 
 	private static final String PARTNER_ID = "partner_id";
 	private static final String TIMES_DOWNED = "times_downed";
-	
+
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( PARTNER_ID, partnerID );
 		bundle.put( TIMES_DOWNED, timesDowned );
 	}
-	
+
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		partnerID = bundle.getInt( PARTNER_ID );
 		timesDowned = bundle.getInt( TIMES_DOWNED );
 	}
-	
+
 	@Override
 	protected boolean act() {
 		//create a child
 		if (partnerID == -1){
-			
+
 			ArrayList<Integer> candidates = new ArrayList<>();
-			
+
 			int[] neighbours = {pos + 1, pos - 1, pos + Dungeon.level.width(), pos - Dungeon.level.width()};
 			for (int n : neighbours) {
-				if (Dungeon.level.passable[n] && Actor.findChar( n ) == null) {
+				if (Dungeon.level.passable[n]
+						&& Actor.findChar( n ) == null
+						&& (!Char.hasProp(this, Property.LARGE) || Dungeon.level.openSpace[n])) {
 					candidates.add( n );
 				}
 			}
-			
+
 			if (!candidates.isEmpty()){
 				Ghoul child = new Ghoul();
 				child.partnerID = this.id();
@@ -120,12 +122,12 @@ public class Ghoul extends Mob {
 				if (state != SLEEPING) {
 					child.state = child.WANDERING;
 				}
-				
+
 				child.pos = Random.element( candidates );
 
 				GameScene.add( child );
 				Dungeon.level.occupyCell(child);
-				
+
 				if (sprite.visible) {
 					Actor.addDelayed( new Pushing( child, pos, child.pos ), -1 );
 				}
@@ -135,7 +137,7 @@ public class Ghoul extends Mob {
 				}
 
 			}
-			
+
 		}
 		return super.act();
 	}
@@ -165,8 +167,8 @@ public class Ghoul extends Mob {
 	protected synchronized void onRemove() {
 		if (beingLifeLinked) {
 			for (Buff buff : buffs()) {
-				//corruption, champion, and king damager are preserved when removed via life link
-				if (!(buff instanceof Corruption)
+				//ally buffs, champion, and king damager are preserved when removed via life link
+				if (!(buff instanceof AllyBuff)
 						&& (!(buff instanceof ChampionEnemy))
 						&& !(buff instanceof DwarfKing.KingDamager)) {
 					buff.detach();
@@ -190,13 +192,13 @@ public class Ghoul extends Mob {
 			}
 		}
 	}
-	
+
 	private class Wandering extends Mob.Wandering {
-		
+
 		@Override
 		protected boolean continueWandering() {
 			enemySeen = false;
-			
+
 			Ghoul partner = (Ghoul) Actor.findById( partnerID );
 			if (partner != null && (partner.state != partner.WANDERING || Dungeon.level.distance( pos,  partner.target) > 1)){
 				target = partner.pos;
@@ -250,7 +252,9 @@ public class Ghoul extends Mob {
 					ArrayList<Integer> candidates = new ArrayList<>();
 					for (int n : PathFinder.NEIGHBOURS8) {
 						int cell = ghoul.pos + n;
-						if (Dungeon.level.passable[cell] && Actor.findChar( cell ) == null) {
+						if (Dungeon.level.passable[cell]
+								&& Actor.findChar( cell ) == null
+								&& (!Char.hasProp(ghoul, Property.LARGE) || Dungeon.level.openSpace[cell])) {
 							candidates.add( cell );
 						}
 					}
@@ -266,7 +270,7 @@ public class Ghoul extends Mob {
 				}
 				ghoul.HP = Math.round(ghoul.HT/10f);
 				Actor.add(ghoul);
-				ghoul.spend(-ghoul.cooldown());
+				ghoul.timeToNow();
 				Dungeon.level.mobs.add(ghoul);
 				Dungeon.level.occupyCell( ghoul );
 				ghoul.sprite.idle();
@@ -297,7 +301,7 @@ public class Ghoul extends Mob {
 			Ghoul newHost = searchForHost(ghoul);
 			if (newHost != null){
 				attachTo(newHost);
-				spend(-cooldown());
+				timeToNow();
 			} else {
 				ghoul.die(this);
 			}

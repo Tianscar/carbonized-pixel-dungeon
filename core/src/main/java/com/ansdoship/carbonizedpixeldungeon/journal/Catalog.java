@@ -119,6 +119,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WarHammer;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Whip;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.LightCrossbow;
+import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 
 import java.util.ArrayList;
@@ -138,6 +139,10 @@ public enum Catalog {
 	SCROLLS;
 	
 	private LinkedHashMap<Class<? extends Item>, Boolean> seen = new LinkedHashMap<>();
+
+	public String title(){
+		return Messages.get( this, name() + ".title");
+	}
 	
 	public Collection<Class<? extends Item>> items(){
 		return seen.keySet();

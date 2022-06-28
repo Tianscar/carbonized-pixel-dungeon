@@ -35,35 +35,35 @@ import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 public class Skeleton extends Mob {
-	
+
 	{
 		spriteClass = SkeletonSprite.class;
-		
+
 		HP = HT = 25;
 		defenseSkill = 9;
-		
+
 		EXP = 5;
 		maxLvl = 10;
 
 		loot = Generator.Category.WEAPON;
-		lootChance = 0.1667f; //by default, see rollToDropLoot()
+		lootChance = 0.1667f; //by default, see lootChance()
 
 		properties.add(Property.UNDEAD);
 		properties.add(Property.INORGANIC);
 	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 2, 10 );
 	}
-	
+
 	@Override
 	public void die( Object cause ) {
-		
+
 		super.die( cause );
-		
+
 		if (cause == Chasm.class) return;
-		
+
 		boolean heroKilled = false;
 		for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
 			Char ch = findChar( pos + PathFinder.NEIGHBOURS8[i] );
@@ -76,11 +76,11 @@ public class Skeleton extends Mob {
 				}
 			}
 		}
-		
+
 		if (Dungeon.level.heroFOV[pos]) {
 			Sample.INSTANCE.play( Assets.Sounds.BONES );
 		}
-		
+
 		if (heroKilled) {
 			Dungeon.fail( getClass() );
 			GLog.n( Messages.get(this, "explo_kill") );
@@ -88,15 +88,14 @@ public class Skeleton extends Mob {
 	}
 
 	@Override
-	public void rollToDropLoot() {
+	public float lootChance() {
 		//each drop makes future drops 1/2 as likely
 		// so loot chance looks like: 1/6, 1/12, 1/24, 1/48, etc.
-		lootChance *= Math.pow(1/2f, Dungeon.LimitedDrops.SKELE_WEP.count);
-		super.rollToDropLoot();
+		return super.lootChance() * (float)Math.pow(1/2f, Dungeon.LimitedDrops.SKELE_WEP.count);
 	}
 
 	@Override
-	protected Item createLoot() {
+	public Item createLoot() {
 		Dungeon.LimitedDrops.SKELE_WEP.count++;
 		return super.createLoot();
 	}
@@ -105,7 +104,7 @@ public class Skeleton extends Mob {
 	public int attackSkill( Char target ) {
 		return 12;
 	}
-	
+
 	@Override
 	public int drRoll() {
 		return Random.NormalIntRange(0, 5);

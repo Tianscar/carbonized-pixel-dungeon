@@ -25,6 +25,7 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndInfoBuff;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class BuffIndicator extends Component {
-	
+
 	//transparent icon
 	public static final int NONE    = 63;
 
@@ -102,24 +103,24 @@ public class BuffIndicator extends Component {
 	public static final int SIZE    = 7;
 	
 	private static BuffIndicator heroInstance;
-	
+
 	private LinkedHashMap<Buff, BuffButton> buffButtons = new LinkedHashMap<>();
 	private boolean needsRefresh;
 	private Char ch;
 	
 	public BuffIndicator( Char ch ) {
 		super();
-		
+
 		this.ch = ch;
 		if (ch == Dungeon.hero) {
 			heroInstance = this;
 		}
 	}
-	
+
 	@Override
 	public void destroy() {
 		super.destroy();
-		
+
 		if (this == heroInstance) {
 			heroInstance = null;
 		}
@@ -133,10 +134,10 @@ public class BuffIndicator extends Component {
 			layout();
 		}
 	}
-	
+
 	@Override
 	protected void layout() {
-		
+
 		ArrayList<Buff> newBuffs = new ArrayList<>();
 		for (Buff buff : ch.buffs()) {
 			if (buff.icon() != NONE) {
@@ -148,7 +149,7 @@ public class BuffIndicator extends Component {
 		for (Buff buff : buffButtons.keySet().toArray(new Buff[0])){
 			if (!newBuffs.contains(buff)){
 				Image icon = buffButtons.get( buff ).icon;
-				icon.origin.set( SIZE / 2f );
+				icon.originToCenter();
 				icon.alpha(0.6f);
 				add( icon );
 				add( new AlphaTweener( icon, 0, 0.6f ) {
@@ -157,19 +158,19 @@ public class BuffIndicator extends Component {
 						super.updateValues( progress );
 						image.scale.set( 1 + 5 * progress );
 					}
-					
+
 					@Override
 					protected void onComplete() {
 						image.killAndErase();
 					}
 				} );
-				
+
 				buffButtons.get( buff ).destroy();
 				remove(buffButtons.get( buff ));
 				buffButtons.remove( buff );
 			}
 		}
-		
+
 		//add new icons
 		for (Buff buff : newBuffs) {
 			if (!buffButtons.containsKey(buff)) {
@@ -178,7 +179,7 @@ public class BuffIndicator extends Component {
 				buffButtons.put( buff, icon );
 			}
 		}
-		
+
 		//layout
 		int pos = 0;
 		for (BuffButton icon : buffButtons.values()){
@@ -193,10 +194,9 @@ public class BuffIndicator extends Component {
 
 		private Buff buff;
 
-		//Todo maybe move into buff icon?
 		public Image grey;
 
-		public BuffButton(Buff buff ){
+		public BuffButton( Buff buff ){
 			super( new BuffIcon(buff, false));
 			this.buff = buff;
 
@@ -244,8 +244,13 @@ public class BuffIndicator extends Component {
 		protected void onPointerUp() {
 			//don't affect buff color
 		}
+
+		@Override
+		protected String hoverText() {
+			return Messages.titleCase(buff.toString());
+		}
 	}
-	
+
 	public static void refreshHero() {
 		if (heroInstance != null) {
 			heroInstance.needsRefresh = true;
