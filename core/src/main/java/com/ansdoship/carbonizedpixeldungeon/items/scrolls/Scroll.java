@@ -209,10 +209,10 @@ public abstract class Scroll extends Item {
 			}
 		}
 	}
-	
+
 	@Override
-	public Item identify() {
-		super.identify();
+	public Item identify( boolean byHero ) {
+		super.identify(byHero);
 
 		if (!isKnown()) {
 			setKnown();

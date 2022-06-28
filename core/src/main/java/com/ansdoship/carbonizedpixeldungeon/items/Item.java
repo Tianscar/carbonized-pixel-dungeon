@@ -390,9 +390,13 @@ public class Item implements Bundlable {
 		return false;
 	}
 
-	public Item identify() {
+	public final Item identify(){
+		return identify(true);
+	}
 
-		if (Dungeon.hero != null && Dungeon.hero.isAlive()){
+	public Item identify( boolean byHero ) {
+
+		if (byHero && Dungeon.hero != null && Dungeon.hero.isAlive()){
 			Catalog.setSeen(getClass());
 			if (!isIdentified()) Talent.onItemIdentified(Dungeon.hero, this);
 		}

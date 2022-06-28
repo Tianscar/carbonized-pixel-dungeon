@@ -21,12 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.Chrome;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.GamesInProgress;
-import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
-import com.ansdoship.carbonizedpixeldungeon.Statistics;
+import com.ansdoship.carbonizedpixeldungeon.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
@@ -52,6 +47,7 @@ import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.NoosaScript;
 import com.ansdoship.pixeldungeonclasses.noosa.NoosaScriptNoLighting;
 import com.ansdoship.pixeldungeonclasses.noosa.SkinnedBlock;
+import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -86,6 +82,7 @@ public class InterlevelScene extends PixelScene {
 	private float timeLeft;
 	
 	private RenderedTextBlock message;
+	private RenderedTextBlock tip;
 	
 	private static Thread thread;
 	private static Exception error = null;
@@ -159,10 +156,11 @@ public class InterlevelScene extends PixelScene {
 		else                         loadingAsset = Assets.Interfaces.SHADOW;
 		
 		//slow down transition when displaying an install prompt
-		if (Updates.isInstallable()){
+		if (Updates.isInstallable() || PDSettings.splashScreen() > 1){
 			fadeTime += 0.5f; //adds 1 second total
+		}
 		//speed up transition when debugging
-		} else if (Game.platform.isDebug()){
+		else if (Game.platform.isDebug() || PDSettings.splashScreen() < 1){
 			fadeTime = 0f;
 		}
 		
@@ -209,10 +207,21 @@ public class InterlevelScene extends PixelScene {
 		message = PixelScene.renderTextBlock( text, 9 );
 		message.setPos(
 				(Camera.main.width - message.width()) / 2,
-				(Camera.main.height - message.height()) / 2
+				(Camera.main.height - message.height()) / 2 - 9
 		);
 		align(message);
 		add( message );
+
+		if (PDSettings.splashScreen() > 1) {
+			text = Messages.get(InterlevelScene.class, "tip_" + Random.Int(1, 7));
+			tip = PixelScene.renderTextBlock( text, 6 );
+			tip.setPos(
+					(Camera.main.width - tip.width()) / 2,
+					message.bottom() + 16
+			);
+			align(tip);
+			add( tip );
+		}
 
 		if (Updates.isInstallable()){
 			StyledButton install = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "install")){
@@ -306,6 +315,7 @@ public class InterlevelScene extends PixelScene {
 		
 		case FADE_IN:
 			message.alpha( 1 - p );
+			tip.alpha( 1 - p );
 			if ((timeLeft -= Game.elapsed) <= 0) {
 				if (!thread.isAlive() && error == null) {
 					phase = Phase.FADE_OUT;
@@ -318,6 +328,7 @@ public class InterlevelScene extends PixelScene {
 			
 		case FADE_OUT:
 			message.alpha( p );
+			tip.alpha( p );
 			
 			if ((timeLeft -= Game.elapsed) <= 0) {
 				Game.switchScene( GameScene.class );

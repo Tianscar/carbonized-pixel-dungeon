@@ -214,10 +214,10 @@ public class Statue extends Mob {
 	
 	@Override
 	public void die( Object cause ) {
-		weapon.identify();
+		weapon.identify(false);
 		Dungeon.level.drop( weapon, pos ).sprite.drop();
 		if (weapon2 != null) {
-			weapon2.identify();
+			weapon2.identify(false);
 			Dungeon.level.drop( weapon2, pos ).sprite.drop();
 		}
 		super.die( cause );

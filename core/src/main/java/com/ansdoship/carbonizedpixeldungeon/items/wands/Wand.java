@@ -213,15 +213,15 @@ public abstract class Wand extends Item {
 		super.level( value );
 		updateLevel();
 	}
-	
+
 	@Override
-	public Item identify() {
-		
+	public Item identify( boolean byHero ) {
+
 		curChargeKnown = true;
-		super.identify();
-		
+		super.identify(byHero);
+
 		updateQuickslot();
-		
+
 		return this;
 	}
 	

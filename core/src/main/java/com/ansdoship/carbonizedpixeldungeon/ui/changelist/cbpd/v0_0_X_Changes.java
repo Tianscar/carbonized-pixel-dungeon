@@ -47,6 +47,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_7p3_changes(changeInfos);
 		add_v0_0_7p2_changes(changeInfos);
 		add_v0_0_7p1_changes(changeInfos);
 		add_v0_0_7_changes(changeInfos);
@@ -70,6 +71,22 @@ public class v0_0_X_Changes {
 		add_v0_0_1_Changes(changeInfos);
 	}
 
+	public static void add_v0_0_7p3_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.7p3", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"补全了部分游戏文本"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"_-_ 优化了过场动画界面"));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 战士“实验对象”天赋导致崩溃的Bug"));
+	}
+
 	public static void add_v0_0_7p2_changes( ArrayList<ChangeInfo> changeInfos ) {
 		ChangeInfo changes = new ChangeInfo("v0.0.7p2", false, "");
 		changes.hardlight(Window.TITLE_COLOR);
@@ -77,6 +94,9 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
 				"补全了部分游戏文本"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"_-_ 修改了死亡界面"));
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了：\n" +
@@ -115,7 +135,8 @@ public class v0_0_X_Changes {
 						"_-_ 实验性的添加了手柄支持\n" +
 						"_-_ 快捷栏改为3～9格\n" +
 						"_-_ 修改了支持和反馈界面\n" +
-						"_-_ 修改了关于界面"));
+						"_-_ 修改了关于界面\n" +
+						"_-_ 对部分其他界面进行了小的调整/改进"));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND), "神偷袖章重制！",
 				"_来自破碎的像素地牢v1.2.3_\n\n" +
