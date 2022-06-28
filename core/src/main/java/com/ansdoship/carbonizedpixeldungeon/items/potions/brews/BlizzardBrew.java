@@ -30,6 +30,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfFrost;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 
 public class BlizzardBrew extends Brew {
 
@@ -44,8 +45,17 @@ public class BlizzardBrew extends Brew {
 			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 			Sample.INSTANCE.play( Assets.Sounds.GAS );
 		}
-		
-		GameScene.add( Blob.seed( cell, 1000, Blizzard.class ) );
+
+		int centerVolume = 120;
+		for (int i : PathFinder.NEIGHBOURS8){
+			if (!Dungeon.level.solid[cell+i]){
+				GameScene.add( Blob.seed( cell+i, 120, Blizzard.class ) );
+			} else {
+				centerVolume += 120;
+			}
+		}
+
+		GameScene.add( Blob.seed( cell, centerVolume, Blizzard.class ) );
 	}
 
 	@Override

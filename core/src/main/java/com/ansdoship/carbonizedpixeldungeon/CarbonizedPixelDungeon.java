@@ -33,12 +33,24 @@ import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
 
 public class CarbonizedPixelDungeon extends Game {
 
+	public static final int v0_0_7   = 20;
 	public static final int v0_0_6   = 16;
 	public static final int v0_0_5   = 12;
 	public static final int v0_0_4   = 9;
 	
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {
 		super( sceneClass == null ? SplashScene.class : sceneClass, platform );
+
+		//CBPD v0.0.7
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfSirensSong.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfAffection" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfChallenge.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfConfusion" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfDivineInspiration.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfHolyFuror" );
 
 		//CBPD v0.0.6
 		Bundle.addAlias(

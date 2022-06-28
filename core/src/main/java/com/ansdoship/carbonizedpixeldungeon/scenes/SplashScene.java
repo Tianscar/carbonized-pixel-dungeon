@@ -28,7 +28,7 @@ public class SplashScene extends PixelScene {
         super.create();
 
         if (PDSettings.splashScreen() < 1 || Game.platform.isDebug()) {
-            CarbonizedPixelDungeon.switchScene(TitleScene.class);
+            CarbonizedPixelDungeon.switchScene(WelcomeScene.class);
             return;
         }
 

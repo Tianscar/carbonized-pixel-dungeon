@@ -28,16 +28,16 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Poison;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
 public class PoisonDart extends TippedDart {
-	
+
 	{
 		image = ItemSpriteSheet.POISON_DART;
 	}
-	
+
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		
-		Buff.affect( defender, Poison.class ).set( 3 + Dungeon.depth / 3 );
-		
+
+		Buff.affect( defender, Poison.class ).set( 3 + Dungeon.depth / 2 );
+
 		return super.proc(attacker, defender, damage);
 	}
 }

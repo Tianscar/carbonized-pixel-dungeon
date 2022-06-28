@@ -22,7 +22,9 @@
 package com.ansdoship.carbonizedpixeldungeon.ui.changelist.cbpd;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.Badges;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.BigRat;
+import com.ansdoship.carbonizedpixeldungeon.effects.BadgeBanner;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.DriedRose;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.ChangesScene;
@@ -45,6 +47,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_7_changes(changeInfos);
 		add_v0_0_6p2_changes(changeInfos);
 		add_v0_0_6p1_changes(changeInfos);
 		add_v0_0_6_changes(changeInfos);
@@ -63,6 +66,109 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_7p1_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.4p1", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"补全了部分游戏文本！"));
+	}
+
+	public static void add_v0_0_7_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.7", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
+				"_-_ 2022年6月28日更新\n" +
+						"_-_ 距离碳化的像素地牢v0.0.6更新31天\n" +
+						"\n" +
+						"由于生活所迫，v0.0.7版本可能会是最后一次更新。\n\n" +
+						"本次更新完全是半成品，大多数本该加入的机制都没有实装。\n\n" +
+						"欢迎各位在Bug的海洋中游泳。\n\n" +
+						"接下来也许会有patch版本，也许会更新内容，但是谁知道呢？\n\n" +
+						"说不出“敬请期待”这样的话了。"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"_-_ 换回了原来的图标\n" +
+						"_-_ 添加了启动界面\n" +
+						"_-_ 添加了针对东亚语言的自定义像素字体\n" +
+						"_-_ 实验性的添加了手柄支持\n" +
+						"_-_ 快捷栏改为3～9格\n" +
+						"_-_ 修改了支持和反馈界面" +
+						"_-_ 修改了关于界面"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND), "神偷袖章重制！",
+				"_来自破碎的像素地牢v1.2.3_\n\n" +
+						"现在神偷袖章能够随获取经验充能，并且可以偷窃怪物和商店老板身上的金币。"));
+
+		changes.addButton( new ChangeButton(BadgeBanner.image(Badges.Badge.MONSTERS_SLAIN_5.image), "新的徽章系统！",
+				"_来自破碎的像素地牢v1.2.3_\n" +
+				        "_徽章现在有名字了，并且添加了8个新徽章！_\n\n" +
+						"这些新的徽章都是现有系列徽章的一部分（例如击败X个敌人），主要存在于黄金级别左右。\n" +
+						"'已玩过的游戏'徽章也被调整为在玩过的游戏数量多或赢过的游戏数量少时解锁。"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SUMMON_ELE), "新的法术结晶！",
+				"_来自破碎的像素地牢v1.2.3_\n" +
+						"添加了_两个新的法术结晶：_\n\n" +
+						"_- 唤魔晶柱_需要元素余烬和一个奥术催化剂。它可以用来召唤一个友好的元素为你战斗，甚至可以用其他物品为它提供能量！\n" +
+						"_- 念力结晶_需要一些液金和一个奥术催化剂。它可以用来远程抓取物品，甚至是粘在敌人身上的投掷物！\n\n" +
+						"由于对法术结晶的重新设计，商人信标和信使结晶显得多余，并已从游戏中移除。商店现在出售一些炼金棱晶来替代商人信标。"));
+
+		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.EXOTIC_ISAZ), "合剂和秘卷重制！",
+				"_来自破碎的像素地牢v1.2.3_\n" +
+						"部分合剂和秘卷已经被重制，更加强大和值得使用：\n\n" +
+						"_- 神圣祝福合剂_现在是_神意启发合剂_，它可以提供两点额外的天赋点。\n" +
+						"_- 魅惑秘卷_现在是_塞壬之歌秘卷_，它可以使敌人永久地变成盟友。\n" +
+						"_- 迷乱秘卷_现在是_决斗秘卷_，它会吸引敌人，但同时也会创造一个竞技场，使你受到的伤害减少。" ));
+
+		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.EXOTIC_AMBER), "合剂和秘卷增强！",
+				"_来自破碎的像素地牢v1.2.3_\n" +
+				        "部分合剂和秘卷得到了些许增强：\n\n" +
+						"_- 暗夜迷雾合剂、暴风骤雨合剂和腐蚀酸雾合剂_的初始AOE范围从1x1上升到3x3\n" +
+						"_- 暗夜迷雾合剂_现在只会遮挡敌人的视野，并且气体增加了50%以上\n" +
+						"_- 腐蚀酸雾合剂_的初始伤害+1\n" +
+						"_- 魔能透视合剂_的视野范围从8上升到12\n" +
+						"_- 全面净化合剂_现在有持续5回合的debuff免疫效果\n\n" +
+						"_- 先见秘卷_的探测范围从2上升到8，但是生效回合从600降低到400\n" +
+						"_- 虹卫秘卷_召唤的虹色幻影生命值+2并且伤害+20%"));
+
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_TOOLKIT), "神器增强！",
+				"_来自破碎的像素地牢v1.2.3_\n" +
+						"部分神器得到了些许增强：\n\n" +
+						"_- 炼金工具箱_现在在敌人周围也能使用了。\n" +
+						"_- 丰饶之角_现在有了“小吃一口”选项，消耗1点充能；为了平衡，充能上限减半，但恢复的饱食度翻倍\n" +
+						"_- 干枯玫瑰_召唤的悲伤幽灵的生命回复翻倍"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.AQUA_BLAST), "炼金增强！",
+				"_来自破碎的像素地牢v1.2.3_\n" +
+				        "部分炼金产物得到了增强：\n\n" +
+						"_- 炼狱魔药、冰暴魔药和淤泥魔药_需要的炼金能量降低1\n" +
+						"_- 转移结晶_需要的炼金能量从6降低到4\n" +
+						"_- 强能晶柱_需要的炼金能量从6降低到4\n" +
+						"_- 返回晶柱_需要的炼金能量从8降低到6\n" +
+						"_- 炼金棱晶_需要的炼金能量从3降低到2\n\n" +
+						"_- 淤泥魔药_每回合造成的伤害提升1\n" +
+						"_- 炼狱魔药和冰暴魔药_的初始AOE范围从1x1上升到3x3\n" +
+						"_- 雷鸣魔药_的AOE范围从5x5上升到7x7\n\n" +
+						"_- 转移结晶_现在会让任何被转移的生物陷入迷惑\n" +
+						"_- 水爆晶核_现在等效于激流陷阱，但一次合成的数量从12个降低到8个\n" +
+						"_- 陷阱晶核_一次合成的数量从3个增加到4个\n" +
+						"_- 诅咒棱晶_现在对高等级装备的提升超过了+1，一次合成的数量从3增加到4\n" +
+						"_- 转换棱晶_一次合成的数量从8个增加到12个，需要的炼金能量从6上升到8"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ROT_DART), "飞镖增强！",
+				"_来自破碎的像素地牢v1.2.3_\n" +
+						"部分涂药飞镖得到了增强：\n\n" +
+						"_- 酸蚀飞镖_的使用次数从1提升到5\n" +
+						"_- 激素涌动飞镖_的持续回合从10提升到30\n" +
+						"_- 电击飞镖_的伤害现在会随着层数有些许提升\n" +
+						"_- 剧毒飞镖_的伤害得到了些许提升\n" +
+						"_- 祝福飞镖_的持续回合从30提升到100\n" +
+						"_- 传送飞镖_现在能更稳定地将敌人传送走"));
 	}
 
 	public static void add_v0_0_6p2_changes( ArrayList<ChangeInfo> changeInfos ) {

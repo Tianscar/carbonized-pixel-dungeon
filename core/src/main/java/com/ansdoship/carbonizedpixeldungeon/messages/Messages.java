@@ -129,12 +129,12 @@ public class Messages {
 			if (c != null && c.getSuperclass() != null){
 				return get(c.getSuperclass(), k, baseName, args);
 			} else {
-				String name = "Ms: "+baseName;
+				String name = "Missing: "+baseName;
 				//Send missing text to console in debug state to facilitate fixing field errors.
 				if(Game.platform.isDebug()) {
 					GLog.w(name);
 				}
-				return name;
+				return name.replaceAll("_", "\\\\_");
 			}
 		}
 	}

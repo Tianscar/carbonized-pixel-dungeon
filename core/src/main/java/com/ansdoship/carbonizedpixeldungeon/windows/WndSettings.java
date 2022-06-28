@@ -89,7 +89,7 @@ public class WndSettings extends WndTabbed {
 
 			@Override
 			protected String hoverText() {
-				return Messages.titleCase(Messages.get(WndSettings.class, "display"));
+				return Messages.titleCase(Messages.get(DisplayTab.class, "title"));
 			}
 		});
 
@@ -108,7 +108,7 @@ public class WndSettings extends WndTabbed {
 
 			@Override
 			protected String hoverText() {
-				return Messages.titleCase(Messages.get(WndSettings.class, "ui"));
+				return Messages.titleCase(Messages.get(UITab.class, "title"));
 			}
 		});
 
@@ -127,7 +127,7 @@ public class WndSettings extends WndTabbed {
 
 			@Override
 			protected String hoverText() {
-				return Messages.titleCase(Messages.get(WndSettings.class, "data"));
+				return Messages.titleCase(Messages.get(DataTab.class, "title"));
 			}
 		});
 
@@ -146,7 +146,7 @@ public class WndSettings extends WndTabbed {
 
 			@Override
 			protected String hoverText() {
-				return Messages.titleCase(Messages.get(WndSettings.class, "audio"));
+				return Messages.titleCase(Messages.get(AudioTab.class, "title"));
 			}
 		});
 
@@ -179,7 +179,7 @@ public class WndSettings extends WndTabbed {
 
 			@Override
 			protected String hoverText() {
-				return Messages.titleCase(Messages.get(WndSettings.class, "langs"));
+				return Messages.titleCase(Messages.get(LangsTab.class, "title"));
 			}
 
 		};

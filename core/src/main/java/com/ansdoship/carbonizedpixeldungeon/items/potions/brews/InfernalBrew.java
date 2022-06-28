@@ -30,6 +30,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 
 public class InfernalBrew extends Brew {
 
@@ -45,8 +46,17 @@ public class InfernalBrew extends Brew {
 			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 			Sample.INSTANCE.play( Assets.Sounds.GAS );
 		}
-		
-		GameScene.add( Blob.seed( cell, 1000, Inferno.class ) );
+
+		int centerVolume = 120;
+		for (int i : PathFinder.NEIGHBOURS8){
+			if (!Dungeon.level.solid[cell+i]){
+				GameScene.add( Blob.seed( cell+i, 120, Inferno.class ) );
+			} else {
+				centerVolume += 120;
+			}
+		}
+
+		GameScene.add( Blob.seed( cell, centerVolume, Inferno.class ) );
 	}
 
 	@Override
