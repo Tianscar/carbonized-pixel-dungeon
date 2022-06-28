@@ -43,6 +43,7 @@ import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.utils.ColorMath;
+import com.ansdoship.pixeldungeonclasses.utils.Point;
 
 import java.util.Date;
 
@@ -200,7 +201,8 @@ public class TitleScene extends PixelScene {
 		version.y = h - version.height() - 2;
 		add( version );
 
-		if (Game.platform.isDesktop() || Game.platform.isAndroid()) {
+		Point p = PDSettings.windowResolution();
+		if (!Game.platform.isiOS() && p.x >= 640 && p.y >= 480) {
 			ExitButton btnExit = new ExitButton();
 			btnExit.setPos( w - btnExit.width(), 0 );
 			add( btnExit );

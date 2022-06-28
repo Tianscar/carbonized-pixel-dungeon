@@ -168,6 +168,15 @@ public class CarbonizedPixelDungeon extends Game {
 		PixelScene.noFade = true;
 		switchScene( c, callback );
 	}
+
+	public static void switchForceFade(Class<? extends PixelScene> c){
+		switchForceFade(c, null);
+	}
+
+	public static void switchForceFade(Class<? extends PixelScene> c, SceneChangeCallback callback) {
+		PixelScene.forceFade = true;
+		switchScene( c, callback );
+	}
 	
 	public static void seamlessResetScene(SceneChangeCallback callback) {
 		if (scene() instanceof PixelScene){

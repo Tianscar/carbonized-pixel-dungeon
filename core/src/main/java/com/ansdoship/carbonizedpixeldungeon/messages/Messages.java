@@ -21,7 +21,6 @@
 
 package com.ansdoship.carbonizedpixeldungeon.messages;
 
-import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -129,11 +128,9 @@ public class Messages {
 			if (c != null && c.getSuperclass() != null){
 				return get(c.getSuperclass(), k, baseName, args);
 			} else {
-				String name = "Missing: "+baseName;
+				String name = "Text missing: "+baseName;
 				//Send missing text to console in debug state to facilitate fixing field errors.
-				if(Game.platform.isDebug()) {
-					GLog.w(name);
-				}
+				Game.platform.logd(name);
 				return name.replaceAll("_", "\\\\_");
 			}
 		}

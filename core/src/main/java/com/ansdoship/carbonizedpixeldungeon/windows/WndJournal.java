@@ -148,7 +148,7 @@ public class WndJournal extends WndTabbed {
 
 					@Override
 					protected String hoverText() {
-						return Messages.titleCase(Messages.get(WndJournal.class, "catalog"));
+						return Messages.titleCase(Messages.get(WndJournal.class, "items"));
 					}
 				}
 		};

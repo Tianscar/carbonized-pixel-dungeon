@@ -47,6 +47,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_7p2_changes(changeInfos);
 		add_v0_0_7p1_changes(changeInfos);
 		add_v0_0_7_changes(changeInfos);
 		add_v0_0_6p2_changes(changeInfos);
@@ -69,13 +70,27 @@ public class v0_0_X_Changes {
 		add_v0_0_1_Changes(changeInfos);
 	}
 
+	public static void add_v0_0_7p2_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.7p2", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"补全了部分游戏文本"));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 玩家死后仍能进入存档的Bug\n" +
+						"_-_ 启动界面的相关Bug"));
+	}
+
 	public static void add_v0_0_7p1_changes( ArrayList<ChangeInfo> changeInfos ) {
 		ChangeInfo changes = new ChangeInfo("v0.0.7p1", false, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
-				"补全了部分游戏文本！"));
+				"补全了部分游戏文本"));
 	}
 
 	public static void add_v0_0_7_changes( ArrayList<ChangeInfo> changeInfos ) {

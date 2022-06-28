@@ -543,7 +543,7 @@ public class WndSettings extends WndTabbed {
 
 			int btnWidth = (int)(width - 2* GAP)/3;
 			btnSplit.setRect(0, barDesc.bottom() + GAP, btnWidth, 16);
-			btnGrouped.setRect(btnSplit.right()+ GAP, btnSplit.top(), btnWidth, 16);
+			btnGrouped.setRect(btnSplit.right()+ GAP, btnSplit.top(), btnWidth + (PixelScene.landscape() ? 0 : 1), 16);
 			btnCentered.setRect(btnGrouped.right()+ GAP, btnSplit.top(), btnWidth, 16);
 
 			if (width > 200) {

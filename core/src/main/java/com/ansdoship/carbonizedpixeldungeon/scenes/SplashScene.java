@@ -27,8 +27,8 @@ public class SplashScene extends PixelScene {
     public void create() {
         super.create();
 
-        if (PDSettings.splashScreen() < 1 || Game.platform.isDebug()) {
-            CarbonizedPixelDungeon.switchScene(WelcomeScene.class);
+        if (PDSettings.splashScreen() < 1 || done || Game.platform.isDebug()) {
+            CarbonizedPixelDungeon.switchForceFade(WelcomeScene.class);
             return;
         }
 
@@ -52,7 +52,7 @@ public class SplashScene extends PixelScene {
                     alpha(GameMath.gate(0, alpha -= Game.elapsed, 1));
                     sec += Game.elapsed;
                     gdxScaleFactor += Game.elapsed / 10.f;
-                    gdx.scale.set(w/originalGdxWidth/3f * gdxScaleFactor);
+                    gdx.scale.set(w/originalGdxWidth/(landscape() ? 4f : 3f) * gdxScaleFactor);
                     gdx.x = (w - gdx.width())/2f;
                     gdx.y = (h - gdx.height())/2f;
                     PixelScene.align(gdx);
@@ -68,7 +68,7 @@ public class SplashScene extends PixelScene {
             }
         };
         originalGdxWidth = gdx.width();
-        gdx.scale.set(w/gdx.width()/3f * gdxScaleFactor);
+        gdx.scale.set(w/gdx.width()/(landscape() ? 4f : 3f) * gdxScaleFactor);
 
         gdx.x = (w - gdx.width())/2f;
         gdx.y = (h - gdx.height())/2f;
@@ -96,7 +96,7 @@ public class SplashScene extends PixelScene {
                     alpha(GameMath.gate(0, alpha -= Game.elapsed, 1));
                     sec += Game.elapsed;
                     ansdoShipScaleFactor += Game.elapsed / 10.f;
-                    ansdoShip.scale.set(w/originalAnsdoShipWidth/2f * ansdoShipScaleFactor);
+                    ansdoShip.scale.set(w/originalAnsdoShipWidth/(landscape() ? 3f : 2f) * ansdoShipScaleFactor);
                     ansdoShip.x = (w - ansdoShip.width())/2f;
                     ansdoShip.y = (h - ansdoShip.height())/2f;
                     PixelScene.align(ansdoShip);
@@ -104,12 +104,12 @@ public class SplashScene extends PixelScene {
                 else if (!done) {
                     done = true;
                     if (ansdoShip.visible) ansdoShip.visible = false;
-                    CarbonizedPixelDungeon.switchScene(WelcomeScene.class);
+                    CarbonizedPixelDungeon.switchForceFade(WelcomeScene.class);
                 }
             }
         };
         originalAnsdoShipWidth = ansdoShip.width();
-        ansdoShip.scale.set(w/ansdoShip.width()/2f * ansdoShipScaleFactor);
+        ansdoShip.scale.set(w/ansdoShip.width()/(landscape() ? 3f : 2f) * ansdoShipScaleFactor);
 
         ansdoShip.x = (w - ansdoShip.width())/2f;
         ansdoShip.y = (h - ansdoShip.height())/2f;

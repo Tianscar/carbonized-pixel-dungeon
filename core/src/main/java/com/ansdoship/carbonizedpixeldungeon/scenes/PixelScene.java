@@ -249,10 +249,15 @@ public class PixelScene extends Scene {
 	}
 
 	public static boolean noFade = false;
+	public static boolean forceFade = false;
 	protected void fadeIn() {
 		if (noFade) {
 			noFade = false;
-		} else {
+		} else if (!forceFade){
+			fadeIn( 0xFF000000, false );
+		}
+		if (forceFade) {
+			forceFade = false;
 			fadeIn( 0xFF000000, false );
 		}
 	}

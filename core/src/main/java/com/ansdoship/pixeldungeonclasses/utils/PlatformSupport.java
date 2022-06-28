@@ -217,6 +217,10 @@ public abstract class PlatformSupport {
 		Gdx.app.log( tag, message );
 	}
 
+	public void logd( String message ) {
+		if (isDebug()) Gdx.app.log("DEBUG", message);
+	}
+
 	public void setClipboardContents( String str ) {
 		Gdx.app.getClipboard().setContents( str );
 	}
