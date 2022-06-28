@@ -21,6 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon.messages;
 
+import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
+import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
@@ -99,33 +101,40 @@ public class Messages {
 		return get(o.getClass(), k, args);
 	}
 
-	public static String get(Class c, String k, Object... args) {
-		return get(c, k, new StringBuilder(), args);
+	public static String get(Class c, String k, Object...args) {
+		return get(c, k, null, args);
 	}
 
-	private static String get(Class c, String k, StringBuilder missingTexts, Object...args){
+	private static String get(Class c, String k, String baseName, Object...args){
 		String key;
 		if (c != null){
-			key = c.getName().replace("com.ansdoship.carbonizedpixeldungeon.", "");
+			key = c.getName();
+			key = key.replace("com.ansdoship.carbonizedpixeldungeon.", "");
 			key += "." + k;
 		} else
 			key = k;
 
-		key = key.toLowerCase(Locale.ENGLISH);
-		String value = getFromBundle(key);
+		String value = getFromBundle(key.toLowerCase(Locale.CHINESE));
 		if (value != null){
 			if (args.length > 0) return format(value, args);
 			else return value;
-		} else {
+		}  else {
+			//Use baseName so the missing string is clear what exactly needs replacing. Otherwise, it just says java.lang.Object.[key]
+			if (baseName == null) {
+				baseName = key;
+			}
 			//this is so child classes can inherit properties from their parents.
 			//in cases where text is commonly grabbed as a utility from classes that aren't mean to be instantiated
 			//(e.g. flavourbuff.dispTurns()) using .class directly is probably smarter to prevent unnecessary recursive calls.
-			if (missingTexts.length() < 1) missingTexts.append("!!!NO TEXT FOUND:\n");
-			if (c != null && c.getSuperclass() != null && c.getSuperclass().getName().startsWith("com.ansdoship.carbonizedpixeldungeon.")){
-				missingTexts.append(key).append(";");
-				return get(c.getSuperclass(), k, missingTexts, args);
+			if (c != null && c.getSuperclass() != null){
+				return get(c.getSuperclass(), k, baseName, args);
 			} else {
-				return missingTexts.append(key).append("!!!").toString().replaceAll("_", "\\\\_");
+				String name = "Ms: "+baseName;
+				//Send missing text to console in debug state to facilitate fixing field errors.
+				if(Game.platform.isDebug()) {
+					GLog.w(name);
+				}
+				return name;
 			}
 		}
 	}
