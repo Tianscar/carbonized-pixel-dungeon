@@ -47,6 +47,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_7p1_changes(changeInfos);
 		add_v0_0_7_changes(changeInfos);
 		add_v0_0_6p2_changes(changeInfos);
 		add_v0_0_6p1_changes(changeInfos);
@@ -98,7 +99,7 @@ public class v0_0_X_Changes {
 						"_-_ 添加了针对东亚语言的自定义像素字体\n" +
 						"_-_ 实验性的添加了手柄支持\n" +
 						"_-_ 快捷栏改为3～9格\n" +
-						"_-_ 修改了支持和反馈界面" +
+						"_-_ 修改了支持和反馈界面\n" +
 						"_-_ 修改了关于界面"));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND), "神偷袖章重制！",
