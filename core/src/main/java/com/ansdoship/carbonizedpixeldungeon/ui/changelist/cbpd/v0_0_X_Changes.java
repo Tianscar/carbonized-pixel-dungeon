@@ -70,7 +70,7 @@ public class v0_0_X_Changes {
 	}
 
 	public static void add_v0_0_7p1_changes( ArrayList<ChangeInfo> changeInfos ) {
-		ChangeInfo changes = new ChangeInfo("v0.0.4p1", false, "");
+		ChangeInfo changes = new ChangeInfo("v0.0.7p1", false, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
