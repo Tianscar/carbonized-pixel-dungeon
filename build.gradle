@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        google()
+        maven{ url 'https://maven.aliyun.com/repository/google' }
         mavenCentral()
     }
     dependencies {
@@ -15,8 +15,8 @@ allprojects {
         appVendor = 'AnsdoShip'
         appPackageName = 'com.ansdoship.carbonizedpixeldungeon'
 
-        appVersionCode = 23
-        appVersionName = '0.0.7p3-ALPHA'
+        appVersionCode = 24
+        appVersionName = '0.0.7p4-ALPHA'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
@@ -31,7 +31,7 @@ allprojects {
     version = appVersionName
 
     repositories {
-        google()
+        maven{ url 'https://maven.aliyun.com/repository/google' }
         mavenCentral()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }

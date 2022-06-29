@@ -221,6 +221,15 @@ public class InterlevelScene extends PixelScene {
 			);
 			align(tip);
 			add( tip );
+		} else {
+			text = Messages.get(InterlevelScene.class, "tip_" + Random.Int(1, 7));
+			tip = PixelScene.renderTextBlock( text, 6 );
+			tip.setPos(
+					(Camera.main.width - tip.width()) / 2,
+					message.bottom() + 999999
+			);
+			align(tip);
+			add( tip );
 		}
 
 		if (Updates.isInstallable()){
@@ -308,14 +317,12 @@ public class InterlevelScene extends PixelScene {
 		super.update();
 
 		waitingTime += Game.elapsed;
-		
-		float p = timeLeft / fadeTime;
-		
+
 		switch (phase) {
 		
 		case FADE_IN:
-			message.alpha( 1 - p );
-			tip.alpha( 1 - p );
+			message.alpha( 1 - timeLeft );
+			tip.alpha( 1 - timeLeft );
 			if ((timeLeft -= Game.elapsed) <= 0) {
 				if (!thread.isAlive() && error == null) {
 					phase = Phase.FADE_OUT;
@@ -327,8 +334,8 @@ public class InterlevelScene extends PixelScene {
 			break;
 			
 		case FADE_OUT:
-			message.alpha( p );
-			tip.alpha( p );
+			message.alpha( timeLeft );
+			tip.alpha( timeLeft );
 			
 			if ((timeLeft -= Game.elapsed) <= 0) {
 				Game.switchScene( GameScene.class );

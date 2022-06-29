@@ -46,7 +46,7 @@ public class v0_0_X_Changes {
 		ChangeInfo changes = new ChangeInfo( "v0.0.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
-
+		add_v0_0_7p4_changes(changeInfos);
 		add_v0_0_7p3_changes(changeInfos);
 		add_v0_0_7p2_changes(changeInfos);
 		add_v0_0_7p1_changes(changeInfos);
@@ -69,6 +69,16 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_7p4_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.7p4", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 过场动画的闪退问题"));
 	}
 
 	public static void add_v0_0_7p3_changes( ArrayList<ChangeInfo> changeInfos ) {
