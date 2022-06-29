@@ -113,7 +113,7 @@ public class Messages {
 		} else
 			key = k;
 
-		String value = getFromBundle(key.toLowerCase(Locale.CHINESE));
+		String value = getFromBundle(key.toLowerCase(Locale.ENGLISH));
 		if (value != null){
 			if (args.length > 0) return format(value, args);
 			else return value;

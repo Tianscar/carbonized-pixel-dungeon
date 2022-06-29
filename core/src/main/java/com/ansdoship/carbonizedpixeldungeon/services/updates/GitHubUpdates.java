@@ -22,6 +22,8 @@
 package com.ansdoship.carbonizedpixeldungeon.services.updates;
 
 
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
+import com.ansdoship.carbonizedpixeldungeon.messages.Languages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
@@ -34,6 +36,8 @@ import java.util.regex.Pattern;
 public class GitHubUpdates extends UpdateService {
 
 	private static Pattern descPattern = Pattern.compile("<!-- DESC_BEGIN -->(.*?)<!-- DESC_END -->", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+	private static Pattern descPatternZH = Pattern.compile("<!-- DESC_BEGIN_ZH -->(.*?)<!-- DESC_END_ZH -->", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+	private static Pattern descPatternTC = Pattern.compile("<!-- DESC_BEGIN_TC -->(.*?)<!-- DESC_END_TC -->", Pattern.DOTALL | Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
 	private static Pattern versionCodePattern = Pattern.compile("VERSION_CODE: ([0-9]*)", Pattern.CASE_INSENSITIVE);
 
 	@Override
@@ -87,7 +91,16 @@ public class GitHubUpdates extends UpdateService {
 
 						update.versionName = latestRelease.getString("name");
 						update.versionCode = latestVersionCode;
-						Matcher m = descPattern.matcher(latestRelease.getString("body"));
+						Matcher m;
+						if (PDSettings.language() == Languages.CHINESE) {
+							m = descPatternZH.matcher(latestRelease.getString("body"));
+						}
+						else if (PDSettings.language() == Languages.TR_CHINESE) {
+							m = descPatternTC.matcher(latestRelease.getString("body"));
+						}
+						else {
+							m = descPattern.matcher(latestRelease.getString("body"));
+						}
 						m.find();
 						update.desc = m.group(1).trim().replaceAll("- ", "_-_ ");
 						update.URL = latestRelease.getString("html_url");

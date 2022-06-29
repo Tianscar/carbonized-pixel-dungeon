@@ -616,8 +616,8 @@ public class GameScene extends PixelScene {
 				if (Runtime.getRuntime().availableProcessors() == 1) {
 					actorThread.setPriority(Thread.NORM_PRIORITY - 1);
 				}
-				actorThread.setName("SHPD Actor Thread");
-				Thread.currentThread().setName("SHPD Render Thread");
+				actorThread.setName("CBPD Actor Thread");
+				Thread.currentThread().setName("CBPD Render Thread");
 				Actor.keepActorThreadAlive = true;
 				actorThread.start();
 			} else if (notifyDelay <= 0f) {

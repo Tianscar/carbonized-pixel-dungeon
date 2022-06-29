@@ -22,7 +22,6 @@
 package com.ansdoship.carbonizedpixeldungeon.desktop;
 
 import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Preferences;
@@ -59,11 +58,14 @@ public class DesktopLauncher {
 		}
 		
 		final String title;
+		title = DesktopMessages.get(DesktopLauncher.class, "app_name");
+		/*
 		if (DesktopLauncher.class.getPackage().getSpecificationTitle() == null){
 			title = System.getProperty("Specification-Title");
 		} else {
 			title = DesktopLauncher.class.getPackage().getSpecificationTitle();
 		}
+		 */
 		
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
@@ -83,20 +85,18 @@ public class DesktopLauncher {
 				exceptionMsg = exceptionMsg.replace("\t", "    ");
 
 				if (exceptionMsg.contains("Couldn't create window")){
-					TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
-							title + " wasn't able to initialize it's graphics display, sorry about that!\n\n" +
-									"This usually happens when a computer's graphics card does not support OpenGL 2.0+, or has misconfigured graphics drivers.\n\n" +
-									"If you're certain the game should be working on your computer, feel free to message the developer (tianscar@protonmail.com)\n\n" +
-									"version: " + Game.version, "ok", "error", false);
+					TinyFileDialogs.tinyfd_messageBox(DesktopMessages.get(DesktopLauncher.class, "crash_title", title),
+							DesktopMessages.get(DesktopLauncher.class, "crash_msg_gl", title) + "\n\n" +
+									"version: " + Game.version + "\n" + exceptionMsg,
+							"ok", "error", false);
 				} else {
-					TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
-							title + " has run into an error it can't recover from and has crashed, sorry about that!\n\n" +
-									"If you could, please email this error message to the developer (tianscar@protonmail.com):\n\n" +
-									"version: " + Game.version + "\n" +
-									exceptionMsg,
+					System.out.print(DesktopMessages.get(DesktopLauncher.class, "crash_msg", title));
+					TinyFileDialogs.tinyfd_messageBox(DesktopMessages.get(DesktopLauncher.class, "crash_title", title),
+							DesktopMessages.get(DesktopLauncher.class, "crash_msg", title) + "\n\n" +
+									"version: " + Game.version + "\n" + exceptionMsg,
 							"ok", "error", false);
 				}
-				if (Gdx.app != null) Gdx.app.exit();
+				System.exit(1);
 			}
 		});
 		
@@ -120,7 +120,7 @@ public class DesktopLauncher {
 		
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		
-		config.setTitle( title );
+		config.setTitle( title + " - v" + Game.version );
 
 		String basePath = "";
 		if (SharedLibraryLoader.isWindows) {
