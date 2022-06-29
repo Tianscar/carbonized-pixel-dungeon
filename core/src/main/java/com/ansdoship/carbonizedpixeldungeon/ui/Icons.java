@@ -115,7 +115,8 @@ public enum Icons {
 	CUBE_CODE,
 	PURIGRO,
 	ARCNOR,
-	PTR;
+	PTR,
+	JASON;
 
 	public Image get() {
 		return get( this );
@@ -366,6 +367,10 @@ public enum Icons {
 				break;
 			case PTR:
 				icon.frame( icon.texture.uvRectBySize( 192, 96, 32, 32 ) );
+				icon.scale.set(PixelScene.align(0.49f));
+				break;
+			case JASON:
+				icon.frame( icon.texture.uvRectBySize( 224, 96, 32, 32 ) );
 				icon.scale.set(PixelScene.align(0.49f));
 				break;
 
