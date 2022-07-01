@@ -219,6 +219,10 @@ abstract public class Weapon extends KindOfWeapon {
 		return (8 + tier * 2) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
 	}
 
+	public boolean canHeroSurpriseAttack( Hero hero ) {
+		return true;
+	}
+
 	@Override
 	public int level() {
 		return super.level() + (curseInfusionBonus ? 1 : 0);

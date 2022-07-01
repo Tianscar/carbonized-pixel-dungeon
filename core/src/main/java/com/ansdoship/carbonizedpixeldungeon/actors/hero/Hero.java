@@ -145,7 +145,7 @@ public class Hero extends Char {
 		alignment = Alignment.ALLY;
 	}
 	
-	public static final int MAX_LEVEL = 30;
+	public static final int MAX_LEVEL = 40;
 
 	public static final int MAX_HUNGER = 450;
 
@@ -279,7 +279,11 @@ public class Hero extends Char {
 	}
 
 	public int WIS() {
-		return WIS;// TODO
+		int wisBonus = 0;
+		if (hasTalent(Talent.WIDE_SEARCH)) {
+			wisBonus += pointsInTalent(Talent.WIDE_SEARCH);
+		}
+		return WIS + wisBonus;// TODO
 	}
 
 	public int CHA() {
@@ -569,7 +573,8 @@ public class Hero extends Char {
 		}
 		
 		float evasion = defenseSkill;
-		
+		float dexMultiplier = 0.1f * DEX();
+		evasion = Math.round(dexMultiplier * evasion);
 		evasion *= RingOfEvasion.evasionMultiplier( this );
 		
 		if (paralysed > 0) {
@@ -688,29 +693,21 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack() {
-		if (belongings.weapon() instanceof MissileWeapon) {
-			if (((MissileWeapon)belongings.weapon()).shooter != null) return STR() >= ((MissileWeapon)belongings.weapon()).shooter.STRReq();
-			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
-		}
-		else if (belongings.weapon() instanceof SpiritBow) {
-			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
+		if (belongings.weapon() instanceof MissileWeapon || belongings.weapon() instanceof SpiritBow) {
+			return ((Weapon) belongings.weapon()).canHeroSurpriseAttack(this);
 		}
 		else if (canWep1Attack && canWep2Attack) {
 			if (!(belongings.weapon() instanceof Weapon) && !(belongings.weapon2() instanceof Weapon)) return true;
-			if (STR() < ((Weapon)belongings.weapon()).STRReq() || STR() < ((Weapon)belongings.weapon2()).STRReq()) return false;
-			if (belongings.weapon() instanceof Flail || belongings.weapon2() instanceof Flail) return false;
+			return ((Weapon) belongings.weapon()).canHeroSurpriseAttack(this) && ((Weapon) belongings.weapon2()).canHeroSurpriseAttack(this);
 		}
 		else if (canWep1Attack) {
 			if (!(belongings.weapon() instanceof Weapon)) return true;
-			if (STR() < ((Weapon)belongings.weapon()).STRReq()) return false;
-			if (belongings.weapon() instanceof Flail) return false;
+			return ((Weapon) belongings.weapon()).canHeroSurpriseAttack(this);
 		}
 		else if (canWep2Attack) {
 			if (!(belongings.weapon2() instanceof Weapon)) return true;
-			if (STR() < ((Weapon)belongings.weapon2()).STRReq()) return false;
-			if (belongings.weapon2() instanceof Flail) return false;
+			return ((Weapon) belongings.weapon2()).canHeroSurpriseAttack(this);
 		}
-
 		return true;
 	}
 
@@ -2088,9 +2085,8 @@ public class Hero extends Char {
 		
 		boolean smthFound = false;
 
-		boolean circular = pointsInTalent(Talent.WIDE_SEARCH) == 1;
-		int distance = heroClass == HeroClass.ROGUE ? 2 : 1;
-		if (hasTalent(Talent.WIDE_SEARCH)) distance++;
+		int distance = 1 + Math.round((WIS()-8) / 8f);
+		boolean circular = WIS() < 8 || (WIS() / 8f)%1 >= 0.5f;
 		
 		boolean foresight = buff(Foresight.class) != null;
 		

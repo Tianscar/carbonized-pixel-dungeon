@@ -115,7 +115,7 @@ public class QuickRecipe extends Component {
 				curr.sprite.alpha(0.3f);
 				hasInputs = false;
 			}
-			curr.showExtraInfo(false);
+			//curr.showExtraInfo(false);
 			add(curr);
 			this.inputs.add(curr);
 		}
@@ -150,7 +150,7 @@ public class QuickRecipe extends Component {
 		if (!hasInputs){
 			this.output.sprite.alpha(0.3f);
 		}
-		this.output.showExtraInfo(false);
+		//this.output.showExtraInfo(false);
 		add(this.output);
 
 		layout();

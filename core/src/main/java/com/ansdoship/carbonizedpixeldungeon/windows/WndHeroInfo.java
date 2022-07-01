@@ -87,7 +87,7 @@ public class WndHeroInfo extends WndTabbed {
 
 			@Override
 			protected String hoverText() {
-				return Messages.titleCase(Messages.get(WndHeroInfo.class, "info"));
+				return Messages.titleCase(Messages.get(WndHeroInfo.class, "intro"));
 			}
 		});
 

@@ -47,6 +47,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_7p7_changes(changeInfos);
 		add_v0_0_7p6_changes(changeInfos);
 		add_v0_0_7p5_changes(changeInfos);
 		add_v0_0_7p4_changes(changeInfos);
@@ -74,6 +75,27 @@ public class v0_0_X_Changes {
 		add_v0_0_1_Changes(changeInfos);
 	}
 
+	public static void add_v0_0_7p7_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.7p7", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"补全了部分游戏文本"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"现在物品的力量需求不会显示在右上角了"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.INFO), "六属性实装！",
+				"_现在六属性全部起作用了！_\n\n" +
+						"_- 力量_影响近战和远程武器的伤害和命中\n" +
+						"_- 体质_影响生命上限\n" +
+						"_- 敏捷_影响投掷和远程武器的伤害和命中\n" +
+						"_- 智力_影响法杖的使用\n" +
+						"_- 感知_影响探测地块的范围\n" +
+						"_- 魅力_能够让商店打折"));
+	}
+
 	public static void add_v0_0_7p6_changes( ArrayList<ChangeInfo> changeInfos ) {
 		ChangeInfo changes = new ChangeInfo("v0.0.7p6", false, "");
 		changes.hardlight(Window.TITLE_COLOR);
@@ -83,7 +105,7 @@ public class v0_0_X_Changes {
 				"补全了部分游戏文本"));
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
-				"优化了关于界面"));
+				"修改了关于界面"));
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"将启动界面和过场动画的设置分开"));

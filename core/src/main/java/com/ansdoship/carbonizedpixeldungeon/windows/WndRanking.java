@@ -483,7 +483,7 @@ public class WndRanking extends WndTabbed {
 
 		QuickSlotButton(Item item){
 			super(item);
-			showExtraInfo(false);
+			//showExtraInfo(false);
 			this.item = item;
 			hotArea.blockLevel = PointerArea.NEVER_BLOCK;
 		}

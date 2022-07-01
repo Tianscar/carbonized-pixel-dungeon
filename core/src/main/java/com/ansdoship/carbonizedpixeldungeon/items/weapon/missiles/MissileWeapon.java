@@ -25,7 +25,6 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Momentum;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.PinCushion;
@@ -37,6 +36,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.bags.MagicalHolster;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfSharpshooting;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.curses.Wayward;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.enchantments.Projecting;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.RangedWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -119,7 +119,27 @@ abstract public class MissileWeapon extends Weapon {
 	}
 
 	public int STRReq(int lvl){
-		return STRReq(tier, lvl) - 1; //1 less str than normal for their tier
+		return STRReq(tier, lvl) - 4; //4 less str than normal for their tier
+	}
+
+	public int DEXReq() {
+		return DEXReq(level());
+	}
+
+	public int DEXReq(int lvl) {
+		return DEXReq(tier, lvl);
+	}
+
+	protected static int DEXReq(int tier, int lvl){
+		lvl = Math.max(0, lvl);
+
+		//dexterity req decreases at +1,+3,+6,+10,etc.
+		return (8 + tier * 2) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
+	}
+
+	@Override
+	public boolean canHeroSurpriseAttack(Hero hero) {
+		return shooter == null ? (hero.STR() >= STRReq() && hero.DEX() >= DEXReq()) : shooter.canMissileSurpriseAttack(hero);
 	}
 
 	@Override
@@ -194,12 +214,42 @@ abstract public class MissileWeapon extends Weapon {
 	}
 
 	@Override
-	public float accuracyFactor(Char owner) {
-		float accFactor = shooter == null ? super.accuracyFactor(owner) : shooter.accuracyFactor(owner);
-		if (owner instanceof Hero && owner.buff(Momentum.class) != null && owner.buff(Momentum.class).freerunning()){
-			accFactor *= 1f + 0.2f*((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM);
+	public float accuracyFactor( Char owner ) {
+
+		float ACC = this.ACC;
+
+		if (shooter == null) {
+			int encumbrance = 0;
+
+			if( owner instanceof Hero ){
+				encumbrance = DEXReq() - ((Hero)owner).DEX();
+			}
+
+			if (hasEnchant(Wayward.class, owner))
+				encumbrance = Math.max(2, encumbrance+2);
+
+			ACC = encumbrance > 0 ? (float)(ACC / Math.pow( 1.5, encumbrance )) : ACC;
+			if (owner instanceof Hero && ((Hero) owner).STR() < STRReq()) ACC = Math.min(ACC, super.accuracyFactor(owner));
 		}
-		return accFactor;
+		else ACC = shooter.missileAccuracyFactor(owner);
+
+		if (owner instanceof Hero && owner.buff(Momentum.class) != null && owner.buff(Momentum.class).freerunning()){
+			ACC *= 1f + 0.2f*((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM);
+		}
+		return ACC;
+	}
+
+	protected float baseDelay( Char owner ){
+		float delay = augment.delayFactor(this.DLY);
+		if (owner instanceof Hero) {
+			int encumbrance = DEXReq() - ((Hero)owner).DEX();
+			if (encumbrance > 0){
+				delay *= Math.pow( 1.2, encumbrance );
+			}
+			if (((Hero) owner).STR() < STRReq()) delay = Math.max(super.baseDelay(owner), delay);
+		}
+
+		return delay;
 	}
 
 	@Override
@@ -347,7 +397,7 @@ abstract public class MissileWeapon extends Weapon {
 
 		if (owner instanceof Hero) {
 			if (shooter == null) {
-				int exStr = ((Hero)owner).STR() - STRReq();
+				int exStr = ((Hero)owner).DEX() - DEXReq();
 				if (exStr > 0) {
 					damage += Random.IntRange( 0, exStr );
 				}
@@ -424,12 +474,16 @@ abstract public class MissileWeapon extends Weapon {
 				tier,
 				Math.round(augment.damageFactor(min())),
 				Math.round(augment.damageFactor(max())),
-				STRReq());
+				STRReq(), DEXReq());
 
 		if (STRReq() > Dungeon.hero.STR()) {
 			info += " " + Messages.get(Weapon.class, "too_heavy");
-		} else if (Dungeon.hero.STR() > STRReq()){
-			info += " " + Messages.get(Weapon.class, "excess_str", Dungeon.hero.STR() - STRReq());
+		}
+
+		if (DEXReq() > Dungeon.hero.DEX()) {
+			info += " " + Messages.get(MissileWeapon.class, "hard_to_aim");
+		} else if (Dungeon.hero.DEX() > DEXReq()){
+			info += " " + Messages.get(MissileWeapon.class, "excess_dex", Dungeon.hero.DEX() - DEXReq());
 		}
 
 		if (enchantment != null && (cursedKnown || !enchantment.curse())){

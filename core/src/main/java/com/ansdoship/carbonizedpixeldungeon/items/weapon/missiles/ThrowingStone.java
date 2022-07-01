@@ -42,4 +42,10 @@ public class ThrowingStone extends MissileWeapon {
 	public int value() {
 		return super.value()/2; //half normal value
 	}
+
+	@Override
+	public int DEXReq(int lvl) {
+		return super.DEXReq(lvl) - 1;
+	}
+
 }

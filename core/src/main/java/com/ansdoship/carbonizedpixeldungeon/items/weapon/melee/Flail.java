@@ -22,6 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.items.weapon.melee;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
 public class Flail extends MeleeWeapon {
@@ -34,7 +35,6 @@ public class Flail extends MeleeWeapon {
 		tier = 4;
 		twoHanded = false;
 		ACC = 0.8f; //0.8x accuracy
-		//also cannot surprise attack, see Hero.canSurpriseAttack
 	}
 
 	@Override
@@ -42,4 +42,10 @@ public class Flail extends MeleeWeapon {
 		return  Math.round(7*(tier+1)) +        //35 base, up from 25
 				lvl*Math.round(1.6f*(tier+1));  //+8 per level, up from +5
 	}
+
+	@Override
+	public boolean canHeroSurpriseAttack(Hero hero) {
+		return false;
+	}
+
 }

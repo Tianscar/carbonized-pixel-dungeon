@@ -32,7 +32,7 @@ import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
-public class MeleeWeapon extends Weapon {
+public abstract class MeleeWeapon extends Weapon {
 
 	public int tier;
 	public boolean twoHanded = false;
@@ -90,6 +90,11 @@ public class MeleeWeapon extends Weapon {
 		}
 
 		return damage;
+	}
+
+	@Override
+	public boolean canHeroSurpriseAttack(Hero hero) {
+		return hero.STR() >= STRReq();
 	}
 
 	@Override

@@ -3,15 +3,19 @@ package com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Badges;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Momentum;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.MagicalHolster;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.curses.Wayward;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.ansdoship.carbonizedpixeldungeon.messages.Languages;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.CellSelector;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
@@ -31,6 +35,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
     public static final String AC_SHOOT	  = "SHOOT";
     public static final String AC_LOAD	  = "LOAD";
     public static final String AC_UNLOAD  = "UNLOAD";
+    public static final String AC_EMPTY   = "EMPTY";
 
     {
         defaultAction = AC_SHOOT;
@@ -47,6 +52,43 @@ public abstract class RangedWeapon extends MeleeWeapon {
 
     public float shootDelayFactor(Char owner) {
         return timeToShoot;
+    }
+
+    public int DEXReq() {
+        return DEXReq(level());
+    }
+
+    public int DEXReq(int lvl) {
+        return DEXReq(tier, lvl);
+    }
+
+    protected static int DEXReq(int tier, int lvl){
+        lvl = Math.max(0, lvl);
+
+        //dexterity req decreases at +1,+3,+6,+10,etc.
+        return (8 + tier * 2) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2 - 4;
+    }
+
+    public boolean canMissileSurpriseAttack(Hero hero) {
+        return hero.STR() >= STRReq() && hero.DEX() >= DEXReq();
+    }
+
+    public float missileAccuracyFactor( Char owner ) {
+
+        float ACC = this.ACC;
+
+        int encumbrance = 0;
+
+        if( owner instanceof Hero ){
+            encumbrance = DEXReq() - ((Hero)owner).DEX();
+        }
+
+        if (hasEnchant(Wayward.class, owner))
+            encumbrance = Math.max(2, encumbrance+2);
+
+        ACC = encumbrance > 0 ? (float)(ACC / Math.pow( 1.5, encumbrance )) : ACC;
+        if (owner instanceof Hero && ((Hero) owner).STR() < STRReq()) ACC = Math.min(ACC, super.accuracyFactor(owner));
+        return ACC;
     }
 
     public boolean needEquip = true;
@@ -84,6 +126,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
         if (!missiles.isEmpty()) {
             actions.add( AC_SHOOT );
             actions.add( AC_UNLOAD );
+            actions.add( AC_EMPTY );
         }
         if (missiles.size() < maxMissiles) {
             actions.add( AC_LOAD );
@@ -114,6 +157,9 @@ public abstract class RangedWeapon extends MeleeWeapon {
         }
         else if (action.equals(AC_UNLOAD)) {
             unload();
+        }
+        else if (action.equals(AC_EMPTY)) {
+            empty();
         }
         else if (action.equals(AC_LOAD)) {
 
@@ -152,6 +198,27 @@ public abstract class RangedWeapon extends MeleeWeapon {
 
             }
         }
+    }
+
+    protected void empty() {
+
+        Hero hero = Dungeon.hero;
+        hero.sprite.operate( hero.pos );
+        hero.busy();
+        Sample.INSTANCE.play(unloadSound, 2, unloadSoundPitch);
+
+        int amount = missiles.size();
+        for (int i = 0; i < amount; i ++) {
+            MissileWeapon missile = popLastMissile();
+            missile.shooter = null;
+
+            GLog.i(Messages.get(this, "you_now_unloaded", missile.name(), name()));
+
+            missile.doPickUp( Dungeon.hero );
+        }
+
+        updateQuickslot();
+
     }
 
     protected void unload() {
@@ -235,6 +302,12 @@ public abstract class RangedWeapon extends MeleeWeapon {
     @Override
     public String info() {
         String info = super.info();
+
+        info += "\n\n" + Messages.get( this, "stats", DEXReq());
+        if (DEXReq() > Dungeon.hero.DEX()) {
+            info += " " + Messages.get(MissileWeapon.class, "hard_to_aim");
+        }
+
         if (cursed) {
             info += "\n\n" + Messages.get( this, "cursed" );
         }
@@ -245,6 +318,8 @@ public abstract class RangedWeapon extends MeleeWeapon {
                 missilesString += "_" + missile.name() + "_, ";
             }
             missilesString = missilesString.substring(0, missilesString.length() - 2);
+            if (PDSettings.language() == Languages.CHINESE || PDSettings.language() == Languages.TR_CHINESE)
+                missilesString = missilesString.replaceAll(", ", "、");
             info += "\n\n" + Messages.get( this, "missiles", missilesString );
 
             MissileWeapon missile = missiles.get(0);

@@ -59,7 +59,7 @@ public class LootIndicator extends Tag {
 				return PDAction.TAG_LOOT;
 			}
 		};
-		slot.showExtraInfo( false );
+		//slot.showExtraInfo( false );
 		add( slot );
 	}
 	

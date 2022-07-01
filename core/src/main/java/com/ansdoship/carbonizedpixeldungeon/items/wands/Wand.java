@@ -35,6 +35,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Recharging;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ScrollEmpower;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.SoulMark;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.mage.WildMagic;
@@ -237,7 +238,22 @@ public abstract class Wand extends Item {
 	public String info() {
 		String desc = desc();
 
-		desc += "\n\n" + statsDesc();
+		desc += "\n\n" + statsDesc() + "\n\n";
+		if (levelKnown) {
+			desc += Messages.get(Wand.class, "int_req", INTReq());
+			if (INTReq() > Dungeon.hero.INT()) {
+				desc += " " + Messages.get(Wand.class, Dungeon.hero.heroClass == HeroClass.MAGE ? "int_not_enough_mage" : "int_not_enough");
+			} else {
+				int intBoostLevel = INTBoostLvl();
+				if (intBoostLevel > 0) desc += " " + Messages.get(Wand.class, "excess_int", intBoostLevel);
+			}
+		}
+		else {
+			desc += Messages.get(Wand.class, "int_req_min", INTReq(0));
+			if (INTReq(0) > Dungeon.hero.INT()) {
+				desc += " " + Messages.get(Wand.class, "probably_int_not_enough");
+			}
+		}
 
 		if (resinBonus == 1){
 			desc += "\n\n" + Messages.get(Wand.class, "resin_one");
@@ -318,6 +334,7 @@ public abstract class Wand extends Item {
 	@Override
 	public int buffedLvl() {
 		int lvl = super.buffedLvl();
+		int intBoostedLvl = lvl + INTBoostLvl();
 
 		if (charger != null && charger.target != null) {
 			if (charger.target.buff(WildMagic.WildMagicTracker.class) != null){
@@ -340,7 +357,7 @@ public abstract class Wand extends Item {
 				return buff.level();
 			}
 		}
-		return lvl;
+		return Math.max(intBoostedLvl, lvl);
 	}
 
 	public void updateLevel() {
@@ -418,7 +435,13 @@ public abstract class Wand extends Item {
 		Invisibility.dispel();
 		updateQuickslot();
 
-		curUser.spendAndNext( TIME_TO_ZAP );
+		int encumbrance = INTReq() - curUser.INT();
+		float delay = TIME_TO_ZAP;
+		if (encumbrance > 0){
+			delay *= Math.pow( 1.2, encumbrance );
+		}
+		curUser.spendAndNext(delay);
+
 	}
 	
 	@Override
@@ -585,7 +608,7 @@ public abstract class Wand extends Item {
 					
 					curUser.busy();
 					
-					if (curWand.cursed){
+					if (curWand.cursed || (curUser.INT() < curWand.INTReq() && curUser.heroClass != HeroClass.MAGE)){
 						if (!curWand.cursedKnown){
 							GLog.n(Messages.get(Wand.class, "curse_discover", curWand.name()));
 						}
@@ -694,4 +717,36 @@ public abstract class Wand extends Item {
 			this.scalingFactor = value;
 		}
 	}
+
+	public int INTReq() {
+		return INTReq(level());
+	}
+
+	public int INTReq(int lvl) {
+		return INTReq(8, lvl);
+	}
+
+	protected static int INTReq(int initial, int lvl) {
+		lvl = Math.max(0, lvl);
+
+		if (lvl <= 1) return initial;
+		else if (lvl <= 7) return initial + lvl - 1;
+		else return initial + 6 + (lvl - 7) * 2;
+	}
+
+	public int INTBoostLvl() {
+		return INTBoostLvl(Dungeon.hero.INT());
+	}
+
+	public int INTBoostLvl(int intelligence) {
+		return INTBoostLvl(8, intelligence);
+	}
+
+	protected static int INTBoostLvl(int basereq, int intelligence) {
+		basereq = Math.max(0, basereq);
+
+		return (int) Math.floor((intelligence - basereq - 1) / 4f);
+	}
+
+
 }

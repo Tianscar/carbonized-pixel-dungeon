@@ -85,6 +85,7 @@ public class ItemSlot extends Button {
 		super();
 		sprite.visible(false);
 		enable(false);
+		showExtraInfo(false);
 	}
 
 	public ItemSlot( Item item ) {
