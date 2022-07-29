@@ -56,7 +56,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfParalyticGas;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPurity;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfToxicGas;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.Ring;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfAccuracy;
@@ -242,7 +242,7 @@ public class Generator {
 			GOLD.probs = new float[]{ 1 };
 			
 			POTION.classes = new Class<?>[]{
-					PotionOfStrength.class, //2 drop every chapter, see Dungeon.posNeeded()
+					PotionOfPower.class, //2 drop every chapter, see Dungeon.posNeeded()
 					PotionOfHealing.class,
 					PotionOfMindVision.class,
 					PotionOfFrost.class,

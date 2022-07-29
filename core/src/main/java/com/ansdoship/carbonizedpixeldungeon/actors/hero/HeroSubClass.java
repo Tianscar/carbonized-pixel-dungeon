@@ -32,7 +32,7 @@ public enum HeroSubClass {
 
 	NONE(HeroIcon.NONE),
 
-	BERSERKER(HeroIcon.BERSERKER),
+	SHIELDGUARD(HeroIcon.SHIELDGUARD),
 	GLADIATOR(HeroIcon.GLADIATOR),
 
 	BATTLEMAGE(HeroIcon.BATTLEMAGE),

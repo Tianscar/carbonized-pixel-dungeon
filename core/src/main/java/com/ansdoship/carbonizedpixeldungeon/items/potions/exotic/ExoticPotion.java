@@ -35,7 +35,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfParalyticGas;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPurity;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfToxicGas;
 import com.ansdoship.carbonizedpixeldungeon.plants.Plant;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -59,8 +59,8 @@ public class ExoticPotion extends Potion {
 		regToExo.put(PotionOfToxicGas.class, PotionOfCorrosiveGas.class);
 		exoToReg.put(PotionOfCorrosiveGas.class, PotionOfToxicGas.class);
 		
-		regToExo.put(PotionOfStrength.class, PotionOfAdrenalineSurge.class);
-		exoToReg.put(PotionOfAdrenalineSurge.class, PotionOfStrength.class);
+		regToExo.put(PotionOfPower.class, PotionOfAdrenalineSurge.class);
+		exoToReg.put(PotionOfAdrenalineSurge.class, PotionOfPower.class);
 		
 		regToExo.put(PotionOfFrost.class, PotionOfSnapFreeze.class);
 		exoToReg.put(PotionOfSnapFreeze.class, PotionOfFrost.class);

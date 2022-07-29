@@ -30,7 +30,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.Generator;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.Potion;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfHealing;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower;
 import com.ansdoship.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ScorpioSprite;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
@@ -107,7 +107,7 @@ public class Scorpio extends Mob {
 		Class<?extends Potion> loot;
 		do{
 			loot = (Class<? extends Potion>) Random.oneOf(Generator.Category.POTION.classes);
-		} while (loot == PotionOfHealing.class || loot == PotionOfStrength.class);
+		} while (loot == PotionOfHealing.class || loot == PotionOfPower.class);
 
 		return Reflection.newInstance(loot);
 	}

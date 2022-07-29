@@ -57,8 +57,7 @@ public class HeroicLeap extends ArmorAbility {
 	public float chargeUse( Hero hero ) {
 		float chargeUse = super.chargeUse(hero);
 		if (hero.buff(DoubleJumpTracker.class) != null){
-			//reduced charge use by 20%/36%/50%/60%
-			chargeUse *= Math.pow(0.795, hero.pointsInTalent(Talent.DOUBLE_JUMP));
+			chargeUse *= 1f-0.25f*hero.pointsInTalent(Talent.DOUBLE_JUMP);
 		}
 		return chargeUse;
 	}
@@ -102,9 +101,7 @@ public class HeroicLeap extends ArmorAbility {
 								Ballistica trajectory = new Ballistica(mob.pos, mob.pos + i, Ballistica.MAGIC_BOLT);
 								int strength = 1+hero.pointsInTalent(Talent.IMPACT_WAVE);
 								WandOfBlastWave.throwChar(mob, trajectory, strength, true);
-								if (Random.Int(4) < hero.pointsInTalent(Talent.IMPACT_WAVE)){
-									Buff.prolong(mob, Vulnerable.class, 3f);
-								}
+								Buff.prolong(mob, Vulnerable.class, 1f+hero.pointsInTalent(Talent.IMPACT_WAVE));
 							}
 						}
 					}

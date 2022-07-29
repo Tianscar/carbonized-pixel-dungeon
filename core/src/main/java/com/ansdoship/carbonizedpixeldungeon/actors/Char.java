@@ -32,6 +32,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Elemental;
+import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Monk;
 import com.ansdoship.carbonizedpixeldungeon.items.Heap;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Potential;
@@ -60,10 +61,7 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.utils.BArray;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
-import com.ansdoship.pixeldungeonclasses.utils.Bundlable;
-import com.ansdoship.pixeldungeonclasses.utils.Bundle;
-import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
-import com.ansdoship.pixeldungeonclasses.utils.Random;
+import com.ansdoship.pixeldungeonclasses.utils.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -299,9 +297,6 @@ public abstract class Char extends Actor {
 
 			dmg = Math.round(dmg*dmgMulti);
 
-			Berserk berserk = buff(Berserk.class);
-			if (berserk != null) dmg = berserk.damageFactor(dmg);
-
 			if (buff( Fury.class ) != null) {
 				dmg *= 1.5f;
 			}
@@ -334,6 +329,16 @@ public abstract class Char extends Actor {
 			if (visibleFight) {
 				if (effectiveDamage > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
 					hitSound(Random.Float(0.87f, 1.15f));
+				}
+				if (effectiveDamage == 0 && enemy.isAlive() && enemy == Dungeon.hero && Dungeon.hero.hasTalent(Talent.COUNTERATTACK)) {
+					enemy.sprite.showStatus( CharSprite.NEUTRAL, Messages.get(Monk.class, "parried") );
+					enemy.sprite.attack(enemy.pos, new Callback() {
+						@Override
+						public void call() {
+							Dungeon.hero.attack( Char.this, 0.25f + 0.25f * Dungeon.hero.pointsInTalent(Talent.COUNTERATTACK),
+									0, 1.0f );
+						}
+					});
 				}
 			}
 

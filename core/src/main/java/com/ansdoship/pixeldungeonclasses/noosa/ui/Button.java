@@ -21,7 +21,6 @@
 
 package com.ansdoship.pixeldungeonclasses.noosa.ui;
 
-import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.ui.Tooltip;
 import com.ansdoship.pixeldungeonclasses.input.*;
 import com.ansdoship.pixeldungeonclasses.noosa.Camera;
@@ -171,7 +170,7 @@ public class Button extends Component {
 				}
 			}
 			hoverTip = new Tooltip(Button.this, text, 80, 0);
-			CarbonizedPixelDungeon.scene().addToFront(hoverTip);
+			Button.this.parent.addToFront(hoverTip);
 			hoverTip.camera = camera();
 			alignTooltip(hoverTip);
 		}

@@ -28,6 +28,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Poison;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Roots;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Slow;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -52,6 +53,7 @@ public class MysteryMeat extends Food {
 	}
 
 	public static void effect(Hero hero){
+		if (hero.hasTalent(Talent.IRON_STOMACH) && hero.pointsInTalent(Talent.IRON_STOMACH) == 2) return;
 		switch (Random.Int( 5 )) {
 			case 0:
 				GLog.w( Messages.get(MysteryMeat.class, "hot") );

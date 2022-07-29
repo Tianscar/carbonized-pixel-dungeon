@@ -24,41 +24,98 @@ package com.ansdoship.carbonizedpixeldungeon;
 import com.ansdoship.carbonizedpixeldungeon.items.Dewdrop;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 
+import java.util.Comparator;
+import java.util.Locale;
+
+import static com.ansdoship.carbonizedpixeldungeon.Challenges.Challenge.NO_HERBALISM;
+
 public class Challenges {
 
-	//Some of these internal IDs are outdated and don't represent what these challenges do
-	public static final int NO_FOOD				= 1;
-	public static final int NO_ARMOR			= 2;
-	public static final int NO_HEALING			= 4;
-	public static final int NO_HERBALISM		= 8;
-	public static final int SWARM_INTELLIGENCE	= 16;
-	public static final int DARKNESS			= 32;
-	public static final int NO_SCROLLS		    = 64;
-	public static final int CHAMPION_ENEMIES	= 128;
-	public static final int STRONGER_BOSSES 	= 256;
+	public enum Challenge {
+		NO_FOOD(VERY_EASY, 1),
+		NO_ARMOR(MEDIUM, 2),
+		NO_HEALING(MEDIUM, 4),
+		NO_HERBALISM(MEDIUM, 8),
+		SWARM_INTELLIGENCE(HARD, 16),
+		DARKNESS(VERY_EASY, 32),
+		NO_SCROLLS(MEDIUM, 64),
+		CHAMPION_ENEMIES(HARD, 128),
+		STRONGER_BOSSES(HARD, 256),
+		NO_TALENTS(EASY, 512);
 
-	public static final int MAX_VALUE           = 511;
+		private final int difficulty;
+		private final int mask;
 
-	public static final String[] NAME_IDS = {
-			"champion_enemies",
-			"stronger_bosses",
-			"no_food",
-			"no_armor",
-			"no_healing",
-			"no_herbalism",
-			"swarm_intelligence",
-			"darkness",
-			"no_scrolls"
-	};
+		public int mask() {
+			return mask;
+		}
 
-	public static final int[] MASKS = {
-			CHAMPION_ENEMIES, STRONGER_BOSSES, NO_FOOD, NO_ARMOR, NO_HEALING, NO_HERBALISM, SWARM_INTELLIGENCE, DARKNESS, NO_SCROLLS
-	};
+		public int difficulty() {
+			return difficulty;
+		}
 
-	public static int activeChallenges(){
+		public String messageId() {
+			return name().toLowerCase(Locale.ENGLISH);
+		}
+
+		Challenge(int difficulty, int mask) {
+			this.difficulty = difficulty;
+			this.mask = mask;
+		}
+
+		public static Challenge[] sort() {
+			Challenge[] values = values();
+			quickSort(values, 0, values.length-1, new Comparator<Challenge>() {
+				@Override
+				public int compare(Challenge o1, Challenge o2) {
+					return o1.difficulty - o2.difficulty;
+				}
+			});
+			return values;
+		}
+
+		private static int partition(Challenge[] array, int low, int high, Comparator<Challenge> comparator) {
+			Challenge pivot = array[high];
+			int pointer = low;
+			for (int i = low; i < high; i++) {
+				if (comparator.compare(array[i], pivot) <= 0) {
+					Challenge temp = array[i];
+					array[i] = array[pointer];
+					array[pointer] = temp;
+					pointer ++;
+				}
+			}
+			Challenge temp = array[pointer];
+			array[pointer] = array[high];
+			array[high] = temp;
+			return pointer;
+		}
+
+		private static void quickSort(Challenge[] array, int low, int high, Comparator<Challenge> comparator) {
+			if (low < high) {
+				int position = partition(array, low, high, comparator);
+				quickSort(array, low, position - 1, comparator);
+				quickSort(array, position + 1, high, comparator);
+			}
+		}
+	}
+
+	public static final Challenge[] all = Challenge.values();
+	public static final Challenge[] allSorted = Challenge.sort();
+
+	public static final int VERY_EASY  = 1;
+	public static final int EASY       = 2;
+	public static final int MEDIUM     = 4;
+	public static final int HARD       = 8;
+	public static final int VERY_HARD  = 16;
+	public static final int IMPOSSIBLE = 32;
+
+	public static final int MAX_MASK = (int) Math.pow(2, all.length) - 1;
+
+	public static int activeChallenges() {
 		int chCount = 0;
-		for (int ch : Challenges.MASKS){
-			if ((Dungeon.challenges & ch) != 0) chCount++;
+		for (Challenge challenge : all){
+			if ((Dungeon.challenges & challenge.mask) != 0) chCount++;
 		}
 		return chCount;
 	}

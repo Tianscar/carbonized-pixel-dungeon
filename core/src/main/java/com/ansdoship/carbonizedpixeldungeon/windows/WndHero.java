@@ -50,7 +50,7 @@ import java.util.Locale;
 public class WndHero extends WndTabbed {
 	
 	private static final int WIDTH		= 120;
-	private static final int HEIGHT		= 128;
+	private static final int HEIGHT		= 126;
 	
 	private StatsTab stats;
 	private TalentsTab talents;
@@ -143,6 +143,8 @@ public class WndHero extends WndTabbed {
 			title.setRect( 0, 0, WIDTH-16, 0 );
 			add(title);
 
+			pos = title.bottom() + GAP;
+
 			IconButton infoButton = new IconButton(Icons.get(Icons.INFO)){
 				@Override
 				protected void onClick() {
@@ -157,13 +159,6 @@ public class WndHero extends WndTabbed {
 			};
 			infoButton.setRect(title.right(), 0, 16, 16);
 			add(infoButton);
-
-			ColorBlock sep = new ColorBlock(1, 1, 0xFF000000);
-			sep.size(WIDTH, 1);
-			sep.y = title.bottom() + 2;
-			add(sep);
-
-			pos = sep.y + GAP;
 
 			int strBonus = hero.STR() - hero.STR;
 			if (strBonus > 0)           statSlot( Messages.get(this, "str"), hero.STR + " + " + strBonus );

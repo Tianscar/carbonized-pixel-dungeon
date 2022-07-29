@@ -102,6 +102,10 @@ public class GamesInProgress {
 				info.slot = slot;
 				Dungeon.preview(info, bundle);
 
+				//saves from before v0.0.8 are not supported
+				if (info.version < CarbonizedPixelDungeon.v0_0_8) {
+					info = null;
+				}
 
 			} catch (IOException e) {
 				info = null;

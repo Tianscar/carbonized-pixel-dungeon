@@ -31,6 +31,8 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
@@ -159,6 +161,9 @@ public class MirrorImage extends NPC {
 		if (hero != null) {
 			if (hero.belongings.weapon() != null) dr += Random.NormalIntRange(0, hero.belongings.weapon().defenseFactor(this)/2);
 			if (hero.belongings.weapon2() != null) dr += Random.NormalIntRange(0, hero.belongings.weapon2().defenseFactor(this)/2);
+			if (hero.subClass == HeroSubClass.SHIELDGUARD){
+				dr += Random.NormalIntRange(0, 6+6*hero.pointsInTalent(Talent.ENHANCED_SHIELD));
+			}
 		}
 		return dr;
 	}

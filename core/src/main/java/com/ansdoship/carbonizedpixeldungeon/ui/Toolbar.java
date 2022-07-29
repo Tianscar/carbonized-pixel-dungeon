@@ -166,7 +166,7 @@ public class Toolbar extends Component {
 			}
 		});
 
-		add(btnInventory = new Tool(0, 0, 24, 26) {
+		addToBack(btnInventory = new Tool(0, 0, 24, 26) {
 			private GoldIndicator gold;
 
 			@Override

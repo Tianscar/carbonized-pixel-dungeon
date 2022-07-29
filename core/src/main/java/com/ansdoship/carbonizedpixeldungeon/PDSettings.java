@@ -202,7 +202,7 @@ public class PDSettings extends GameSettings {
 	}
 	
 	public static int challenges() {
-		return getInt( KEY_CHALLENGES, 0, 0, Challenges.MAX_VALUE );
+		return getInt( KEY_CHALLENGES, 0, 0, Challenges.MAX_MASK );
 	}
 
 	public static void supportNagged( boolean value ) {

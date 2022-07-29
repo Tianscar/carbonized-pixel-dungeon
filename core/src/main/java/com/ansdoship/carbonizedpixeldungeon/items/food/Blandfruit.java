@@ -37,7 +37,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfParalyticGas;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPurity;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfToxicGas;
 import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -110,7 +110,7 @@ public class Blandfruit extends Food {
 	@Override
 	public String name() {
 		if (potionAttrib instanceof PotionOfHealing)        return Messages.get(this, "sunfruit");
-		if (potionAttrib instanceof PotionOfStrength)       return Messages.get(this, "rotfruit");
+		if (potionAttrib instanceof PotionOfPower)       return Messages.get(this, "rotfruit");
 		if (potionAttrib instanceof PotionOfParalyticGas)   return Messages.get(this, "earthfruit");
 		if (potionAttrib instanceof PotionOfInvisibility)   return Messages.get(this, "blindfruit");
 		if (potionAttrib instanceof PotionOfLiquidFlame)    return Messages.get(this, "firefruit");
@@ -159,7 +159,7 @@ public class Blandfruit extends Food {
 		potionAttrib.image = ItemSpriteSheet.BLANDFRUIT;
 
 		if (potionAttrib instanceof PotionOfHealing)        potionGlow = new ItemSprite.Glowing( 0x2EE62E );
-		if (potionAttrib instanceof PotionOfStrength)       potionGlow = new ItemSprite.Glowing( 0xCC0022 );
+		if (potionAttrib instanceof PotionOfPower)       potionGlow = new ItemSprite.Glowing( 0xCC0022 );
 		if (potionAttrib instanceof PotionOfParalyticGas)   potionGlow = new ItemSprite.Glowing( 0x67583D );
 		if (potionAttrib instanceof PotionOfInvisibility)   potionGlow = new ItemSprite.Glowing( 0xD9D9D9 );
 		if (potionAttrib instanceof PotionOfLiquidFlame)    potionGlow = new ItemSprite.Glowing( 0xFF7F00 );

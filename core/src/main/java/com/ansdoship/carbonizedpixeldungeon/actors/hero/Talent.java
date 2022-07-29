@@ -26,17 +26,7 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.GamesInProgress;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ArtifactRecharge;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.CounterBuff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.EnhancedRings;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.FlavourBuff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Haste;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.LostInventory;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Recharging;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.RevealedArea;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Roots;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.WandEmpower;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
@@ -54,7 +44,6 @@ import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.ansdoship.carbonizedpixeldungeon.levels.Level;
 import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
@@ -76,13 +65,13 @@ import java.util.LinkedHashMap;
 public enum Talent {
 
 	//Warrior T1
-	HEARTY_MEAL(0), ARMSMASTERS_INTUITION(1), TEST_SUBJECT(2), IRON_WILL(3),
+	HEARTY_MEAL(0), ARMSMASTERS_INTUITION(1), WEAKNESS_STRIKE(2), IRON_WILL(3),
 	//Warrior T2
 	IRON_STOMACH(4), RESTORED_WILLPOWER(5), RUNIC_TRANSFERENCE(6), LETHAL_MOMENTUM(7), IMPROVISED_PROJECTILES(8),
 	//Warrior T3
 	HOLD_FAST(9, 3), STRONGMAN(10, 3),
-	//Berserker T3
-	ENDLESS_RAGE(11, 3), BERSERKING_STAMINA(12, 3), ENRAGED_CATALYST(13, 3),
+	//Shieldguard T3
+	COUNTERATTACK(11, 3), RECKLESS_SLAM(12, 3), ENHANCED_SHIELD(13, 3),
 	//Gladiator T3
 	CLEAVE(14, 3), LETHAL_DEFENSE(15, 3), ENHANCED_COMBO(16, 3),
 	//Heroic Leap T4
@@ -176,6 +165,9 @@ public enum Talent {
 		public String desc() { return Messages.get(this, "desc", dispTurns(visualcooldown())); }
 	};
 	public static class SpiritBladesTracker extends FlavourBuff{};
+	public static class WeaknessStrikeTracker extends CounterBuff{};
+	public static class ExtraMeleeAttack extends Buff{};
+	public static class MeleeMustHit extends Buff{};
 
 	int icon;
 	int maxPoints;
@@ -238,7 +230,7 @@ public enum Talent {
 			else                                           Buff.count(hero, NatureBerriesAvailable.class, 2);
 		}
 
-		if (talent == ARMSMASTERS_INTUITION && hero.pointsInTalent(ARMSMASTERS_INTUITION) == 2){
+		if (talent == ARMSMASTERS_INTUITION){
 			if (hero.belongings.weapon() != null) hero.belongings.weapon().identify();
 			if (hero.belongings.weapon2() != null) hero.belongings.weapon2().identify();
 			if (hero.belongings.armor() != null)  hero.belongings.armor.identify();
@@ -277,19 +269,16 @@ public enum Talent {
 
 	public static void onFoodEaten( Hero hero, float foodVal, Item foodSource ){
 		if (hero.hasTalent(HEARTY_MEAL)){
-			//3/5 HP healed, when hero is below 25% health
-			if (hero.HP <= hero.HT/4) {
-				hero.HP = Math.min(hero.HP + 1 + 2 * hero.pointsInTalent(HEARTY_MEAL), hero.HT);
-				hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1+hero.pointsInTalent(HEARTY_MEAL));
-			//2/3 HP healed, when hero is below 50% health
-			} else if (hero.HP <= hero.HT/2){
-				hero.HP = Math.min(hero.HP + 1 + hero.pointsInTalent(HEARTY_MEAL), hero.HT);
-				hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), hero.pointsInTalent(HEARTY_MEAL));
-			}
+			//heal for 5/8 HP
+			hero.HP = Math.min(hero.HP + 2 + 3 * hero.pointsInTalent(HEARTY_MEAL), hero.HT);
+			hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1+hero.pointsInTalent(HEARTY_MEAL));
 		}
 		if (hero.hasTalent(IRON_STOMACH)){
 			if (hero.cooldown() > 0) {
 				Buff.affect(hero, WarriorFoodImmunity.class, hero.cooldown());
+			}
+			if (hero.pointsInTalent(IRON_STOMACH) == 2) {
+				Buff.affect(hero, Hunger.class).satisfy(Hunger.HUNGRY/6f);
 			}
 		}
 		if (hero.hasTalent(EMPOWERING_MEAL)){
@@ -321,10 +310,6 @@ public enum Talent {
 		// 1.75x/2.5x speed with huntress talent
 		float factor = 1f + hero.pointsInTalent(SURVIVALISTS_INTUITION)*0.75f;
 
-		// 2x/instant for Warrior (see onItemEquipped)
-		if (item instanceof MeleeWeapon || item instanceof Armor){
-			factor *= 1f + hero.pointsInTalent(ARMSMASTERS_INTUITION);
-		}
 		// 3x/instant for mage (see Wand.wandUsed())
 		if (item instanceof Wand){
 			factor *= 1f + 2*hero.pointsInTalent(SCHOLARS_INTUITION);
@@ -340,8 +325,10 @@ public enum Talent {
 		if (hero.hasTalent(RESTORED_WILLPOWER)){
 			BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
 			if (shield != null){
-				int shieldToGive = Math.round(shield.maxShield() * 0.33f*(1+hero.pointsInTalent(RESTORED_WILLPOWER)));
-				shield.supercharge(shieldToGive);
+				shield.supercharge(shield.maxShield());
+				if (hero.pointsInTalent(Talent.RESTORED_WILLPOWER) == 2) {
+					Buff.affect(hero, AdrenalineSurge.class).reset(1, 200f);
+				}
 			}
 		}
 		if (hero.hasTalent(RESTORED_NATURE)){
@@ -407,7 +394,7 @@ public enum Talent {
 	}
 
 	public static void onItemEquipped( Hero hero, Item item ){
-		if (hero.pointsInTalent(ARMSMASTERS_INTUITION) == 2 && (item instanceof Weapon || item instanceof Armor)){
+		if (hero.hasTalent(ARMSMASTERS_INTUITION) && (item instanceof Weapon || item instanceof Armor)){
 			item.identify();
 		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
@@ -426,13 +413,13 @@ public enum Talent {
 	}
 
 	//note that IDing can happen in alchemy scene, so be careful with VFX here
-	public static void onItemIdentified( Hero hero, Item item ){
-		if (hero.hasTalent(TEST_SUBJECT)){
-			//heal for 2/3 HP
-			hero.HP = Math.min(hero.HP + 1 + hero.pointsInTalent(TEST_SUBJECT), hero.HT);
+	public static void onItemIdentified( Hero hero, Item item ) {
+		if (hero.hasTalent(ARMSMASTERS_INTUITION) && hero.pointsInTalent(ARMSMASTERS_INTUITION) == 2) {
+			//heal for 5 HP
+			hero.HP = Math.min(hero.HP + 1 + 2 * hero.pointsInTalent(ARMSMASTERS_INTUITION), hero.HT);
 			if (hero.sprite != null) {
 				Emitter e = hero.sprite.emitter();
-				if (e != null) e.burst(Speck.factory(Speck.HEALING), hero.pointsInTalent(TEST_SUBJECT));
+				if (e != null) e.burst(Speck.factory(Speck.HEALING), hero.pointsInTalent(ARMSMASTERS_INTUITION));
 			}
 		}
 		if (hero.hasTalent(TESTED_HYPOTHESIS)){
@@ -484,7 +471,7 @@ public enum Talent {
 		//tier 1
 		switch (cls){
 			case WARRIOR: default:
-				Collections.addAll(tierTalents, HEARTY_MEAL, ARMSMASTERS_INTUITION, TEST_SUBJECT, IRON_WILL);
+				Collections.addAll(tierTalents, HEARTY_MEAL, ARMSMASTERS_INTUITION, WEAKNESS_STRIKE, IRON_WILL);
 				break;
 			case MAGE:
 				Collections.addAll(tierTalents, EMPOWERING_MEAL, SCHOLARS_INTUITION, TESTED_HYPOTHESIS, BACKUP_BARRIER);
@@ -541,8 +528,8 @@ public enum Talent {
 		}
 		tierTalents.clear();
 
-		//tier4
-		//TBD
+		//tier 4
+		//TODO
 	}
 
 	public static void initSubclassTalents( Hero hero ){
@@ -560,8 +547,8 @@ public enum Talent {
 
 		//tier 3
 		switch (cls){
-			case BERSERKER: default:
-				Collections.addAll(tierTalents, ENDLESS_RAGE, BERSERKING_STAMINA, ENRAGED_CATALYST);
+			case SHIELDGUARD: default:
+				Collections.addAll(tierTalents, COUNTERATTACK, RECKLESS_SLAM, ENHANCED_SHIELD);
 				break;
 			case GLADIATOR:
 				Collections.addAll(tierTalents, CLEAVE, LETHAL_DEFENSE, ENHANCED_COMBO);
@@ -648,6 +635,10 @@ public enum Talent {
 				}
 			}
 		}
+	}
+
+	public static int totalPoints(int tier) {
+		return tierLevelThresholds[tier+1] - tierLevelThresholds[tier] + Dungeon.hero.bonusTalentPoints(tier);
 	}
 
 }

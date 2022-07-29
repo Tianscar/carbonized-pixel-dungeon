@@ -70,7 +70,7 @@ public class BrokenSeal extends Item {
 	}
 
 	public int maxShield( int armTier, int armLvl ){
-		return armTier + armLvl + Dungeon.hero.pointsInTalent(Talent.IRON_WILL);
+		return armTier + armLvl + (Dungeon.hero.hasTalent(Talent.IRON_WILL) ? 1+Dungeon.hero.pointsInTalent(Talent.IRON_WILL) : 0);
 	}
 
 	@Override

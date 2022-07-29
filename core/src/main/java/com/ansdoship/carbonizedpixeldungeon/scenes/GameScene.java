@@ -373,7 +373,7 @@ public class GameScene extends PixelScene {
 				int pos = Dungeon.level.randomRespawnCell( null );
 				if (item instanceof Potion) {
 					((Potion)item).shatter( pos );
-				} else if (item instanceof Plant.Seed && !Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+				} else if (item instanceof Plant.Seed && !Dungeon.isChallenged(Challenges.Challenge.NO_HERBALISM)) {
 					Dungeon.level.plant( (Plant.Seed)item, pos );
 				} else if (item instanceof Honeypot) {
 					Dungeon.level.drop(((Honeypot) item).shatter(null, pos), pos);
@@ -514,16 +514,17 @@ public class GameScene extends PixelScene {
 		//re-show WndResurrect if needed
 		if (!Dungeon.hero.isAlive()){
 			//check if hero has an unblessed ankh
-			boolean hasAnkh = false;
+			Ankh ankh = null;
 			for (Ankh i : Dungeon.hero.belongings.getAllItems(Ankh.class)){
 				if (!i.isBlessed()){
-					hasAnkh = true;
+					ankh = i;
 				}
 			}
-			if (hasAnkh) {
-				add(new WndResurrect());
+			if (ankh != null && GamesInProgress.gameExists(GamesInProgress.curSlot)) {
+				add(new WndResurrect(ankh));
+			} else {
+				gameOver();
 			}
-			else gameOver();
 		}
 
 	}

@@ -29,7 +29,7 @@ public class WndFeedback extends Window {
             @Override
             protected void onClick() {
                 super.onClick();
-                String link = "https://jq.qq.com/?_wv=1027&k=Af0aT21o";
+                String link = "https://jq.qq.com/?_wv=1027&k=ntjMkAsW";
                 Game.platform.openURI(link);
             }
 

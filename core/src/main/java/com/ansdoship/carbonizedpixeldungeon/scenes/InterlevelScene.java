@@ -25,8 +25,10 @@ import com.ansdoship.carbonizedpixeldungeon.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
+import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.LostBackpack;
 import com.ansdoship.carbonizedpixeldungeon.levels.Level;
+import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 import com.ansdoship.carbonizedpixeldungeon.levels.features.Chasm;
 import com.ansdoship.carbonizedpixeldungeon.levels.rooms.special.SpecialRoom;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -51,6 +53,7 @@ import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class InterlevelScene extends PixelScene {
 	
@@ -450,18 +453,25 @@ public class InterlevelScene extends PixelScene {
 			Dungeon.switchLevel( level, Dungeon.hero.pos );
 		}
 	}
-	
+
 	private void resurrect() {
-		
+
 		Mob.holdAllies( Dungeon.level );
 
 		Level level;
 		if (Dungeon.level.locked) {
+			ArrayList<Item> preservedItems = Dungeon.level.getItemsToPreserveFromSealedResurrect();
+
 			Dungeon.hero.resurrect();
 			Dungeon.depth--;
 			level = Dungeon.newLevel();
 			Dungeon.hero.pos = level.randomRespawnCell(Dungeon.hero);
+
+			for (Item i : preservedItems){
+				level.drop(i, level.randomRespawnCell(null));
+			}
 			level.drop(new LostBackpack(), level.randomRespawnCell(null));
+
 		} else {
 			level = Dungeon.level;
 			BArray.setFalse(level.heroFOV);
@@ -472,9 +482,28 @@ public class InterlevelScene extends PixelScene {
 			do {
 				Dungeon.hero.pos = level.randomRespawnCell(Dungeon.hero);
 				tries++;
-			} while (level.trueDistance(invPos, Dungeon.hero.pos) <= 30 - (tries/10));
-			level.plants.remove(Dungeon.hero.pos); //so the hero does not spawn on a plant
+
+				//prevents spawning on traps or plants, prefers farther locations first
+			} while (level.traps.get(Dungeon.hero.pos) != null
+					|| (level.plants.get(Dungeon.hero.pos) != null && tries < 500)
+					|| level.trueDistance(invPos, Dungeon.hero.pos) <= 30 - (tries/10));
+
+			//directly trample grass
+			if (level.map[Dungeon.hero.pos] == Terrain.HIGH_GRASS || level.map[Dungeon.hero.pos] == Terrain.FURROWED_GRASS){
+				level.map[Dungeon.hero.pos] = Terrain.GRASS;
+			}
 			Dungeon.hero.resurrect();
+			if (!level.passable[invPos]) {
+				tries = 0;
+				do {
+					invPos = level.randomRespawnCell(Dungeon.hero);
+					tries++;
+
+					//prevents spawning on traps or plants, prefers farther locations first
+				} while (level.traps.get(invPos) != null
+						|| (level.plants.get(invPos) != null && tries < 500)
+						|| level.trueDistance(Dungeon.hero.pos, invPos) <= 30 - (tries/10));
+			}
 			level.drop(new LostBackpack(), invPos);
 		}
 

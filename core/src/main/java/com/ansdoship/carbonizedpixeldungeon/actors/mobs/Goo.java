@@ -48,7 +48,7 @@ import com.ansdoship.pixeldungeonclasses.utils.Random;
 public class Goo extends Mob {
 
 	{
-		HP = HT = Dungeon.isChallenged(Challenges.STRONGER_BOSSES) ? 120 : 100;
+		HP = HT = Dungeon.isChallenged(Challenges.Challenge.STRONGER_BOSSES) ? 120 : 100;
 		EXP = 10;
 		defenseSkill = 8;
 		spriteClass = GooSprite.class;
@@ -103,7 +103,7 @@ public class Goo extends Mob {
 			if (Dungeon.level.heroFOV[pos] ){
 				sprite.emitter().burst( Speck.factory( Speck.HEALING ), healInc );
 			}
-			if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES) && healInc < 3) {
+			if (Dungeon.isChallenged(Challenges.Challenge.STRONGER_BOSSES) && healInc < 3) {
 				healInc++;
 			}
 			if (HP*2 > HT) {
@@ -192,7 +192,7 @@ public class Goo extends Mob {
 		} else {
 
 			pumpedUp++;
-			if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES)){
+			if (Dungeon.isChallenged(Challenges.Challenge.STRONGER_BOSSES)){
 				pumpedUp++;
 			}
 

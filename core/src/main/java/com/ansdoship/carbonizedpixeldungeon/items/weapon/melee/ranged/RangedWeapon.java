@@ -9,6 +9,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Momentum;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.MagicalHolster;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
@@ -42,10 +43,15 @@ public abstract class RangedWeapon extends MeleeWeapon {
         bones = false;
     }
 
-    public float timeToLoad = 1f;
+    public float time2Load = 1f;
 
     public float loadDelayFactor(Char owner) {
-        return timeToLoad * (1f/speedMultiplier(owner));
+        return time2Load * (1f/speedMultiplier(owner));
+    }
+
+    public float time2Unload = 0.5f;
+    public float unloadDelayFactor(Char owner) {
+        return time2Unload * (1f/speedMultiplier(owner));
     }
 
     public float timeToShoot = 1f;
@@ -202,20 +208,33 @@ public abstract class RangedWeapon extends MeleeWeapon {
 
     protected void empty() {
 
+        int amount = missiles.size();
+        if (amount == 1) {
+            unload();
+            return;
+        }
+
         Hero hero = Dungeon.hero;
         hero.sprite.operate( hero.pos );
         hero.busy();
         Sample.INSTANCE.play(unloadSound, 2, unloadSoundPitch);
 
-        int amount = missiles.size();
+        String missilesString = "";
         for (int i = 0; i < amount; i ++) {
             MissileWeapon missile = popLastMissile();
             missile.shooter = null;
 
-            GLog.i(Messages.get(this, "you_now_unloaded", missile.name(), name()));
+            if (!missile.collect()){
+                Dungeon.level.drop(missile, hero.pos);
+            }
 
-            missile.doPickUp( Dungeon.hero );
+            missilesString += missile.name() + ", ";
         }
+        missilesString = missilesString.substring(0, missilesString.length() - 2);
+        if (PDSettings.language() == Languages.CHINESE || PDSettings.language() == Languages.TR_CHINESE)
+            missilesString = missilesString.replaceAll(", ", "、");
+        GLog.i(Messages.get(this, "you_now_unloaded", missilesString, name()));
+        hero.spendAndNext( unloadDelayFactor( hero ) * amount );
 
         updateQuickslot();
 
@@ -232,8 +251,10 @@ public abstract class RangedWeapon extends MeleeWeapon {
         missile.shooter = null;
 
         GLog.i(Messages.get(this, "you_now_unloaded", missile.name(), name()));
-
-        missile.doPickUp( Dungeon.hero );
+        hero.spendAndNext( unloadDelayFactor( hero ) );
+        if (!missile.collect()){
+            Dungeon.level.drop(missile, hero.pos);
+        }
 
         updateQuickslot();
 
@@ -303,12 +324,12 @@ public abstract class RangedWeapon extends MeleeWeapon {
     public String info() {
         String info = super.info();
 
-        info += "\n\n" + Messages.get( this, "stats", DEXReq());
+        info += "\n\n" + Messages.get( this, levelKnown ? "stats_known" : "stats_unknown", DEXReq());
         if (DEXReq() > Dungeon.hero.DEX()) {
-            info += " " + Messages.get(MissileWeapon.class, "hard_to_aim");
+            info += " " + Messages.get(MissileWeapon.class, levelKnown ? "too_bulky" : "probably_too_bulky");
         }
 
-        if (cursed) {
+        if (cursed && cursedKnown) {
             info += "\n\n" + Messages.get( this, "cursed" );
         }
         if (!missiles.isEmpty()) {

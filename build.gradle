@@ -15,8 +15,8 @@ allprojects {
         appVendor = 'AnsdoShip'
         appPackageName = 'com.ansdoship.carbonizedpixeldungeon'
 
-        appVersionCode = 27
-        appVersionName = '0.0.7p7-ALPHA'
+        appVersionCode = 28
+        appVersionName = '0.0.8-ALPHA'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 

@@ -222,8 +222,8 @@ public class Dungeon {
 		GamesInProgress.selectedClass.initHero( hero );
 	}
 
-	public static boolean isChallenged( int mask ) {
-		return (challenges & mask) != 0;
+	public static boolean isChallenged( Challenges.Challenge challenge ) {
+		return (challenges & challenge.mask()) != 0;
 	}
 	
 	public static Level newLevel() {
@@ -413,7 +413,7 @@ public class Dungeon {
 	public static boolean souNeeded() {
 		int souLeftThisSet;
 		//3 SOU each floor set, 1.5 (rounded) on forbidden runes challenge
-		if (isChallenged(Challenges.NO_SCROLLS)){
+		if (isChallenged(Challenges.Challenge.NO_SCROLLS)){
 			souLeftThisSet = Math.round(1.5f - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 1.5f));
 		} else {
 			souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 3);

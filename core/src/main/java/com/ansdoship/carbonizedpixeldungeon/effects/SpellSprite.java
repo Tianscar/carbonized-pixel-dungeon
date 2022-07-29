@@ -39,6 +39,8 @@ public class SpellSprite extends Image {
 	public static final int MASTERY		= 3;
 	public static final int BERSERK     = 4;
 	public static final int ANKH        = 5;
+	public static final int DEFENSE     = 6;
+	public static final int NO_DEFENSE  = 7;
 	
 	private static final int SIZE	= 16;
 	

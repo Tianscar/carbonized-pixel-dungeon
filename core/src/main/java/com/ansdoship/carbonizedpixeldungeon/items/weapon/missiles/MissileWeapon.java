@@ -38,6 +38,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.curses.Wayward;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.enchantments.Projecting;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.RangedWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -470,20 +471,32 @@ abstract public class MissileWeapon extends Weapon {
 
 		String info = desc();
 
-		info += "\n\n" + Messages.get( MissileWeapon.class, "stats",
-				tier,
-				Math.round(augment.damageFactor(min())),
-				Math.round(augment.damageFactor(max())),
-				STRReq(), DEXReq());
-
-		if (STRReq() > Dungeon.hero.STR()) {
-			info += " " + Messages.get(Weapon.class, "too_heavy");
-		}
-
-		if (DEXReq() > Dungeon.hero.DEX()) {
-			info += " " + Messages.get(MissileWeapon.class, "hard_to_aim");
-		} else if (Dungeon.hero.DEX() > DEXReq()){
-			info += " " + Messages.get(MissileWeapon.class, "excess_dex", Dungeon.hero.DEX() - DEXReq());
+		if (levelKnown) {
+			info += "\n\n" + Messages.get( MissileWeapon.class, "stats_known",
+					tier,
+					Math.round(augment.damageFactor(min())),
+					Math.round(augment.damageFactor(max())),
+					STRReq(), DEXReq());
+			if (STRReq() > Dungeon.hero.STR()) {
+				info += " " + Messages.get(Weapon.class, "too_heavy");
+			}
+			if (DEXReq() > Dungeon.hero.DEX()) {
+				info += " " + Messages.get(MissileWeapon.class, "too_bulky");
+			} else if (Dungeon.hero.DEX() > DEXReq()){
+				info += " " + Messages.get(MissileWeapon.class, "excess_dex", Dungeon.hero.DEX() - DEXReq());
+			}
+		} else {
+			info += "\n\n" + Messages.get( MissileWeapon.class, "stats_unknown",
+					tier,
+					Math.round(min(0)),
+					Math.round(max(0)),
+					STRReq(0), DEXReq(0));
+			if (STRReq(0) > Dungeon.hero.STR()) {
+				info += " " + Messages.get(MeleeWeapon.class, "probably_too_heavy");
+			}
+			if (DEXReq() > Dungeon.hero.DEX()) {
+				info += " " + Messages.get(MissileWeapon.class, "probably_too_bulky");
+			}
 		}
 
 		if (enchantment != null && (cursedKnown || !enchantment.curse())){

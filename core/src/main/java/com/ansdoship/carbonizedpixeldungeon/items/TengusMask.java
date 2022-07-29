@@ -24,6 +24,8 @@ package com.ansdoship.carbonizedpixeldungeon.items;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Badges;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.DefensiveStance;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
@@ -96,6 +98,7 @@ public class TengusMask extends Item {
 		curUser.busy();
 
 		curUser.subClass = way;
+		if (curUser.subClass == HeroSubClass.SHIELDGUARD) Buff.affect( curUser, DefensiveStance.class );
 		Talent.initSubclassTalents(curUser);
 
 		curUser.sprite.operate( curUser.pos );
@@ -105,6 +108,8 @@ public class TengusMask extends Item {
 		e.pos(e.x-2, e.y-6, 4, 4);
 		e.start(Speck.factory(Speck.MASK), 0.05f, 20);
 		GLog.p( Messages.get(this, "used"));
+
+		updateQuickslot();
 
 	}
 }

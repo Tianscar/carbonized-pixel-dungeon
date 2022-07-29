@@ -23,6 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.ui.changelist.cbpd;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Badges;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.BigRat;
 import com.ansdoship.carbonizedpixeldungeon.effects.BadgeBanner;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.DriedRose;
@@ -47,6 +48,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_8_changes(changeInfos);
 		add_v0_0_7p7_changes(changeInfos);
 		add_v0_0_7p6_changes(changeInfos);
 		add_v0_0_7p5_changes(changeInfos);
@@ -75,6 +77,32 @@ public class v0_0_X_Changes {
 		add_v0_0_1_Changes(changeInfos);
 	}
 
+	public static void add_v0_0_8_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.8", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
+				"_-_ 2022年7月29日更新\n" +
+						"_-_ 距离碳化的像素地牢v0.0.7更新31天\n" +
+						"\n" +
+						"因为生活所迫，停更了一段时间，期间还经历了QQ群被炸，但v0.0.8版本最终还是到来了。\n\n" +
+						"本次更新仍未加入属性药水，但移除了狂战士，改为盾卫。\n\n" +
+						"如果不出意外，接下来的几个patch版本会加入属性药水，敬请期待。"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"补全了部分游戏文本"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.NEWS), "网址变更",
+				"_-_ 官网网址变更到：_https://carbonizedpd.tianscar.com_\n" +
+						"_-_ 新闻界面和QQ群加群链接都更换到新的网址\n" +
+						"_-_ 实装了捐赠界面"));
+
+		changes.addButton(new ChangeButton( new Image(Assets.Sprites.WARRIOR, 0, 90, 12, 15), HeroSubClass.SHIELDGUARD.title(),
+				"_加入了新职业：盾卫，作为狂战士的替代品！_\n\n" +
+						"盾卫拥有额外的0~6点格挡量，并且近战攻击会造成防御值和格挡量10%的额外伤害。盾卫随时可以进入防御姿态，防御姿态下防御力提升50%，但近战攻击力也降低50%。"));
+	}
+
 	public static void add_v0_0_7p7_changes( ArrayList<ChangeInfo> changeInfos ) {
 		ChangeInfo changes = new ChangeInfo("v0.0.7p7", false, "");
 		changes.hardlight(Window.TITLE_COLOR);
@@ -93,7 +121,8 @@ public class v0_0_X_Changes {
 						"_- 敏捷_影响投掷和远程武器的伤害和命中\n" +
 						"_- 智力_影响法杖的使用\n" +
 						"_- 感知_影响探测地块的范围\n" +
-						"_- 魅力_能够让商店打折"));
+						"_- 魅力_能够让商店打折\n\n" +
+						"注：力量药水暂未修改，其他属性没有增加的渠道，现版本建议使用战士游玩。"));
 	}
 
 	public static void add_v0_0_7p6_changes( ArrayList<ChangeInfo> changeInfos ) {
@@ -393,7 +422,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.NEWS), "游戏新闻界面实装！",
 				"_现在游戏新闻界面会显示碳化的像素地牢的游戏新闻了！_\n\n" +
-						"这个功能会从cbpd.tianscar.com拉来博客文章，然后在游戏中显示。它还会在有新文章时通知玩家。\n\n" +
+						"这个功能会从carbonizedpd.tianscar.com拉来博客文章，然后在游戏中显示。它还会在有新文章时通知玩家。\n\n" +
 						"感谢Evan的Atom订阅代码和Hexo博客框架！我以后会尽量保持游戏新闻的更新的！"));
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "新的BGM！",

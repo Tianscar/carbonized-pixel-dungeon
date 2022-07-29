@@ -58,7 +58,6 @@ public class Messages {
 
 	private static String[] prop_files = new String[]{
 			Assets.Messages.ACTORS,
-			Assets.Messages.BIGRAT,
 			Assets.Messages.ITEMS,
 			Assets.Messages.JOURNAL,
 			Assets.Messages.LEVELS,
@@ -83,6 +82,9 @@ public class Messages {
 
 		for (String file : prop_files) {
 			bundles.add(I18NBundle.createBundle(Gdx.files.internal(file), locale));
+		}
+		if (lang.code().equals("zh") || lang.code().equals("tc")) {
+			bundles.add(I18NBundle.createBundle(Gdx.files.internal(Assets.Messages.BIGRAT), locale));
 		}
 	}
 

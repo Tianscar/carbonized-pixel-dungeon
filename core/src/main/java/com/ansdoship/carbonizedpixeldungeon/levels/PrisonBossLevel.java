@@ -597,7 +597,7 @@ public class PrisonBossLevel extends Level {
 		boolean[] trapsPatch;
 
 		//fill ramps up much faster during challenge, effectively 78%-90%
-		if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES)){
+		if (Dungeon.isChallenged(Challenges.Challenge.STRONGER_BOSSES)){
 			fill = 0.675f + fill/4f;
 		}
 
@@ -617,7 +617,7 @@ public class PrisonBossLevel extends Level {
 			//so distance to tengu starts at 3-6 tiles and scales up to 7-8 as fill increases
 		} while (((PathFinder.distance[heroPos] < Math.ceil(7*fill))
 				|| (PathFinder.distance[heroPos] > Math.ceil(4 + 4*fill))));
-		System.out.println(tries);
+		Game.platform.logd("tries: " + tries);
 
 		PathFinder.setMapSize(width(), height());
 		

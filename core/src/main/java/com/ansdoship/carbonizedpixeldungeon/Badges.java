@@ -131,7 +131,7 @@ public class Badges {
 		VICTORY                     ( 85 ),
 		YASD                        ( 86, true ),
 		BOSS_SLAIN_3_GLADIATOR,
-		BOSS_SLAIN_3_BERSERKER,
+		BOSS_SLAIN_3_SHIELDGUARD,
 		BOSS_SLAIN_3_WARLOCK,
 		BOSS_SLAIN_3_BATTLEMAGE,
 		BOSS_SLAIN_3_FREERUNNER,
@@ -141,7 +141,7 @@ public class Badges {
 		BOSS_SLAIN_3_ALL_SUBCLASSES ( 87, true ),
 		GAMES_PLAYED_3              ( 88, true ),
 
-		//platinum
+		//diamond
 		HAPPY_END                   ( 96 ),
 		ALL_ITEMS_IDENTIFIED        ( 97, true ),
 		VICTORY_WARRIOR,
@@ -151,8 +151,9 @@ public class Badges {
 		VICTORY_ALL_CLASSES         ( 98, true ),
 		GAMES_PLAYED_4              ( 99, true ),
 		CHAMPION_1                  ( 100 ),
+		LEVEL_REACHED_6             ( 101 ),
 
-		//diamond
+		//platinum
 		GAMES_PLAYED_5              ( 112, true ),
 		CHAMPION_2                  ( 113 ),
 		CHAMPION_3                  ( 114 );
@@ -358,6 +359,10 @@ public class Badges {
 		}
 		if (!local.contains( Badge.LEVEL_REACHED_5 ) && Dungeon.hero.lvl >= 30) {
 			badge = Badge.LEVEL_REACHED_5;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.LEVEL_REACHED_6 ) && Dungeon.hero.lvl >= 40) {
+			badge = Badge.LEVEL_REACHED_6;
 			local.add( badge );
 		}
 
@@ -667,8 +672,8 @@ public class Badges {
 					case GLADIATOR:
 						badge = Badge.BOSS_SLAIN_3_GLADIATOR;
 						break;
-					case BERSERKER:
-						badge = Badge.BOSS_SLAIN_3_BERSERKER;
+					case SHIELDGUARD:
+						badge = Badge.BOSS_SLAIN_3_SHIELDGUARD;
 						break;
 					case WARLOCK:
 						badge = Badge.BOSS_SLAIN_3_WARLOCK;
@@ -695,7 +700,7 @@ public class Badges {
 				addGlobal(badge);
 
 				if (isUnlocked( Badge.BOSS_SLAIN_3_GLADIATOR ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_BERSERKER ) &&
+						isUnlocked( Badge.BOSS_SLAIN_3_SHIELDGUARD ) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_WARLOCK ) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_BATTLEMAGE ) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_FREERUNNER ) &&
@@ -929,7 +934,7 @@ public class Badges {
 			{Badge.MONSTERS_SLAIN_1, Badge.MONSTERS_SLAIN_2, Badge.MONSTERS_SLAIN_3, Badge.MONSTERS_SLAIN_4, Badge.MONSTERS_SLAIN_5},
 			{Badge.GOLD_COLLECTED_1, Badge.GOLD_COLLECTED_2, Badge.GOLD_COLLECTED_3, Badge.GOLD_COLLECTED_4, Badge.GOLD_COLLECTED_5},
 			{Badge.ITEM_LEVEL_1, Badge.ITEM_LEVEL_2, Badge.ITEM_LEVEL_3, Badge.ITEM_LEVEL_4, Badge.ITEM_LEVEL_5},
-			{Badge.LEVEL_REACHED_1, Badge.LEVEL_REACHED_2, Badge.LEVEL_REACHED_3, Badge.LEVEL_REACHED_4, Badge.LEVEL_REACHED_5},
+			{Badge.LEVEL_REACHED_1, Badge.LEVEL_REACHED_2, Badge.LEVEL_REACHED_3, Badge.LEVEL_REACHED_4, Badge.LEVEL_REACHED_5, Badge.LEVEL_REACHED_6},
 			{Badge.STRENGTH_ATTAINED_1, Badge.STRENGTH_ATTAINED_2, Badge.STRENGTH_ATTAINED_3, Badge.STRENGTH_ATTAINED_4, Badge.STRENGTH_ATTAINED_5},
 			{Badge.FOOD_EATEN_1, Badge.FOOD_EATEN_2, Badge.FOOD_EATEN_3, Badge.FOOD_EATEN_4, Badge.FOOD_EATEN_5},
 			{Badge.POTIONS_COOKED_1, Badge.POTIONS_COOKED_2, Badge.POTIONS_COOKED_3, Badge.POTIONS_COOKED_4, Badge.POTIONS_COOKED_5},

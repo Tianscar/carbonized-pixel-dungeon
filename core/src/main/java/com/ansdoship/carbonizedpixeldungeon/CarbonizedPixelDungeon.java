@@ -33,6 +33,7 @@ import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
 
 public class CarbonizedPixelDungeon extends Game {
 
+	public static final int v0_0_8   = 28;
 	public static final int v0_0_7   = 20;
 	public static final int v0_0_6   = 16;
 	public static final int v0_0_5   = 12;
@@ -40,6 +41,11 @@ public class CarbonizedPixelDungeon extends Game {
 	
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {
 		super( sceneClass == null ? SplashScene.class : sceneClass, platform );
+
+		//CBPD v0.0.8
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength" );
 
 		//CBPD v0.0.7
 		Bundle.addAlias(

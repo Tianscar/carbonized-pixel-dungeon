@@ -101,12 +101,7 @@ public class WndGameInProgress extends Window {
 			add( btnChallenges );
 		}
 
-		ColorBlock sep1 = new ColorBlock(1, 1, 0xFF000000);
-		sep1.size(WIDTH, 1);
-		sep1.y = title.bottom() + 2;
-		add(sep1);
-
-		pos = sep1.y + GAP;
+		pos = title.bottom() + GAP;
 
 		int strBonus = info.STRBonus;
 		if (strBonus > 0)           statSlot( Messages.get(this, "str"), info.STR + " + " + strBonus );
@@ -125,13 +120,6 @@ public class WndGameInProgress extends Window {
 		pos += GAP;
 		statSlot( Messages.get(this, "gold"), info.goldCollected );
 		statSlot( Messages.get(this, "depth"), info.maxDepth );
-
-		ColorBlock sep2 = new ColorBlock(1, 1, 0xFF000000);
-		sep2.size(WIDTH, 1);
-		sep2.y = pos;
-		add(sep2);
-
-		pos += GAP;
 		
 		RedButton cont = new RedButton(Messages.get(this, "continue")){
 			@Override

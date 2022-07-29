@@ -33,6 +33,7 @@ import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class WndChallenges extends Window {
 
@@ -43,6 +44,7 @@ public class WndChallenges extends Window {
 
 	private boolean editable;
 	private ArrayList<CheckBox> boxes;
+	private final Challenges.Challenge[] challenges;
 
 	public WndChallenges( int checked, boolean editable ) {
 
@@ -62,12 +64,14 @@ public class WndChallenges extends Window {
 		boxes = new ArrayList<>();
 
 		float pos = TTL_HEIGHT;
-		for (int i=0; i < Challenges.NAME_IDS.length; i++) {
 
-			final String challenge = Challenges.NAME_IDS[i];
+		challenges = Challenges.allSorted;
+		for (int i=0; i < challenges.length; i++) {
+
+			final Challenges.Challenge challenge = challenges[i];
 			
-			CheckBox cb = new CheckBox( Messages.titleCase(Messages.get(Challenges.class, challenge)) );
-			cb.checked( (checked & Challenges.MASKS[i]) != 0 );
+			CheckBox cb = new CheckBox( Messages.titleCase(Messages.get(Challenges.class, challenge.name().toLowerCase(Locale.ENGLISH))) );
+			cb.checked( (checked & challenge.mask()) != 0 );
 			cb.active = editable;
 
 			if (i > 0) {
@@ -103,7 +107,7 @@ public class WndChallenges extends Window {
 			int value = 0;
 			for (int i=0; i < boxes.size(); i++) {
 				if (boxes.get( i ).checked()) {
-					value |= Challenges.MASKS[i];
+					value |= challenges[i].mask();
 				}
 			}
 			PDSettings.challenges( value );

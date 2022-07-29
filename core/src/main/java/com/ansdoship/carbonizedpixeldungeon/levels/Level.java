@@ -29,15 +29,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.ansdoship.carbonizedpixeldungeon.actors.blobs.SmokeScreen;
 import com.ansdoship.carbonizedpixeldungeon.actors.blobs.Web;
 import com.ansdoship.carbonizedpixeldungeon.actors.blobs.WellWater;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Awareness;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Blindness;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ChampionEnemy;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.LockedFloor;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.MagicalSight;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.MindVision;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.RevealedArea;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Shadows;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
@@ -55,12 +47,13 @@ import com.ansdoship.carbonizedpixeldungeon.items.Stylus;
 import com.ansdoship.carbonizedpixeldungeon.items.Torch;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfEnchantment;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfIntuition;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfRegrowth;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfWarding;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.HeavyBoomerang;
 import com.ansdoship.carbonizedpixeldungeon.levels.features.Chasm;
 import com.ansdoship.carbonizedpixeldungeon.levels.features.Door;
 import com.ansdoship.carbonizedpixeldungeon.levels.features.HighGrass;
@@ -118,7 +111,7 @@ public abstract class Level implements Bundlable {
 	public boolean[] mapped;
 	public boolean[] discoverable;
 
-	public int viewDistance = Dungeon.isChallenged( Challenges.DARKNESS ) ? 2 : 8;
+	public int viewDistance = Dungeon.isChallenged( Challenges.Challenge.DARKNESS ) ? 2 : 8;
 	
 	public boolean[] heroFOV;
 	
@@ -182,12 +175,12 @@ public abstract class Level implements Bundlable {
 
 			addItemToSpawn(Generator.random(Generator.Category.FOOD));
 
-			if (Dungeon.isChallenged(Challenges.DARKNESS)){
+			if (Dungeon.isChallenged(Challenges.Challenge.DARKNESS)){
 				addItemToSpawn( new Torch() );
 			}
 
 			if (Dungeon.posNeeded()) {
-				addItemToSpawn( new PotionOfStrength() );
+				addItemToSpawn( new PotionOfPower() );
 				Dungeon.LimitedDrops.STRENGTH_POTIONS.count++;
 			}
 			if (Dungeon.souNeeded()) {
@@ -309,6 +302,11 @@ public abstract class Level implements Bundlable {
 	public void restoreFromBundle( Bundle bundle ) {
 
 		version = bundle.getInt( VERSION );
+
+		//saves from before v0.0.8 are not supported
+		if (version < CarbonizedPixelDungeon.v0_0_8){
+			throw new RuntimeException("old save");
+		}
 
 		setSize( bundle.getInt(WIDTH), bundle.getInt(HEIGHT));
 		
@@ -451,7 +449,7 @@ public abstract class Level implements Bundlable {
 		}
 
 		Mob m = Reflection.newInstance(mobsToSpawn.remove(0));
-		if (Dungeon.isChallenged(Challenges.CHAMPION_ENEMIES)){
+		if (Dungeon.isChallenged(Challenges.Challenge.CHAMPION_ENEMIES)){
 			ChampionEnemy.rollForChampion(m);
 		}
 		return m;
@@ -475,6 +473,22 @@ public abstract class Level implements Bundlable {
 				Dungeon.hero.buff(LockedFloor.class).detach();
 			}
 		}
+	}
+
+	public ArrayList<Item> getItemsToPreserveFromSealedResurrect(){
+		ArrayList<Item> items = new ArrayList<>();
+		for (Heap h : heaps.valueList()){
+			if (h.type == Heap.Type.HEAP) items.addAll(h.items);
+		}
+		for (Mob m : mobs){
+			for (PinCushion b : m.buffs(PinCushion.class)){
+				items.addAll(b.getStuckItems());
+			}
+		}
+		for (HeavyBoomerang.CircleBack b : Dungeon.hero.buffs(HeavyBoomerang.CircleBack.class)){
+			if (b.activeDepth() == Dungeon.depth) items.add(b.cancel());
+		}
+		return items;
 	}
 
 	public Group addVisuals() {
@@ -811,7 +825,7 @@ public abstract class Level implements Bundlable {
 	
 	public Plant plant( Plant.Seed seed, int pos ) {
 		
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)){
+		if (Dungeon.isChallenged(Challenges.Challenge.NO_HERBALISM)){
 			return null;
 		}
 

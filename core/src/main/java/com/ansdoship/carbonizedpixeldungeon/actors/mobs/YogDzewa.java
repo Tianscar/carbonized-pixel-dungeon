@@ -124,7 +124,7 @@ public class YogDzewa extends Mob {
 
 	private ArrayList<Class> regularSummons = new ArrayList<>();
 	{
-		if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES)){
+		if (Dungeon.isChallenged(Challenges.Challenge.STRONGER_BOSSES)){
 			for (int i = 0; i < 6; i++){
 				if (i >= 4){
 					regularSummons.add(YogRipper.class);
@@ -209,7 +209,7 @@ public class YogDzewa extends Mob {
 					Dungeon.observe();
 				}
 				for (Char ch : affected) {
-					if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES)){
+					if (Dungeon.isChallenged(Challenges.Challenge.STRONGER_BOSSES)){
 						ch.damage(Random.NormalIntRange(30, 50), new Eye.DeathGaze());
 					} else {
 						ch.damage(Random.NormalIntRange(20, 30), new Eye.DeathGaze());
@@ -362,7 +362,7 @@ public class YogDzewa extends Mob {
 
 			addFist((YogFist)Reflection.newInstance(fistSummons.remove(0)));
 
-			if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES)){
+			if (Dungeon.isChallenged(Challenges.Challenge.STRONGER_BOSSES)){
 				addFist((YogFist)Reflection.newInstance(challengeSummons.remove(0)));
 			}
 
@@ -392,7 +392,7 @@ public class YogDzewa extends Mob {
 
 		int targetPos = Dungeon.level.exit + Dungeon.level.width();
 
-		if (!Dungeon.isChallenged(Challenges.STRONGER_BOSSES)
+		if (!Dungeon.isChallenged(Challenges.Challenge.STRONGER_BOSSES)
 				&& Actor.findChar(targetPos) == null){
 			fist.pos = targetPos;
 		} else if (Actor.findChar(targetPos-1) == null){

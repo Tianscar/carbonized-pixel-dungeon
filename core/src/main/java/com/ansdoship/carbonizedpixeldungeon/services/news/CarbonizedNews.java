@@ -46,9 +46,9 @@ public class CarbonizedNews extends NewsService {
 
 		Net.HttpRequest httpGet = new Net.HttpRequest(Net.HttpMethods.GET);
 		if (preferHTTPS) {
-			httpGet.setUrl("https://cbpd.tianscar.com/atom.xml");
+			httpGet.setUrl("https://carbonizedpd.tianscar.com/atom.xml");
 		} else {
-			httpGet.setUrl("http://cbpd.tianscar.com/atom.xml");
+			httpGet.setUrl("http://carbonizedpd.tianscar.com/atom.xml");
 		}
 
 		Gdx.net.sendHttpRequest(httpGet, new Net.HttpResponseListener() {

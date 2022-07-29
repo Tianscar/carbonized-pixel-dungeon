@@ -28,10 +28,10 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 
-public class PotionOfStrength extends Potion {
+public class PotionOfPower extends Potion {
 
 	{
-		icon = ItemSpriteSheet.Icons.POTION_STRENGTH;
+		icon = ItemSpriteSheet.Icons.POTION_POWER;
 
 		unique = true;
 	}

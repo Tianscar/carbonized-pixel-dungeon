@@ -209,11 +209,6 @@ public class WndRanking extends WndTabbed {
 			PixelScene.align(btnTalents);
 			add(btnTalents);
 
-			ColorBlock sep = new ColorBlock(1, 1, 0xFF000000);
-			sep.size(WIDTH, 1);
-			sep.y = title.bottom() + 1;
-			add(sep);
-
 			float pos = btnTalents.bottom();
 
 			if (Dungeon.challenges > 0) {

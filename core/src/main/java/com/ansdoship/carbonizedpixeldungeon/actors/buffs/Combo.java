@@ -88,10 +88,10 @@ public class Combo extends Buff implements ActionIndicator.Action {
 	public void hit( Char enemy ) {
 
 		count++;
-		comboTime = 5f;
+		comboTime = 10f;
 
 		if (!enemy.isAlive() || (enemy.buff(Corruption.class) != null && enemy.HP == enemy.HT)){
-			comboTime = Math.max(comboTime, 15*((Hero)target).pointsInTalent(Talent.CLEAVE));
+			comboTime = Math.max(comboTime, 20*((Hero)target).pointsInTalent(Talent.CLEAVE));
 		}
 
 		initialComboTime = comboTime;
@@ -176,6 +176,8 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		Image icon;
 		if (((Hero)target).belongings.weapon() != null){
 			icon = new ItemSprite(((Hero)target).belongings.weapon().image, null);
+		} else if (((Hero)target).belongings.weapon2() != null){
+			icon = new ItemSprite(((Hero)target).belongings.weapon2().image, null);
 		} else {
 			icon = new ItemSprite(new Item(){ {image = ItemSpriteSheet.WEAPON_HOLDER; }});
 		}
@@ -309,7 +311,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 				dmgMulti = 0;
 				break;
 			case SLAM:
-				dmgBonus = Math.round(target.drRoll() * count / 5f);
+				dmgBonus = Math.round(target.drRoll() * count * 0.2f);
 				break;
 			case CRUSH:
 				dmgMulti = 0.25f * count;
@@ -414,9 +416,14 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		}
 
 		if (!enemy.isAlive() || (!wasAlly && enemy.alignment == target.alignment)) {
-			if (hero.hasTalent(Talent.LETHAL_DEFENSE) && hero.buff(BrokenSeal.WarriorShield.class) != null){
-				BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
-				shield.supercharge(Math.round(shield.maxShield() * hero.pointsInTalent(Talent.LETHAL_DEFENSE)/3f));
+			if (hero.hasTalent(Talent.LETHAL_DEFENSE)) {
+				if (Dungeon.hero.pointsInTalent(Talent.LETHAL_DEFENSE) == 2) {
+					Buff.affect(Dungeon.hero, Talent.MeleeMustHit.class);
+				}
+				if (hero.buff(BrokenSeal.WarriorShield.class) != null){
+					BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
+					shield.supercharge(Math.round(shield.maxShield() * hero.pointsInTalent(Talent.LETHAL_DEFENSE)*0.5f));
+				}
 			}
 		}
 

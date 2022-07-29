@@ -26,7 +26,7 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.AlchemicalCatalyst;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -73,7 +73,7 @@ public class ElixirOfMight extends Elixir {
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
 
 		{
-			inputs =  new Class[]{PotionOfStrength.class, AlchemicalCatalyst.class};
+			inputs =  new Class[]{PotionOfPower.class, AlchemicalCatalyst.class};
 			inQuantity = new int[]{1, 1};
 
 			cost = 6;

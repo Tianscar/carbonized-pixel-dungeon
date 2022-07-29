@@ -72,8 +72,8 @@ public class AboutScene extends PixelScene {
 						"\nDachhack's Sprouted Pixel Dungeon, " +
 						"\nTypedScroll's Overgrown Pixel Dungeon, " +
 						"\ndreamdream2020's Scorched Pixel Dungeon",
-				"cbpd.tianscar.com",
-				"https://cbpd.tianscar.com");
+				"carbonizedpd.tianscar.com",
+				"https://carbonizedpd.tianscar.com");
 		if (landscape()){
 			tians.setRect((w - fullWidth)/2f - 6, 7, 120, 0);
 		} else {

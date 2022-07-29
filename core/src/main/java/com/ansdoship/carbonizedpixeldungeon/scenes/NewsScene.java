@@ -145,7 +145,7 @@ public class NewsScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				String link = "https://cbpd.tianscar.com";
+				String link = "https://carbonizedpd.tianscar.com";
 				Game.platform.openURI(link);
 			}
 		};
