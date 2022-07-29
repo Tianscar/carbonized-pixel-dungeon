@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-        google()
-        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven{ url 'https://maven.aliyun.com/repository/jcenter'}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
@@ -31,8 +31,8 @@ allprojects {
     version = appVersionName
 
     repositories {
-        google()
-        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven{ url 'https://maven.aliyun.com/repository/jcenter'}
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
 
