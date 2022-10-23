@@ -48,6 +48,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
+		add_v0_0_8p1_changes(changeInfos);
 		add_v0_0_8_changes(changeInfos);
 		add_v0_0_7p7_changes(changeInfos);
 		add_v0_0_7p6_changes(changeInfos);
@@ -75,6 +76,18 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_8p1_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.8p1", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
+				"_-_ 2022年10月23日更新\n" +
+						"_-_ 距离碳化的像素地牢v0.0.8更新88天\n" +
+						"\n" +
+						"我恢复更新了。不过这个版本什么都没更......周更中（最迟下周三会补上这次更新），敬请期待！"));
 	}
 
 	public static void add_v0_0_8_changes( ArrayList<ChangeInfo> changeInfos ) {

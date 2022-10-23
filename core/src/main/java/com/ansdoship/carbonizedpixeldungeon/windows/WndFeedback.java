@@ -99,7 +99,7 @@ public class WndFeedback extends Window {
             @Override
             protected void onClick() {
                 super.onClick();
-                String link = "https://sponsor.tianscar.com";
+                String link = "https://afdian.net/a/tianscar";
                 Game.platform.openURI(link);
             }
         };

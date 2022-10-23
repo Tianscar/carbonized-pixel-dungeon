@@ -7,8 +7,8 @@ A traditional roguelike game, with randomly generated levels, items, enemies, an
 
 Carbonized Pixel Dungeon currently compiles for Android and Desktop platforms. It is available from [GitHub](https://github.com/AnsdoShip/carbonized-pixel-dungeon/releases).
 
-If you like this game, please consider [sponsor me](https://sponsor.tianscar.com)!
+If you like this game, please consider [sponsor me](https://afdian.net/a/tianscar)!
 
-There is an official blog for this project at [cbpd.tianscar.com](https://cbpd.tianscar.com).
+There is an official blog for this project at [carbonizedpd.tianscar.com](https://carbonizedpd.tianscar.com).
 
 Note that **this repository does not accept pull requests!** The code here is provided in hopes that others may find it useful for their own projects, not to allow community contribution. Issue reports of all kinds (bug reports, feature requests, etc.) are welcome.
