@@ -21,17 +21,14 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items.potions.elixirs;
 
-import com.ansdoship.carbonizedpixeldungeon.Badges;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.AlchemicalCatalyst;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPotential;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
-import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
-import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 
@@ -43,25 +40,34 @@ public class ElixirOfMight extends Elixir {
 		unique = true;
 	}
 
+	private static final int START_POINTS = 3;
+	private static final int HTBOOST = 10;
+
+	@Override
+	protected void drink(Hero hero) {
+		PotionOfPotential.drink(hero, new ItemSprite(this), START_POINTS, new String[] { Messages.get(this, "msg_hp", HTBOOST) },
+				new String[]{ Messages.get(this, "msg_hp_2") }, new Runnable() {
+			@Override
+			public void run() {
+				/*
+				Buff.affect(hero, HTBoost.class).reset();
+				HTBoost boost = Buff.affect(hero, HTBoost.class);
+				boost.reset();
+				 */
+				hero.HTBoost += HTBOOST;
+				hero.updateHT( true );
+				ElixirOfMight.super.drink(hero);
+			}
+		});
+	}
+
 	@Override
 	public void apply( Hero hero ) {
 		identify();
-
-		hero.STR++;
-
-		Buff.affect(hero, HTBoost.class).reset();
-		HTBoost boost = Buff.affect(hero, HTBoost.class);
-		boost.reset();
-
-		hero.updateHT( true );
-		hero.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "msg_1", boost.boost() ));
-		GLog.p( Messages.get(this, "msg_2") );
-
-		Badges.validateStrengthAttained();
 	}
 
 	public String desc() {
-		return Messages.get(this, "desc", HTBoost.boost(Dungeon.hero.HT));
+		return Messages.get(this, "desc", HTBOOST);
 	}
 
 	@Override
@@ -73,7 +79,7 @@ public class ElixirOfMight extends Elixir {
 	public static class Recipe extends com.ansdoship.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
 
 		{
-			inputs =  new Class[]{PotionOfPower.class, AlchemicalCatalyst.class};
+			inputs =  new Class[]{PotionOfPotential.class, AlchemicalCatalyst.class};
 			inQuantity = new int[]{1, 1};
 
 			cost = 6;
@@ -141,7 +147,7 @@ public class ElixirOfMight extends Elixir {
 			return Messages.get(this, "desc", boost(), left);
 		}
 
-		private static String LEFT = "left";
+		private static final String LEFT = "left";
 
 		@Override
 		public void storeInBundle(Bundle bundle) {
@@ -155,4 +161,5 @@ public class ElixirOfMight extends Elixir {
 			left = bundle.getInt(LEFT);
 		}
 	}
+
 }

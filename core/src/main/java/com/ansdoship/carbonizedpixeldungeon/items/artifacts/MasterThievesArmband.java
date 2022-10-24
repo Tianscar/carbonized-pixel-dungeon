@@ -304,11 +304,11 @@ public class MasterThievesArmband extends Artifact {
 		public float stealChance(Item item){
 			int chargesUsed = chargesToUse(item);
 			float val = chargesUsed * (10 + level()/2f);
-			return Math.min(1f, val/item.value());
+			return Math.min(1f, val/item.buyValue( Dungeon.hero ));
 		}
 
 		public int chargesToUse(Item item){
-			int value = item.value();
+			int value = item.buyValue( Dungeon.hero );
 			float valUsing = 0;
 			int chargesUsed = 0;
 			while (valUsing < value && chargesUsed < charge){

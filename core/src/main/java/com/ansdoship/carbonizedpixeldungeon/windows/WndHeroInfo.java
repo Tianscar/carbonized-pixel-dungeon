@@ -183,24 +183,29 @@ public class WndHeroInfo extends WndTabbed {
 				case WARRIOR: default:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
 							new ItemSprite(ItemSpriteSheet.SHORTSWORD),
-							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
+					        new ItemSprite(ItemSpriteSheet.POTION_CRIMSON)};
 					break;
 				case MAGE:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.MAGES_STAFF),
+							new ItemSprite(ItemSpriteSheet.WAND_CORRUPTION),
 							new ItemSprite(ItemSpriteSheet.WAND_MAGIC_MISSILE),
-							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
+							new ItemSprite(ItemSpriteSheet.POTION_CRIMSON)};
 					break;
 				case ROGUE:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.ARTIFACT_CLOAK),
 							Icons.get(Icons.STAIRS),
 							new ItemSprite(ItemSpriteSheet.DAGGER),
-							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
+							new ItemSprite(ItemSpriteSheet.POTION_CRIMSON)};
 					break;
 				case HUNTRESS:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SPIRIT_BOW),
 							new Image(Assets.Environment.TILES_SEWERS, 112, 96, 16, 16),
 							new ItemSprite(ItemSpriteSheet.GLOVES),
-							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
+							new ItemSprite(ItemSpriteSheet.POTION_CRIMSON)};
 					break;
 			}
 			for (Image im : icons) {
@@ -227,7 +232,7 @@ public class WndHeroInfo extends WndTabbed {
 				pos = info[i].bottom() + 4*MARGIN;
 			}
 
-			height = Math.max(height, pos - 4*MARGIN);
+			height = Math.max(height, pos);
 
 		}
 	}

@@ -24,19 +24,50 @@ package com.ansdoship.carbonizedpixeldungeon.items.potions.exotic;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AdrenalineSurge;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPotential;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.ansdoship.pixeldungeonclasses.utils.Random;
 
-public class PotionOfAdrenalineSurge extends ExoticPotion {
+import java.util.ArrayList;
+import java.util.List;
+
+public class PotionOfPotentialBurst extends ExoticPotion {
 	
 	{
 		icon = ItemSpriteSheet.Icons.POTION_ARENSURGE;
 
 		unique = true;
 	}
+
+	private static final int START_POINTS = 4;
 	
 	@Override
 	public void apply(Hero hero) {
 		identify();
+		int[] STRpts = new int[] { 0 };
+		int[] CONpts = new int[] { 0 };
+		int[] DEXpts = new int[] { 0 };
+		int[] INTpts = new int[] { 0 };
+		int[] WISpts = new int[] { 0 };
+		int[] CHApts = new int[] { 0 };
+		List<int[]> ALLpts = new ArrayList<>(6);
+		ALLpts.add(STRpts);
+		ALLpts.add(CONpts);
+		ALLpts.add(DEXpts);
+		ALLpts.add(INTpts);
+		ALLpts.add(WISpts);
+		ALLpts.add(CHApts);
+		int points = START_POINTS;
+		if (hero.heroClass == HeroClass.MAGE) {
+			INTpts[0] ++;
+			ALLpts.remove(INTpts);
+			points --;
+		}
+		for (int i = 0; i < points; i ++) {
+			ALLpts.remove(Random.Int(ALLpts.size()))[0] ++;
+		}
+		PotionOfPotential.addPoints( hero, new int[] { STRpts[0], CONpts[0], DEXpts[0], INTpts[0], WISpts[0], CHApts[0] }, null, null );
 		Buff.affect(hero, AdrenalineSurge.class).reset(2, 800f);
 	}
 	

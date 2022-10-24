@@ -47,7 +47,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.Stylus;
 import com.ansdoship.carbonizedpixeldungeon.items.Torch;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPotential;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfEnchantment;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfIntuition;
@@ -180,7 +180,7 @@ public abstract class Level implements Bundlable {
 			}
 
 			if (Dungeon.posNeeded()) {
-				addItemToSpawn( new PotionOfPower() );
+				addItemToSpawn( new PotionOfPotential() );
 				Dungeon.LimitedDrops.STRENGTH_POTIONS.count++;
 			}
 			if (Dungeon.souNeeded()) {

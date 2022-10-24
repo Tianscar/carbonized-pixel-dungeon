@@ -45,9 +45,10 @@ public class v0_0_X_Changes {
 	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ) {
 
 		ChangeInfo changes = new ChangeInfo( "v0.0.X", true, "");
-		changes.hardlight( Window.TITLE_COLOR);
+		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		add_v0_0_8p2_changes(changeInfos);
 		add_v0_0_8p1_changes(changeInfos);
 		add_v0_0_8_changes(changeInfos);
 		add_v0_0_7p7_changes(changeInfos);
@@ -78,6 +79,27 @@ public class v0_0_X_Changes {
 		add_v0_0_1_Changes(changeInfos);
 	}
 
+	public static void add_v0_0_8p2_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.8p2", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"补全了部分游戏文本"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ELIXIR_MIGHT), "六属性完全实装！",
+						"_力量药剂_相关改动：\n" +
+						"\n" +
+						"_- 力量药剂_改为_潜能药剂_，会根据选择的角色给予一定量的固定属性点和可支配属性点加成。" +
+						"（法师能获得 2 点可支配属性点和 1 点固定属性点，其他角色为 1 点可支配属性点和 2 点固定属性点。）\n" +
+						"_- 激素涌动合剂_改为_潜能迸发合剂_，不仅保留了原有的激素涌动buff，还能给予比潜能药剂更多的属性点，但是属性点的分配是完全随机的。" +
+						"（法师能固定获得 1 点智力，其余 3 点随机，其他角色为 4 点随机属性点。）\n" +
+						"_- 根骨秘药_的效果改为在_潜能药剂_的基础上额外永久增加 10 点生命上限。"));
+
+		changes.addButton( new ChangeButton(BadgeBanner.image(Badges.Badge.CONSTITUTION_ATTAINED_1.image), "徽章改动！",
+				"添加了其他五个基础属性对应的徽章，并将六属性对应徽章的获取改为对应属性达到_ 13/15/17/19/21 点_。"));
+	}
+
 	public static void add_v0_0_8p1_changes( ArrayList<ChangeInfo> changeInfos ) {
 		ChangeInfo changes = new ChangeInfo("v0.0.8p1", false, "");
 		changes.hardlight(Window.TITLE_COLOR);
@@ -85,7 +107,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
 				"_-_ 2022年10月23日更新\n" +
-						"_-_ 距离碳化的像素地牢v0.0.8更新88天\n" +
+						"_-_ 距离碳素地牢v0.0.8更新88天\n" +
 						"\n" +
 						"我恢复更新了。不过这个版本什么都没更......周更中（最迟下周三会补上这次更新），敬请期待！"));
 	}
@@ -97,7 +119,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
 				"_-_ 2022年7月29日更新\n" +
-						"_-_ 距离碳化的像素地牢v0.0.7更新31天\n" +
+						"_-_ 距离碳素地牢v0.0.7更新31天\n" +
 						"\n" +
 						"因为生活所迫，停更了一段时间，期间还经历了QQ群被炸，但v0.0.8版本最终还是到来了。\n\n" +
 						"本次更新仍未加入属性药水，但移除了狂战士，改为盾卫。\n\n" +
@@ -233,7 +255,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
 				"_-_ 2022年6月28日更新\n" +
-						"_-_ 距离碳化的像素地牢v0.0.6更新31天\n" +
+						"_-_ 距离碳素地牢v0.0.6更新31天\n" +
 						"\n" +
 						"由于生活所迫，v0.0.7版本可能会是最后一次更新。\n\n" +
 						"本次更新完全是半成品，大多数本该加入的机制都没有实装。\n\n" +
@@ -357,7 +379,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
 				"_-_ 2022年5月28日更新\n" +
-						"_-_ 距离碳化的像素地牢v0.0.5更新2天\n" +
+						"_-_ 距离碳素地牢v0.0.5更新2天\n" +
 						"\n" +
 						"v0.0.6版本将会是一个里程碑式的更新！\n\n" +
 						"添加了新的生物：大佬鼠！（代替了原来的老鼠王）\n\n" +
@@ -429,12 +451,12 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
 				"_-_ 2022年5月26日更新\n" +
-						"_-_ 距离碳化的像素地牢v0.0.4更新2天\n" +
+						"_-_ 距离碳素地牢v0.0.4更新2天\n" +
 						"\n" +
 						"v0.0.5版本将后续版本的破碎的像素地牢的BGM全部加入，并实装了游戏新闻界面！"));
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.NEWS), "游戏新闻界面实装！",
-				"_现在游戏新闻界面会显示碳化的像素地牢的游戏新闻了！_\n\n" +
+				"_现在游戏新闻界面会显示碳素地牢的游戏新闻了！_\n\n" +
 						"这个功能会从carbonizedpd.tianscar.com拉来博客文章，然后在游戏中显示。它还会在有新文章时通知玩家。\n\n" +
 						"感谢Evan的Atom订阅代码和Hexo博客框架！我以后会尽量保持游戏新闻的更新的！"));
 
@@ -476,7 +498,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
 				"_-_ 2022年5月24日更新\n" +
-						"_-_ 距离碳化的像素地牢v0.0.3更新1天\n" +
+						"_-_ 距离碳素地牢v0.0.3更新1天\n" +
 						"\n" +
 						"v0.0.4版本添加了新的改动界面，修改了支持和反馈界面，以及应用程序图标。"));
 
@@ -518,7 +540,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
 				"_-_ 2022年5月23日更新\n" +
-						"_-_ 距离碳化的像素地牢v0.0.2更新1天\n" +
+						"_-_ 距离碳素地牢v0.0.2更新1天\n" +
 						"\n" +
 						"v0.0.3版本让英雄的饱食度能够在状态栏上显示，并且将快捷栏增加到了最多6格。"));
 
@@ -572,7 +594,7 @@ public class v0_0_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CARBON_STEEL), "开发者的留言",
 				"_-_ 2022年5月22日更新\n" +
-						"_-_ 距离碳化的像素地牢v0.0.1更新1天\n" +
+						"_-_ 距离碳素地牢v0.0.1更新1天\n" +
 						"\n" +
 						"v0.0.2版本添加了武器双持机制，将近战武器全部分为了单手武器和双手武器。\n" +
 						"\n" +
@@ -628,7 +650,7 @@ public class v0_0_X_Changes {
 				"_-_ 2022年5月21日更新\n" +
 				"_-_ 距离破碎的像素地牢v1.0.3更新280天\n" +
 				"\n" +
-				"v0.0.1是碳化的像素地牢的第一个版本！该版本基于破碎的像素地牢v1.0.3。\n" +
+				"v0.0.1是碳素地牢的第一个版本！该版本基于破碎的像素地牢v1.0.3。\n" +
 				"\n" +
 				"因为不喜欢炼金能量更新，所以我选择了基于炼金能量更新之前的最后一个版本来修改。\n" +
 				"\n" +

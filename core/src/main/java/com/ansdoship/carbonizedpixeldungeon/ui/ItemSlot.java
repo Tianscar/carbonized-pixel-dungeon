@@ -26,7 +26,12 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.Ring;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.RangedWeapon;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -56,8 +61,8 @@ public class ItemSlot extends Button {
 	protected Image      itemIcon;
 	protected BitmapText level;
 
-	private static final String TXT_STRENGTH	= ":%d";
-	private static final String TXT_TYPICAL_STR	= "%d?";
+	private static final String TXT_EXTRA	= ":%d";
+	private static final String TXT_TYPICAL_EXTRA	= "%d?";
 
 	private static final String TXT_LEVEL	= "%+d";
 
@@ -85,7 +90,7 @@ public class ItemSlot extends Button {
 		super();
 		sprite.visible(false);
 		enable(false);
-		showExtraInfo(false);
+		//showExtraInfo(false);
 	}
 
 	public ItemSlot( Item item ) {
@@ -215,20 +220,46 @@ public class ItemSlot extends Button {
 			itemIcon.frame(ItemSpriteSheet.Icons.film.get(item.icon));
 			add(itemIcon);
 
-		} else if (item instanceof Weapon || item instanceof Armor) {
+		} else if (item instanceof Weapon || item instanceof Armor || item instanceof Wand) {
 
-			if (item.levelKnown){
-				int str = item instanceof Weapon ? ((Weapon)item).STRReq() : ((Armor)item).STRReq();
-				extra.text( Messages.format( TXT_STRENGTH, str ) );
-				if (str > Dungeon.hero.STR()) {
+			if (item.levelKnown) {
+				int strreq = item instanceof Weapon ? ((Weapon)item).STRReq() : item instanceof Armor ? ((Armor)item).STRReq() : 0;
+				int dexreq = item instanceof MissileWeapon ? ((MissileWeapon)item).DEXReq() :
+						item instanceof RangedWeapon ? ((RangedWeapon)item).DEXReq() : 0;
+				int intreq = item instanceof Wand ? ((Wand)item).INTReq() : item instanceof MagesStaff ? ((MagesStaff)item).getWand().INTReq() : 0;
+				if (strreq > Dungeon.hero.STR()) {
+					extra.text( Messages.format( TXT_EXTRA, strreq ));
+					extra.hardlight( DEGRADED );
+				} else if (dexreq > Dungeon.hero.DEX()) {
+					extra.text( Messages.format( TXT_EXTRA, dexreq ));
+					extra.hardlight( DEGRADED );
+				} else if (intreq > Dungeon.hero.INT()) {
+					extra.text( Messages.format( TXT_EXTRA, intreq ));
 					extra.hardlight( DEGRADED );
 				} else {
 					extra.resetColor();
+					extra.text( null );
 				}
 			} else {
-				int str = item instanceof Weapon ? ((Weapon)item).STRReq(0) : ((Armor)item).STRReq(0);
-				extra.text( Messages.format( TXT_TYPICAL_STR, str ) );
-				extra.hardlight( WARNING );
+				int strreq = item instanceof Weapon ? ((Weapon)item).STRReq(0) :
+						item instanceof Armor ? ((Armor)item).STRReq(0) : 0;
+				int dexreq = item instanceof MissileWeapon ? ((MissileWeapon)item).DEXReq(0) :
+						item instanceof RangedWeapon ? ((RangedWeapon)item).DEXReq(0) : 0;
+				int intreq = item instanceof Wand ? ((Wand)item).INTReq(0) :
+						item instanceof MagesStaff ? ((MagesStaff)item).getWand().INTReq(0) : 0;
+				if (strreq > Dungeon.hero.STR()) {
+					extra.text( Messages.format( TXT_TYPICAL_EXTRA, strreq ));
+					extra.hardlight( WARNING );
+				} else if (dexreq > Dungeon.hero.DEX()) {
+					extra.text( Messages.format( TXT_TYPICAL_EXTRA, dexreq ));
+					extra.hardlight( WARNING );
+				} else if (intreq > Dungeon.hero.INT()) {
+					extra.text( Messages.format( TXT_TYPICAL_EXTRA, intreq ));
+					extra.hardlight( WARNING );
+				} else {
+					extra.resetColor();
+					extra.text( null );
+				}
 			}
 			extra.measure();
 

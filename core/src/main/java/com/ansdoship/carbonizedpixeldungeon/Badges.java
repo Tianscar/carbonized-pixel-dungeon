@@ -63,73 +63,98 @@ public class Badges {
 		ITEM_LEVEL_1                ( 8 ),
 		LEVEL_REACHED_1             ( 9 ),
 		STRENGTH_ATTAINED_1         ( 10 ),
-		FOOD_EATEN_1                ( 11 ),
-		POTIONS_COOKED_1            ( 12 ),
-		BOSS_SLAIN_1                ( 13 ),
-		DEATH_FROM_FIRE             ( 14 ),
-		DEATH_FROM_POISON           ( 15 ),
-		DEATH_FROM_GAS              ( 16 ),
-		DEATH_FROM_HUNGER           ( 17 ),
-		DEATH_FROM_FALLING          ( 18 ),
-		GAMES_PLAYED_1              ( 19, true ),
+		CONSTITUTION_ATTAINED_1     ( 11 ),
+		DEXTERITY_ATTAINED_1        ( 12 ),
+		INTELLIGENCE_ATTAINED_1     ( 13 ),
+		WISDOM_ATTAINED_1           ( 14 ),
+		CHARISMA_ATTAINED_1         ( 15 ),
+		FOOD_EATEN_1                ( 16 ),
+		POTIONS_COOKED_1            ( 17 ),
+		BOSS_SLAIN_1                ( 18 ),
+		DEATH_FROM_FIRE             ( 19 ),
+		DEATH_FROM_POISON           ( 20 ),
+		DEATH_FROM_GAS              ( 21 ),
+		DEATH_FROM_HUNGER           ( 22 ),
+		DEATH_FROM_FALLING          ( 23 ),
+		GAMES_PLAYED_1              ( 24, true ),
 
 		//silver
-		NO_MONSTERS_SLAIN           ( 32 ),
-		GRIM_WEAPON                 ( 33 ),
-		MONSTERS_SLAIN_3            ( 34 ),
-		MONSTERS_SLAIN_4            ( 35 ),
-		GOLD_COLLECTED_3            ( 36 ),
-		GOLD_COLLECTED_4            ( 37 ),
-		ITEM_LEVEL_2                ( 38 ),
-		ITEM_LEVEL_3                ( 39 ),
-		LEVEL_REACHED_2             ( 40 ),
-		LEVEL_REACHED_3             ( 41 ),
-		STRENGTH_ATTAINED_2         ( 42 ),
-		STRENGTH_ATTAINED_3         ( 43 ),
-		FOOD_EATEN_2                ( 44 ),
-		FOOD_EATEN_3                ( 45 ),
-		POTIONS_COOKED_2            ( 46 ),
-		POTIONS_COOKED_3            ( 47 ),
-		BOSS_SLAIN_2                ( 48 ),
-		BOSS_SLAIN_3                ( 49 ),
-		ALL_POTIONS_IDENTIFIED      ( 50 ),
-		ALL_SCROLLS_IDENTIFIED      ( 51 ),
-		DEATH_FROM_GLYPH            ( 52 ),
+		NO_MONSTERS_SLAIN           ( 64 ),
+		GRIM_WEAPON                 ( 65 ),
+		MONSTERS_SLAIN_3            ( 66 ),
+		MONSTERS_SLAIN_4            ( 67 ),
+		GOLD_COLLECTED_3            ( 68 ),
+		GOLD_COLLECTED_4            ( 69 ),
+		ITEM_LEVEL_2                ( 70 ),
+		ITEM_LEVEL_3                ( 71 ),
+		LEVEL_REACHED_2             ( 72 ),
+		LEVEL_REACHED_3             ( 73 ),
+		STRENGTH_ATTAINED_2         ( 74 ),
+		STRENGTH_ATTAINED_3         ( 75 ),
+		CONSTITUTION_ATTAINED_2     ( 76 ),
+		CONSTITUTION_ATTAINED_3     ( 77 ),
+		DEXTERITY_ATTAINED_2        ( 78 ),
+		DEXTERITY_ATTAINED_3        ( 79 ),
+		INTELLIGENCE_ATTAINED_2     ( 80 ),
+		INTELLIGENCE_ATTAINED_3     ( 81 ),
+		WISDOM_ATTAINED_2           ( 82 ),
+		WISDOM_ATTAINED_3           ( 83 ),
+		CHARISMA_ATTAINED_2         ( 84 ),
+		CHARISMA_ATTAINED_3         ( 85 ),
+		FOOD_EATEN_2                ( 86 ),
+		FOOD_EATEN_3                ( 87 ),
+		POTIONS_COOKED_2            ( 88 ),
+		POTIONS_COOKED_3            ( 89 ),
+		BOSS_SLAIN_2                ( 90 ),
+		BOSS_SLAIN_3                ( 91 ),
+		ALL_POTIONS_IDENTIFIED      ( 92 ),
+		ALL_SCROLLS_IDENTIFIED      ( 93 ),
+		DEATH_FROM_GLYPH            ( 94 ),
 		BOSS_SLAIN_1_WARRIOR,
 		BOSS_SLAIN_1_MAGE,
 		BOSS_SLAIN_1_ROGUE,
 		BOSS_SLAIN_1_HUNTRESS,
-		BOSS_SLAIN_1_ALL_CLASSES    ( 53, true ),
-		GAMES_PLAYED_2              ( 54, true ),
+		BOSS_SLAIN_1_ALL_CLASSES    ( 95, true ),
+		GAMES_PLAYED_2              ( 96, true ),
 
 		//gold
-		PIRANHAS                    ( 64 ),
+		PIRANHAS                    ( 128 ),
 		BAG_BOUGHT_VELVET_POUCH,
 		BAG_BOUGHT_SCROLL_HOLDER,
 		BAG_BOUGHT_POTION_BANDOLIER,
 		BAG_BOUGHT_MAGICAL_HOLSTER,
-		ALL_BAGS_BOUGHT             ( 65 ),
-		MASTERY_COMBO               ( 66 ),
-		MONSTERS_SLAIN_5            ( 67 ),
-		GOLD_COLLECTED_5            ( 68 ),
-		ITEM_LEVEL_4                ( 69 ),
-		ITEM_LEVEL_5                ( 70 ),
-		LEVEL_REACHED_4             ( 71 ),
-		LEVEL_REACHED_5             ( 72 ),
-		STRENGTH_ATTAINED_4         ( 73 ),
-		STRENGTH_ATTAINED_5         ( 74 ),
-		FOOD_EATEN_4                ( 75 ),
-		FOOD_EATEN_5                ( 76 ),
-		POTIONS_COOKED_4             ( 77 ),
-		POTIONS_COOKED_5             ( 78 ),
-		BOSS_SLAIN_4                ( 79 ),
-		ALL_WEAPONS_IDENTIFIED      ( 80 ),
-		ALL_ARMOR_IDENTIFIED        ( 81 ),
-		ALL_WANDS_IDENTIFIED        ( 82 ),
-		ALL_RINGS_IDENTIFIED        ( 83 ),
-		ALL_ARTIFACTS_IDENTIFIED    ( 84 ),
-		VICTORY                     ( 85 ),
-		YASD                        ( 86, true ),
+		ALL_BAGS_BOUGHT             ( 129 ),
+		MASTERY_COMBO               ( 130 ),
+		MONSTERS_SLAIN_5            ( 131 ),
+		GOLD_COLLECTED_5            ( 132 ),
+		ITEM_LEVEL_4                ( 133 ),
+		ITEM_LEVEL_5                ( 134 ),
+		LEVEL_REACHED_4             ( 135 ),
+		LEVEL_REACHED_5             ( 136 ),
+		STRENGTH_ATTAINED_4         ( 137 ),
+		STRENGTH_ATTAINED_5         ( 138 ),
+		CONSTITUTION_ATTAINED_4     ( 139 ),
+		CONSTITUTION_ATTAINED_5     ( 140 ),
+		DEXTERITY_ATTAINED_4        ( 141 ),
+		DEXTERITY_ATTAINED_5        ( 142 ),
+		INTELLIGENCE_ATTAINED_4     ( 143 ),
+		INTELLIGENCE_ATTAINED_5     ( 144 ),
+		WISDOM_ATTAINED_4           ( 145 ),
+		WISDOM_ATTAINED_5           ( 146 ),
+		CHARISMA_ATTAINED_4         ( 147 ),
+		CHARISMA_ATTAINED_5         ( 148 ),
+		FOOD_EATEN_4                ( 149 ),
+		FOOD_EATEN_5                ( 150 ),
+		POTIONS_COOKED_4            ( 151 ),
+		POTIONS_COOKED_5            ( 152 ),
+		BOSS_SLAIN_4                ( 153 ),
+		ALL_WEAPONS_IDENTIFIED      ( 154 ),
+		ALL_ARMOR_IDENTIFIED        ( 155 ),
+		ALL_WANDS_IDENTIFIED        ( 156 ),
+		ALL_RINGS_IDENTIFIED        ( 157 ),
+		ALL_ARTIFACTS_IDENTIFIED    ( 158 ),
+		VICTORY                     ( 159 ),
+		YASD                        ( 160, true ),
 		BOSS_SLAIN_3_GLADIATOR,
 		BOSS_SLAIN_3_SHIELDGUARD,
 		BOSS_SLAIN_3_WARLOCK,
@@ -138,25 +163,25 @@ public class Badges {
 		BOSS_SLAIN_3_ASSASSIN,
 		BOSS_SLAIN_3_SNIPER,
 		BOSS_SLAIN_3_WARDEN,
-		BOSS_SLAIN_3_ALL_SUBCLASSES ( 87, true ),
-		GAMES_PLAYED_3              ( 88, true ),
+		BOSS_SLAIN_3_ALL_SUBCLASSES ( 161, true ),
+		GAMES_PLAYED_3              ( 162, true ),
 
 		//diamond
-		HAPPY_END                   ( 96 ),
-		ALL_ITEMS_IDENTIFIED        ( 97, true ),
+		HAPPY_END                   ( 192 ),
+		ALL_ITEMS_IDENTIFIED        ( 193, true ),
 		VICTORY_WARRIOR,
 		VICTORY_MAGE,
 		VICTORY_ROGUE,
 		VICTORY_HUNTRESS,
-		VICTORY_ALL_CLASSES         ( 98, true ),
-		GAMES_PLAYED_4              ( 99, true ),
-		CHAMPION_1                  ( 100 ),
-		LEVEL_REACHED_6             ( 101 ),
+		VICTORY_ALL_CLASSES         ( 194, true ),
+		GAMES_PLAYED_4              ( 195, true ),
+		CHAMPION_1                  ( 196 ),
+		LEVEL_REACHED_6             ( 197 ),
 
 		//platinum
-		GAMES_PLAYED_5              ( 112, true ),
-		CHAMPION_2                  ( 113 ),
-		CHAMPION_3                  ( 114 );
+		GAMES_PLAYED_5              ( 224, true ),
+		CHAMPION_2                  ( 225 ),
+		CHAMPION_3                  ( 226 );
 
 		public boolean meta;
 
@@ -369,27 +394,171 @@ public class Badges {
 		displayBadge( badge );
 	}
 
+	public static void validatePropertiesAttained() {
+		validateStrengthAttained();
+		validateConstitutionAttained();
+		validateDexterityAttained();
+		validateIntelligenceAttained();
+		validateWisdomAttained();
+		validateCharismaAttained();
+	}
+
 	public static void validateStrengthAttained() {
 		Badge badge = null;
 
-		if (!local.contains( Badge.STRENGTH_ATTAINED_1 ) && Dungeon.hero.STR >= 12) {
+		if (!local.contains( Badge.STRENGTH_ATTAINED_1 ) && Dungeon.hero.STR >= 13) {
 			badge = Badge.STRENGTH_ATTAINED_1;
 			local.add( badge );
 		}
-		if (!local.contains( Badge.STRENGTH_ATTAINED_2 ) && Dungeon.hero.STR >= 14) {
+		if (!local.contains( Badge.STRENGTH_ATTAINED_2 ) && Dungeon.hero.STR >= 15) {
 			badge = Badge.STRENGTH_ATTAINED_2;
 			local.add( badge );
 		}
-		if (!local.contains( Badge.STRENGTH_ATTAINED_3 ) && Dungeon.hero.STR >= 16) {
+		if (!local.contains( Badge.STRENGTH_ATTAINED_3 ) && Dungeon.hero.STR >= 17) {
 			badge = Badge.STRENGTH_ATTAINED_3;
 			local.add( badge );
 		}
-		if (!local.contains( Badge.STRENGTH_ATTAINED_4 ) && Dungeon.hero.STR >= 18) {
+		if (!local.contains( Badge.STRENGTH_ATTAINED_4 ) && Dungeon.hero.STR >= 19) {
 			badge = Badge.STRENGTH_ATTAINED_4;
 			local.add( badge );
 		}
-		if (!local.contains( Badge.STRENGTH_ATTAINED_5 ) && Dungeon.hero.STR >= 20) {
+		if (!local.contains( Badge.STRENGTH_ATTAINED_5 ) && Dungeon.hero.STR >= 21) {
 			badge = Badge.STRENGTH_ATTAINED_5;
+			local.add( badge );
+		}
+
+		displayBadge( badge );
+	}
+
+	public static void validateConstitutionAttained() {
+		Badge badge = null;
+
+		if (!local.contains( Badge.CONSTITUTION_ATTAINED_1 ) && Dungeon.hero.CON >= 13) {
+			badge = Badge.CONSTITUTION_ATTAINED_1;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.CONSTITUTION_ATTAINED_2 ) && Dungeon.hero.CON >= 15) {
+			badge = Badge.CONSTITUTION_ATTAINED_2;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.CONSTITUTION_ATTAINED_3 ) && Dungeon.hero.CON >= 17) {
+			badge = Badge.CONSTITUTION_ATTAINED_3;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.CONSTITUTION_ATTAINED_4 ) && Dungeon.hero.CON >= 19) {
+			badge = Badge.CONSTITUTION_ATTAINED_4;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.CONSTITUTION_ATTAINED_5 ) && Dungeon.hero.CON >= 21) {
+			badge = Badge.CONSTITUTION_ATTAINED_5;
+			local.add( badge );
+		}
+
+		displayBadge( badge );
+	}
+
+	public static void validateDexterityAttained() {
+		Badge badge = null;
+
+		if (!local.contains( Badge.DEXTERITY_ATTAINED_1 ) && Dungeon.hero.DEX >= 13) {
+			badge = Badge.DEXTERITY_ATTAINED_1;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.DEXTERITY_ATTAINED_2 ) && Dungeon.hero.DEX >= 15) {
+			badge = Badge.DEXTERITY_ATTAINED_2;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.DEXTERITY_ATTAINED_3 ) && Dungeon.hero.DEX >= 17) {
+			badge = Badge.DEXTERITY_ATTAINED_3;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.DEXTERITY_ATTAINED_4 ) && Dungeon.hero.DEX >= 19) {
+			badge = Badge.DEXTERITY_ATTAINED_4;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.DEXTERITY_ATTAINED_5 ) && Dungeon.hero.DEX >= 21) {
+			badge = Badge.DEXTERITY_ATTAINED_5;
+			local.add( badge );
+		}
+
+		displayBadge( badge );
+	}
+
+	public static void validateIntelligenceAttained() {
+		Badge badge = null;
+
+		if (!local.contains( Badge.INTELLIGENCE_ATTAINED_1 ) && Dungeon.hero.INT >= 13) {
+			badge = Badge.INTELLIGENCE_ATTAINED_1;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.INTELLIGENCE_ATTAINED_2 ) && Dungeon.hero.INT >= 15) {
+			badge = Badge.INTELLIGENCE_ATTAINED_2;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.INTELLIGENCE_ATTAINED_3 ) && Dungeon.hero.INT >= 17) {
+			badge = Badge.INTELLIGENCE_ATTAINED_3;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.INTELLIGENCE_ATTAINED_4 ) && Dungeon.hero.INT >= 19) {
+			badge = Badge.INTELLIGENCE_ATTAINED_4;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.INTELLIGENCE_ATTAINED_5 ) && Dungeon.hero.INT >= 21) {
+			badge = Badge.INTELLIGENCE_ATTAINED_5;
+			local.add( badge );
+		}
+
+		displayBadge( badge );
+	}
+
+	public static void validateWisdomAttained() {
+		Badge badge = null;
+
+		if (!local.contains( Badge.WISDOM_ATTAINED_1 ) && Dungeon.hero.WIS >= 13) {
+			badge = Badge.WISDOM_ATTAINED_1;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.WISDOM_ATTAINED_2 ) && Dungeon.hero.WIS >= 15) {
+			badge = Badge.WISDOM_ATTAINED_2;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.WISDOM_ATTAINED_3 ) && Dungeon.hero.WIS >= 17) {
+			badge = Badge.WISDOM_ATTAINED_3;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.WISDOM_ATTAINED_4 ) && Dungeon.hero.WIS >= 19) {
+			badge = Badge.WISDOM_ATTAINED_4;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.WISDOM_ATTAINED_5 ) && Dungeon.hero.WIS >= 21) {
+			badge = Badge.WISDOM_ATTAINED_5;
+			local.add( badge );
+		}
+
+		displayBadge( badge );
+	}
+
+	public static void validateCharismaAttained() {
+		Badge badge = null;
+
+		if (!local.contains( Badge.CHARISMA_ATTAINED_1 ) && Dungeon.hero.CHA >= 13) {
+			badge = Badge.CHARISMA_ATTAINED_1;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.CHARISMA_ATTAINED_2 ) && Dungeon.hero.CHA >= 15) {
+			badge = Badge.CHARISMA_ATTAINED_2;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.CHARISMA_ATTAINED_3 ) && Dungeon.hero.CHA >= 17) {
+			badge = Badge.CHARISMA_ATTAINED_3;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.CHARISMA_ATTAINED_4 ) && Dungeon.hero.CHA >= 19) {
+			badge = Badge.CHARISMA_ATTAINED_4;
+			local.add( badge );
+		}
+		if (!local.contains( Badge.CHARISMA_ATTAINED_5 ) && Dungeon.hero.CHA >= 21) {
+			badge = Badge.CHARISMA_ATTAINED_5;
 			local.add( badge );
 		}
 
@@ -936,6 +1105,11 @@ public class Badges {
 			{Badge.ITEM_LEVEL_1, Badge.ITEM_LEVEL_2, Badge.ITEM_LEVEL_3, Badge.ITEM_LEVEL_4, Badge.ITEM_LEVEL_5},
 			{Badge.LEVEL_REACHED_1, Badge.LEVEL_REACHED_2, Badge.LEVEL_REACHED_3, Badge.LEVEL_REACHED_4, Badge.LEVEL_REACHED_5, Badge.LEVEL_REACHED_6},
 			{Badge.STRENGTH_ATTAINED_1, Badge.STRENGTH_ATTAINED_2, Badge.STRENGTH_ATTAINED_3, Badge.STRENGTH_ATTAINED_4, Badge.STRENGTH_ATTAINED_5},
+			{Badge.CONSTITUTION_ATTAINED_1, Badge.CONSTITUTION_ATTAINED_2, Badge.CONSTITUTION_ATTAINED_3, Badge.CONSTITUTION_ATTAINED_4, Badge.CONSTITUTION_ATTAINED_5},
+			{Badge.DEXTERITY_ATTAINED_2, Badge.DEXTERITY_ATTAINED_2, Badge.DEXTERITY_ATTAINED_3, Badge.DEXTERITY_ATTAINED_4, Badge.DEXTERITY_ATTAINED_5},
+			{Badge.INTELLIGENCE_ATTAINED_1, Badge.INTELLIGENCE_ATTAINED_2, Badge.INTELLIGENCE_ATTAINED_3, Badge.INTELLIGENCE_ATTAINED_4, Badge.INTELLIGENCE_ATTAINED_5},
+			{Badge.WISDOM_ATTAINED_1, Badge.WISDOM_ATTAINED_2, Badge.WISDOM_ATTAINED_3, Badge.WISDOM_ATTAINED_4, Badge.WISDOM_ATTAINED_5},
+			{Badge.CHARISMA_ATTAINED_1, Badge.CHARISMA_ATTAINED_2, Badge.CHARISMA_ATTAINED_3, Badge.CHARISMA_ATTAINED_4, Badge.CHARISMA_ATTAINED_5},
 			{Badge.FOOD_EATEN_1, Badge.FOOD_EATEN_2, Badge.FOOD_EATEN_3, Badge.FOOD_EATEN_4, Badge.FOOD_EATEN_5},
 			{Badge.POTIONS_COOKED_1, Badge.POTIONS_COOKED_2, Badge.POTIONS_COOKED_3, Badge.POTIONS_COOKED_4, Badge.POTIONS_COOKED_5},
 			{Badge.BOSS_SLAIN_1, Badge.BOSS_SLAIN_2, Badge.BOSS_SLAIN_3, Badge.BOSS_SLAIN_4},

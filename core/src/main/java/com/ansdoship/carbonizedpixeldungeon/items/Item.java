@@ -470,6 +470,14 @@ public class Item implements Bundlable {
 		return 0;
 	}
 
+	public int sellValue( Hero hero ) {
+		return (int) Math.ceil(value() * (1 + (hero.CHA() - 10) * 0.05f));
+	}
+
+	public int buyValue( Hero hero ) {
+		return (int) Math.ceil(value() * (1 - (hero.CHA() - 10) * 0.05f));
+	}
+
 	public Item virtual(){
 		Item item = Reflection.newInstance(getClass());
 		if (item == null) return null;

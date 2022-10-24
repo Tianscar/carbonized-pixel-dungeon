@@ -135,7 +135,7 @@ public class BadgeBanner extends Image {
 	//we also hardcode any special cases
 	static {
 		//combo master
-		highlightPositions.put(66, new Point(3, 7));
+		highlightPositions.put(130, new Point(3, 7));
 	}
 
 	//adds a shine to an appropriate pixel on a badge

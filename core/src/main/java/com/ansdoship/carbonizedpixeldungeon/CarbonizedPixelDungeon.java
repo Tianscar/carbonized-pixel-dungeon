@@ -21,6 +21,8 @@
 
 package com.ansdoship.carbonizedpixeldungeon;
 
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPotential;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfPotentialBurst;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.TitleScene;
@@ -44,7 +46,13 @@ public class CarbonizedPixelDungeon extends Game {
 
 		//CBPD v0.0.8
 		Bundle.addAlias(
-				com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower.class,
+				com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfPotentialBurst.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfAdrenalineSurge" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPotential.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPower" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPotential.class,
 				"com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfStrength" );
 
 		//CBPD v0.0.7
