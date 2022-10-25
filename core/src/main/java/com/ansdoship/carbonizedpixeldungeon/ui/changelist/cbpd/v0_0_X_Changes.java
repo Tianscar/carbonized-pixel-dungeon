@@ -23,6 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.ui.changelist.cbpd;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Badges;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.BigRat;
 import com.ansdoship.carbonizedpixeldungeon.effects.BadgeBanner;
@@ -48,6 +49,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		add_v0_0_8p3_changes(changeInfos);
 		add_v0_0_8p2_changes(changeInfos);
 		add_v0_0_8p1_changes(changeInfos);
 		add_v0_0_8_changes(changeInfos);
@@ -77,6 +79,34 @@ public class v0_0_X_Changes {
 		add_v0_0_2p1_changes(changeInfos);
 		add_v0_0_2_Changes(changeInfos);
 		add_v0_0_1_Changes(changeInfos);
+	}
+
+	public static void add_v0_0_8p3_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.8p3", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"补全了部分游戏文本"));
+
+		changes.addButton(new ChangeButton( new Image(Assets.Sprites.WARRIOR, 0, 90, 12, 15), HeroClass.WARRIOR.title(),
+				"_削弱：_\n\n" +
+						"_- 钢铁之胃+2_的额外_50点_饱食度降低为_15点_。\n" +
+						"_- 不动如山_的额外护甲值从_+5/+8/+11_降低为_+4/+6/+8_。\n" +
+						"\n" +
+						"_-_ 盾卫的额外格挡量从_0~6点_降低到_0~2点_，进入防御姿态后为_0~4点_。\n" +
+						"_- 格挡强化_的格挡量提升从_0~12/18/24点_降低到_0~8/12/16点_。\n" +
+						"_-_ 盾卫必须要进入防御姿态才能获得伤害加成了。\n" +
+						"_-_ 盾卫必须_在原地等待_才能进入防御姿态了，并且_移动_会退出防御姿态。\n" +
+						"_-_ 防御姿态不会再影响盾卫的攻击力和防御力了。\n" +
+						"_-_ 盾卫的三个专属天赋都必须在防御姿态下才能起效了。"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"现在_潜能药剂_一开始就被鉴定了。"));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了：\n" +
+						"_-_ 盾卫格挡反击卡死的Bug"));
 	}
 
 	public static void add_v0_0_8p2_changes( ArrayList<ChangeInfo> changeInfos ) {

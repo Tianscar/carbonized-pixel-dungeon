@@ -45,10 +45,10 @@ public class WndFeedback extends Window {
         btnQQ.setPos(width - 18, 0);
         add(btnQQ);
 
-        ColorBlock sep1 = new ColorBlock(1, 1, 0xFF000000);
-        sep1.size(width, 1);
-        sep1.y = title.bottom() + 1;
-        add(sep1);
+        //ColorBlock sep1 = new ColorBlock(1, 1, 0xFF000000);
+        //sep1.size(width, 1);
+        //sep1.y = title.bottom() + 1;
+        //add(sep1);
 
         IconButton btnDiscord = new IconButton( Icons.get(Icons.DISCORD) ) {
             @Override
@@ -90,10 +90,10 @@ public class WndFeedback extends Window {
         text.setPos( title.left(), title.bottom() + 4 );
         add( text );
 
-        ColorBlock sep2 = new ColorBlock(1, 1, 0xFF000000);
-        sep2.size(width, 1);
-        sep2.y = text.bottom() + GAP;
-        add(sep2);
+        //ColorBlock sep2 = new ColorBlock(1, 1, 0xFF000000);
+        //sep2.size(width, 1);
+        //sep2.y = text.bottom() + GAP;
+        //add(sep2);
 
         RedButton btnSponsor = new RedButton(Messages.get(this, "sponsor_link")){
             @Override
@@ -105,9 +105,9 @@ public class WndFeedback extends Window {
         };
         btnSponsor.icon(Icons.get(Icons.GOLD));
         if (PixelScene.landscape()) {
-            btnSponsor.setRect(0, text.bottom() + GAP*3, (width - GAP) * 0.5f, BTN_HEIGHT);
+            btnSponsor.setRect(0, text.bottom() + GAP*2, (width - GAP) * 0.5f, BTN_HEIGHT);
         } else {
-            btnSponsor.setRect(0, text.bottom() + GAP*3, width, BTN_HEIGHT);
+            btnSponsor.setRect(0, text.bottom() + GAP*2, width, BTN_HEIGHT);
         }
         add(btnSponsor);
 
@@ -121,7 +121,7 @@ public class WndFeedback extends Window {
         };
         btnFeedback.icon(Icons.get(Icons.GITHUB));
         if (PixelScene.landscape()) {
-            btnFeedback.setRect(btnSponsor.right() + 2, text.bottom() + GAP*3, (width - 2) * 0.5f, BTN_HEIGHT);
+            btnFeedback.setRect(btnSponsor.right() + 2, text.bottom() + GAP*2, (width - 2) * 0.5f, BTN_HEIGHT);
         } else {
             btnFeedback.setRect(0, btnSponsor.bottom() + GAP, width, BTN_HEIGHT);
         }

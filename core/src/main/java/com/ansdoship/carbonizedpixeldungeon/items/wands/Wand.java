@@ -723,15 +723,15 @@ public abstract class Wand extends Item {
 	}
 
 	public int INTReq(int lvl) {
-		return INTReq(8, lvl);
+		return INTReq(10, lvl);
 	}
 
 	protected static int INTReq(int initial, int lvl) {
 		lvl = Math.max(0, lvl);
 
-		if (lvl <= 1) return initial;
-		else if (lvl <= 7) return initial + lvl - 1;
-		else return initial + 6 + (lvl - 7) * 2;
+		if (lvl <= 3) return initial;
+		else if (lvl <= 7) return initial + lvl - 3;
+		else return initial + 4 + (lvl - 7) * 2;
 	}
 
 	public int INTBoostLvl() {

@@ -330,7 +330,11 @@ public abstract class Char extends Actor {
 				if (effectiveDamage > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
 					hitSound(Random.Float(0.87f, 1.15f));
 				}
-				if (effectiveDamage == 0 && enemy.isAlive() && enemy == Dungeon.hero && Dungeon.hero.hasTalent(Talent.COUNTERATTACK)) {
+				if (effectiveDamage == 0 && enemy.isAlive() && enemy == Dungeon.hero
+						&& Dungeon.hero.subClass == HeroSubClass.SHIELDGUARD
+						&& Dungeon.hero.hasTalent(Talent.COUNTERATTACK)
+				        && Dungeon.hero.buff(DefensiveStance.class) != null) {
+					Dungeon.hero.busy();
 					enemy.sprite.showStatus( CharSprite.NEUTRAL, Messages.get(Monk.class, "parried") );
 					enemy.sprite.attack(enemy.pos, new Callback() {
 						@Override

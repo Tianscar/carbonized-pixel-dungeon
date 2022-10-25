@@ -656,16 +656,11 @@ public class Hero extends Char {
 		}
 
 		if (buff(HoldFast.class) != null){
-			dr += Random.NormalIntRange(0, 2+3*pointsInTalent(Talent.HOLD_FAST));
+			dr += Random.NormalIntRange(0, 2+2*pointsInTalent(Talent.HOLD_FAST));
 		}
 
 		if (subClass == HeroSubClass.SHIELDGUARD){
-			dr += Random.NormalIntRange(0, 6+6*pointsInTalent(Talent.ENHANCED_SHIELD));
-		}
-
-		DefensiveStance defense = buff(DefensiveStance.class);
-		if (defense != null && defense.enabled()) {
-			dr *= 1.5f;
+			dr += Random.NormalIntRange(0, buff(DefensiveStance.class) == null ? 2 : 4+4*pointsInTalent(Talent.ENHANCED_SHIELD));
 		}
 
 		return dr;
@@ -697,12 +692,8 @@ public class Hero extends Char {
 		}
 
 		if (!(wep instanceof MissileWeapon) && !(wep instanceof SpiritBow)) {
-			if (subClass == HeroSubClass.SHIELDGUARD) {
+			if (subClass == HeroSubClass.SHIELDGUARD && buff(DefensiveStance.class) != null) {
 				dmg += Math.round(drRoll() * 0.1f * (pointsInTalent(Talent.RECKLESS_SLAM)+1));
-			}
-			DefensiveStance defense = buff(DefensiveStance.class);
-			if (defense != null && defense.enabled()) {
-				dmg *= 0.5f;
 			}
 		}
 
@@ -1334,10 +1325,15 @@ public class Hero extends Char {
 	public void rest( boolean fullRest ) {
 		spendAndNext( TIME_TO_REST );
 		if (!fullRest) {
+			boolean showStatus = true;
 			if (hasTalent(Talent.HOLD_FAST)){
 				Buff.affect(this, HoldFast.class);
 			}
-			if (sprite != null) {
+			if (subClass == HeroSubClass.SHIELDGUARD) {
+				Buff.affect(this, DefensiveStance.class);
+				showStatus = false;
+			}
+			if (sprite != null && showStatus) {
 				sprite.showStatus(CharSprite.DEFAULT, Messages.get(this, "wait"));
 			}
 		}

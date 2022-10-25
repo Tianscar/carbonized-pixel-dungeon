@@ -47,10 +47,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.armor.LeatherArmor;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.ansdoship.carbonizedpixeldungeon.items.food.Food;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfHealing;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfInvisibility;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.*;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.*;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfMagicMissile;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
@@ -91,6 +88,7 @@ public enum HeroClass {
 		waterskin.collect();
 
 		new ScrollOfIdentify().identify();
+		new PotionOfPotential().identify();
 
 		switch (this) {
 			case WARRIOR:

@@ -278,7 +278,7 @@ public enum Talent {
 				Buff.affect(hero, WarriorFoodImmunity.class, hero.cooldown());
 			}
 			if (hero.pointsInTalent(IRON_STOMACH) == 2) {
-				Buff.affect(hero, Hunger.class).satisfy(Hunger.HUNGRY/6f);
+				Buff.affect(hero, Hunger.class).satisfy(Hunger.HUNGRY/20f);
 			}
 		}
 		if (hero.hasTalent(EMPOWERING_MEAL)){

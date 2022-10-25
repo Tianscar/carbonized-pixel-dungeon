@@ -184,28 +184,28 @@ public class WndHeroInfo extends WndTabbed {
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
 							new ItemSprite(ItemSpriteSheet.SHORTSWORD),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
-					        new ItemSprite(ItemSpriteSheet.POTION_CRIMSON)};
+					        new ItemSprite(ItemSpriteSheet.ELIXIR_MIGHT)};
 					break;
 				case MAGE:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.MAGES_STAFF),
 							new ItemSprite(ItemSpriteSheet.WAND_CORRUPTION),
 							new ItemSprite(ItemSpriteSheet.WAND_MAGIC_MISSILE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
-							new ItemSprite(ItemSpriteSheet.POTION_CRIMSON)};
+							new ItemSprite(ItemSpriteSheet.ELIXIR_MIGHT)};
 					break;
 				case ROGUE:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.ARTIFACT_CLOAK),
 							Icons.get(Icons.STAIRS),
 							new ItemSprite(ItemSpriteSheet.DAGGER),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
-							new ItemSprite(ItemSpriteSheet.POTION_CRIMSON)};
+							new ItemSprite(ItemSpriteSheet.ELIXIR_MIGHT)};
 					break;
 				case HUNTRESS:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SPIRIT_BOW),
 							new Image(Assets.Environment.TILES_SEWERS, 112, 96, 16, 16),
 							new ItemSprite(ItemSpriteSheet.GLOVES),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
-							new ItemSprite(ItemSpriteSheet.POTION_CRIMSON)};
+							new ItemSprite(ItemSpriteSheet.ELIXIR_MIGHT)};
 					break;
 			}
 			for (Image im : icons) {
@@ -232,6 +232,8 @@ public class WndHeroInfo extends WndTabbed {
 				pos = info[i].bottom() + 4*MARGIN;
 			}
 
+			pos -= 3*MARGIN;
+
 			height = Math.max(height, pos);
 
 		}
@@ -256,7 +258,14 @@ public class WndHeroInfo extends WndTabbed {
 			Talent.initClassTalents(cls, talents);
 			talents.get(2).clear(); //we show T3 talents with subclasses
 
-			talentPane = new TalentsPane(false, talents);
+			talentPane = new TalentsPane(false, talents) {
+				@Override
+				protected void createChildren() {
+					super.createChildren();
+					controller.remove();
+					thumb.remove();
+				}
+			};
 			add(talentPane);
 		}
 
@@ -268,7 +277,7 @@ public class WndHeroInfo extends WndTabbed {
 			message.maxWidth((int)width);
 			message.setPos(0, title.bottom()+4*MARGIN);
 
-			talentPane.setRect(0, message.bottom() + 3*MARGIN, width, 85);
+			talentPane.setRect(0, message.bottom() + 3*MARGIN, width, 80);
 
 			height = Math.max(height, talentPane.bottom());
 		}
