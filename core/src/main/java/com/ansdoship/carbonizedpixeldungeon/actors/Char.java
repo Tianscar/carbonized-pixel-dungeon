@@ -61,7 +61,10 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.utils.BArray;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
-import com.ansdoship.pixeldungeonclasses.utils.*;
+import com.ansdoship.pixeldungeonclasses.utils.Bundlable;
+import com.ansdoship.pixeldungeonclasses.utils.Bundle;
+import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
+import com.ansdoship.pixeldungeonclasses.utils.Random;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -330,19 +333,17 @@ public abstract class Char extends Actor {
 				if (effectiveDamage > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
 					hitSound(Random.Float(0.87f, 1.15f));
 				}
-				if (effectiveDamage == 0 && enemy.isAlive() && enemy == Dungeon.hero
+				else if (effectiveDamage == 0
+						&& enemy.isAlive()
+						&& this != Dungeon.hero
+						&& enemy == Dungeon.hero
+						&& Dungeon.hero.canAttack(this)
 						&& Dungeon.hero.subClass == HeroSubClass.SHIELDGUARD
 						&& Dungeon.hero.hasTalent(Talent.COUNTERATTACK)
 				        && Dungeon.hero.buff(DefensiveStance.class) != null) {
-					Dungeon.hero.busy();
 					enemy.sprite.showStatus( CharSprite.NEUTRAL, Messages.get(Monk.class, "parried") );
-					enemy.sprite.attack(enemy.pos, new Callback() {
-						@Override
-						public void call() {
-							Dungeon.hero.attack( Char.this, 0.25f + 0.25f * Dungeon.hero.pointsInTalent(Talent.COUNTERATTACK),
-									0, 1.0f );
-						}
-					});
+					Buff.affect(enemy, Talent.CounterAttackTracker.class).enemy = this;
+					Dungeon.hero.busy();
 				}
 			}
 

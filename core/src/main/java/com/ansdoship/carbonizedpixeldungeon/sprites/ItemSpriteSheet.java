@@ -228,9 +228,10 @@ public class ItemSpriteSheet {
 	public static final int LIGHT_CROSSBOW  = WEP_TIER2+5;
 	static{
 		assignItemRect(SHORTSWORD,      13, 13);
-		assignItemRect(HAND_AXE,        12, 14);
+		assignItemRect(HAND_AXE,        11, 14);
 		assignItemRect(SPEAR,           16, 16);
 		assignItemRect(QUARTERSTAFF,    16, 16);
+		assignItemRect(DIRK,            13, 14);
 		assignItemRect(LIGHT_CROSSBOW,  14, 14);
 	}
 
@@ -243,11 +244,11 @@ public class ItemSpriteSheet {
 	public static final int WHIP            = WEP_TIER3+5;
 	static{
 		assignItemRect(SWORD,           14, 14);
-		assignItemRect(MACE,            15, 15);
+		assignItemRect(MACE,            16, 16);
 		assignItemRect(SCIMITAR,        13, 16);
 		assignItemRect(ROUND_SHIELD,    16, 16);
 		assignItemRect(SAI,             16, 16);
-		assignItemRect(WHIP,            14, 14);
+		assignItemRect(WHIP,            15, 15);
 	}
 
 	private static final int WEP_TIER4      =                               xy(17, 8);   //16 slots
@@ -260,9 +261,9 @@ public class ItemSpriteSheet {
 	static{
 		assignItemRect(LONGSWORD,       15, 15);
 		assignItemRect(BATTLE_AXE,      16, 16);
-		assignItemRect(FLAIL,           14, 14);
-		assignItemRect(RUNIC_BLADE,     14, 14);
-		assignItemRect(ASSASSINS_BLADE, 14, 15);
+		assignItemRect(FLAIL,           14, 15);
+		assignItemRect(RUNIC_BLADE,     16, 16);
+		assignItemRect(ASSASSINS_BLADE, 16, 16);
 		assignItemRect(CROSSBOW,        15, 15);
 	}
 
@@ -277,7 +278,7 @@ public class ItemSpriteSheet {
 		assignItemRect(GREATSWORD,  16, 16);
 		assignItemRect(WAR_HAMMER,  16, 16);
 		assignItemRect(GLAIVE,      16, 16);
-		assignItemRect(GREATAXE,    12, 16);
+		assignItemRect(GREATAXE,    13, 16);
 		assignItemRect(GREATSHIELD, 12, 16);
 		assignItemRect(GAUNTLETS,   13, 15);
 	}

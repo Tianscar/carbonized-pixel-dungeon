@@ -50,11 +50,13 @@ import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 import com.ansdoship.carbonizedpixeldungeon.messages.Languages;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
+import com.ansdoship.carbonizedpixeldungeon.ui.AttackIndicator;
 import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.Emitter;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
@@ -145,6 +147,39 @@ public enum Talent {
 		public String desc() { return Messages.get(this, "desc", dispTurns(visualcooldown())); }
 	};
 	public static class LethalMomentumTracker extends FlavourBuff{};
+	public static class CounterAttackTracker extends Buff{
+		{ actPriority = HERO_PRIO+1;}
+		public Char enemy;
+		@Override
+		public boolean act() {
+			target.sprite.attack(enemy.pos, new Callback() {
+				@Override
+				public void call() {
+
+					AttackIndicator.target(enemy);
+
+					boolean wasAlly = enemy.alignment == target.alignment;
+					Hero hero = (Hero) target;
+					hero.attack(enemy, 0.25f + 0.25f * Dungeon.hero.pointsInTalent(Talent.COUNTERATTACK), 0, 1.0f);
+					if (!enemy.isAlive() || (!wasAlly && enemy.alignment == target.alignment)) {
+						if (hero.hasTalent(Talent.LETHAL_DEFENSE)) {
+							if (Dungeon.hero.pointsInTalent(Talent.LETHAL_DEFENSE) == 2) {
+								Buff.affect(Dungeon.hero, Talent.MeleeMustHit.class);
+							}
+							if (hero.buff(BrokenSeal.WarriorShield.class) != null){
+								BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
+								shield.supercharge(Math.round(shield.maxShield() * hero.pointsInTalent(Talent.LETHAL_DEFENSE)*0.5f));
+							}
+						}
+					}
+
+					next();
+				}
+			});
+			detach();
+			return false;
+		}
+	}
 	public static class StrikingWaveTracker extends FlavourBuff{};
 	public static class WandPreservationCounter extends CounterBuff{{revivePersists = true;}};
 	public static class EmpoweredStrikeTracker extends FlavourBuff{};

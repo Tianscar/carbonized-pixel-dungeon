@@ -223,10 +223,13 @@ public class ItemSlot extends Button {
 		} else if (item instanceof Weapon || item instanceof Armor || item instanceof Wand) {
 
 			if (item.levelKnown) {
-				int strreq = item instanceof Weapon ? ((Weapon)item).STRReq() : item instanceof Armor ? ((Armor)item).STRReq() : 0;
+				int strreq = item instanceof Weapon ? ((Weapon)item).STRReq() :
+						(item instanceof Armor ? ((Armor)item).STRReq() : 0);
 				int dexreq = item instanceof MissileWeapon ? ((MissileWeapon)item).DEXReq() :
-						item instanceof RangedWeapon ? ((RangedWeapon)item).DEXReq() : 0;
-				int intreq = item instanceof Wand ? ((Wand)item).INTReq() : item instanceof MagesStaff ? ((MagesStaff)item).getWand().INTReq() : 0;
+						(item instanceof RangedWeapon ? ((RangedWeapon)item).DEXReq() : 0);
+				int intreq = item instanceof Wand ? ((Wand)item).INTReq() :
+						(item instanceof MagesStaff ?
+								(((MagesStaff)item).getWand() == null ? 0 : ((MagesStaff)item).getWand().INTReq()) : 0);
 				if (strreq > Dungeon.hero.STR()) {
 					extra.text( Messages.format( TXT_EXTRA, strreq ));
 					extra.hardlight( DEGRADED );

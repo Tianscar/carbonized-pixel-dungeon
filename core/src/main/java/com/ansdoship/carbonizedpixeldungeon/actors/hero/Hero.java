@@ -1329,8 +1329,8 @@ public class Hero extends Char {
 			if (hasTalent(Talent.HOLD_FAST)){
 				Buff.affect(this, HoldFast.class);
 			}
-			if (subClass == HeroSubClass.SHIELDGUARD) {
-				Buff.affect(this, DefensiveStance.class);
+			if (subClass == HeroSubClass.SHIELDGUARD && buff(DefensiveStance.class) == null) {
+				Buff.affect(this, DefensiveStance.class).showEnableEffects(true);
 				showStatus = false;
 			}
 			if (sprite != null && showStatus) {
