@@ -39,7 +39,7 @@ Watabou (Pixel Dungeon)
 freesound.org
 ### Graphics  
 Tianscar & H39ClassBB  
-NYRDS & ThEnigma314 % Pavel Provotorov (Remixed Dungeon)  
+NYRDS & ThEnigma314 & Pavel Provotorov (Remixed Dungeon)  
 Dachhack (Sprouted Pixel Dungeon)  
 TypedScroll (Overgrown Pixel Dungeon)  
 dreamdream2020 (Scorched Pixel Dungeon)  
