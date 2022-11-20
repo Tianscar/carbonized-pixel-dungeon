@@ -42,7 +42,7 @@ import java.util.ArrayList;
 
 public class StartScene extends PixelScene {
 	
-	private static final int SLOT_WIDTH = 100;
+	private static final int SLOT_WIDTH = 120;
 	private static final int SLOT_HEIGHT = 22;
 	
 	@Override

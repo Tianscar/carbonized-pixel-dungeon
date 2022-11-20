@@ -24,6 +24,7 @@ package com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Belongings;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.effects.Enchanting;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
@@ -43,6 +44,7 @@ import com.ansdoship.carbonizedpixeldungeon.windows.WndBag;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndTitledMessage;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfEnchantment extends ExoticScroll {
 	
@@ -82,42 +84,56 @@ public class ScrollOfEnchantment extends ExoticScroll {
 
 		@Override
 		public void onSelect(final Item item) {
-			
+
+			final int size = curUser.subClass == HeroSubClass.LOREMASTER ? 5 : 3;
 			if (item instanceof Weapon){
-				
-				final Weapon.Enchantment enchants[] = new Weapon.Enchantment[3];
+
+				final Weapon.Enchantment enchants[] = new Weapon.Enchantment[size];
 				
 				Class<? extends Weapon.Enchantment> existing = ((Weapon) item).enchantment != null ? ((Weapon) item).enchantment.getClass() : null;
 				enchants[0] = Weapon.Enchantment.randomCommon( existing );
 				enchants[1] = Weapon.Enchantment.randomUncommon( existing );
 				enchants[2] = Weapon.Enchantment.random( existing, enchants[0].getClass(), enchants[1].getClass());
-				
+				if (curUser.subClass == HeroSubClass.LOREMASTER) {
+					enchants[3] = Weapon.Enchantment.random( existing, enchants[0].getClass(), enchants[1].getClass());
+					enchants[4] = Weapon.Enchantment.random( existing, enchants[0].getClass(), enchants[1].getClass());
+				}
+				String[] texts = new String[size + 1];
+				for (int i = 0; i < size; i ++) {
+					texts[i] = enchants[i].name();
+				}
+				texts[size] = Messages.get(ScrollOfEnchantment.class, "cancel");
+
 				GameScene.show(new WndOptions(new ItemSprite(ScrollOfEnchantment.this),
 						Messages.titleCase(ScrollOfEnchantment.this.name()),
 						Messages.get(ScrollOfEnchantment.class, "weapon") +
 						"\n\n" +
 						Messages.get(ScrollOfEnchantment.class, "cancel_warn"),
-						enchants[0].name(),
-						enchants[1].name(),
-						enchants[2].name(),
-						Messages.get(ScrollOfEnchantment.class, "cancel")){
+						texts) {
 					
 					@Override
 					protected void onSelect(int index) {
-						if (index < 3) {
-							((Weapon) item).enchant(enchants[index]);
-							GLog.p(Messages.get(StoneOfEnchantment.class, "weapon"));
-							((ScrollOfEnchantment)curItem).readAnimation();
-							
-							Sample.INSTANCE.play( Assets.Sounds.READ );
-							Enchanting.show(curUser, item);
-							Talent.onUpgradeScrollUsed( Dungeon.hero );
-						}
+						doRecord(new Callback() {
+							@Override
+							public void call() {
+
+								if (index < size) {
+									((Weapon) item).enchant(enchants[index]);
+									GLog.p(Messages.get(StoneOfEnchantment.class, "weapon"));
+									((ScrollOfEnchantment)curItem).readAnimation();
+
+									Sample.INSTANCE.play( Assets.Sounds.READ );
+									Enchanting.show(curUser, item);
+									Talent.onUpgradeScrollUsed( Dungeon.hero );
+								}
+
+							}
+						});
 					}
 					
 					@Override
 					protected boolean hasInfo(int index) {
-						return index < 3;
+						return index < size;
 					}
 
 					@Override
@@ -136,39 +152,54 @@ public class ScrollOfEnchantment extends ExoticScroll {
 			
 			} else if (item instanceof Armor) {
 				
-				final Armor.Glyph glyphs[] = new Armor.Glyph[3];
+				final Armor.Glyph glyphs[] = new Armor.Glyph[size];
 				
 				Class<? extends Armor.Glyph> existing = ((Armor) item).glyph != null ? ((Armor) item).glyph.getClass() : null;
 				glyphs[0] = Armor.Glyph.randomCommon( existing );
 				glyphs[1] = Armor.Glyph.randomUncommon( existing );
 				glyphs[2] = Armor.Glyph.random( existing, glyphs[0].getClass(), glyphs[1].getClass());
+				if (curUser.subClass == HeroSubClass.LOREMASTER) {
+					glyphs[3] = Armor.Glyph.random( existing, glyphs[0].getClass(), glyphs[1].getClass());
+					glyphs[4] = Armor.Glyph.random( existing, glyphs[0].getClass(), glyphs[1].getClass());
+				}
+
+				String[] texts = new String[size + 1];
+				for (int i = 0; i < size; i ++) {
+					texts[i] = glyphs[i].name();
+				}
+				texts[size] = Messages.get(ScrollOfEnchantment.class, "cancel");
 				
 				GameScene.show(new WndOptions( new ItemSprite(ScrollOfEnchantment.this),
 						Messages.titleCase(ScrollOfEnchantment.this.name()),
 						Messages.get(ScrollOfEnchantment.class, "armor") +
 						"\n\n" +
 						Messages.get(ScrollOfEnchantment.class, "cancel_warn"),
-						glyphs[0].name(),
-						glyphs[1].name(),
-						glyphs[2].name(),
-						Messages.get(ScrollOfEnchantment.class, "cancel")){
+						texts) {
 					
 					@Override
 					protected void onSelect(int index) {
-						if (index < 3) {
-							((Armor) item).inscribe(glyphs[index]);
-							GLog.p(Messages.get(StoneOfEnchantment.class, "armor"));
-							((ScrollOfEnchantment)curItem).readAnimation();
-							
-							Sample.INSTANCE.play( Assets.Sounds.READ );
-							Enchanting.show(curUser, item);
-							Talent.onUpgradeScrollUsed( Dungeon.hero );
-						}
+						doRecord(new Callback() {
+							@Override
+							public void call() {
+
+								if (index < size) {
+									((Armor) item).inscribe(glyphs[index]);
+									GLog.p(Messages.get(StoneOfEnchantment.class, "armor"));
+									((ScrollOfEnchantment)curItem).readAnimation();
+
+									Sample.INSTANCE.play( Assets.Sounds.READ );
+									Enchanting.show(curUser, item);
+									Talent.onUpgradeScrollUsed( Dungeon.hero );
+								}
+
+							}
+						});
+
 					}
 
 					@Override
 					protected boolean hasInfo(int index) {
-						return index < 3;
+						return index < size;
 					}
 
 					@Override
@@ -186,7 +217,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 				});
 			} else {
 				//TODO if this can ever be found un-IDed, need logic for that
-				curItem.collect();
+				if (!anonymous) curItem.collect();
 			}
 		}
 	};

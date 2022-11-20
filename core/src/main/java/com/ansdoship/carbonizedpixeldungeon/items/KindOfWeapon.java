@@ -27,6 +27,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
@@ -57,17 +58,19 @@ abstract public class KindOfWeapon extends EquipableItem {
 		boolean equipFull = false;
 		boolean shouldEquip = false;
 		if (this instanceof MeleeWeapon && ((MeleeWeapon) this).twoHanded) {
-			KindOfWeapon tmpWeapon = hero.belongings.weapon;
-			KindOfWeapon tmpWeapon2 = hero.belongings.weapon2;
-			if ((hero.belongings.weapon == null || hero.belongings.weapon.doUnequip( hero, true )) &&
-					(hero.belongings.weapon2 == null || hero.belongings.weapon2.doUnequip( hero, true ))) {
+			if (hero.belongings.weapon == null && hero.belongings.weapon2 == null) shouldEquip = true;
+			else if (hero.belongings.weapon == null) {
+				shouldEquip = hero.belongings.weapon2.doUnequip(hero, true);
+			}
+			else if (hero.belongings.weapon2 == null) {
+				shouldEquip = hero.belongings.weapon.doUnequip(hero, true);
+			}
+			else {
+				shouldEquip = hero.belongings.weapon.doUnequip(hero, true) && hero.belongings.weapon2.doUnequip(hero, true);
+			}
+			if (shouldEquip) {
 				hero.belongings.weapon = this;
 				hero.belongings.weapon2 = null;
-				shouldEquip = true;
-			}
-			else { // Rollback if failed to equip
-				hero.belongings.weapon = tmpWeapon;
-				hero.belongings.weapon2 = tmpWeapon2;
 			}
 		}
 		else {
@@ -128,7 +131,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 								updateQuickslot();
 
 								cursedKnown = true;
-								if (cursed) {
+								if (cursed && !(KindOfWeapon.this instanceof MagesStaff && hero.hasTalent(Talent.FORBIDDEN_KNOWLEDGE))) {
 									equipCursed( hero );
 									GLog.n( Messages.get(KindOfWeapon.class, "equip_cursed") );
 								}
@@ -157,7 +160,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 				updateQuickslot();
 
 				cursedKnown = true;
-				if (cursed) {
+				if (cursed && !(KindOfWeapon.this instanceof MagesStaff && hero.hasTalent(Talent.FORBIDDEN_KNOWLEDGE))) {
 					equipCursed( hero );
 					GLog.n( Messages.get(KindOfWeapon.class, "equip_cursed") );
 				}

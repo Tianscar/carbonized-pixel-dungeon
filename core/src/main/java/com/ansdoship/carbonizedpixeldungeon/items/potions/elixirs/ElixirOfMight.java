@@ -31,6 +31,7 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ElixirOfMight extends Elixir {
 
@@ -46,9 +47,9 @@ public class ElixirOfMight extends Elixir {
 	@Override
 	protected void drink(Hero hero) {
 		PotionOfPotential.drink(hero, new ItemSprite(this), START_POINTS, new String[] { Messages.get(this, "msg_hp", HTBOOST) },
-				new String[]{ Messages.get(this, "msg_hp_2") }, new Runnable() {
+				new String[]{ Messages.get(this, "msg_hp_2") }, new Callback() {
 			@Override
-			public void run() {
+			public void call() {
 				/*
 				Buff.affect(hero, HTBoost.class).reset();
 				HTBoost boost = Buff.affect(hero, HTBoost.class);

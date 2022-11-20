@@ -25,11 +25,12 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.LightArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.Robe;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.Ring;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.ranged.RangedWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -126,7 +127,7 @@ public class ItemSlot extends Button {
 
 		if (status != null) {
 			status.measure();
-			if (status.width > width - (margin.left + margin.right)){
+			if (status.width >= width - (margin.left + margin.right)) {
 				status.scale.set(PixelScene.align(0.8f));
 			} else {
 				status.scale.set(1f);
@@ -137,13 +138,22 @@ public class ItemSlot extends Button {
 		}
 
 		if (extra != null) {
+			extra.scale.set(1f);
 			extra.x = x + (width - extra.width()) - margin.right;
 			extra.y = y + margin.top;
 			PixelScene.align(extra);
 
-			if ((status.width() + extra.width()) > width){
-				extra.x = x;
-				extra.y = status.y + status.height() - 1;
+			if ((status.width() + extra.width()) > (width - margin.right)) {
+				extra.scale.set(PixelScene.align(0.8f));
+				if ((status.width() + extra.width()) > (width - margin.right)) {
+					extra.x = status.x;
+					extra.y = status.y + status.height() - 1;
+				}
+				else {
+					extra.x = x + (width - extra.width()) - margin.right;
+					extra.y = y + margin.top;
+					PixelScene.align(extra);
+				}
 			}
 		}
 
@@ -226,10 +236,12 @@ public class ItemSlot extends Button {
 				int strreq = item instanceof Weapon ? ((Weapon)item).STRReq() :
 						(item instanceof Armor ? ((Armor)item).STRReq() : 0);
 				int dexreq = item instanceof MissileWeapon ? ((MissileWeapon)item).DEXReq() :
-						(item instanceof RangedWeapon ? ((RangedWeapon)item).DEXReq() : 0);
+						(item instanceof RangedWeapon ? ((RangedWeapon)item).DEXReq() :
+								(item instanceof LightArmor ? ((LightArmor) item).DEXReq() : 0));
 				int intreq = item instanceof Wand ? ((Wand)item).INTReq() :
 						(item instanceof MagesStaff ?
-								(((MagesStaff)item).getWand() == null ? 0 : ((MagesStaff)item).getWand().INTReq()) : 0);
+								(((MagesStaff)item).getWand() == null ? 0 : ((MagesStaff)item).getWand().INTReq()) :
+								(item instanceof Robe ? ((Robe) item).INTReq() : 0));
 				if (strreq > Dungeon.hero.STR()) {
 					extra.text( Messages.format( TXT_EXTRA, strreq ));
 					extra.hardlight( DEGRADED );

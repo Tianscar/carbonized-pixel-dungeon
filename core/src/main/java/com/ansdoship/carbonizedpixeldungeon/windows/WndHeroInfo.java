@@ -182,7 +182,7 @@ public class WndHeroInfo extends WndTabbed {
 			switch (cls){
 				case WARRIOR: default:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
-							new ItemSprite(ItemSpriteSheet.SHORTSWORD),
+							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ),
 					        new ItemSprite(ItemSpriteSheet.ELIXIR_MIGHT)};
 					break;

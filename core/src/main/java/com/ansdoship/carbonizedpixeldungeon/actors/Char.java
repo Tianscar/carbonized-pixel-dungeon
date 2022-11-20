@@ -34,6 +34,8 @@ import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.warrior.Endure
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Elemental;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Monk;
 import com.ansdoship.carbonizedpixeldungeon.items.Heap;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.HeavyArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.Robe;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Potential;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfCleansing;
@@ -45,6 +47,9 @@ import com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfPsionic
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfFireblast;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfFrost;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfLightning;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfFireblast;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfFrost;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfLightning;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.enchantments.Blazing;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.enchantments.Blocking;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.enchantments.Grim;
@@ -316,8 +321,11 @@ public abstract class Char extends Actor {
 				dmg = endure.adjustDamageTaken(dmg);
 			}
 
-			if (enemy.buff(ScrollOfChallenge.ChallengeArena.class) != null){
-				dmg *= 0.67f;
+			if (enemy.buff(ScrollOfChallenge.ChallengeArena.class) != null) {
+				if (Dungeon.hero.subClass == HeroSubClass.LOREMASTER) {
+					dmg *= 0.33f;
+				}
+				else dmg *= 0.67f;
 			}
 
 			int effectiveDamage = enemy.defenseProc( this, dmg );
@@ -338,7 +346,6 @@ public abstract class Char extends Actor {
 						&& this != Dungeon.hero
 						&& enemy == Dungeon.hero
 						&& Dungeon.hero.canAttack(this)
-						&& Dungeon.hero.subClass == HeroSubClass.SHIELDGUARD
 						&& Dungeon.hero.hasTalent(Talent.COUNTERATTACK)
 				        && Dungeon.hero.buff(DefensiveStance.class) != null) {
 					enemy.sprite.showStatus( CharSprite.NEUTRAL, Messages.get(Monk.class, "parried") );
@@ -819,6 +826,24 @@ public abstract class Char extends Actor {
 				result *= 0.5f;
 			}
 		}
+
+		if (this instanceof Hero) {
+			if (((Hero) this).belongings.armor() instanceof Robe) {
+				float resist = ((Robe) ((Hero) this).belongings.armor()).resist(effect);
+				if (((Robe) ((Hero) this).belongings.armor()).INTReq() > ((Hero) this).INT()) {
+					resist += 0.1f*(((Robe) ((Hero) this).belongings.armor()).INTReq() - ((Hero) this).INT());
+				}
+				result *= resist;
+			}
+			else if (((Hero) this).belongings.armor() instanceof HeavyArmor) {
+				float resist = ((HeavyArmor) ((Hero) this).belongings.armor()).resist(effect);
+				if (((Hero) this).belongings.armor().STRReq() > ((Hero) this).STR()) {
+					resist += 0.1f*(((Hero) this).belongings.armor().STRReq() - ((Hero) this).STR());
+				}
+				result *= resist;
+			}
+		}
+
 		return result * RingOfElements.resist(this, effect);
 	}
 
@@ -867,13 +892,13 @@ public abstract class Char extends Actor {
 		DEMONIC,
 		INORGANIC ( new HashSet<Class>(),
 				new HashSet<Class>( Arrays.asList(Bleeding.class, ToxicGas.class, Poison.class) )),
-		FIERY ( new HashSet<Class>( Arrays.asList(WandOfFireblast.class, Elemental.FireElemental.class)),
+		FIERY ( new HashSet<Class>( Arrays.asList(WandOfFireblast.class, SparkWandOfFireblast.class, Elemental.FireElemental.class)),
 				new HashSet<Class>( Arrays.asList(Burning.class, Blazing.class))),
-		ICY ( new HashSet<Class>( Arrays.asList(WandOfFrost.class, Elemental.FrostElemental.class)),
+		ICY ( new HashSet<Class>( Arrays.asList(WandOfFrost.class, SparkWandOfFrost.class, Elemental.FrostElemental.class)),
 				new HashSet<Class>( Arrays.asList(Frost.class, Chill.class))),
 		ACIDIC ( new HashSet<Class>( Arrays.asList(Corrosion.class)),
 				new HashSet<Class>( Arrays.asList(Ooze.class))),
-		ELECTRIC ( new HashSet<Class>( Arrays.asList(WandOfLightning.class, Shocking.class, Potential.class, Electricity.class, ShockingDart.class, Elemental.ShockElemental.class )),
+		ELECTRIC ( new HashSet<Class>( Arrays.asList(WandOfLightning.class, SparkWandOfLightning.class, Shocking.class, Potential.class, Electricity.class, ShockingDart.class, Elemental.ShockElemental.class )),
 				new HashSet<Class>()),
 		LARGE,
 		IMMOVABLE;

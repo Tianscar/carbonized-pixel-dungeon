@@ -26,12 +26,14 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Blindness;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Weakness;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfPsionicBlast extends ExoticScroll {
 	
@@ -41,35 +43,46 @@ public class ScrollOfPsionicBlast extends ExoticScroll {
 	
 	@Override
 	public void doRead() {
-		
-		GameScene.flash( 0x80FFFFFF );
-		
-		Sample.INSTANCE.play( Assets.Sounds.BLAST );
-		
-		int targets = 0;
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-			if (Dungeon.level.heroFOV[mob.pos]) {
-				targets ++;
-				mob.damage(Math.round(mob.HT/2f + mob.HP/2f), this);
-				if (mob.isAlive()) {
-					Buff.prolong(mob, Blindness.class, Blindness.DURATION);
-				}
-			}
-		}
-		
-		curUser.damage(Math.max(0, Math.round(curUser.HT*(0.5f * (float)Math.pow(0.9, targets)))), this);
-		if (curUser.isAlive()) {
-			Buff.prolong(curUser, Blindness.class, Blindness.DURATION);
-			Buff.prolong(curUser, Weakness.class, Weakness.DURATION*5f);
-			Dungeon.observe();
-			readAnimation();
-		} else {
-			Dungeon.fail( getClass() );
-			GLog.n( Messages.get(this, "ondeath") );
-		}
 
-		identify();
-		
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				GameScene.flash( 0x80FFFFFF );
+
+				Sample.INSTANCE.play( Assets.Sounds.BLAST );
+
+				int targets = 0;
+				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					if (Dungeon.level.heroFOV[mob.pos]) {
+						targets ++;
+						mob.damage(Math.round(mob.HT/2f + mob.HP/2f), this);
+						if (mob.isAlive()) {
+							Buff.prolong(mob, Blindness.class, Blindness.DURATION);
+						}
+					}
+				}
+
+				if (curUser.subClass == HeroSubClass.LOREMASTER) {
+					readAnimation();
+				}
+				else {
+					curUser.damage(Math.max(0, Math.round(curUser.HT*(0.5f * (float)Math.pow(0.9, targets)))), this);
+					if (curUser.isAlive()) {
+						Buff.prolong(curUser, Blindness.class, Blindness.DURATION);
+						Buff.prolong(curUser, Weakness.class, Weakness.DURATION*5f);
+						Dungeon.observe();
+						readAnimation();
+					} else {
+						Dungeon.fail( getClass() );
+						GLog.n( Messages.get(this, "ondeath") );
+					}
+				}
+
+				identify();
+
+			}
+		});
 	
 	}
 }

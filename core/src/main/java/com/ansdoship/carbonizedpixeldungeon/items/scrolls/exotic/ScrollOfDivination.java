@@ -22,6 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.Identification;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.Potion;
@@ -36,7 +37,9 @@ import com.ansdoship.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.ansdoship.carbonizedpixeldungeon.ui.Window;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.carbonizedpixeldungeon.windows.IconTitle;
+import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
@@ -48,26 +51,19 @@ public class ScrollOfDivination extends ExoticScroll {
 	{
 		icon = ItemSpriteSheet.Icons.SCROLL_DIVINATE;
 	}
-	
-	@Override
-	public void doRead() {
-		
-		curUser.sprite.parent.add( new Identification( curUser.sprite.center().offset( 0, -16 ) ) );
-		
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-		
+
+	public static void identifyItems( Item item, int left ) {
 		HashSet<Class<? extends Potion>> potions = Potion.getUnknown();
 		HashSet<Class<? extends Scroll>> scrolls = Scroll.getUnknown();
 		HashSet<Class<? extends Ring>> rings = Ring.getUnknown();
-		
+
 		int total = potions.size() + scrolls.size() + rings.size();
-		
+
 		ArrayList<Item> IDed = new ArrayList<>();
-		int left = 4;
-		
+
 		float[] baseProbs = new float[]{3, 3, 3};
 		float[] probs = baseProbs.clone();
-		
+
 		while (left > 0 && total > 0) {
 			switch (Random.chances(probs)) {
 				default:
@@ -112,26 +108,47 @@ public class ScrollOfDivination extends ExoticScroll {
 		}
 
 		if (total == 0){
-			GLog.n( Messages.get(this, "nothing_left") );
+			GLog.n( Messages.get(ScrollOfDivination.class, "nothing_left") );
 		} else {
-			GameScene.show(new WndDivination(IDed));
+			GameScene.show(new WndDivination(item, IDed));
 		}
-
-		readAnimation();
-		identify();
 	}
 	
-	private class WndDivination extends Window {
+	@Override
+	public void doRead() {
+
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				curUser.sprite.parent.add( new Identification( curUser.sprite.center().offset( 0, -16 ) ) );
+
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+
+				int left = 4;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) left += 2;
+				identifyItems(ScrollOfDivination.this, left);
+
+				readAnimation();
+
+				identify();
+
+			}
+		});
+
+	}
+	
+	private static class WndDivination extends Window {
 		
 		private static final int WIDTH = 120;
 		
-		WndDivination(ArrayList<Item> IDed ){
-			IconTitle cur = new IconTitle(new ItemSprite(ScrollOfDivination.this),
-					Messages.titleCase(Messages.get(ScrollOfDivination.class, "name")));
+		WndDivination( Item item, ArrayList<Item> IDed ){
+			IconTitle cur = new IconTitle( new ItemSprite(item),
+					Messages.titleCase(Messages.get(item, "name")));
 			cur.setRect(0, 0, WIDTH, 0);
 			add(cur);
 			
-			RenderedTextBlock msg = PixelScene.renderTextBlock(Messages.get(this, "desc"), 6);
+			RenderedTextBlock msg = PixelScene.renderTextBlock(Messages.get(this, "desc", item.trueName()), 6);
 			msg.maxWidth(120);
 			msg.setPos(0, cur.bottom() + 2);
 			add(msg);

@@ -21,6 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.scenes;
 
+import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -68,10 +69,11 @@ public class AboutScene extends PixelScene {
 				new ItemSprite( ItemSpriteSheet.CARBON_STEEL ),
 				"Developed by: _Tianscar_\nBased on ShatteredPD's open source\n" +
 						"Inspired by: " +
-						"\nCocoa's ARranged Pixel Dungeon, " +
-						"\nDachhack's Sprouted Pixel Dungeon, " +
-						"\nTypedScroll's Overgrown Pixel Dungeon, " +
-						"\ndreamdream2020's Scorched Pixel Dungeon",
+						"NYRDS's Remixed Dungeon, " +
+						"Cocoa's ARranged Pixel Dungeon, " +
+						"Dachhack's Sprouted Pixel Dungeon, " +
+						"TypedScroll's Overgrown Pixel Dungeon, " +
+						"dreamdream2020's Scorched Pixel Dungeon",
 				"carbonizedpd.tianscar.com",
 				"https://carbonizedpd.tianscar.com");
 		if (landscape()){
@@ -81,6 +83,29 @@ public class AboutScene extends PixelScene {
 		}
 		content.add(tians);
 
+		CreditsBlock h39 = new CreditsBlock(false, TIANS_COLOR,
+				"Art Director:",
+				new Image(Assets.Sprites.BEE, 2, 2, 13, 12),
+				"H39ClassBB",
+				"github.com/H39ClassBB",
+				"https://github.com/H39ClassBB");
+		h39.setSize(colWidth/2f, 0);
+		if (landscape()){
+			h39.setPos(tians.right(), 5);
+		} else {
+			h39.setPos(w/2f - colWidth/2f, tians.bottom()+5);
+		}
+		content.add(h39);
+
+		CreditsBlock taolin = new CreditsBlock(false, TIANS_COLOR,
+				"Chief Director:",
+				new ItemSprite( ItemSpriteSheet.PHASE_SHIFT ),
+				"Taolin",
+				null,
+				null);
+		taolin.setRect(h39.right() + 3, h39.top(), colWidth/2f, 0);
+		content.add(taolin);
+
 		CreditsBlock ptr = new CreditsBlock(false, TIANS_COLOR,
 				"Music:",
 				Icons.PTR.get(),
@@ -89,17 +114,17 @@ public class AboutScene extends PixelScene {
 				"https://progressive-tune.github.io/ptr", true);
 		ptr.setSize(colWidth/2f, 0);
 		CreditsBlock jason = new CreditsBlock(false, TIANS_COLOR,
-				"theme.ogg",
+				null,
 				Icons.JASON.get(),
 				"Jasφn",
 				"music.163.com/artist/...",
 				"https://music.163.com/artist?id=48991962&userid=3270966253");
 		jason.setSize(colWidth/2f, 0);
 		if (landscape()){
-			ptr.setPos(tians.right() + colWidth/4f, tians.top() + (tians.height() - ptr.height() - jason.height())/2f);
+			ptr.setPos(tians.right() + colWidth/4f, h39.bottom() + 5);
 			jason.setPos(ptr.left(), ptr.bottom() + 5);
 		} else {
-			ptr.setRect(w / 2f - colWidth/4f, tians.bottom() + 5, colWidth/2f, 0);
+			ptr.setRect(w / 2f - colWidth/4f, h39.bottom() + 5, colWidth/2f, 0);
 			jason.setRect(w / 2f - colWidth/4f, ptr.bottom() + 5, colWidth/2f, 0);
 		}
 		content.add(ptr);
@@ -120,7 +145,7 @@ public class AboutScene extends PixelScene {
 				"ShatteredPixel.com",
 				shpxLink);
 		if (landscape()){
-			shpx.setRect(tians.left(), tians.bottom() + 13, colWidth, 0);
+			shpx.setRect(tians.left(), Math.max(tians.bottom(), jason.bottom()) + 10, colWidth, 0);
 		} else {
 			shpx.setRect(tians.left(), jason.bottom() + 12, colWidth, 0);
 		}
@@ -165,7 +190,7 @@ public class AboutScene extends PixelScene {
 		final int WATA_COLOR = 0x55AAFF;
 		CreditsBlock wata = new CreditsBlock(true, WATA_COLOR,
 				"Pixel Dungeon",
-				Icons.WATA.get(),
+				Icons.WATABOU.get(),
 				"Developed by: _Watabou_\nInspired by Brian Walker's Brogue",
 				"pixeldungeon.watabou.ru",
 				"http://pixeldungeon.watabou.ru");

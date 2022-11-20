@@ -25,6 +25,7 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Recharging;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.SpellSprite;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.EnergyParticle;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -32,6 +33,7 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.Emitter;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfRecharging extends Scroll {
 
@@ -42,17 +44,29 @@ public class ScrollOfRecharging extends Scroll {
 	@Override
 	public void doRead() {
 
-		Buff.affect(curUser, Recharging.class, Recharging.DURATION);
-		charge(curUser);
+		doRecord(new Callback() {
+			@Override
+			public void call() {
 
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-		Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
+				float duration = Recharging.DURATION;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) {
+					duration = Math.round(duration * 1.5f);
+				}
+				Buff.affect(curUser, Recharging.class, duration);
+				charge(curUser);
 
-		GLog.i( Messages.get(this, "surge") );
-		SpellSprite.show( curUser, SpellSprite.CHARGE );
-		identify();
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+				Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
 
-		readAnimation();
+				GLog.i( Messages.get(ScrollOfRecharging.this, "surge") );
+				SpellSprite.show( curUser, SpellSprite.CHARGE );
+				identify();
+
+				readAnimation();
+
+			}
+		});
+
 	}
 	
 	public static void charge( Char user ) {

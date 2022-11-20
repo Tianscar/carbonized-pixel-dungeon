@@ -21,12 +21,20 @@
 
 package com.ansdoship.carbonizedpixeldungeon.items.scrolls;
 
+import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Badges;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.Identification;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
+import com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfDivination;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
+import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
+import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
+import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfIdentify extends InventoryScroll {
 
@@ -34,6 +42,51 @@ public class ScrollOfIdentify extends InventoryScroll {
 		icon = ItemSpriteSheet.Icons.SCROLL_IDENTIFY;
 
 		bones = true;
+	}
+
+	@Override
+	public void doRead() {
+		if (curUser.subClass == HeroSubClass.LOREMASTER) {
+			GameScene.show(new WndOptions(new ItemSprite(this),
+					Messages.titleCase(Messages.get(this, "name")),
+					Messages.get(this, "prompt"),
+					Messages.get(this, "one_item"),
+					Messages.get(this, "two_rand")) {
+				@Override
+				protected void onSelect(int index) {
+					doRecord(new Callback() {
+						@Override
+						public void call() {
+							switch (index) {
+								case 0:
+									ScrollOfIdentify.this.superDoRead();
+									break;
+								case 1:
+									curUser.sprite.parent.add( new Identification( curUser.sprite.center().offset( 0, -16 ) ) );
+
+									Sample.INSTANCE.play( Assets.Sounds.READ );
+
+									ScrollOfDivination.identifyItems(ScrollOfIdentify.this, 2);
+
+									readAnimation();
+
+									break;
+							}
+						}
+					});
+				}
+				@Override
+				public void onBackPressed() {
+					if (!anonymous) curItem.collect();
+					super.onBackPressed();
+				}
+			});
+		}
+		else super.doRead();
+	}
+
+	private void superDoRead() {
+		super.doRead();
 	}
 
 	@Override

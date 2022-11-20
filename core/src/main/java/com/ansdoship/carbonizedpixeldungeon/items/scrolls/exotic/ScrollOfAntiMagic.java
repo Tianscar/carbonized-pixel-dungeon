@@ -23,8 +23,10 @@ package com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic;
 
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.MagicImmune;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfAntiMagic extends ExoticScroll {
 	
@@ -34,12 +36,22 @@ public class ScrollOfAntiMagic extends ExoticScroll {
 	
 	@Override
 	public void doRead() {
-		
-		Buff.affect( curUser, MagicImmune.class, MagicImmune.DURATION );
-		new Flare( 5, 32 ).color( 0xFF0000, true ).show( curUser.sprite, 2f );
 
-		identify();
-		
-		readAnimation();
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				float duration = MagicImmune.DURATION;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) duration = Math.round(duration * 1.5f);
+				Buff.affect( curUser, MagicImmune.class, duration );
+				new Flare( 5, 32 ).color( 0xFF0000, true ).show( curUser.sprite, 2f );
+
+				identify();
+
+				readAnimation();
+
+			}
+		});
+
 	}
 }

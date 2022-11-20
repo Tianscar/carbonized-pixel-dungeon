@@ -21,12 +21,10 @@
 
 package com.ansdoship.carbonizedpixeldungeon;
 
-import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfPotential;
-import com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfPotentialBurst;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
-import com.ansdoship.carbonizedpixeldungeon.scenes.TitleScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.SplashScene;
+import com.ansdoship.carbonizedpixeldungeon.scenes.TitleScene;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Music;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
@@ -41,10 +39,79 @@ public class CarbonizedPixelDungeon extends Game {
 	public static final int v0_0_5   = 12;
 	public static final int v0_0_4   = 9;
 	
-	public CarbonizedPixelDungeon(PlatformSupport platform ) {
+	public CarbonizedPixelDungeon( PlatformSupport platform ) {
 		super( sceneClass == null ? SplashScene.class : sceneClass, platform );
 
 		//CBPD v0.0.8
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWand.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.Spark" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.DamageSparkWand.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.DamageSpark" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfBlastWave.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfBlastWave" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfCorrosion.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfCorrosion" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfCorruption.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfCorruption" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfDisintegration.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfDisintegration" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfFireblast.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfFireblast" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfFrost.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfFrost" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfLightning.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfLightning" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfLivingEarth.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfLivingEarth" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfMagicMissile.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfMagicMissile" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfPrismaticLight.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfPrismaticLight" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfRegrowth.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfRegrowth" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfTransfusion.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfTransfusion" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfWarding.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkOfWarding" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.armor.Robe.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.armor.Robes" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.armor.WhiteRobe.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.armor.WhiteRobes" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.armor.GreenRobe.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.armor.GreenRobes" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.armor.BlackRobe.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.armor.BlackRobes" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.armor.BlueRobe.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.armor.BlueRobes" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.items.armor.VioletRobe.class,
+				"com.ansdoship.carbonizedpixeldungeon.items.armor.VioletRobes" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.MagicSheep.class,
+				"com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.MagicSheep" );
+		Bundle.addAlias(
+				com.ansdoship.carbonizedpixeldungeon.actors.mobs.AlbinoRat.class,
+				"com.ansdoship.carbonizedpixeldungeon.actors.mobs.Albino" );
 		Bundle.addAlias(
 				com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfPotentialBurst.class,
 				"com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfAdrenalineSurge" );

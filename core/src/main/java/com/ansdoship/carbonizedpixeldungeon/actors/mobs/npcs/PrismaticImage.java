@@ -31,6 +31,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.PrismaticGuard;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
@@ -98,8 +99,8 @@ public class PrismaticImage extends NPC {
 			}
 		}
 
-		if (hero.tier() != armTier){
-			armTier = hero.tier();
+		if (hero.armorTier() != armTier){
+			armTier = hero.armorTier();
 			((PrismaticSprite)sprite).updateArmor( armTier );
 		}
 
@@ -145,7 +146,13 @@ public class PrismaticImage extends NPC {
 	@Override
 	public int damageRoll() {
 		if (hero != null) {
-			return Random.NormalIntRange( 2 + hero.lvl/4, 4 + hero.lvl/2 );
+			int min = 2 + hero.lvl/4;
+			int max = 4 + hero.lvl/2;
+			if (hero.subClass == HeroSubClass.LOREMASTER) {
+				min = Math.round(min * 1.5f);
+				max *= 2;
+			}
+			return Random.NormalIntRange( min, max );
 		} else {
 			return Random.NormalIntRange( 2, 4 );
 		}
@@ -228,7 +235,7 @@ public class PrismaticImage extends NPC {
 
 		hero = (Hero)Actor.findById(heroID);
 		if (hero != null) {
-			armTier = hero.tier();
+			armTier = hero.armorTier();
 		}
 		((PrismaticSprite)s).updateArmor( armTier );
 		return s;

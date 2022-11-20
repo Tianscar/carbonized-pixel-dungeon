@@ -121,7 +121,11 @@ public class CellSelector extends ScrollArea {
 		}
 	}
 
-	private float zoom( float value ) {
+	public float zoom() {
+		return camera.zoom;
+	}
+
+	public float zoom( float value ) {
 
 		value = GameMath.gate( PixelScene.minZoom, value, PixelScene.maxZoom );
 		PDSettings.zoom((int) (value - PixelScene.defaultZoom));

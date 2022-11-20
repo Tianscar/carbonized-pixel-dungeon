@@ -43,7 +43,10 @@ import com.ansdoship.carbonizedpixeldungeon.items.Heap;
 import com.ansdoship.carbonizedpixeldungeon.items.Heap.Type;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.KindOfWeapon;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.ClassArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.LightArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.Robe;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Brimstone;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Viscosity;
@@ -207,10 +210,9 @@ public class Hero extends Char {
 		int curHT = HT;
 
 		HT = 20 + 5*(lvl-1) + HTBoost;
-		float conMultiplier = 0.1f * CON();
-		HT = Math.round(conMultiplier * HT);
+		float conHTMultiplier = conHTMultiplier(this);
 		float ringMultiplier = RingOfMight.HTMultiplier(this);
-		HT = Math.round(ringMultiplier * HT);
+		HT = Math.round(conHTMultiplier * ringMultiplier * HT);
 
 		if (buff(ElixirOfMight.HTBoost.class) != null){
 			HT += buff(ElixirOfMight.HTBoost.class).boost();
@@ -220,7 +222,7 @@ public class Hero extends Char {
 			HP += Math.max(HT - curHT, 0);
 		}
 		else if (conBoostHP) {
-			HP += Math.max(Math.round(conMultiplier * HP) - HP, 0);
+			HP += Math.max(Math.round(conHTMultiplier * HP) - HP, 0);
 		}
 		HP = Math.min(HP, HT);
 	}
@@ -255,8 +257,20 @@ public class Hero extends Char {
 		return CON;// TODO
 	}
 
+	public static float conHTMultiplier( Hero hero ) {
+		int con = hero.CON();
+		if (con <= 10) return 0.1f * con;
+		else return (float) Math.pow( 1.035, con-10 );
+	}
+
 	public int DEX() {
 		return DEX;// TODO
+	}
+
+	public static float dexEvasionMultiplier( Hero hero ) {
+		int dex = hero.DEX();
+		if (dex <= 10) return 0.1f * dex;
+		else return (float) Math.pow( 1.035, dex-10 );
 	}
 
 	public int INT() {
@@ -273,6 +287,18 @@ public class Hero extends Char {
 
 	public int CHA() {
 		return CHA;// TODO
+	}
+
+	public static float chaSellMultiplier( Hero hero ) {
+		int cha = hero.CHA();
+		if (cha <= 10) return 1 - 0.1f * (cha - 10);
+		else return 1 + 0.05f * (cha - 10);
+	}
+
+	public static float chaBuyMultiplier( Hero hero ) {
+		int cha = hero.CHA();
+		if (cha <= 10) return 1 + 0.1f * (cha - 10);
+		else return 1 - 0.05f * (cha - 10);
 	}
 
 	private static final String CLASS       = "class";
@@ -485,7 +511,7 @@ public class Hero extends Char {
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
 			return true;
 		}
-		if ( subClass == HeroSubClass.SHIELDGUARD ) {
+		if ( buff(DefensiveStance.class) != null ) {
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
 			return true;
 		}
@@ -500,14 +526,20 @@ public class Hero extends Char {
 		Buff.affect( this, Hunger.class );
 	}
 
-	public int tier() {
-		if (belongings.armor() instanceof ClassArmor){
-			return 6;
-		} else if (belongings.armor() != null){
-			return belongings.armor().tier;
-		} else {
-			return 0;
+	public int armorTier() {
+		final Armor armor = belongings.armor();
+		if (armor == null) return 0;
+		final int tier = armor.tier;
+		if (armor instanceof Robe) {
+			return tier + 6;
 		}
+		else if (armor instanceof LightArmor) {
+			return tier + 9;
+		}
+		else if (armor instanceof ClassArmor) {
+			return 6;
+		}
+		else return tier;
 	}
 
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
@@ -546,9 +578,12 @@ public class Hero extends Char {
 				Buff.affect( this, Talent.MeleeMustHit.class );
 			}
 		}
+		if (hasTalent(Talent.ARCANE_STRIKE) && target.buff(Talent.ArcaneStrikeTracker.class) != null) {
+			Buff.affect( this, Talent.MeleeMustHit.class );
+		}
 
 		if (buff(Talent.MeleeMustHit.class) != null && !(wep instanceof MissileWeapon) && !(wep instanceof SpiritBow)) {
-			Buff.detach(this, Talent.MeleeMustHit.class);
+			Buff.detach( this, Talent.MeleeMustHit.class );
 			return INFINITE_ACCURACY;
 		}
 
@@ -599,8 +634,7 @@ public class Hero extends Char {
 		}
 
 		float evasion = defenseSkill;
-		float dexMultiplier = 0.1f * DEX();
-		evasion = Math.round(dexMultiplier * evasion);
+		evasion *= dexEvasionMultiplier( this );
 		evasion *= RingOfEvasion.evasionMultiplier( this );
 
 		if (paralysed > 0) {
@@ -635,7 +669,17 @@ public class Hero extends Char {
 
 		if (belongings.armor() != null) {
 			int armDr = Random.NormalIntRange( belongings.armor().DRMin(), belongings.armor().DRMax());
-			if (STR() < belongings.armor().STRReq()){
+			if (belongings.armor() instanceof Robe) {
+				if (INT() < ((Robe) belongings.armor()).INTReq()) {
+					armDr -= 2*(((Robe) belongings.armor()).INTReq() - INT());
+				}
+			}
+			else if (belongings.armor() instanceof LightArmor) {
+				if (DEX() < ((LightArmor) belongings.armor()).DEXReq()) {
+					armDr -= 2*(((LightArmor) belongings.armor()).DEXReq() - DEX());
+				}
+			}
+			if (STR() < belongings.armor().STRReq()) {
 				armDr -= 2*(belongings.armor().STRReq() - STR());
 			}
 			if (armDr > 0) dr += armDr;
@@ -659,8 +703,8 @@ public class Hero extends Char {
 			dr += Random.NormalIntRange(0, 2+2*pointsInTalent(Talent.HOLD_FAST));
 		}
 
-		if (subClass == HeroSubClass.SHIELDGUARD){
-			dr += Random.NormalIntRange(0, buff(DefensiveStance.class) == null ? 2 : 4+4*pointsInTalent(Talent.ENHANCED_SHIELD));
+		if (buff(DefensiveStance.class) != null) {
+			dr += Random.NormalIntRange(0, 4+4*pointsInTalent(Talent.ENHANCED_SHIELD));
 		}
 
 		return dr;
@@ -693,7 +737,8 @@ public class Hero extends Char {
 
 		if (!(wep instanceof MissileWeapon) && !(wep instanceof SpiritBow)) {
 			if (subClass == HeroSubClass.SHIELDGUARD && buff(DefensiveStance.class) != null) {
-				dmg += Math.round(drRoll() * 0.1f * (pointsInTalent(Talent.RECKLESS_SLAM)+1));
+				dmg += Math.round(drRoll() * 0.05f * (pointsInTalent(Talent.RECKLESS_SLAM)+1));
+				dmg *= 0.5f;
 			}
 		}
 
@@ -800,24 +845,29 @@ public class Hero extends Char {
 			return 0;
 		}
 
+		float delay;
 		if (wep instanceof MissileWeapon || wep instanceof SpiritBow) {
-			return wep.delayFactor( this );
+			delay = wep.delayFactor( this );
 		}
 		else if (canWep1Attack && canWep2Attack) {
-			return (wep.delayFactor( this ) + wep2.delayFactor( this )) * 0.5f;
+			delay = (wep.delayFactor( this ) + wep2.delayFactor( this )) * 0.5f;
 		}
 		else if (canWep1Attack) {
-			return wep.delayFactor( this );
+			delay = wep.delayFactor( this );
 		}
 		else if (canWep2Attack) {
-			return wep2.delayFactor( this );
+			delay = wep2.delayFactor( this );
 		}
 		else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
 			//But there's going to be that one guy who gets a furor+force ring combo
 			//This is for that one guy, you shall get your fists of fury!
-			return 1f/RingOfFuror.attackSpeedMultiplier(this);
+			delay = 1f/RingOfFuror.attackSpeedMultiplier(this);
 		}
+		if (buff(Combo.class) != null) {
+			delay /= buff(Combo.class).attackSpeedMultiplier();
+		}
+		return delay;
 	}
 
 	@Override
@@ -1330,7 +1380,7 @@ public class Hero extends Char {
 				Buff.affect(this, HoldFast.class);
 			}
 			if (subClass == HeroSubClass.SHIELDGUARD && buff(DefensiveStance.class) == null) {
-				Buff.affect(this, DefensiveStance.class).showEnableEffects(true);
+				Buff.affect(this, DefensiveStance.class).defense(true);
 				showStatus = false;
 			}
 			if (sprite != null && showStatus) {
@@ -1434,14 +1484,17 @@ public class Hero extends Char {
 		}
 
 		Endure.EndureTracker endure = buff(Endure.EndureTracker.class);
-		if (!(src instanceof Char)){
+		if (!(src instanceof Char)) {
 			//reduce damage here if it isn't coming from a character (if it is we already reduced it)
-			if (endure != null){
+			if (endure != null) {
 				dmg = endure.adjustDamageTaken(dmg);
 			}
 			//the same also applies to challenge scroll damage reduction
-			if (buff(ScrollOfChallenge.ChallengeArena.class) != null){
-				dmg *= 0.67f;
+			if (buff(ScrollOfChallenge.ChallengeArena.class) != null) {
+				if (Dungeon.hero.subClass == HeroSubClass.LOREMASTER) {
+					dmg *= 0.33f;
+				}
+				else dmg *= 0.66f;
 			}
 		}
 

@@ -24,10 +24,12 @@ package com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.SpellSprite;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfMysticalEnergy extends ExoticScroll {
 	
@@ -37,18 +39,28 @@ public class ScrollOfMysticalEnergy extends ExoticScroll {
 	
 	@Override
 	public void doRead() {
-		
-		//append buff
-		Buff.affect(curUser, ArtifactRecharge.class).set( 30 ).ignoreHornOfPlenty = false;
 
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-		Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
-		
-		SpellSprite.show( curUser, SpellSprite.CHARGE );
-		identify();
-		ScrollOfRecharging.charge(curUser);
-		
-		readAnimation();
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				//append buff
+				float duration = 30;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) duration = Math.round(duration * 1.5f);
+				Buff.affect(curUser, ArtifactRecharge.class).set( duration ).ignoreHornOfPlenty = false;
+
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+				Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
+
+				SpellSprite.show( curUser, SpellSprite.CHARGE );
+				identify();
+				ScrollOfRecharging.charge(curUser);
+
+				readAnimation();
+
+			}
+		});
+
 	}
 	
 }

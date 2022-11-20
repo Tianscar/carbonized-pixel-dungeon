@@ -49,6 +49,8 @@ import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 
+import java.text.DecimalFormat;
+
 public class Combo extends Buff implements ActionIndicator.Action {
 	
 	private int count = 0;
@@ -131,7 +133,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", count, dispTurns(comboTime));
+		return Messages.get(this, "desc", count, new DecimalFormat("#.##").format(100f * (attackSpeedMultiplier() - 1f)), dispTurns(comboTime));
 	}
 
 	private static final String COUNT = "count";
@@ -490,4 +492,9 @@ public class Combo extends Buff implements ActionIndicator.Action {
 			return Messages.get(Combo.class, "prompt");
 		}
 	};
+
+	public float attackSpeedMultiplier() {
+		return (float) Math.pow(1.105, Math.min(count, 7));
+	}
+
 }

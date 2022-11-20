@@ -25,13 +25,13 @@ import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Bleeding;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.items.food.MysteryMeat;
-import com.ansdoship.carbonizedpixeldungeon.sprites.AlbinoSprite;
+import com.ansdoship.carbonizedpixeldungeon.sprites.AlbinoRatSprite;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
-public class Albino extends Rat {
+public class AlbinoRat extends Rat {
 
 	{
-		spriteClass = AlbinoSprite.class;
+		spriteClass = AlbinoRatSprite.class;
 		
 		HP = HT = 15;
 		EXP = 2;

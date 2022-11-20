@@ -22,12 +22,7 @@
 package com.ansdoship.carbonizedpixeldungeon.items;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
-import com.ansdoship.carbonizedpixeldungeon.items.armor.ClothArmor;
-import com.ansdoship.carbonizedpixeldungeon.items.armor.LeatherArmor;
-import com.ansdoship.carbonizedpixeldungeon.items.armor.MailArmor;
-import com.ansdoship.carbonizedpixeldungeon.items.armor.PlateArmor;
-import com.ansdoship.carbonizedpixeldungeon.items.armor.ScaleArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.*;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.Artifact;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.CapeOfThorns;
@@ -184,8 +179,13 @@ public class Generator {
 		WEP_T3	( 0,    MeleeWeapon.class),
 		WEP_T4	( 0,    MeleeWeapon.class),
 		WEP_T5	( 0,    MeleeWeapon.class),
-		
-		ARMOR	( 3,    Armor.class ),
+
+		ARMOR_ALL( 0,   Armor.class ),
+		ARMOR   ( 3,    Armor.class ),
+		ARMOR_G	( 0,    GeneralArmor.class ),
+		ARMOR_L ( 0,    LightArmor.class ),
+		ARMOR_H ( 0,    HeavyArmor.class ),
+		ROBE   ( 1,    Robe.class ),
 		
 		MISSILE ( 3,    MissileWeapon.class ),
 		MIS_T1  ( 0,    MissileWeapon.class ),
@@ -375,14 +375,34 @@ public class Generator {
 			};
 			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4, 4 };
 			
-			//see Generator.randomArmor
-			ARMOR.classes = new Class<?>[]{
+			//see Generator.randomGeneralArmor
+			ARMOR_G.classes = new Class<?>[]{
 					ClothArmor.class,
-					LeatherArmor.class,
+					LeatherArmor.class };
+			ARMOR_G.probs = new float[]{ 0, 0 };
+
+			//see Generator.randomLightArmor
+			ARMOR_L.classes = new Class<?>[]{
+					VineArmor.class,
+					FeatherArmor.class,
+					MithrilArmor.class };
+			ARMOR_L.probs = new float[]{ 0, 0, 0 };
+
+			//see Generator.randomHeavyArmor
+			ARMOR_H.classes = new Class<?>[]{
 					MailArmor.class,
 					ScaleArmor.class,
 					PlateArmor.class };
-			ARMOR.probs = new float[]{ 0, 0, 0, 0, 0 };
+			ARMOR_H.probs = new float[]{ 0, 0, 0 };
+
+			//see Generator.randomRobe
+			ROBE.classes = new Class<?>[]{
+					WhiteRobe.class,
+					GreenRobe.class,
+					BlackRobe.class,
+					BlueRobe.class,
+					VioletRobe.class };
+			ROBE.probs = new float[]{ 0, 0, 0, 0, 0 };
 			
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};
@@ -501,8 +521,12 @@ public class Generator {
 	
 	public static Item random( Category cat ) {
 		switch (cat) {
+			case ARMOR_ALL:
+				return randomArmorAll();
 			case ARMOR:
 				return randomArmor();
+			case ROBE:
+				return randomRobe();
 			case WEAPON:
 				return randomWeapon();
 			case MISSILE:
@@ -535,15 +559,65 @@ public class Generator {
 		return Reflection.newInstance(cl).random();
 	}
 
-	public static Armor randomArmor(){
+	public static Armor randomArmorAll() {
+		return randomArmorAll(Dungeon.depth / 5);
+	}
+
+	public static Armor randomArmorAll(int floorSet) {
+		if (Random.Int(3) == 0) return randomRobe(floorSet);
+		else return randomArmor(floorSet);
+	}
+
+	public static Armor randomArmor() {
 		return randomArmor(Dungeon.depth / 5);
 	}
 	
 	public static Armor randomArmor(int floorSet) {
 
 		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
-		
-		Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(floorSetTierProbs[floorSet])]);
+
+		final int tier = Random.chances(floorSetTierProbs[floorSet]);
+		if (tier <= 1) return randomGeneralArmor(tier);
+		else if (Random.Int(2) == 0) return randomLightArmor(tier);
+		else return randomHeavyArmor(tier);
+	}
+
+	public static GeneralArmor randomGeneralArmor(int tier) {
+		if (tier <= 1) {
+			GeneralArmor a = (GeneralArmor) Reflection.newInstance(Category.ARMOR_G.classes[tier]);
+			a.random();
+			return a;
+		}
+		else return null;
+	}
+
+	public static HeavyArmor randomHeavyArmor(int tier) {
+		if (tier > 1) {
+			HeavyArmor a = (HeavyArmor) Reflection.newInstance(Category.ARMOR_H.classes[tier-2]);
+			a.random();
+			return a;
+		}
+		else return null;
+	}
+
+	public static LightArmor randomLightArmor(int tier) {
+		if (tier > 1) {
+			LightArmor a = (LightArmor) Reflection.newInstance(Category.ARMOR_L.classes[tier-2]);
+			a.random();
+			return a;
+		}
+		else return null;
+	}
+
+	public static Robe randomRobe() {
+		return randomRobe(Dungeon.depth / 5);
+	}
+
+	public static Robe randomRobe(int floorSet) {
+
+		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
+
+		Robe a = (Robe) Reflection.newInstance(Category.ROBE.classes[Random.chances(floorSetTierProbs[floorSet])]);
 		a.random();
 		return a;
 	}

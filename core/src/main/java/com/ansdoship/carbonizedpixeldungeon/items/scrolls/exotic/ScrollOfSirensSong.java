@@ -28,6 +28,8 @@ import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AllyBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Charm;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Paralysis;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -38,6 +40,7 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfSirensSong extends ExoticScroll {
 	
@@ -47,8 +50,41 @@ public class ScrollOfSirensSong extends ExoticScroll {
 	
 	@Override
 	public void doRead() {
-		if (!anonymous) curItem.collect(); //we detach it later
-		GameScene.selectCell(targeter);
+		if (curUser.subClass == HeroSubClass.LOREMASTER) {
+
+			doRecord(new Callback() {
+				@Override
+				public void call() {
+
+					curUser.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
+					Sample.INSTANCE.play( Assets.Sounds.CHARMS );
+					Sample.INSTANCE.playDelayed( Assets.Sounds.LULLABY, 0.1f );
+
+					for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+						if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
+							if (!mob.isImmune(Enthralled.class)){
+								AllyBuff.affectAndLoot(mob, curUser, Enthralled.class);
+
+							} else {
+								Buff.affect( mob, Charm.class, Charm.DURATION ).object = curUser.id();
+
+							}
+							mob.sprite.centerEmitter().burst( Speck.factory( Speck.HEART ), 10 );
+						}
+					}
+
+					identify();
+
+					readAnimation();
+
+				}
+			});
+
+		}
+		else {
+			if (!anonymous) curItem.collect(); //we detach it later
+			GameScene.selectCell(targeter);
+		}
 	}
 
 	private CellSelector.Listener targeter = new CellSelector.Listener() {

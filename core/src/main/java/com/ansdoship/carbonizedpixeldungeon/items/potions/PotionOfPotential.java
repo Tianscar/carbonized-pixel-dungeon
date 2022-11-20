@@ -26,16 +26,19 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.exotic.PotionOfPotentialBurst;
 import com.ansdoship.carbonizedpixeldungeon.messages.Languages;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
-import com.ansdoship.carbonizedpixeldungeon.windows.WndGameInProgress;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
+import com.ansdoship.carbonizedpixeldungeon.windows.WndTitledMessage;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class PotionOfPotential extends Potion {
 
@@ -49,9 +52,9 @@ public class PotionOfPotential extends Potion {
 
 	@Override
 	protected void drink(Hero hero) {
-		drink(hero, new ItemSprite(this), START_POINTS, null, null, new Runnable() {
+		drink(hero, new ItemSprite(this), START_POINTS, null, null, new Callback() {
 			@Override
-			public void run() {
+			public void call() {
 				PotionOfPotential.super.drink(hero);
 			}
 		});
@@ -62,8 +65,9 @@ public class PotionOfPotential extends Potion {
 		identify();
 	}
 
-	public static void drink( Hero hero, Image icon, int startPoints, String[] statsExt, String[] logExt, Runnable afterDrink ) {
+	public static void drink( Hero hero, Image icon, int startPoints, String[] statsExt, String[] logExt, Callback afterDrink ) {
 		int[] points = new int[] { 0, 0, 0, 0, 0, 0, startPoints }; // STR, CON, DEX, INT, WIS, CHA, points
+		boolean[] block = new boolean[] { false, false, false, false, false, true };
 		switch (hero.heroClass) {
 			case WARRIOR:
 				points[0] ++;
@@ -71,6 +75,7 @@ public class PotionOfPotential extends Potion {
 				points[6] -= 2;
 				break;
 			case MAGE:
+				block[0] = true;
 				points[3] ++;
 				points[6] -= 1;
 				break;
@@ -85,17 +90,28 @@ public class PotionOfPotential extends Potion {
 				points[6] -= 2;
 				break;
 		}
-		Runnable runnable = new Runnable() {
+		for (int i = 0; i < 6; i ++) {
+			if (points[i] > 0) block[i] = true;
+		}
+		Callback afterCancel = new Callback() {
 			@Override
-			public void run() {
-				if (points[6] < 1) {
-					addPoints( hero, points, statsExt, logExt );
-					if (afterDrink != null) afterDrink.run();
-				}
-				else showWndOptions(copyImage(icon), points, this);
+			public void call() {
+				PotionOfPotentialBurst.randomAddPoints( hero, points, block );
+				addPoints( hero, points, statsExt, logExt );
+				if (afterDrink != null) afterDrink.call();
 			}
 		};
-		showWndOptions(icon, points, runnable);
+		Callback afterSelect = new Callback() {
+			@Override
+			public void call() {
+				if (points[6] < 1) {
+					addPoints( hero, points, statsExt, logExt );
+					if (afterDrink != null) afterDrink.call();
+				}
+				else showWndOptions(copyImage(icon), points, this, afterCancel);
+			}
+		};
+		showWndOptions(icon, points, afterSelect, afterCancel);
 	}
 
 	private static Image copyImage(Image src) {
@@ -161,27 +177,62 @@ public class PotionOfPotential extends Potion {
 		return result;
 	}
 
-	private static void showWndOptions(Image icon, int[] points, Runnable afterSelect) {
+	private static void showWndOptions(Image icon, int[] points, Callback afterSelect, Callback afterCancel) {
+		String[] propertiesName = new String[] {
+				Messages.get(PotionOfPotential.class, "str"),
+				Messages.get(PotionOfPotential.class, "con"),
+				Messages.get(PotionOfPotential.class, "dex"),
+				Messages.get(PotionOfPotential.class, "int"),
+				Messages.get(PotionOfPotential.class, "wis"),
+				Messages.get(PotionOfPotential.class, "cha"),
+				Messages.get(PotionOfPotential.class, "cancel")
+		};
+		String[] propertiesDesc = new String[] {
+				Messages.get(PotionOfPotential.class, "str_desc"),
+				Messages.get(PotionOfPotential.class, "con_desc"),
+				Messages.get(PotionOfPotential.class, "dex_desc"),
+				Messages.get(PotionOfPotential.class, "int_desc"),
+				Messages.get(PotionOfPotential.class, "wis_desc"),
+				Messages.get(PotionOfPotential.class, "cha_desc"),
+		};
 		GameScene.show(new WndOptions(icon,
-				Messages.get(PotionOfPotential.class, "name"),
-				Messages.get(PotionOfPotential.class, "select", points[6]),
-				Messages.get(WndGameInProgress.class, "str"),
-				Messages.get(WndGameInProgress.class, "con"),
-				Messages.get(WndGameInProgress.class, "dex"),
-				Messages.get(WndGameInProgress.class, "int"),
-				Messages.get(WndGameInProgress.class, "wis"),
-				Messages.get(WndGameInProgress.class, "cha")) {
+				Messages.titleCase(Messages.get(PotionOfPotential.class, "name")),
+				Messages.get(PotionOfPotential.class, "select", points[6]) +
+						"\n\n" +
+						Messages.get(PotionOfPotential.class, "cancel_warn"),
+				propertiesName) {
 			@Override
 			protected void onSelect(int index) {
-				points[index]++;
-				points[6]--;
-				if (afterSelect != null) afterSelect.run();
+				if (index == 6) {
+					if (afterCancel != null) afterCancel.call();
+				}
+				else {
+					points[index]++;
+					points[6]--;
+					if (afterSelect != null) afterSelect.call();
+				}
 			}
 			@Override
 			protected boolean enabled(int index) {
 				if (Dungeon.hero.heroClass == HeroClass.MAGE && index == 0) return false;
 				if (index == 5) return false;
+				if (index == 6) return true;
 				return points[index] < 1;
+			}
+			@Override
+			protected boolean hasInfo(int index) {
+				return index != 6;
+			}
+			@Override
+			protected void onInfo(int index) {
+				GameScene.show(new WndTitledMessage(
+						Icons.get(Icons.INFO),
+						Messages.titleCase(propertiesName[index]),
+						propertiesDesc[index]));
+			}
+			@Override
+			public void onBackPressed() {
+				//do nothing, reader has to cancel
 			}
 		});
 	}

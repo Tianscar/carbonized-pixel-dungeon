@@ -24,12 +24,9 @@ package com.ansdoship.carbonizedpixeldungeon.windows;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.GamesInProgress;
 import com.ansdoship.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.ansdoship.carbonizedpixeldungeon.PDSettings;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
-import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
-import com.ansdoship.carbonizedpixeldungeon.scenes.HeroSelectScene;
-import com.ansdoship.carbonizedpixeldungeon.scenes.InterlevelScene;
-import com.ansdoship.carbonizedpixeldungeon.scenes.RankingsScene;
-import com.ansdoship.carbonizedpixeldungeon.scenes.TitleScene;
+import com.ansdoship.carbonizedpixeldungeon.scenes.*;
 import com.ansdoship.carbonizedpixeldungeon.services.updates.Updates;
 import com.ansdoship.carbonizedpixeldungeon.ui.Icons;
 import com.ansdoship.carbonizedpixeldungeon.ui.RedButton;
@@ -60,6 +57,9 @@ public class WndGame extends Window {
 			}
 		});
 		curBtn.icon(Icons.get(Icons.PREFS));
+
+		//zoom
+		addZoomButtons();
 
 		//install prompt
 		if (Updates.isInstallable()){
@@ -140,4 +140,35 @@ public class WndGame extends Window {
 		btn2.setRect( btn1.right() + GAP, btn1.top(), WIDTH - btn1.right() - GAP, BTN_HEIGHT );
 		pos += BTN_HEIGHT;
 	}
+
+	private void addZoomButtons() {
+		RedButton btn1 = new RedButton("") {
+			@Override
+			protected void onClick() {
+				GameScene.zoom(GameScene.zoom() - 1f);
+			}
+		};
+			btn1.icon(Icons.get(Icons.MINUS_LARGE));
+		add( btn1 );
+		btn1.setRect( 0, pos > 0 ? pos += GAP : 0, BTN_HEIGHT, BTN_HEIGHT );
+		RedButton btn2 = new RedButton("") {
+			@Override
+			protected void onClick() {
+				GameScene.zoom(GameScene.zoom() + 1f);
+			}
+		};
+		btn2.icon(Icons.get(Icons.PLUS_LARGE));
+		add( btn2 );
+		btn2.setRect( WIDTH - BTN_HEIGHT, btn1.top(), BTN_HEIGHT, BTN_HEIGHT );
+		RedButton btn3 = new RedButton( Messages.get(this, "zoom") ) {
+			@Override
+			protected void onClick() {
+				GameScene.zoom(PixelScene.defaultZoom);
+			}
+		};
+		add( btn3 );
+		btn3.setRect( btn1.right() + GAP, btn1.top(), WIDTH - BTN_HEIGHT*2 - GAP*2, BTN_HEIGHT );
+		pos += BTN_HEIGHT;
+	}
+
 }

@@ -52,11 +52,11 @@ public class DefensiveStance extends Buff {
 
     @Override
     public void detach() {
-        showEnableEffects(false);
+        defense(false);
         super.detach();
     }
 
-    public void showEnableEffects(boolean enabled) {
+    public void defense(boolean enabled) {
         Hero hero = Dungeon.hero;
         if (hero != null && hero.sprite != null) {
             if (enabled) {

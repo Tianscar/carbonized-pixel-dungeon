@@ -143,7 +143,7 @@ public class GamesInProgress {
 		info.shld = hero.shielding();
 		info.heroClass = hero.heroClass;
 		info.subClass = hero.subClass;
-		info.armorTier = hero.tier();
+		info.armorTier = hero.armorTier();
 		
 		info.goldCollected = Statistics.goldCollected;
 		info.maxDepth = Statistics.deepestFloor;

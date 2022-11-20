@@ -28,6 +28,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ScrollEmpower;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.items.Generator;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
@@ -49,12 +50,14 @@ import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfEnchantment;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfFlock;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfIntuition;
 import com.ansdoship.carbonizedpixeldungeon.items.stones.StoneOfShock;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.journal.Catalog;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.HeroSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
 import java.util.ArrayList;
@@ -66,6 +69,8 @@ public abstract class Scroll extends Item {
 	public static final String AC_READ	= "READ";
 	
 	protected static final float TIME_TO_READ	= 1f;
+
+	protected boolean record = false;
 
 	private static final HashMap<String, Integer> runes = new HashMap<String, Integer>() {
 		{
@@ -172,13 +177,26 @@ public abstract class Scroll extends Item {
 			} else {
 				curUser = hero;
 				curItem = detach( hero.belongings.backpack );
+				record = true;
 				doRead();
 			}
-			
+
 		}
 	}
 	
 	public abstract void doRead();
+
+	protected void doRecord(Callback afterRecord) {
+		if (!record) {
+			if (afterRecord != null) afterRecord.call();
+			return;
+		}
+		MagesStaff staff = curUser.belongings.getItem(MagesStaff.class);
+		if (staff == null) {
+			if (afterRecord != null) afterRecord.call();
+		}
+		else staff.record(this, afterRecord);
+	}
 
 	protected void readAnimation() {
 		Invisibility.dispel();
@@ -231,7 +249,22 @@ public abstract class Scroll extends Item {
 			desc() :
 			Messages.get(this, "unknown_desc");
 	}
-	
+
+	protected String extra() {
+		if (Dungeon.hero.subClass == HeroSubClass.LOREMASTER) {
+			return "\n\n" + Messages.get(this, "lore_desc");
+		}
+		else return null;
+	}
+
+	@Override
+	public String desc() {
+		String desc = super.desc();
+		String extra = extra();
+		if (extra != null) desc += extra;
+		return desc;
+	}
+
 	@Override
 	public boolean isUpgradable() {
 		return false;

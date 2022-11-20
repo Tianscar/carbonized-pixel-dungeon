@@ -471,11 +471,11 @@ public class Item implements Bundlable {
 	}
 
 	public int sellValue( Hero hero ) {
-		return (int) Math.ceil(value() * (1 + (hero.CHA() - 10) * 0.05f));
+		return (int) Math.floor(value() * Hero.chaSellMultiplier(hero));
 	}
 
 	public int buyValue( Hero hero ) {
-		return (int) Math.ceil(value() * (1 - (hero.CHA() - 10) * 0.05f));
+		return (int) Math.ceil(value() * Hero.chaBuyMultiplier(hero));
 	}
 
 	public Item virtual(){

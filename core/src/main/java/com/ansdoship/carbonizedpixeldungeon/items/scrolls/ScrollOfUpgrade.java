@@ -27,6 +27,7 @@ import com.ansdoship.carbonizedpixeldungeon.Statistics;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Degrade;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.ShadowParticle;
@@ -68,7 +69,10 @@ public class ScrollOfUpgrade extends InventoryScroll {
 			boolean hadCursedEnchant = w.hasCurseEnchant();
 			boolean hadGoodEnchant = w.hasGoodEnchant();
 
-			w.upgrade();
+			if (curUser.subClass == HeroSubClass.LOREMASTER) {
+				w.upgrade(false, false, true);
+			}
+			else w.upgrade();
 
 			if (w.cursedKnown && hadCursedEnchant && !w.hasCurseEnchant()){
 				removeCurse( Dungeon.hero );
@@ -85,7 +89,10 @@ public class ScrollOfUpgrade extends InventoryScroll {
 			boolean hadCursedGlyph = a.hasCurseGlyph();
 			boolean hadGoodGlyph = a.hasGoodGlyph();
 
-			a.upgrade();
+			if (curUser.subClass == HeroSubClass.LOREMASTER) {
+				a.upgrade(false, false);
+			}
+			else a.upgrade();
 
 			if (a.cursedKnown && hadCursedGlyph && !a.hasCurseGlyph()){
 				removeCurse( Dungeon.hero );

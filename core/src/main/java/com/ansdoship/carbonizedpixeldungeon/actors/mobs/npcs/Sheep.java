@@ -31,31 +31,12 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.SheepSprite;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
-public class Sheep extends NPC {
+public abstract class Sheep extends NPC {
 
 	private static final String[] LINE_KEYS = {"Baa!", "Baa?", "Baa.", "Baa..."};
 
 	{
 		spriteClass = SheepSprite.class;
-	}
-
-	public float lifespan;
-
-	private boolean initialized = false;
-
-	@Override
-	protected boolean act() {
-		if (initialized) {
-			HP = 0;
-
-			destroy();
-			sprite.die();
-
-		} else {
-			initialized = true;
-			spend( lifespan + Random.Float(2) );
-		}
-		return true;
 	}
 
 	@Override
@@ -69,6 +50,17 @@ public class Sheep extends NPC {
 
 	@Override
 	public void add( Buff buff ) {
+	}
+
+	protected String extra() {
+		return Messages.get(this, "extra_desc");
+	}
+
+	@Override
+	public String description() {
+		String ext = extra();
+		if (ext == null) return super.description();
+		else return super.description() + '\n' + ext;
 	}
 
 	@Override

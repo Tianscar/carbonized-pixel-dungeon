@@ -72,7 +72,7 @@ import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Armor extends EquipableItem {
+public abstract class Armor extends EquipableItem {
 
 	protected static final String AC_DETACH       = "DETACH";
 	
@@ -103,9 +103,11 @@ public class Armor extends EquipableItem {
 	public Glyph glyph;
 	public boolean curseInfusionBonus = false;
 	
-	private BrokenSeal seal;
+	protected BrokenSeal seal;
 	
 	public int tier;
+
+	public boolean metal = false;
 	
 	private static final int USES_TO_ID = 10;
 	private float usesLeftToID = USES_TO_ID;
@@ -176,12 +178,12 @@ public class Armor extends EquipableItem {
 			if (detaching.level() > 0){
 				degrade();
 			}
-			if (detaching.getGlyph() != null){
-				if (hero.hasTalent(Talent.RUNIC_TRANSFERENCE)
-						&& (Arrays.asList(Glyph.common).contains(detaching.getGlyph().getClass())
-							|| Arrays.asList(Glyph.uncommon).contains(detaching.getGlyph().getClass()))){
-					inscribe(null);
-				} else if (hero.pointsInTalent(Talent.RUNIC_TRANSFERENCE) == 2){
+			if (hero.pointsInTalent(Talent.RUNIC_TRANSFERENCE) == 2) {
+				detaching.setGlyph(glyph);
+				inscribe(null);
+			}
+			else if (detaching.getGlyph() != null) {
+				if (hero.hasTalent(Talent.RUNIC_TRANSFERENCE)) {
 					inscribe(null);
 				} else {
 					detaching.setGlyph(null);
@@ -284,6 +286,10 @@ public class Armor extends EquipableItem {
 	}
 
 	public int DRMax(int lvl){
+		return DRMax(tier, lvl, augment);
+	}
+
+	protected static int DRMax(int tier, int lvl, Augment augment) {
 		if (Dungeon.isChallenged(Challenges.Challenge.NO_ARMOR)){
 			return 1 + tier + lvl + augment.defenseFactor(lvl);
 		}
@@ -301,11 +307,15 @@ public class Armor extends EquipableItem {
 	}
 
 	public int DRMin(int lvl){
+		return DRMin(tier, lvl, augment);
+	}
+
+	protected static int DRMin(int tier, int lvl, Augment augment){
 		if (Dungeon.isChallenged(Challenges.Challenge.NO_ARMOR)){
 			return 0;
 		}
 
-		int max = DRMax(lvl);
+		int max = DRMax(tier, lvl, augment);
 		if (lvl >= max){
 			return (lvl - max);
 		} else {
@@ -315,13 +325,22 @@ public class Armor extends EquipableItem {
 	
 	public float evasionFactor( Char owner, float evasion ){
 		
-		if (hasGlyph(Stone.class, owner) && !((Stone)glyph).testingEvasion()){
+		if (hasGlyph(Stone.class, owner) && !((Stone)glyph).testingEvasion()) {
 			return 0;
 		}
 		
-		if (owner instanceof Hero){
+		if (owner instanceof Hero) {
 			int aEnc = STRReq() - ((Hero) owner).STR();
 			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
+			if (this instanceof Robe) {
+				aEnc = ((Robe) this).INTReq() - ((Hero) owner).INT();
+				if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
+			}
+			else if (this instanceof LightArmor) {
+				aEnc = ((LightArmor) this).DEXReq() - ((Hero) owner).DEX();
+				if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
+				else if (aEnc < 0) evasion += 2*Math.max(0, -aEnc);
+			}
 			
 			Momentum momentum = owner.buff(Momentum.class);
 			if (momentum != null){
@@ -337,6 +356,14 @@ public class Armor extends EquipableItem {
 		if (owner instanceof Hero) {
 			int aEnc = STRReq() - ((Hero) owner).STR();
 			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
+			if (this instanceof Robe) {
+				aEnc = ((Robe) this).INTReq() - ((Hero) owner).INT();
+				if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
+			}
+			else if (this instanceof LightArmor) {
+				aEnc = ((LightArmor) this).DEXReq() - ((Hero) owner).DEX();
+				if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
+			}
 		}
 		
 		if (hasGlyph(Swiftness.class, owner)) {
@@ -391,13 +418,19 @@ public class Armor extends EquipableItem {
 	public Item upgrade() {
 		return upgrade( false );
 	}
-	
-	public Item upgrade( boolean inscribe ) {
 
-		if (inscribe && (glyph == null || glyph.curse())){
+	public Item upgrade( boolean inscribe ) {
+		return upgrade( inscribe, true );
+	}
+	
+	public Item upgrade( boolean inscribe, boolean removeGlyph ) {
+
+		if (inscribe && (glyph == null || glyph.curse())) {
 			inscribe( Glyph.random() );
-		} else if (!inscribe && level() >= 4 && Random.Float(10) < Math.pow(2, level()-4)){
-			inscribe(null);
+		} else {
+			if (removeGlyph) if (!inscribe && level() >= 4 && Random.Float(10) < Math.pow(2, level()-4)) {
+				inscribe(null);
+			}
 		}
 		
 		cursed = false;
@@ -441,24 +474,28 @@ public class Armor extends EquipableItem {
 	public String name() {
 		return glyph != null && (cursedKnown || !glyph.curse()) ? glyph.name( super.name() ) : super.name();
 	}
-	
-	@Override
-	public String info() {
-		String info = desc();
-		
+
+	public String statsInfo() {
+		String info;
 		if (levelKnown) {
-			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", DRMin(), DRMax(), STRReq());
-			
+			info = Messages.get(Armor.class, "curr_absorb", DRMin(), DRMax(), STRReq());
+
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "too_heavy");
 			}
 		} else {
-			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", DRMin(0), DRMax(0), STRReq(0));
+			info = Messages.get(Armor.class, "avg_absorb", DRMin(0), DRMax(0), STRReq(0));
 
 			if (STRReq(0) > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "probably_too_heavy");
 			}
 		}
+		return info;
+	}
+	
+	@Override
+	public String info() {
+		String info = desc() + "\n\n" + statsInfo();
 
 		switch (augment) {
 			case EVASION:

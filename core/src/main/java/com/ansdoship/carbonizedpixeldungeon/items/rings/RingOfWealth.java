@@ -255,7 +255,7 @@ public class RingOfWealth extends Ring {
 				result = w;
 				break;
 			case 2:
-				Armor a = Generator.randomArmor(floorset);
+				Armor a = Generator.randomArmorAll(floorset);
 				if (!a.hasGoodGlyph() && Random.Int(10) < level)        a.inscribe();
 				else if (a.hasCurseGlyph())                             a.inscribe(null);
 				result = a;

@@ -23,6 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.items.scrolls;
 
 import com.ansdoship.carbonizedpixeldungeon.Challenges;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.effects.Transmuting;
 import com.ansdoship.carbonizedpixeldungeon.items.EquipableItem;
@@ -149,10 +150,12 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		
 		Weapon n;
 		Generator.Category c;
+		int tierBoost = 0;
+		if (curUser.subClass == HeroSubClass.LOREMASTER) tierBoost ++;
 		if (w instanceof MeleeWeapon) {
-			c = Generator.wepTiers[((MeleeWeapon)w).tier - 1];
+			c = Generator.wepTiers[Math.min(Generator.wepTiers.length-1, ((MeleeWeapon)w).tier - 1 + tierBoost)];
 		} else {
-			c = Generator.misTiers[((MissileWeapon)w).tier - 1];
+			c = Generator.misTiers[Math.min(Generator.misTiers.length-1, ((MissileWeapon)w).tier - 1 + tierBoost)];
 		}
 		
 		do {

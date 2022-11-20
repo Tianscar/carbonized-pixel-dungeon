@@ -29,9 +29,16 @@ public class Drowsy extends Buff {
 
 	public static final float DURATION = 5f;
 
+	private float duration;
+
 	{
 		type = buffType.NEUTRAL;
 		announced = true;
+		duration = DURATION;
+	}
+
+	public void duration(float duration) {
+		this.duration = duration;
 	}
 
 	@Override
@@ -41,7 +48,7 @@ public class Drowsy extends Buff {
 
 	@Override
 	public float iconFadePercent() {
-		return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+		return Math.max(0, (duration - visualcooldown()) / duration);
 	}
 
 	@Override
@@ -52,7 +59,7 @@ public class Drowsy extends Buff {
 	public boolean attachTo(Char target ) {
 		if (!target.isImmune(Sleep.class) && super.attachTo(target)) {
 			if (cooldown() == 0) {
-				spend(DURATION);
+				spend(duration);
 			}
 			return true;
 		}

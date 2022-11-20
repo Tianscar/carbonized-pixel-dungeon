@@ -26,10 +26,12 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Paralysis;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfPetrification extends ExoticScroll {
 	
@@ -39,17 +41,28 @@ public class ScrollOfPetrification extends ExoticScroll {
 	
 	@Override
 	public void doRead() {
-		new Flare( 5, 32 ).color( 0xFF0000, true ).show( curUser.sprite, 2f );
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-		
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-			if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
-				Buff.affect( mob, Paralysis.class, Paralysis.DURATION );
-			}
-		}
 
-		identify();
-		
-		readAnimation();
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				new Flare( 5, 32 ).color( 0xFF0000, true ).show( curUser.sprite, 2f );
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+
+				float duration = Paralysis.DURATION * 10;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) duration = Math.round(duration * 1.5f);
+				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
+						Buff.affect( mob, Paralysis.class, duration );
+					}
+				}
+
+				identify();
+
+				readAnimation();
+
+			}
+		});
+
 	}
 }

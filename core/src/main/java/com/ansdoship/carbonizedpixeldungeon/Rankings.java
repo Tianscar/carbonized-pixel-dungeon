@@ -67,7 +67,7 @@ public enum Rankings {
 		rec.cause = cause;
 		rec.win		= win;
 		rec.heroClass	= Dungeon.hero.heroClass;
-		rec.armorTier	= Dungeon.hero.tier();
+		rec.armorTier	= Dungeon.hero.armorTier();
 		rec.herolevel	= Dungeon.hero.lvl;
 		rec.depth		= Dungeon.depth;
 		rec.score	= score( win );

@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.items.armor;
 
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
-public class ClothArmor extends Armor {
+public class ClothArmor extends GeneralArmor {
 
 	{
 		image = ItemSpriteSheet.ARMOR_CLOTH;

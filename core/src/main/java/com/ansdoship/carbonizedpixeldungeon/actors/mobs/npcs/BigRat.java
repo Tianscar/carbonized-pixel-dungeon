@@ -133,16 +133,15 @@ public class BigRat extends NPC {
 			return super.interact(c);
 		}
 
-		Languages lang = PDSettings.language();
 		if (state == SLEEPING) {
 			notice();
-			yell( Messages.get(this, (lang == Languages.CHINESE || lang == Languages.TR_CHINESE) ?
+			yell( Messages.get(this, PDSettings.chinese() ?
 					("not_sleeping_" + Random.Int(1, 4)) : "not_sleeping") );
 			state = WANDERING;
 		} else if (count >= 4 && !seedGiven) {
 			seedGiven = true;
 			Item seeds = new Sungrass.Seed().quantity(Random.Int(1, 4));
-			yell( Messages.get(this, (lang == Languages.CHINESE || lang == Languages.TR_CHINESE) ?
+			yell( Messages.get(this, PDSettings.chinese() ?
 					("seed_" + Random.Int(1, 4)) : "seed") );
 			if (seeds.collect( Dungeon.hero.belongings.backpack )) {
 				GameScene.pickUp( seeds, Dungeon.hero.pos );
@@ -151,10 +150,10 @@ public class BigRat extends NPC {
 			} else {
 				Dungeon.level.drop(seeds, Dungeon.hero.pos).sprite.drop();
 			}
-		} else yell( Messages.get(this, (lang == Languages.CHINESE || lang == Languages.TR_CHINESE) ?
+		} else yell( Messages.get(this, PDSettings.chinese() ?
 				("text_" + Random.Int(1, count >= 10 ? 55 : 54)) : "what_is_it") );
 
-		if (count < 54) count ++;
+		if (count < 10) count ++;
 
 		return true;
 	}

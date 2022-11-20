@@ -23,7 +23,7 @@ package com.ansdoship.carbonizedpixeldungeon.items.armor;
 
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
-public class MailArmor extends Armor {
+public class MailArmor extends HeavyArmor {
 
 	{
 		image = ItemSpriteSheet.ARMOR_MAIL;

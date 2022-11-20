@@ -55,7 +55,7 @@ public class KingsCrown extends Item {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		actions.add( AC_WEAR );
+		//actions.add( AC_WEAR );
 		return actions;
 	}
 	

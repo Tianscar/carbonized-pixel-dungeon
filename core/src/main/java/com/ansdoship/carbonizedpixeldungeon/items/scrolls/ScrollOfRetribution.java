@@ -26,10 +26,12 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Blindness;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Weakness;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfRetribution extends Scroll {
 
@@ -39,32 +41,41 @@ public class ScrollOfRetribution extends Scroll {
 	
 	@Override
 	public void doRead() {
-		
-		GameScene.flash( 0x80FFFFFF );
-		
-		//scales from 0x to 1x power, maxing at ~10% HP
-		float hpPercent = (curUser.HT - curUser.HP)/(float)(curUser.HT);
-		float power = Math.min( 4f, 4.45f*hpPercent);
-		
-		Sample.INSTANCE.play( Assets.Sounds.BLAST );
-		
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-			if (Dungeon.level.heroFOV[mob.pos]) {
-				//deals 10%HT, plus 0-90%HP based on scaling
-				mob.damage(Math.round(mob.HT/10f + (mob.HP * power * 0.225f)), this);
-				if (mob.isAlive()) {
-					Buff.prolong(mob, Blindness.class, Blindness.DURATION);
-				}
-			}
-		}
-		
-		Buff.prolong(curUser, Weakness.class, Weakness.DURATION);
-		Buff.prolong(curUser, Blindness.class, Blindness.DURATION);
-		Dungeon.observe();
 
-		identify();
-		
-		readAnimation();
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				GameScene.flash( 0x80FFFFFF );
+
+				//scales from 0x to 1x power, maxing at ~10% HP
+				float hpPercent = (curUser.HT - curUser.HP)/(float)(curUser.HT);
+				float power = Math.min( 4f, 4.45f*hpPercent);
+
+				Sample.INSTANCE.play( Assets.Sounds.BLAST );
+
+				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					if (Dungeon.level.heroFOV[mob.pos]) {
+						//deals 10%HT, plus 0-90%HP based on scaling
+						mob.damage(Math.round(mob.HT/10f + (mob.HP * power * 0.225f)), ScrollOfRetribution.this);
+						if (mob.isAlive()) {
+							Buff.prolong(mob, Blindness.class, Blindness.DURATION);
+						}
+					}
+				}
+
+				if (curUser.subClass != HeroSubClass.LOREMASTER) {
+					Buff.prolong(curUser, Weakness.class, Weakness.DURATION);
+					Buff.prolong(curUser, Blindness.class, Blindness.DURATION);
+					Dungeon.observe();
+				}
+
+				identify();
+
+				readAnimation();
+
+			}
+		});
 		
 	}
 	

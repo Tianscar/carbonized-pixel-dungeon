@@ -21,11 +21,7 @@
 
 package com.ansdoship.carbonizedpixeldungeon.actors.hero;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
-import com.ansdoship.carbonizedpixeldungeon.Badges;
-import com.ansdoship.carbonizedpixeldungeon.Challenges;
-import com.ansdoship.carbonizedpixeldungeon.Dungeon;
-import com.ansdoship.carbonizedpixeldungeon.QuickSlot;
+import com.ansdoship.carbonizedpixeldungeon.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.huntress.SpectralBlades;
@@ -40,11 +36,12 @@ import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.warrior.Endure
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.warrior.HeroicLeap;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.warrior.Shockwave;
 import com.ansdoship.carbonizedpixeldungeon.items.BrokenSeal;
+import com.ansdoship.carbonizedpixeldungeon.items.Generator;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.Waterskin;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.ClothArmor;
-import com.ansdoship.carbonizedpixeldungeon.items.armor.LeatherArmor;
-import com.ansdoship.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.WhiteRobe;
+import com.ansdoship.carbonizedpixeldungeon.items.artifacts.*;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.ansdoship.carbonizedpixeldungeon.items.food.Food;
 import com.ansdoship.carbonizedpixeldungeon.items.potions.*;
@@ -54,16 +51,18 @@ import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Gloves;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
-import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.Shortsword;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
+import com.ansdoship.carbonizedpixeldungeon.plants.Earthroot;
+import com.ansdoship.carbonizedpixeldungeon.plants.Sungrass;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 
 public enum HeroClass {
 
 	WARRIOR( HeroSubClass.SHIELDGUARD, HeroSubClass.GLADIATOR ),
-	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
+	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.LOREMASTER ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
 	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN );
 
@@ -138,13 +137,22 @@ public enum HeroClass {
 		hero.CON += 1;
 		hero.DEX -= 1;
 
-		Item i = new LeatherArmor().identify();
-		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (LeatherArmor)i;
+		Item i = new ClothArmor().identify();
+		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
 
-		(hero.belongings.weapon = new Shortsword()).identify();
+		HornOfPlenty horn = new HornOfPlenty();
+		Generator.Category.ARTIFACT.probs[3]--;
+		horn.bones = false;
+		horn.charge((int) Math.floor(horn.chargeCap() * 0.5));
+		(hero.belongings.artifact = horn).identify();
+		hero.belongings.artifact.activate( hero );
+
+		(hero.belongings.weapon = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
+
 		Dungeon.quickslot.setSlot(0, stones);
+		Dungeon.quickslot.setSlot(1, horn);
 
 		if (hero.belongings.armor != null){
 			hero.belongings.armor.affixSeal(new BrokenSeal());
@@ -157,17 +165,24 @@ public enum HeroClass {
 	private static void initMage( Hero hero ) {
 		hero.INT += 2;
 
-		Item i = new ClothArmor().identify();
-		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
+		Item i = new WhiteRobe().identify();
+		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (WhiteRobe)i;
+
+		UnstableSpellbook spellbook = new UnstableSpellbook();
+		Generator.Category.ARTIFACT.probs[8]--;
+		spellbook.bones = false;
+		(hero.belongings.artifact = spellbook).identify();
+		hero.belongings.artifact.activate( hero );
 
 		MagesStaff staff;
 
 		staff = new MagesStaff(new WandOfMagicMissile());
 
 		(hero.belongings.weapon = staff).identify();
-		hero.belongings.weapon.activate(hero);
+		hero.belongings.weapon.activate( hero );
 
 		Dungeon.quickslot.setSlot(0, staff);
+		Dungeon.quickslot.setSlot(1, spellbook);
 
 		new ScrollOfUpgrade().identify();
 		new PotionOfLiquidFlame().identify();
@@ -186,11 +201,19 @@ public enum HeroClass {
 		(hero.belongings.artifact = cloak).identify();
 		hero.belongings.artifact.activate( hero );
 
+		MasterThievesArmband armband = new MasterThievesArmband();
+		Generator.Category.ARTIFACT.probs[4]--;
+		armband.bones = false;
+		armband.charge((int) Math.floor(armband.chargeCap() * 0.5));
+		(hero.belongings.misc = armband).identify();
+		hero.belongings.misc.activate( hero );
+
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
 
 		Dungeon.quickslot.setSlot(0, cloak);
-		Dungeon.quickslot.setSlot(1, knives);
+		Dungeon.quickslot.setSlot(1, armband);
+		Dungeon.quickslot.setSlot(2, knives);
 
 		new ScrollOfMagicMapping().identify();
 		new PotionOfInvisibility().identify();
@@ -205,9 +228,18 @@ public enum HeroClass {
 		Item i = new ClothArmor().identify();
 		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
 
+		SandalsOfNature sandals = new SandalsOfNature();
+		Generator.Category.ARTIFACT.probs[5]--;
+		sandals.bones = false;
+		(hero.belongings.artifact = sandals).identify();
+		hero.belongings.artifact.activate( hero );
+
 		(hero.belongings.weapon = new Gloves()).identify();
 		SpiritBow bow = new SpiritBow();
 		bow.identify().collect();
+
+		new Sungrass.Seed().collect();
+		new Earthroot.Seed().collect();
 
 		Dungeon.quickslot.setSlot(0, bow);
 
@@ -253,6 +285,7 @@ public enum HeroClass {
 		}
 	}
 
+	/*
 	public String splashArt(){
 		switch (this) {
 			case WARRIOR: default:
@@ -265,6 +298,7 @@ public enum HeroClass {
 				return Assets.Splashes.HUNTRESS;
 		}
 	}
+	 */
 	
 	public String[] perks() {
 		switch (this) {

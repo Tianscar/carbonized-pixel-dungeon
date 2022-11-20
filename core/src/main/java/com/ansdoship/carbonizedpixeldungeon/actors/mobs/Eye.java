@@ -31,6 +31,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.Dewdrop;
 import com.ansdoship.carbonizedpixeldungeon.items.Generator;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfDisintegration;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfDisintegration;
 import com.ansdoship.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
@@ -250,6 +251,7 @@ public class Eye extends Mob {
 
 	{
 		resistances.add( WandOfDisintegration.class );
+		resistances.add( SparkWandOfDisintegration.class );
 	}
 
 	{

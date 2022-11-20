@@ -209,14 +209,14 @@ public class ItemSpriteSheet {
 	public static final int GLOVES          = WEP_TIER1+2;
 	public static final int RAPIER          = WEP_TIER1+3;
 	public static final int DAGGER          = WEP_TIER1+4;
-	public static final int MAGES_STAFF     = WEP_TIER1+5;
-	public static final int SPIRIT_CROSSBOW = WEP_TIER1+6;
+	//public static final int SPIRIT_CROSSBOW = WEP_TIER1+6;
+	public static final int KNUCKLES        = WEP_TIER1+6;
 	static{
 		assignItemRect(WORN_SHORTSWORD, 13, 13);
 		assignItemRect(GLOVES,          12, 16);
 		assignItemRect(DAGGER,          12, 13);
-		assignItemRect(MAGES_STAFF,     15, 16);
-		assignItemRect(SPIRIT_CROSSBOW, 15, 15);
+		//assignItemRect(SPIRIT_CROSSBOW, 15, 15);
+		assignItemRect(KNUCKLES,        15, 10);
 	}
 
 	private static final int WEP_TIER2      =                               xy(17, 7);   //16 slots
@@ -356,23 +356,57 @@ public class ItemSpriteSheet {
 	public static final int ARMOR_MAIL      = ARMOR+2;
 	public static final int ARMOR_SCALE     = ARMOR+3;
 	public static final int ARMOR_PLATE     = ARMOR+4;
-	public static final int ARMOR_WARRIOR   = ARMOR+5;
-	public static final int ARMOR_MAGE      = ARMOR+6;
-	public static final int ARMOR_ROGUE     = ARMOR+7;
-	public static final int ARMOR_HUNTRESS  = ARMOR+8;
+	public static final int ROBE_WHITE     = ARMOR+5;
+	public static final int ROBE_GREEN     = ARMOR+6;
+	public static final int ROBE_BLACK     = ARMOR+7;
+	public static final int ROBE_BLUE      = ARMOR+8;
+	public static final int ROBE_VIOLET    = ARMOR+9;
+	public static final int ARMOR_VINE      = ARMOR+10;
+	public static final int ARMOR_FEATHER   = ARMOR+11;
+	public static final int ARMOR_MITHRIL   = ARMOR+12;
+	public static final int ARMOR_WARRIOR   = ARMOR+13;
+	public static final int ARMOR_MAGE      = ARMOR+14;
+	public static final int ARMOR_ROGUE     = ARMOR+15;
+	public static final int ARMOR_HUNTRESS  = ARMOR+16;
 	static{
 		assignItemRect(ARMOR_CLOTH,     15, 12);
 		assignItemRect(ARMOR_LEATHER,   14, 13);
 		assignItemRect(ARMOR_MAIL,      14, 12);
 		assignItemRect(ARMOR_SCALE,     14, 11);
 		assignItemRect(ARMOR_PLATE,     12, 12);
+		assignItemRect(ROBE_WHITE,     16, 16);
+		assignItemRect(ROBE_GREEN,     16, 16);
+		assignItemRect(ROBE_BLACK,     16, 16);
+		assignItemRect(ROBE_BLUE,      16, 16);
+		assignItemRect(ROBE_VIOLET,    16, 16);
+		assignItemRect(ARMOR_VINE,      14, 12);
+		assignItemRect(ARMOR_FEATHER,   14, 13);
+		assignItemRect(ARMOR_MITHRIL,   14, 13);
 		assignItemRect(ARMOR_WARRIOR,   12, 12);
 		assignItemRect(ARMOR_MAGE,      15, 15);
 		assignItemRect(ARMOR_ROGUE,     14, 12);
 		assignItemRect(ARMOR_HUNTRESS,  13, 15);
 	}
 
-	                                                                                    //32 free slots
+	private static final int SPARKWANDS              =                           xy(1, 13);  //32 slots
+	public static final int SPARKWAND_MAGIC_MISSILE  = SPARKWANDS+0;
+	public static final int SPARKWAND_FIREBOLT       = SPARKWANDS+1;
+	public static final int SPARKWAND_FROST          = SPARKWANDS+2;
+	public static final int SPARKWAND_LIGHTNING      = SPARKWANDS+3;
+	public static final int SPARKWAND_DISINTEGRATION = SPARKWANDS+4;
+	public static final int SPARKWAND_PRISMATIC_LIGHT= SPARKWANDS+5;
+	public static final int SPARKWAND_CORROSION      = SPARKWANDS+6;
+	public static final int SPARKWAND_LIVING_EARTH   = SPARKWANDS+7;
+	public static final int SPARKWAND_BLAST_WAVE     = SPARKWANDS+8;
+	public static final int SPARKWAND_CORRUPTION     = SPARKWANDS+9;
+	public static final int SPARKWAND_WARDING        = SPARKWANDS+10;
+	public static final int SPARKWAND_REGROWTH       = SPARKWANDS+11;
+	public static final int SPARKWAND_TRANSFUSION    = SPARKWANDS+12;
+	public static final int MASTERS_SPARKWAND        = SPARKWANDS+13;
+	static {
+		for (int i = SPARKWANDS; i < SPARKWANDS+32; i++)
+			assignItemRect(i, 16, 16);
+	}
 
 	private static final int WANDS              =                           xy(1, 14);  //32 slots
 	public static final int WAND_MAGIC_MISSILE  = WANDS+0;
@@ -388,9 +422,10 @@ public class ItemSpriteSheet {
 	public static final int WAND_WARDING        = WANDS+10;
 	public static final int WAND_REGROWTH       = WANDS+11;
 	public static final int WAND_TRANSFUSION    = WANDS+12;
+	public static final int MAGES_STAFF         = WANDS+13;
 	static {
 		for (int i = WANDS; i < WANDS+32; i++)
-			assignItemRect(i, 14, 14);
+			assignItemRect(i, 16, 16);
 	}
 
 	private static final int RINGS          =                               xy(1, 15);  //32 slots
@@ -441,7 +476,7 @@ public class ItemSpriteSheet {
 	public static final int ARTIFACT_VIAL4      = ARTIFACTS+26;
 	static{
 		assignItemRect(ARTIFACT_CLOAK,      9,  15);
-		assignItemRect(ARTIFACT_ARMBAND,    16, 13);
+		assignItemRect(ARTIFACT_ARMBAND,    14, 11);
 		assignItemRect(ARTIFACT_CAPE,       16, 14);
 		assignItemRect(ARTIFACT_TALISMAN,   15, 13);
 		assignItemRect(ARTIFACT_HOURGLASS,  13, 16);
@@ -453,15 +488,15 @@ public class ItemSpriteSheet {
 		assignItemRect(ARTIFACT_HORN2,      15, 15);
 		assignItemRect(ARTIFACT_HORN3,      15, 15);
 		assignItemRect(ARTIFACT_HORN4,      15, 15);
-		assignItemRect(ARTIFACT_CHALICE1,   12, 15);
-		assignItemRect(ARTIFACT_CHALICE2,   12, 15);
-		assignItemRect(ARTIFACT_CHALICE3,   12, 15);
-		assignItemRect(ARTIFACT_SANDALS,    16, 6 );
-		assignItemRect(ARTIFACT_SHOES,      16, 6 );
-		assignItemRect(ARTIFACT_BOOTS,      16, 9 );
-		assignItemRect(ARTIFACT_GREAVES,    16, 14);
-		assignItemRect(ARTIFACT_ROSE1,      14, 14);
-		assignItemRect(ARTIFACT_ROSE2,      14, 14);
+		assignItemRect(ARTIFACT_CHALICE1,   12, 16);
+		assignItemRect(ARTIFACT_CHALICE2,   12, 16);
+		assignItemRect(ARTIFACT_CHALICE3,   12, 16);
+		assignItemRect(ARTIFACT_SANDALS,    16, 9 );
+		assignItemRect(ARTIFACT_SHOES,      16, 9 );
+		assignItemRect(ARTIFACT_BOOTS,      16, 13 );
+		assignItemRect(ARTIFACT_GREAVES,    16, 16);
+		assignItemRect(ARTIFACT_ROSE1,      13, 13);
+		assignItemRect(ARTIFACT_ROSE2,      14, 13);
 		assignItemRect(ARTIFACT_ROSE3,      14, 14);
 		assignItemRect(ARTIFACT_VIAL1,      12, 12);
 		assignItemRect(ARTIFACT_VIAL2,      12, 12);

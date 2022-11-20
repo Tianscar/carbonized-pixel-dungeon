@@ -25,6 +25,8 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.ansdoship.carbonizedpixeldungeon.levels.Level;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
 
 public enum Icons {
@@ -45,10 +47,6 @@ public enum Icons {
 
 	//rankings and hero select icons, spacing for 16x16
 	STAIRS,
-	WARRIOR,
-	MAGE,
-	ROGUE,
-	HUNTRESS,
 
 	//grey icons, mainly used for buttons, spacing for 16x16
 	EXIT,
@@ -66,6 +64,8 @@ public enum Icons {
 	RENAME_ON,
 	LEFTARROW,
 	RIGHTARROW,
+	LEFTARROW_ALT,
+	RIGHTARROW_ALT,
 
 	//misc icons, mainly used for buttons, spacing for 16x16 until the smaller icons at the end
 	UNCHECKED,
@@ -79,9 +79,8 @@ public enum Icons {
 	TALENT,
 	MAGNIFY,
 	BUFFS,
-	ENERGY,
-	COIN_SML,
-	ENERGY_SML,
+	MINUS_LARGE,
+	PLUS_LARGE,
 	BACKPACK,
 	SEED_POUCH,
 	SCROLL_HOLDER,
@@ -109,7 +108,7 @@ public enum Icons {
 	//icons that appear in the about screen, variable spacing
 	LIBGDX,
 	ALEKS,
-	WATA,
+	WATABOU,
 	CELESTI,
 	KRISTJAN,
 	CUBE_CODE,
@@ -164,18 +163,6 @@ public enum Icons {
 			case STAIRS:
 				icon.frame( icon.texture.uvRectBySize( 0, 16, 13, 16 ) );
 				break;
-			case WARRIOR:
-				icon.frame( icon.texture.uvRectBySize( 16, 16, 9, 15 ) );
-				break;
-			case MAGE:
-				icon.frame( icon.texture.uvRectBySize( 32, 16, 15, 14 ) );
-				break;
-			case ROGUE:
-				icon.frame( icon.texture.uvRectBySize( 48, 16, 9, 15 ) );
-				break;
-			case HUNTRESS:
-				icon.frame( icon.texture.uvRectBySize( 64, 16, 16, 16 ) );
-				break;
 
 			case EXIT:
 				icon.frame( icon.texture.uvRectBySize( 0, 32, 15, 11 ) );
@@ -224,6 +211,13 @@ public enum Icons {
 				break;
 			case RIGHTARROW:
 				icon.frame( icon.texture.uvRectBySize( 208, 32, 14, 8 ) );
+				icon.frame( icon.texture.uvRectBySize( 224, 32, 11, 9));
+				break;
+			case LEFTARROW_ALT:
+				icon.frame( icon.texture.uvRectBySize( 224, 32, 11, 9 ) );
+				break;
+			case RIGHTARROW_ALT:
+				icon.frame( icon.texture.uvRectBySize( 240, 32, 11, 9 ) );
 				break;
 
 			case UNCHECKED:
@@ -259,14 +253,11 @@ public enum Icons {
 			case BUFFS:
 				icon.frame( icon.texture.uvRectBySize( 160, 48, 16, 15 ) );
 				break;
-			case ENERGY:
-				icon.frame( icon.texture.uvRectBySize( 176, 48, 16, 16 ) );
+			case MINUS_LARGE:
+				icon.frame( icon.texture.uvRectBySize( 176, 48, 8, 4 ) );
 				break;
-			case COIN_SML:
-				icon.frame( icon.texture.uvRectBySize( 192, 48, 7, 7 ) );
-				break;
-			case ENERGY_SML:
-				icon.frame( icon.texture.uvRectBySize( 192, 56, 8, 7 ) );
+			case PLUS_LARGE:
+				icon.frame( icon.texture.uvRectBySize( 176, 53, 8, 8 ) );
 				break;
 
 			case TARGET:
@@ -340,7 +331,7 @@ public enum Icons {
 			case ALEKS:
 				icon.frame( icon.texture.uvRectBySize( 16, 96, 16, 13 ) );
 				break;
-			case WATA:
+			case WATABOU:
 				icon.frame( icon.texture.uvRectBySize( 0, 112, 17, 12 ) );
 				break;
 
@@ -381,13 +372,13 @@ public enum Icons {
 	public static Image get( HeroClass cl ) {
 		switch (cl) {
 			case WARRIOR:
-				return get( WARRIOR );
+				return new ItemSprite( ItemSpriteSheet.SEAL );
 			case MAGE:
-				return get( MAGE );
+				return new ItemSprite( ItemSpriteSheet.MAGES_STAFF );
 			case ROGUE:
-				return get( ROGUE );
+				return new ItemSprite( ItemSpriteSheet.ARTIFACT_CLOAK );
 			case HUNTRESS:
-				return get( HUNTRESS );
+				return new ItemSprite( ItemSpriteSheet.SPIRIT_BOW );
 			default:
 				return null;
 		}

@@ -38,7 +38,7 @@ public class ScrollEmpower extends Buff {
 	private int left;
 
 	public void reset(){
-		left = Dungeon.hero.pointsInTalent(Talent.EMPOWERING_SCROLLS);
+		left = 1 + Dungeon.hero.pointsInTalent(Talent.EMPOWERING_SCROLLS);
 		Item.updateQuickslot();
 	}
 
@@ -67,7 +67,7 @@ public class ScrollEmpower extends Buff {
 
 	@Override
 	public float iconFadePercent() {
-		return Math.max(0, (3f - left) / 3f);
+		return Math.max(0, (4f - left) / 4f);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class ScrollEmpower extends Buff {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", Dungeon.hero.pointsInTalent(Talent.EMPOWERING_SCROLLS), left);
+		return Messages.get(this, "desc", 1 + Dungeon.hero.pointsInTalent(Talent.EMPOWERING_SCROLLS), left);
 	}
 
 	private static final String LEFT = "left";

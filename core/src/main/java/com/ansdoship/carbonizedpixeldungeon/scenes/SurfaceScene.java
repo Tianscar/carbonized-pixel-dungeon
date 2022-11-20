@@ -29,6 +29,8 @@ import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.DriedRose;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfLivingEarth;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfWarding;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfLivingEarth;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfWarding;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.CharSprite;
@@ -190,12 +192,14 @@ public class SurfaceScene extends PixelScene {
 		
 		int earthLevel = Dungeon.hero.belongings.getItem(WandOfLivingEarth.class) == null ? 0 : Dungeon.hero.belongings.getItem(WandOfLivingEarth.class).level();
 		int wardLevel = Dungeon.hero.belongings.getItem(WandOfWarding.class) == null ? 0 : Dungeon.hero.belongings.getItem(WandOfWarding.class).level();
+		earthLevel = Math.max(earthLevel, Dungeon.hero.belongings.getItem(SparkWandOfLivingEarth.class) == null ? earthLevel : Dungeon.hero.belongings.getItem(SparkWandOfLivingEarth.class).level());
+		wardLevel = Math.max(wardLevel, Dungeon.hero.belongings.getItem(SparkWandOfWarding.class) == null ? wardLevel : Dungeon.hero.belongings.getItem(SparkWandOfWarding.class).level());
 		
 		MagesStaff staff = Dungeon.hero.belongings.getItem(MagesStaff.class);
 		if (staff != null){
-			if (staff.wandClass() == WandOfLivingEarth.class){
+			if (staff.wandClass() == WandOfLivingEarth.class || staff.wandClass() == SparkWandOfLivingEarth.class) {
 				earthLevel = Math.max(earthLevel, staff.level());
-			} else if (staff.wandClass() == WandOfWarding.class){
+			} else if (staff.wandClass() == WandOfWarding.class || staff.wandClass() == SparkWandOfWarding.class) {
 				wardLevel = Math.max(wardLevel, staff.level());
 			}
 		}

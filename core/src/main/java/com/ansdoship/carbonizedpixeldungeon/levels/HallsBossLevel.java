@@ -57,10 +57,10 @@ public class HallsBossLevel extends Level {
 
 	@Override
 	public void playLevelMusic() {
-		if (locked){
+		if (locked) {
 			Music.INSTANCE.play(Assets.Music.HALLS_BOSS, true);
 			//if exit isn't unlocked
-		} else if (map[exit] != Terrain.EXIT){
+		} else if (map[exit] != Terrain.EXIT) {
 			Music.INSTANCE.stop();
 		} else {
 			Music.INSTANCE.playTracks(
@@ -222,6 +222,13 @@ public class HallsBossLevel extends Level {
 		YogDzewa boss = new YogDzewa();
 		boss.pos = exit + width*3;
 		GameScene.add( boss );
+
+		Game.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				Music.INSTANCE.play(Assets.Music.HALLS_BOSS, true);
+			}
+		});
 	}
 
 	@Override

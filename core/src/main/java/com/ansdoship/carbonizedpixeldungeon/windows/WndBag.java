@@ -21,36 +21,24 @@
 
 package com.ansdoship.carbonizedpixeldungeon.windows;
 
-import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.PDAction;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.LostInventory;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
-import com.ansdoship.carbonizedpixeldungeon.items.EquipableItem;
-import com.ansdoship.carbonizedpixeldungeon.items.Gold;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
-import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
-import com.ansdoship.carbonizedpixeldungeon.items.bags.MagicalHolster;
-import com.ansdoship.carbonizedpixeldungeon.items.bags.PotionBandolier;
-import com.ansdoship.carbonizedpixeldungeon.items.bags.ScrollHolder;
-import com.ansdoship.carbonizedpixeldungeon.items.bags.VelvetPouch;
-import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
+import com.ansdoship.carbonizedpixeldungeon.items.bags.*;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.*;
-import com.ansdoship.pixeldungeonclasses.gltextures.TextureCache;
 import com.ansdoship.pixeldungeonclasses.input.GameAction;
 import com.ansdoship.pixeldungeonclasses.input.KeyBindings;
 import com.ansdoship.pixeldungeonclasses.input.KeyEvent;
 import com.ansdoship.pixeldungeonclasses.noosa.BitmapText;
-import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 import com.ansdoship.pixeldungeonclasses.noosa.Image;
-import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 
 public class WndBag extends WndTabbed {
 	

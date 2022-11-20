@@ -157,7 +157,7 @@ public class Badges {
 		YASD                        ( 160, true ),
 		BOSS_SLAIN_3_GLADIATOR,
 		BOSS_SLAIN_3_SHIELDGUARD,
-		BOSS_SLAIN_3_WARLOCK,
+		BOSS_SLAIN_3_LOREMASTER,
 		BOSS_SLAIN_3_BATTLEMAGE,
 		BOSS_SLAIN_3_FREERUNNER,
 		BOSS_SLAIN_3_ASSASSIN,
@@ -844,8 +844,8 @@ public class Badges {
 					case SHIELDGUARD:
 						badge = Badge.BOSS_SLAIN_3_SHIELDGUARD;
 						break;
-					case WARLOCK:
-						badge = Badge.BOSS_SLAIN_3_WARLOCK;
+					case LOREMASTER:
+						badge = Badge.BOSS_SLAIN_3_LOREMASTER;
 						break;
 					case BATTLEMAGE:
 						badge = Badge.BOSS_SLAIN_3_BATTLEMAGE;
@@ -870,7 +870,7 @@ public class Badges {
 
 				if (isUnlocked( Badge.BOSS_SLAIN_3_GLADIATOR ) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_SHIELDGUARD ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_WARLOCK ) &&
+						isUnlocked( Badge.BOSS_SLAIN_3_LOREMASTER ) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_BATTLEMAGE ) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_FREERUNNER ) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_ASSASSIN ) &&

@@ -241,18 +241,24 @@ abstract public class Weapon extends KindOfWeapon {
 	public Item upgrade() {
 		return upgrade(false);
 	}
-	
-	public Item upgrade(boolean enchant ) {
 
-		if (enchant){
-			if (enchantment == null){
+	public Item upgrade( boolean enchant ) {
+		return upgrade(enchant, true, true);
+	}
+	
+	public Item upgrade( boolean enchant, boolean removeGoodEnchant, boolean removeCurseEnchant ) {
+
+		if ( enchant ) {
+			if (enchantment == null) {
 				enchant(Enchantment.random());
 			}
 		} else {
-			if (hasCurseEnchant()){
-				if (Random.Int(3) == 0) enchant(null);
-			} else if (level() >= 4 && Random.Float(10) < Math.pow(2, level()-4)){
-				enchant(null);
+			if (hasCurseEnchant()) {
+				if (removeCurseEnchant) if (Random.Int(3) == 0) enchant(null);
+			} else {
+				if (removeGoodEnchant) if (level() >= 4 && Random.Float(10) < Math.pow(2, level()-4)) {
+					enchant(null);
+				}
 			}
 		}
 		

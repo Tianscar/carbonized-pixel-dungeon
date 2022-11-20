@@ -209,6 +209,19 @@ public class Artifact extends KindofMisc {
 		//do nothing by default;
 	}
 
+	public void charge(int charge) {
+		this.charge = Math.min(Math.max(0, charge), chargeCap);
+		updateQuickslot();
+	}
+
+	public int charge() {
+		return charge;
+	}
+
+	public int chargeCap() {
+		return chargeCap;
+	}
+
 	public class ArtifactBuff extends Buff {
 
 		public int itemLevel() {

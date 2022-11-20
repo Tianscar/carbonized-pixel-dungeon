@@ -30,6 +30,7 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndBag;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public abstract class InventoryScroll extends Scroll {
 
@@ -109,16 +110,30 @@ public abstract class InventoryScroll extends Scroll {
 			}
 			
 			if (item != null) {
-				
-				((InventoryScroll)curItem).onItemSelected( item );
-				((InventoryScroll)curItem).readAnimation();
-				
-				Sample.INSTANCE.play( Assets.Sounds.READ );
-				
+
+				doRecord(new Callback() {
+					@Override
+					public void call() {
+
+						((InventoryScroll)curItem).onItemSelected( item );
+						((InventoryScroll)curItem).readAnimation();
+
+						Sample.INSTANCE.play( Assets.Sounds.READ );
+
+					}
+				});
+
 			} else if (identifiedByUse && !((Scroll)curItem).anonymous) {
-				
-				((InventoryScroll)curItem).confirmCancelation();
-				
+
+				doRecord(new Callback() {
+					@Override
+					public void call() {
+
+						((InventoryScroll)curItem).confirmCancelation();
+
+					}
+				});
+
 			} else if (!((Scroll)curItem).anonymous) {
 				
 				curItem.collect( curUser.belongings.backpack );

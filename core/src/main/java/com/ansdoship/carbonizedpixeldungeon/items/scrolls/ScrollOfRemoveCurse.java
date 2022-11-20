@@ -25,6 +25,7 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Degrade;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.ShadowParticle;
 import com.ansdoship.carbonizedpixeldungeon.items.EquipableItem;
@@ -32,15 +33,44 @@ import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfRemoveCurse extends InventoryScroll {
 
 	{
 		icon = ItemSpriteSheet.Icons.SCROLL_REMCURSE;
 		preferredBag = Belongings.Backpack.class;
+	}
+
+	@Override
+	public void doRead() {
+		if (curUser.subClass == HeroSubClass.LOREMASTER) {
+
+			doRecord(new Callback() {
+				@Override
+				public void call() {
+
+					new Flare( 6, 32 ).show( curUser.sprite, 2f ) ;
+
+					boolean procced = uncurse( curUser, curUser.belongings.getAllItems().toArray(new Item[0]) );
+
+					Degrade.detach( curUser, Degrade.class );
+
+					if (procced) {
+						GLog.p( Messages.get(ScrollOfRemoveCurse.this, "cleansed_lore") );
+					} else {
+						GLog.i( Messages.get(ScrollOfRemoveCurse.this, "not_cleansed_lore") );
+					}
+
+				}
+			});
+
+		}
+		else super.doRead();
 	}
 
 	@Override
@@ -51,7 +81,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 	public static boolean uncursable( Item item ){
 		if (item.isEquipped(Dungeon.hero) && Dungeon.hero.buff(Degrade.class) != null) {
 			return true;
-		} if ((item instanceof EquipableItem || item instanceof Wand) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){
+		} if ((item instanceof EquipableItem || item instanceof Wand) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)) {
 			return true;
 		} else if (item instanceof Weapon){
 			return ((Weapon)item).hasCurseEnchant();
@@ -81,29 +111,32 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 		
 		boolean procced = false;
 		for (Item item : items) {
-			if (item != null) {
+			if (item != null && uncursable(item)) {
 				item.cursedKnown = true;
 				if (item.cursed) {
 					procced = true;
 					item.cursed = false;
 				}
-			}
-			if (item instanceof Weapon){
-				Weapon w = (Weapon) item;
-				if (w.hasCurseEnchant()){
-					w.enchant(null);
-					procced = true;
+				if (item instanceof Weapon) {
+					Weapon w = (Weapon) item;
+					if (w.hasCurseEnchant()) {
+						w.enchant(null);
+						procced = true;
+					}
+					if (w instanceof MagesStaff) {
+						((MagesStaff) w).updateWand(curUser, false);
+					}
 				}
-			}
-			if (item instanceof Armor){
-				Armor a = (Armor) item;
-				if (a.hasCurseGlyph()){
-					a.inscribe(null);
-					procced = true;
+				else if (item instanceof Armor) {
+					Armor a = (Armor) item;
+					if (a.hasCurseGlyph()) {
+						a.inscribe(null);
+						procced = true;
+					}
 				}
-			}
-			if (item instanceof Wand){
-				((Wand) item).updateLevel();
+				else if (item instanceof Wand) {
+					((Wand) item).updateLevel();
+				}
 			}
 		}
 		

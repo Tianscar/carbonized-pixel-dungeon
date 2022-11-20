@@ -25,12 +25,14 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Drowsy;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfLullaby extends Scroll {
 
@@ -40,23 +42,34 @@ public class ScrollOfLullaby extends Scroll {
 
 	@Override
 	public void doRead() {
-		
-		curUser.sprite.centerEmitter().start( Speck.factory( Speck.NOTE ), 0.3f, 5 );
-		Sample.INSTANCE.play( Assets.Sounds.LULLABY );
 
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-			if (Dungeon.level.heroFOV[mob.pos]) {
-				Buff.affect( mob, Drowsy.class );
-				mob.sprite.centerEmitter().start( Speck.factory( Speck.NOTE ), 0.3f, 5 );
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				curUser.sprite.centerEmitter().start( Speck.factory( Speck.NOTE ), 0.3f, 5 );
+				Sample.INSTANCE.play( Assets.Sounds.LULLABY );
+
+				float duration = Drowsy.DURATION;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) duration = Math.round(duration * 1.5f);
+
+				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					if (Dungeon.level.heroFOV[mob.pos]) {
+						Buff.affect( mob, Drowsy.class ).duration(duration);
+						mob.sprite.centerEmitter().start( Speck.factory( Speck.NOTE ), 0.3f, 5 );
+					}
+				}
+
+				Buff.affect( curUser, Drowsy.class ).duration(duration);
+
+				GLog.i( Messages.get(ScrollOfLullaby.this, "sooth") );
+
+				identify();
+				readAnimation();
+
 			}
-		}
+		});
 
-		Buff.affect( curUser, Drowsy.class );
-
-		GLog.i( Messages.get(this, "sooth") );
-
-		identify();
-		readAnimation();
 	}
 	
 	@Override

@@ -24,7 +24,7 @@ package com.ansdoship.carbonizedpixeldungeon.items.stones;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
-import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.Sheep;
+import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.MagicSheep;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
@@ -52,7 +52,7 @@ public class StoneOfFlock extends Runestone {
 				if (Dungeon.level.insideMap(i)
 						&& Actor.findChar(i) == null
 						&& !(Dungeon.level.pit[i])) {
-					Sheep sheep = new Sheep();
+					MagicSheep sheep = new MagicSheep();
 					sheep.lifespan = Random.NormalIntRange( 6, 8 );
 					sheep.pos = i;
 					GameScene.add(sheep);

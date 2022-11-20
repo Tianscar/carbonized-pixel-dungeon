@@ -23,7 +23,9 @@ package com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AdrenalineSurge;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
@@ -37,6 +39,7 @@ import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.Emitter;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Point;
 
@@ -50,18 +53,31 @@ public class ScrollOfChallenge extends ExoticScroll {
 	
 	@Override
 	public void doRead() {
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-			mob.beckon( curUser.pos );
-		}
 
-		Buff.affect(curUser, ChallengeArena.class).setup(curUser.pos);
+		doRecord(new Callback() {
+			@Override
+			public void call() {
 
-		identify();
-		
-		curUser.sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
-		Sample.INSTANCE.play( Assets.Sounds.CHALLENGE );
-		
-		readAnimation();
+				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					mob.beckon( curUser.pos );
+				}
+
+				Buff.affect(curUser, ChallengeArena.class).setup(curUser.pos);
+
+				identify();
+
+				curUser.sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
+				Sample.INSTANCE.play( Assets.Sounds.CHALLENGE );
+
+				if (curUser.subClass == HeroSubClass.LOREMASTER) {
+					Buff.affect(curUser, AdrenalineSurge.class).reset(2, 200f);
+				}
+
+				readAnimation();
+
+			}
+		});
+
 	}
 
 
@@ -104,7 +120,7 @@ public class ScrollOfChallenge extends ExoticScroll {
 
 		@Override
 		public String desc() {
-			return Messages.get(this, "desc", left);
+			return Messages.get(this, "desc", curUser.subClass == HeroSubClass.LOREMASTER ? 66 : 33, left);
 		}
 
 		public void setup(int pos){

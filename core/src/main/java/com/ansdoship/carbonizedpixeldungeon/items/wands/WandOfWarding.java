@@ -9,6 +9,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.NPC;
 import com.ansdoship.carbonizedpixeldungeon.effects.MagicMissile;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWandOfWarding;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -52,7 +53,7 @@ public class WandOfWarding extends Wand {
 		int maxWardEnergy = 0;
 		for (Buff buff : curUser.buffs()){
 			if (buff instanceof Wand.Charger){
-				if (((Charger) buff).wand() instanceof WandOfWarding){
+				if (((Charger) buff).wand() instanceof WandOfWarding || ((Charger) buff).wand() instanceof SparkWandOfWarding){
 					maxWardEnergy += 2 + ((Charger) buff).wand().level();
 				}
 			}
@@ -174,7 +175,7 @@ public class WandOfWarding extends Wand {
 	public static class Ward extends NPC {
 
 		public int tier = 1;
-		private int wandLevel = 1;
+		public int wandLevel = 1;
 
 		public int totalZaps = 0;
 

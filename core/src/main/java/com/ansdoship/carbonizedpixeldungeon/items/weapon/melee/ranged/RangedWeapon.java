@@ -334,14 +334,12 @@ public abstract class RangedWeapon extends MeleeWeapon {
         }
         if (!missiles.isEmpty()) {
 
-            String missilesString = "";
+            String missilesText = "";
             for (MissileWeapon missile : missiles) {
-                missilesString += "_" + missile.name() + "_, ";
+                missilesText += "_" + missile.name() + "_, ";
             }
-            missilesString = missilesString.substring(0, missilesString.length() - 2);
-            if (PDSettings.language() == Languages.CHINESE || PDSettings.language() == Languages.TR_CHINESE)
-                missilesString = missilesString.replaceAll(", ", "、");
-            info += "\n\n" + Messages.get( this, "missiles", missilesString );
+            missilesText = missilesText.substring(0, missilesText.length() - 2);
+            info += "\n\n" + Messages.get( this, "missiles", Messages.replaceComma(missilesText) );
 
             MissileWeapon missile = missiles.get(0);
             int level = 0;

@@ -26,14 +26,7 @@ import com.ansdoship.carbonizedpixeldungeon.Badges;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Barrier;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.LockedFloor;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.MagicImmune;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Recharging;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.ScrollEmpower;
-import com.ansdoship.carbonizedpixeldungeon.actors.buffs.SoulMark;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.*;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
@@ -46,6 +39,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.MagicalHolster;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.RingOfEnergy;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.SparkWand;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
@@ -56,10 +50,7 @@ import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.QuickSlotButton;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
-import com.ansdoship.pixeldungeonclasses.utils.Bundle;
-import com.ansdoship.pixeldungeonclasses.utils.Callback;
-import com.ansdoship.pixeldungeonclasses.utils.PointF;
-import com.ansdoship.pixeldungeonclasses.utils.Random;
+import com.ansdoship.pixeldungeonclasses.utils.*;
 
 import java.util.ArrayList;
 
@@ -185,16 +176,12 @@ public abstract class Wand extends Item {
 
 	//TODO Consider externalizing char awareness buff
 	protected static void wandProc(Char target, int wandLevel, int chargesUsed){
+		if (Dungeon.hero.hasTalent(Talent.ARCANE_STRIKE)) {
+			Buff.affect(target, Talent.ArcaneStrikeTracker.class);
+		}
 		if (Dungeon.hero.hasTalent(Talent.ARCANE_VISION)) {
 			int dur = 5 + 5*Dungeon.hero.pointsInTalent(Talent.ARCANE_VISION);
 			Buff.append(Dungeon.hero, TalismanOfForesight.CharAwareness.class, dur).charID = target.id();
-		}
-
-		if (target != Dungeon.hero &&
-				Dungeon.hero.subClass == HeroSubClass.WARLOCK &&
-				//standard 1 - 0.92^x chance, plus 7%. Starts at 15%
-				Random.Float() > (Math.pow(0.92f, (wandLevel*chargesUsed)+1) - 0.07f)){
-			SoulMark.prolong(target, SoulMark.class, SoulMark.DURATION + wandLevel);
 		}
 	}
 
@@ -254,6 +241,12 @@ public abstract class Wand extends Item {
 				desc += " " + Messages.get(Wand.class, "probably_int_not_enough");
 			}
 		}
+		if (this instanceof SparkWand && ((SparkWand) this).advanced()) {
+			desc += " " + Messages.get(SparkWand.class, "advanced");
+		}
+		if (Dungeon.hero.belongings.armor() != null && Dungeon.hero.belongings.armor().metal) {
+			desc += "\n\n" + Messages.get(Wand.class, "metal_armor");
+		}
 
 		if (resinBonus == 1){
 			desc += "\n\n" + Messages.get(Wand.class, "resin_one");
@@ -267,7 +260,7 @@ public abstract class Wand extends Item {
 			desc += "\n\n" + Messages.get(Wand.class, "not_cursed");
 		}
 
-		if (Dungeon.hero.subClass == HeroSubClass.BATTLEMAGE){
+		if (Dungeon.hero.subClass == HeroSubClass.BATTLEMAGE) {
 			desc += "\n\n" + Messages.get(this, "bmage_desc");
 		}
 
@@ -294,7 +287,7 @@ public abstract class Wand extends Item {
 	
 	@Override
 	public int level() {
-		if (!cursed && curseInfusionBonus){
+		if (!cursed && curseInfusionBonus) {
 			curseInfusionBonus = false;
 			updateLevel();
 		}
@@ -334,7 +327,6 @@ public abstract class Wand extends Item {
 	@Override
 	public int buffedLvl() {
 		int lvl = super.buffedLvl();
-		int intBoostedLvl = lvl + INTBoostLvl();
 
 		if (charger != null && charger.target != null) {
 			if (charger.target.buff(WildMagic.WildMagicTracker.class) != null){
@@ -348,16 +340,18 @@ public abstract class Wand extends Item {
 				}
 			}
 
-			if (charger.target.buff(ScrollEmpower.class) != null){
-				lvl += Dungeon.hero.pointsInTalent(Talent.EMPOWERING_SCROLLS);
+			if (charger.target.buff(ScrollEmpower.class) != null) {
+				lvl += (1 + Dungeon.hero.pointsInTalent(Talent.EMPOWERING_SCROLLS));
 			}
 
+			lvl += INTBoostLvl();
+
 			WandOfMagicMissile.MagicCharge buff = charger.target.buff(WandOfMagicMissile.MagicCharge.class);
-			if (buff != null && buff.level() > lvl){
+			if (buff != null && buff.level() > lvl) {
 				return buff.level();
 			}
 		}
-		return Math.max(intBoostedLvl, lvl);
+		return lvl;
 	}
 
 	public void updateLevel() {
@@ -390,18 +384,18 @@ public abstract class Wand extends Item {
 		particle.radiateXY(0.5f);
 	}
 
-	protected void wandUsed() {
+	public void wandUsed() {
 		if (!isIdentified()) {
 			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
-			if (usesLeftToID <= 0 || Dungeon.hero.pointsInTalent(Talent.SCHOLARS_INTUITION) == 2) {
+			if (usesLeftToID <= 0 || Dungeon.hero.hasTalent(Talent.SCHOLARS_INTUITION)) {
 				identify();
 				GLog.p( Messages.get(Wand.class, "identify") );
 				Badges.validateItemLevelAquired( this );
 			}
 		}
-		
+
 		curCharges -= cursed ? 1 : chargesPerCast();
 
 		//remove magic charge at a higher priority, if we are benefiting from it are and not the
@@ -423,9 +417,9 @@ public abstract class Wand extends Item {
 		if (charger != null
 				&& charger.target == Dungeon.hero
 				&& !Dungeon.hero.belongings.contains(this)) {
-			if (curCharges == 0 && Dungeon.hero.hasTalent(Talent.BACKUP_BARRIER)) {
-				//grants 3/5 shielding
-				Buff.affect(Dungeon.hero, Barrier.class).setShield(1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER));
+			if (Dungeon.hero.hasTalent(Talent.CARRY_ON_BARRIER)) {
+				//grants 2/3 shielding
+				Buff.affect(Dungeon.hero, Barrier.class).incShield(1 + Dungeon.hero.pointsInTalent(Talent.CARRY_ON_BARRIER));
 			}
 			if (Dungeon.hero.hasTalent(Talent.EMPOWERED_STRIKE)){
 				Buff.prolong(Dungeon.hero, Talent.EmpoweredStrikeTracker.class, 10f);
@@ -439,6 +433,12 @@ public abstract class Wand extends Item {
 		float delay = TIME_TO_ZAP;
 		if (encumbrance > 0){
 			delay *= Math.pow( 1.2, encumbrance );
+		}
+		if (Dungeon.hero.hasTalent(Talent.MAGIC_OVERLOAD)) {
+			if (Dungeon.hero.buff(Recharging.class) != null) delay *= 0.5f;
+			if (Dungeon.hero.pointsInTalent(Talent.MAGIC_OVERLOAD) == 2) {
+				if (Dungeon.hero.buff(ArtifactRecharge.class) != null) delay *= 0.5f;
+			}
 		}
 		curUser.spendAndNext(delay);
 
@@ -560,7 +560,7 @@ public abstract class Wand extends Item {
 		}
 	}
 	
-	protected static CellSelector.Listener zapper = new  CellSelector.Listener() {
+	protected static CellSelector.Listener zapper = new CellSelector.Listener() {
 		
 		@Override
 		public void onSelect( Integer target ) {
@@ -580,8 +580,8 @@ public abstract class Wand extends Item {
 				int cell = shot.collisionPos;
 				
 				if (target == curUser.pos || cell == curUser.pos) {
-					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)){
-						float shield = curUser.HT * (0.05f*curWand.curCharges);
+					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)) {
+						float shield = curUser.HT * (0.06f*curWand.curCharges);
 						if (curUser.pointsInTalent(Talent.SHIELD_BATTERY) == 2) shield *= 1.5f;
 						Buff.affect(curUser, Barrier.class).setShield(Math.round(shield));
 						curWand.curCharges = 0;
@@ -608,7 +608,8 @@ public abstract class Wand extends Item {
 					
 					curUser.busy();
 					
-					if (curWand.cursed || (curUser.INT() < curWand.INTReq() && curUser.heroClass != HeroClass.MAGE)){
+					if (curWand.cursed || (curUser.INT() < curWand.INTReq() && curUser.heroClass != HeroClass.MAGE) ||
+							(curUser.belongings.armor() != null && curUser.belongings.armor().metal)) {
 						if (!curWand.cursedKnown){
 							GLog.n(Messages.get(Wand.class, "curse_discover", curWand.name()));
 						}
@@ -730,8 +731,11 @@ public abstract class Wand extends Item {
 		lvl = Math.max(0, lvl);
 
 		if (lvl <= 3) return initial;
-		else if (lvl <= 7) return initial + lvl - 3;
-		else return initial + 4 + (lvl - 7) * 2;
+		else {
+			lvl = lvl - 3;
+			int boost = (lvl - (lvl % 3)) / 3 * 2;
+			return initial + boost;
+		}
 	}
 
 	public int INTBoostLvl() {
@@ -739,14 +743,51 @@ public abstract class Wand extends Item {
 	}
 
 	public int INTBoostLvl(int intelligence) {
-		return INTBoostLvl(8, intelligence);
+		return INTBoostLvl(INTReq(), intelligence);
 	}
 
 	protected static int INTBoostLvl(int basereq, int intelligence) {
 		basereq = Math.max(0, basereq);
 
-		return (int) Math.floor((intelligence - basereq - 1) / 4f);
+		return (int) Math.max(0, Math.floor((intelligence - basereq) / 3f));
 	}
 
+	public SparkWand wandToSpark() {
+		return wandToSpark(this);
+	}
+
+	public Wand sparkToWand() {
+		if (!(this instanceof SparkWand)) return this;
+		return sparkToWand((SparkWand) this);
+	}
+
+	public static SparkWand wandToSpark(Wand wand ) {
+		if (wand instanceof SparkWand) return (SparkWand) wand;
+		if (SparkWand.wandToSpark.containsKey(wand.getClass())) {
+			SparkWand sparkWand = Reflection.newInstance(SparkWand.wandToSpark.get(wand.getClass()));
+			sparkWand.level(wand.level() - wand.resinBonus);
+			sparkWand.resinBonus = wand.resinBonus;
+			sparkWand.maxCharges += sparkWand.resinBonus;
+			sparkWand.partialCharge = wand.partialCharge;
+			sparkWand.curCharges = Math.max(sparkWand.maxCharges, wand.curCharges + 2);
+			sparkWand.identify(false);
+			return sparkWand;
+		}
+		else return null;
+	}
+
+	public static Wand sparkToWand( SparkWand sparkWand) {
+		if (SparkWand.sparkToWand.containsKey(sparkWand.getClass())) {
+			Wand wand = Reflection.newInstance(SparkWand.sparkToWand.get(sparkWand.getClass()));
+			wand.level(sparkWand.level() - sparkWand.resinBonus);
+			wand.resinBonus = sparkWand.resinBonus;
+			wand.maxCharges += wand.resinBonus;
+			wand.partialCharge = sparkWand.partialCharge;
+			wand.curCharges = Math.min(wand.maxCharges, sparkWand.curCharges);
+			wand.identify(false);
+			return wand;
+		}
+		else return null;
+	}
 
 }

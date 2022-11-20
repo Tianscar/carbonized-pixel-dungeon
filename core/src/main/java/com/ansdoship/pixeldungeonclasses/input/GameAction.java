@@ -58,6 +58,9 @@ public class GameAction {
 	public static final GameAction RIGHT_CLICK  = new GameAction( "right_click" );
 	public static final GameAction MIDDLE_CLICK = new GameAction( "middle_click" );
 
+	public static final GameAction PREV = new GameAction( "prev" );
+	public static final GameAction NEXT = new GameAction( "next" );
+
 	public static ArrayList<GameAction> allActions(){
 		return new ArrayList<>(ALL_ACTIONS);
 	}

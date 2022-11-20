@@ -48,7 +48,7 @@ public class WelcomeScene extends PixelScene {
 
 		final int previousVersion = PDSettings.version();
 
-		if (CarbonizedPixelDungeon.versionCode == previousVersion && !PDSettings.intro()) {
+		if (CarbonizedPixelDungeon.versionCode == previousVersion && !PDSettings.intro() && !Game.platform.isSnapshot()) {
 			CarbonizedPixelDungeon.switchScene(TitleScene.class);
 			return;
 		}
@@ -117,7 +117,7 @@ public class WelcomeScene extends PixelScene {
 
 		float buttonY = Math.min(topRegion + (PixelScene.landscape() ? 60 : 120), h - 24);
 
-		if (previousVersion != 0 && !PDSettings.intro()){
+		if (previousVersion != 0 && !PDSettings.intro() && !Game.platform.isSnapshot()){
 			StyledButton changes = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(TitleScene.class, "changes")){
 				@Override
 				protected void onClick() {
@@ -142,7 +142,10 @@ public class WelcomeScene extends PixelScene {
 
 		RenderedTextBlock text = PixelScene.renderTextBlock(6);
 		String message;
-		if (previousVersion == 0 || PDSettings.intro()) {
+		if (Game.platform.isSnapshot()) {
+			message = Messages.get(this, "snapshot_intro");
+			message += "\n\n" + Messages.get(this, "snapshot_msg");
+		} else if (previousVersion == 0 || PDSettings.intro()) {
 			message = Messages.get(this, "welcome_msg");
 		} else if (previousVersion <= CarbonizedPixelDungeon.versionCode) {
 			if (previousVersion < LATEST_UPDATE){
@@ -153,10 +156,10 @@ public class WelcomeScene extends PixelScene {
 				message = Messages.get(this, "patch_intro");
 				message += "\n";
 				//message += "\n" + "null";
-				//message += "\n" + Messages.get(this, "patch_balance");
-				//message += "\n" + Messages.get(this, "patch_features");
+				message += "\n" + Messages.get(this, "patch_balance");
+				message += "\n" + Messages.get(this, "patch_features");
 				message += "\n" + Messages.get(this, "patch_bugfixes");
-				//message += "\n" + Messages.get(this, "patch_translations");
+				message += "\n" + Messages.get(this, "patch_translations");
 
 			}
 		} else {

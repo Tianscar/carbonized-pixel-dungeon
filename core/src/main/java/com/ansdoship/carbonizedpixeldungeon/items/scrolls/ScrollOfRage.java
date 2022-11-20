@@ -24,14 +24,17 @@ package com.ansdoship.carbonizedpixeldungeon.items.scrolls;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.AdrenalineSurge;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Amok;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfRage extends Scroll {
 
@@ -42,20 +45,32 @@ public class ScrollOfRage extends Scroll {
 	@Override
 	public void doRead() {
 
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-			mob.beckon( curUser.pos );
-			if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
-				Buff.prolong(mob, Amok.class, 5f);
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					mob.beckon( curUser.pos );
+					if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
+						Buff.prolong(mob, Amok.class, 5f);
+					}
+				}
+
+				GLog.w( Messages.get(ScrollOfRage.this, "roar") );
+				identify();
+
+				curUser.sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
+				Sample.INSTANCE.play( Assets.Sounds.CHALLENGE );
+
+				if (curUser.subClass == HeroSubClass.LOREMASTER) {
+					Buff.affect(curUser, AdrenalineSurge.class).reset(2, 200f);
+				}
+
+				readAnimation();
+
 			}
-		}
+		});
 
-		GLog.w( Messages.get(this, "roar") );
-		identify();
-		
-		curUser.sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
-		Sample.INSTANCE.play( Assets.Sounds.CHALLENGE );
-
-		readAnimation();
 	}
 	
 	@Override

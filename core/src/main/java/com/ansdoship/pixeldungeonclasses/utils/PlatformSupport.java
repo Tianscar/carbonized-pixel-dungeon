@@ -209,6 +209,10 @@ public abstract class PlatformSupport {
 		return Game.version.contains("INDEV");
 	}
 
+	public boolean isSnapshot() {
+		return Game.version.contains("SNAPSHOT");
+	}
+
 	public void openURI( String URI ){
 		Gdx.net.openURI(URI);
 	}

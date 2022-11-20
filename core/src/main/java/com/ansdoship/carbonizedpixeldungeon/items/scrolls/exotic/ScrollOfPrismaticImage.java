@@ -30,6 +30,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfPrismaticImage extends ExoticScroll {
 	
@@ -39,24 +40,32 @@ public class ScrollOfPrismaticImage extends ExoticScroll {
 	
 	@Override
 	public void doRead() {
-		
-		boolean found = false;
-		for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])){
-			if (m instanceof PrismaticImage){
-				found = true;
-				m.HP = m.HT;
-				m.sprite.emitter().burst(Speck.factory(Speck.HEALING), 4);
-			}
-		}
-		
-		if (!found) {
-			Buff.affect(curUser, PrismaticGuard.class).set( PrismaticGuard.maxHP( curUser ) );
-		}
 
-		identify();
-		
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-	
-		readAnimation();
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				boolean found = false;
+				for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])){
+					if (m instanceof PrismaticImage){
+						found = true;
+						m.HP = m.HT;
+						m.sprite.emitter().burst(Speck.factory(Speck.HEALING), 4);
+					}
+				}
+
+				if (!found) {
+					Buff.affect(curUser, PrismaticGuard.class).set( PrismaticGuard.maxHP( curUser ) );
+				}
+
+				identify();
+
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+
+				readAnimation();
+
+			}
+		});
+
 	}
 }

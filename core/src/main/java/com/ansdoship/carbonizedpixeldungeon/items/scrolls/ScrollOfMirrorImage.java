@@ -27,11 +27,13 @@ import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
 
@@ -47,15 +49,26 @@ public class ScrollOfMirrorImage extends Scroll {
 	
 	@Override
 	public void doRead() {
-		int spawnedImages = spawnImages(curUser, NIMAGES);
-		
-		if (spawnedImages > 0) {
-			identify();
-		}
-		
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-		
-		readAnimation();
+
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				int nimages = NIMAGES;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) nimages ++;
+				int spawnedImages = spawnImages(curUser, nimages);
+
+				if (spawnedImages > 0) {
+					identify();
+				}
+
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+
+				readAnimation();
+
+			}
+		});
+
 	}
 	
 	//returns the number of images spawned

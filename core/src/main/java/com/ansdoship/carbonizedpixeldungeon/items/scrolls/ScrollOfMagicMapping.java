@@ -23,6 +23,9 @@ package com.ansdoship.carbonizedpixeldungeon.items.scrolls;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Awareness;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.effects.SpellSprite;
@@ -32,6 +35,7 @@ import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfMagicMapping extends Scroll {
 
@@ -41,47 +45,63 @@ public class ScrollOfMagicMapping extends Scroll {
 
 	@Override
 	public void doRead() {
-		
-		int length = Dungeon.level.length();
-		int[] map = Dungeon.level.map;
-		boolean[] mapped = Dungeon.level.mapped;
-		boolean[] discoverable = Dungeon.level.discoverable;
-		
-		boolean noticed = false;
-		
-		for (int i=0; i < length; i++) {
-			
-			int terr = map[i];
-			
-			if (discoverable[i]) {
-				
-				mapped[i] = true;
-				if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
-					
-					Dungeon.level.discover( i );
-					
-					if (Dungeon.level.heroFOV[i]) {
-						GameScene.discoverTile( i, terr );
-						discover( i );
-						
-						noticed = true;
+
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				int length = Dungeon.level.length();
+				int[] map = Dungeon.level.map;
+				boolean[] mapped = Dungeon.level.mapped;
+				boolean[] discoverable = Dungeon.level.discoverable;
+
+				boolean noticed = false;
+
+				for (int i=0; i < length; i++) {
+
+					int terr = map[i];
+
+					if (discoverable[i]) {
+
+						mapped[i] = true;
+						if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
+
+							Dungeon.level.discover( i );
+
+							if (Dungeon.level.heroFOV[i]) {
+								GameScene.discoverTile( i, terr );
+								discover( i );
+
+								noticed = true;
+							}
+						}
 					}
 				}
+
+				if (curUser.subClass == HeroSubClass.LOREMASTER) {
+					Buff.affect( curUser, Awareness.class, Awareness.DURATION );
+					Dungeon.observe();
+
+					Dungeon.hero.interrupt();
+				}
+
+				GameScene.updateFog();
+
+				GLog.i( Messages.get(ScrollOfMagicMapping.this, "layout") );
+				if (noticed) {
+					Sample.INSTANCE.play( Assets.Sounds.SECRET );
+				}
+
+				SpellSprite.show( curUser, SpellSprite.MAP );
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+
+				identify();
+
+				readAnimation();
+
 			}
-		}
-		GameScene.updateFog();
-		
-		GLog.i( Messages.get(this, "layout") );
-		if (noticed) {
-			Sample.INSTANCE.play( Assets.Sounds.SECRET );
-		}
-		
-		SpellSprite.show( curUser, SpellSprite.MAP );
-		Sample.INSTANCE.play( Assets.Sounds.READ );
+		});
 
-		identify();
-
-		readAnimation();
 	}
 	
 	@Override

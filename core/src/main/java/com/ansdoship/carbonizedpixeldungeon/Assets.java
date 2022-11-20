@@ -115,13 +115,20 @@ public class Assets {
 	}
 
 	public static class Music {
-		public static final String THEME  	= "music/theme.ogg";
+
+		public static final String THEME     	= "music/theme.ogg";
 
 		public static final String SURFACE  	= "music/surface.ogg";
+
+		public static final String HERO_SELECT  = "music/hero_select.ogg";
+
+		public static final String INN          = "music/inn.png";
 
 		public static final String SEWERS_1     = "music/sewers_1.ogg";
 		public static final String SEWERS_2     = "music/sewers_2.ogg";
 		public static final String SEWERS_BOSS  = "music/sewers_boss.ogg";
+
+		public static final String SOKOBAN  	= "music/sokoban.ogg";
 
 
 		public static final String PRISON_1     = "music/prison_1.ogg";
@@ -143,7 +150,7 @@ public class Assets {
 		public static final String HALLS_2      = "music/halls_2.ogg";
 		public static final String HALLS_BOSS   = "music/halls_boss.ogg";
 
-		public static final String SOKOBAN  	= "music/sokoban.ogg";
+
 	}
 
 	public static class Sounds {
@@ -237,10 +244,10 @@ public class Assets {
 	}
 
 	public static class Splashes {
-		public static final String WARRIOR	= "splashes/warrior.jpg";
-		public static final String MAGE		= "splashes/mage.jpg";
-		public static final String ROGUE	= "splashes/rogue.jpg";
-		public static final String HUNTRESS	= "splashes/huntress.jpg";
+		//public static final String WARRIOR	= "splashes/warrior.jpg";
+		//public static final String MAGE		= "splashes/mage.jpg";
+		//public static final String ROGUE	= "splashes/rogue.jpg";
+		//public static final String HUNTRESS	= "splashes/huntress.jpg";
 		public static final String GDX = "splashes/gdx.png";
 		public static final String ANSDOSHIP = "splashes/ansdoship.png";
 	}

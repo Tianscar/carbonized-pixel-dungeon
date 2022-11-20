@@ -42,6 +42,7 @@ import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.ShaftParticle;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.Robe;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.glyphs.Brimstone;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
@@ -1103,12 +1104,12 @@ public class DriedRose extends Artifact {
 
 							@Override
 							public boolean itemSelectable(Item item) {
-								return item instanceof Armor;
+								return item instanceof Armor && !(item instanceof Robe);
 							}
 
 							@Override
 							public void onSelect(Item item) {
-								if (!(item instanceof Armor)) {
+								if (!(item instanceof Armor) || item instanceof Robe) {
 									//do nothing, should only happen when window is cancelled
 								} else if (item.unique || ((Armor) item).checkSeal() != null) {
 									GLog.w( Messages.get(WndGhostHero.class, "cant_unique"));

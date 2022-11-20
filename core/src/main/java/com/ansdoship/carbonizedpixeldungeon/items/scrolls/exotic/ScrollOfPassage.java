@@ -22,14 +22,21 @@
 package com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic;
 
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.plants.Swiftthistle;
+import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.scenes.InterlevelScene;
+import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
+import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
+
+import java.util.ArrayList;
 
 public class ScrollOfPassage extends ExoticScroll {
 
@@ -53,10 +60,51 @@ public class ScrollOfPassage extends ExoticScroll {
 		if (timeFreeze != null) timeFreeze.disarmPressedTraps();
 		Swiftthistle.TimeBubble timeBubble = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 		if (timeBubble != null) timeBubble.disarmPressedTraps();
+		final int depth = Math.max(1, (Dungeon.depth - 1 - (Dungeon.depth-2)%5));
+		if (curUser.subClass == HeroSubClass.LOREMASTER) {
+			ArrayList<Integer> depths = new ArrayList<>(5);
+			for (int i = depth; i <= Dungeon.depth; i ++) {
+				depths.add(i);
+			}
+			if (depths.size() == 1) returnDepth(depth);
+			else {
+				String[] depthTexts = new String[depths.size()];
+				for (int i = 0; i < depthTexts.length; i ++) {
+					depthTexts[i] = Messages.get(this, "floor", depths.get(i));
+				}
+				GameScene.show( new WndOptions(new ItemSprite(this),
+						Messages.titleCase(Messages.get(ScrollOfPassage.class, "name")),
+						Messages.get(ScrollOfPassage.class, "prompt"),
+						depthTexts) {
+					@Override
+					protected void onSelect(int index) {
+						doRecord(new Callback() {
+							@Override
+							public void call() {
 
+								if (index != -1) {
+									returnDepth(depths.get(index));
+								}
+
+							}
+						});
+					}
+					@Override
+					public void onBackPressed() {
+						if (!anonymous) curItem.collect();
+						super.onBackPressed();
+					}
+				});
+			}
+		}
+		else returnDepth(depth);
+	}
+
+	public static void returnDepth(int depth) {
 		InterlevelScene.mode = InterlevelScene.Mode.RETURN;
-		InterlevelScene.returnDepth = Math.max(1, (Dungeon.depth - 1 - (Dungeon.depth-2)%5));
+		InterlevelScene.returnDepth = depth;
 		InterlevelScene.returnPos = -1;
 		Game.switchScene( InterlevelScene.class );
 	}
+
 }

@@ -77,8 +77,8 @@ public class MirrorImage extends NPC {
 			}
 		}
 
-		if (hero.tier() != armTier){
-			armTier = hero.tier();
+		if (hero.armorTier() != armTier){
+			armTier = hero.armorTier();
 			((MirrorSprite)sprite).updateArmor( armTier );
 		}
 
@@ -162,8 +162,8 @@ public class MirrorImage extends NPC {
 		if (hero != null) {
 			if (hero.belongings.weapon() != null) dr += Random.NormalIntRange(0, hero.belongings.weapon().defenseFactor(this)/2);
 			if (hero.belongings.weapon2() != null) dr += Random.NormalIntRange(0, hero.belongings.weapon2().defenseFactor(this)/2);
-			if (hero.subClass == HeroSubClass.SHIELDGUARD){
-				dr += Random.NormalIntRange(0, hero.buff(DefensiveStance.class) == null ? 2 : 4+4*hero.pointsInTalent(Talent.ENHANCED_SHIELD));
+			if (hero.buff(DefensiveStance.class) != null){
+				dr += Random.NormalIntRange(0, 4+4*hero.pointsInTalent(Talent.ENHANCED_SHIELD));
 			}
 		}
 		return dr;
@@ -208,7 +208,7 @@ public class MirrorImage extends NPC {
 
 		hero = (Hero)Actor.findById(heroID);
 		if (hero != null) {
-			armTier = hero.tier();
+			armTier = hero.armorTier();
 		}
 		((MirrorSprite)s).updateArmor( armTier );
 		return s;

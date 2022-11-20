@@ -27,37 +27,49 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Barrier;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.FlavourBuff;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Talent;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.ElmoParticle;
+import com.ansdoship.carbonizedpixeldungeon.items.ArcaneResin;
 import com.ansdoship.carbonizedpixeldungeon.items.Item;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.Artifact;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.MagicalHolster;
+import com.ansdoship.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTransmutation;
+import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfCorrosion;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfCorruption;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfDisintegration;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfLivingEarth;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfRegrowth;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.*;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.ansdoship.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndBag;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndOptions;
 import com.ansdoship.carbonizedpixeldungeon.windows.WndUseItem;
+import com.ansdoship.pixeldungeonclasses.noosa.Image;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.Emitter;
 import com.ansdoship.pixeldungeonclasses.noosa.particles.PixelParticle;
 import com.ansdoship.pixeldungeonclasses.utils.Bundle;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
+import com.ansdoship.pixeldungeonclasses.utils.Reflection;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class MagesStaff extends MeleeWeapon {
 
@@ -72,6 +84,13 @@ public class MagesStaff extends MeleeWeapon {
 
 	private static final float STAFF_SCALE_FACTOR = 0.75f;
 
+	public ArrayList<Scroll> records = new ArrayList<>();
+	public static final String RECORDS  = "RECORDS";
+
+	public static final String AC_READ  = "READ";
+
+	public static final String AC_SPARK	= "SPARK";
+
 	{
 		image = ItemSpriteSheet.MAGES_STAFF;
 		hitSound = Assets.Sounds.HIT;
@@ -85,6 +104,8 @@ public class MagesStaff extends MeleeWeapon {
 
 		unique = true;
 		bones = false;
+
+		RCH = 2;
 	}
 
 	public MagesStaff() {
@@ -97,7 +118,7 @@ public class MagesStaff extends MeleeWeapon {
 				lvl*(tier+1);               //scaling unaffected
 	}
 
-	public MagesStaff(Wand wand){
+	public MagesStaff(Wand wand) {
 		this();
 		wand.identify();
 		wand.cursed = false;
@@ -113,12 +134,19 @@ public class MagesStaff extends MeleeWeapon {
 		if (wand!= null && wand.curCharges > 0) {
 			actions.add( AC_ZAP );
 		}
+		if (wand instanceof SparkWand) {
+			actions.add( AC_SPARK );
+		}
+		if (records.size() > 0 && hero.buff(ReadRecordCooldown.class) == null) {
+			actions.add( AC_READ );
+		}
 		return actions;
 	}
 
 	@Override
 	public void activate( Char ch ) {
 		applyWandChargeBuff(ch);
+		if (ch instanceof Hero) updateWand((Hero) ch, false);
 	}
 
 	@Override
@@ -131,7 +159,7 @@ public class MagesStaff extends MeleeWeapon {
 			curUser = hero;
 			GameScene.selectItem(itemSelector);
 
-		} else if (action.equals(AC_ZAP)){
+		} else if (action.equals(AC_ZAP)) {
 
 			if (wand == null) {
 				GameScene.show(new WndUseItem(null, this));
@@ -140,7 +168,63 @@ public class MagesStaff extends MeleeWeapon {
 
 			if (cursed || hasCurseEnchant()) wand.cursed = true;
 			else                             wand.cursed = false;
+			if (hero.hasTalent(Talent.FORBIDDEN_KNOWLEDGE)) wand.cursed = false;
 			wand.execute(hero, AC_ZAP);
+		} else if (action.equals(AC_SPARK)) {
+
+			if (wand == null) {
+				GameScene.show(new WndUseItem(null, this));
+				return;
+			}
+
+			if (cursed || hasCurseEnchant()) wand.cursed = true;
+			else                             wand.cursed = false;
+			if (hero.hasTalent(Talent.FORBIDDEN_KNOWLEDGE)) wand.cursed = false;
+			wand.execute(hero, AC_SPARK);
+		} else if (action.equals(AC_READ)) {
+
+			if (wand == null) {
+				GameScene.show(new WndUseItem(null, this));
+				return;
+			}
+
+			if (records.size() == 1) readRecord( hero, 0 );
+			else {
+				String[] scrollNames = new String[records.size()];
+				for (int i = 0; i < records.size(); i ++) {
+					scrollNames[i] = records.get(i).trueName();
+				}
+				ItemSprite sprite = new ItemSprite();
+				GameScene.show(new WndOptions( sprite,
+						Messages.titleCase(Messages.get(this, "recorded_scrolls")),
+						Messages.get(this, "prompt_record"), scrollNames) {
+					{
+						sprite.view(MagesStaff.this);
+					}
+					@Override
+					protected void onSelect(int index) {
+						readRecord( hero, index );
+					}
+				});
+			}
+		}
+	}
+
+	private void readRecord( Hero hero, int index ) {
+		Scroll scroll = records.get(index);
+		int charges = 1;
+		if (scroll instanceof ExoticScroll) charges ++;
+		if (MagesStaff.this.wand.curCharges < charges) {
+			GLog.w(Messages.get(Wand.class, "fizzles"));
+		}
+		else {
+			MagesStaff.this.wand.curCharges -= charges;
+			records.remove(scroll);
+			scroll.anonymize();
+			curItem = scroll;
+			curUser = hero;
+			scroll.doRead();
+			Buff.affect(curUser, ReadRecordCooldown.class, ReadRecordCooldown.DURATION);
 		}
 	}
 
@@ -155,13 +239,30 @@ public class MagesStaff extends MeleeWeapon {
 
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
+		if (attacker instanceof Hero && ((Hero) attacker).hasTalent(Talent.KNOWLEDGE_IS_POWER) && records.size() > 0) {
+			damage += Math.floor(records.size() * (2 + ((Hero) attacker).pointsInTalent(Talent.KNOWLEDGE_IS_POWER)));
+		}
 		if (attacker.buff(Talent.EmpoweredStrikeTracker.class) != null){
 			attacker.buff(Talent.EmpoweredStrikeTracker.class).detach();
-			damage = Math.round( damage * (1f + Dungeon.hero.pointsInTalent(Talent.EMPOWERED_STRIKE)/4f));
+			damage = Math.round( damage * (1f + Dungeon.hero.pointsInTalent(Talent.EMPOWERED_STRIKE)/3f));
 		}
 
-		if (wand.curCharges >= wand.maxCharges && attacker instanceof Hero && Random.Int(5) < ((Hero) attacker).pointsInTalent(Talent.EXCESS_CHARGE)){
-			Buff.affect(attacker, Barrier.class).setShield(buffedLvl()*2);
+		if (wand.curCharges >= wand.maxCharges && attacker instanceof Hero) {
+			int shield = (int) Math.floor(buffedLvl()*((Hero) attacker).pointsInTalent(Talent.EXCESS_CHARGE)*0.5f);
+			Barrier barrier = attacker.buff(Barrier.class);
+			if (shield > 0) {
+				if (barrier == null) Buff.affect(attacker, Barrier.class).setShield(shield);
+				else {
+					int max = buffedLvl() * 2;
+					if (barrier.shielding() >= max) {
+						Buff.affect(attacker, Barrier.class).setShield(shield);
+					}
+					else {
+						if (barrier.shielding() + shield > max) shield = max - barrier.shielding();
+						Buff.affect(attacker, Barrier.class).incShield(shield);
+					}
+				}
+			}
 		}
 
 		if (attacker instanceof Hero && ((Hero) attacker).hasTalent(Talent.MYSTICAL_CHARGE)){
@@ -184,7 +285,7 @@ public class MagesStaff extends MeleeWeapon {
 	public int reachFactor(Char owner) {
 		int reach = super.reachFactor(owner);
 		if (owner instanceof Hero
-				&& wand instanceof WandOfDisintegration
+				&& (wand instanceof WandOfDisintegration || wand instanceof SparkWandOfDisintegration)
 				&& ((Hero)owner).subClass == HeroSubClass.BATTLEMAGE){
 			reach++;
 		}
@@ -196,6 +297,7 @@ public class MagesStaff extends MeleeWeapon {
 		if (super.collect(container)) {
 			if (container.owner != null) {
 				applyWandChargeBuff(container.owner);
+				if (container.owner instanceof Hero) updateWand((Hero) container.owner, false);
 			}
 			return true;
 		} else {
@@ -208,20 +310,42 @@ public class MagesStaff extends MeleeWeapon {
 		if (wand != null) wand.stopCharging();
 	}
 
-	public Item imbueWand(Wand wand, Char owner){
+	public Item imbueWand( Wand wand, Char owner ) {
+		return imbueWand(wand, owner, true);
+	}
+
+	public Item imbueWand( Wand wand, Char owner, boolean preserve ) {
 
 		int oldStaffcharges = this.wand.curCharges;
 
-		if (owner == Dungeon.hero && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)
-				&& Random.Float() < 0.34f + 0.33f*Dungeon.hero.pointsInTalent(Talent.WAND_PRESERVATION)){
+		if (preserve && owner == Dungeon.hero && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)) {
 
 			Talent.WandPreservationCounter counter = Buff.affect(Dungeon.hero, Talent.WandPreservationCounter.class);
 			if (counter.count() < 3) {
 				counter.countUp(1);
+				if (Dungeon.hero.pointsInTalent(Talent.WAND_PRESERVATION) == 2) {
+					int curLvl = this.wand.level();
+					int wandLvl = wand.level();
+					final int lostLvl;
+					if (wandLvl >= curLvl) {
+						lostLvl = curLvl - 1;
+					}
+					else {
+						lostLvl = wandLvl;
+					}
+					final int resins = lostLvl * 2 - 1;
+					if (resins > 0) {
+						Item item = new ArcaneResin().quantity(resins);
+						if (!item.collect()) {
+							Dungeon.level.drop(item, owner.pos);
+						}
+					}
+				}
 				this.wand.level(0);
 				if (!this.wand.collect()) {
 					Dungeon.level.drop(this.wand, owner.pos);
 				}
+
 				GLog.newLine();
 				GLog.p(Messages.get(this, "preserved"));
 			}
@@ -240,6 +364,10 @@ public class MagesStaff extends MeleeWeapon {
 		
 		level(targetLevel);
 		this.wand = wand;
+		if (wand instanceof SparkWand) {
+			image = ItemSpriteSheet.MASTERS_SPARKWAND;
+		}
+		else image = ItemSpriteSheet.MAGES_STAFF;
 		updateWand(false);
 		wand.curCharges = Math.min(wand.maxCharges, wand.curCharges+oldStaffcharges);
 		if (owner != null) wand.charge(owner);
@@ -269,7 +397,7 @@ public class MagesStaff extends MeleeWeapon {
 		}
 	}
 
-	public void applyWandChargeBuff(Char owner){
+	public void applyWandChargeBuff(Char owner) {
 		if (wand != null){
 			wand.charge(owner, STAFF_SCALE_FACTOR);
 		}
@@ -296,13 +424,20 @@ public class MagesStaff extends MeleeWeapon {
 
 		return this;
 	}
+
+	public final void updateWand( boolean levelled ) {
+		updateWand(Dungeon.hero, levelled);
+	}
 	
-	public void updateWand(boolean levelled){
+	public void updateWand( Hero hero, boolean levelled ) {
 		if (wand != null) {
 			int curCharges = wand.curCharges;
 			wand.level(level());
 			//gives the wand one additional max charge
 			wand.maxCharges = Math.min(wand.maxCharges + 1, 10);
+			if ((cursed || hasCurseEnchant()) && hero.hasTalent(Talent.FORBIDDEN_KNOWLEDGE)) {
+				wand.maxCharges += 2 * hero.pointsInTalent(Talent.FORBIDDEN_KNOWLEDGE);
+			}
 			wand.curCharges = Math.min(curCharges + (levelled ? 1 : 0), wand.maxCharges);
 			updateQuickslot();
 		}
@@ -328,7 +463,7 @@ public class MagesStaff extends MeleeWeapon {
 	public String info() {
 		String info = super.info();
 
-		if (wand != null){
+		if (wand != null) {
 			info += "\n\n" + Messages.get(this, "has_wand", Messages.get(wand, "name"));
 			info += wand.info();
 			/*
@@ -340,6 +475,14 @@ public class MagesStaff extends MeleeWeapon {
 			}
 			 */
 		}
+		if (!records.isEmpty()) {
+			String recordsText = "";
+			for (Scroll record : records) {
+				recordsText += "_" + record.name() + "_, ";
+			}
+			recordsText = recordsText.substring(0, recordsText.length() - 2);
+			info += "\n\n" + Messages.get( this, "records", Messages.replaceComma( recordsText ));
+		}
 
 		return info;
 	}
@@ -348,7 +491,7 @@ public class MagesStaff extends MeleeWeapon {
 	public Emitter emitter() {
 		if (wand == null) return null;
 		Emitter emitter = new Emitter();
-		emitter.pos(12.5f, 3);
+		emitter.pos(14, 1);
 		emitter.fillTarget = false;
 		emitter.pour(StaffParticleFactory, 0.1f);
 		return emitter;
@@ -360,6 +503,7 @@ public class MagesStaff extends MeleeWeapon {
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(WAND, wand);
+		bundle.put(RECORDS, records);
 	}
 
 	@Override
@@ -368,6 +512,48 @@ public class MagesStaff extends MeleeWeapon {
 		wand = (Wand) bundle.get(WAND);
 		if (wand != null) {
 			wand.maxCharges = Math.min(wand.maxCharges + 1, 10);
+			if (wand instanceof SparkWand) image = ItemSpriteSheet.MASTERS_SPARKWAND;
+		}
+		records = new ArrayList<>((Collection<Scroll>) ((Collection<?>) bundle.getCollection(RECORDS)));
+	}
+
+	public void record(Scroll scroll, Callback afterRecord) {
+		if (Dungeon.hero.subClass != HeroSubClass.LOREMASTER ||
+				scroll instanceof ScrollOfUpgrade || scroll instanceof ScrollOfTransmutation) {
+			if (afterRecord != null) afterRecord.call();
+			return;
+		}
+		int max = 1 + Dungeon.hero.pointsInTalent(Talent.MAGIC_TRACE);
+		if (records.size() == max) {
+			String[] texts = new String[records.size() + 1];
+			for (int i = 0; i < records.size(); i ++) {
+				texts[i] = records.get(i).trueName();
+			}
+			texts[texts.length-1] = Messages.get(MagesStaff.class, "cancel");
+			GameScene.show(new WndOptions(new ItemSprite(scroll),
+					Messages.titleCase(scroll.trueName()),
+					Messages.get(MagesStaff.class, "override_record"),
+					texts) {
+				@Override
+				protected void onSelect(int index) {
+					if (index < records.size()) {
+						GLog.newLine();
+						GLog.w( Messages.get(MagesStaff.class, "lost_record", Messages.titleCase(records.remove(index).trueName())) );
+						records.add(Reflection.newInstance(scroll.getClass()));
+						GLog.i( Messages.get(MagesStaff.class, "record", Messages.titleCase(scroll.trueName())) );
+					}
+					if (afterRecord != null) afterRecord.call();
+				}
+				@Override
+				public void onBackPressed() {
+				}
+			});
+		}
+		else {
+			records.add(Reflection.newInstance(scroll.getClass()));
+			GLog.newLine();
+			GLog.i( Messages.get(this, "record", Messages.titleCase(scroll.trueName())) );
+			if (afterRecord != null) afterRecord.call();
 		}
 	}
 
@@ -433,8 +619,7 @@ public class MagesStaff extends MeleeWeapon {
 						preservesLeft -= Dungeon.hero.buff(Talent.WandPreservationCounter.class).count();
 					}
 					if (preservesLeft > 0){
-						int preserveChance = Dungeon.hero.pointsInTalent(Talent.WAND_PRESERVATION) == 1 ? 67 : 100;
-						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_talent", preserveChance, preservesLeft);
+						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_talent", preservesLeft);
 					} else {
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_lost");
 					}
@@ -492,7 +677,12 @@ public class MagesStaff extends MeleeWeapon {
 					|| (wand instanceof WandOfCorruption)
 					|| (wand instanceof WandOfCorrosion)
 					|| (wand instanceof WandOfRegrowth)
-					|| (wand instanceof WandOfLivingEarth));
+					|| (wand instanceof WandOfLivingEarth)
+			        || (wand instanceof SparkWandOfDisintegration)
+					|| (wand instanceof SparkWandOfCorruption)
+					|| (wand instanceof SparkWandOfCorrosion)
+					|| (wand instanceof SparkWandOfRegrowth)
+					|| (wand instanceof SparkWandOfLivingEarth));
 		}
 	};
 
@@ -546,4 +736,27 @@ public class MagesStaff extends MeleeWeapon {
 			size(minSize + (left / lifespan)*(maxSize-minSize) + Random.Float(sizeJitter));
 		}
 	}
+
+	public static class ReadRecordCooldown extends FlavourBuff {
+
+		public static final float DURATION = 10f;
+		public int icon() { return BuffIndicator.TIME; }
+		public void tintIcon(Image icon) { icon.hardlight(0.5f,0.5f,1); }
+		public float iconFadePercent() { return Math.max(0, visualcooldown() / DURATION); }
+		public String toString() { return Messages.get(this, "name"); }
+		public String desc() { return Messages.get(this, "desc", dispTurns(visualcooldown())); }
+	};
+
+	public void wandToSpark() {
+		if (wand != null && !(wand instanceof SparkWand)) {
+			imbueWand(wand.wandToSpark(), curUser, false);
+		}
+	}
+
+	public void sparkToWand() {
+		if (wand != null && wand instanceof SparkWand) {
+			imbueWand(wand.sparkToWand(), curUser, false);
+		}
+	}
+
 }

@@ -106,7 +106,7 @@ public class Ankh extends Item {
 		blessed = true;
 	}
 
-	private static final Glowing WHITE = new Glowing( 0xFFFFCC );
+	private static final Glowing WHITE = new Glowing( 0xFFFFFF );
 
 	@Override
 	public Glowing glowing() {

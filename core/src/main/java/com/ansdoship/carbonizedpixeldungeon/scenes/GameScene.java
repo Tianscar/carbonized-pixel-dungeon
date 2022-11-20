@@ -113,6 +113,14 @@ public class GameScene extends PixelScene {
 	private CircleArc counter;
 	
 	private static CellSelector cellSelector;
+
+	public static float zoom(float value) {
+		return cellSelector.zoom(value);
+	}
+
+	public static float zoom() {
+		return cellSelector.zoom();
+	}
 	
 	private Group terrain;
 	private Group customTiles;

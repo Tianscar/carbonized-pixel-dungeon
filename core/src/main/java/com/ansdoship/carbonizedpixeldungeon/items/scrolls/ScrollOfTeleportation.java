@@ -25,9 +25,13 @@ import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Invisibility;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.Speck;
+import com.ansdoship.carbonizedpixeldungeon.items.potions.PotionOfInvisibility;
 import com.ansdoship.carbonizedpixeldungeon.levels.RegularLevel;
 import com.ansdoship.carbonizedpixeldungeon.levels.Terrain;
 import com.ansdoship.carbonizedpixeldungeon.levels.rooms.Room;
@@ -40,6 +44,7 @@ import com.ansdoship.carbonizedpixeldungeon.utils.BArray;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
 import com.ansdoship.pixeldungeonclasses.noosa.tweeners.AlphaTweener;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.PathFinder;
 import com.ansdoship.pixeldungeonclasses.utils.Point;
 import com.ansdoship.pixeldungeonclasses.utils.Random;
@@ -55,13 +60,31 @@ public class ScrollOfTeleportation extends Scroll {
 	@Override
 	public void doRead() {
 
-		Sample.INSTANCE.play( Assets.Sounds.READ );
+		doRecord(new Callback() {
+			@Override
+			public void call() {
 
-		if (teleportPreferringUnseen( curUser )){
-			readAnimation();
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+
+				if (teleportPreferringUnseen( curUser )){
+					readAnimation();
+				}
+				identify();
+
+			}
+		});
+
+	}
+
+	@Override
+	protected void readAnimation() {
+		super.readAnimation();
+
+		if (curUser.subClass == HeroSubClass.LOREMASTER) {
+			Buff.affect( curUser, Invisibility.class, Invisibility.DURATION / 2 );
+			GLog.i( Messages.get(PotionOfInvisibility.class, "invisible") );
+			Sample.INSTANCE.playDelayed( Assets.Sounds.MELD, 0.1f );
 		}
-		identify();
-
 	}
 
 	public static boolean teleportToLocation(Char ch, int pos){

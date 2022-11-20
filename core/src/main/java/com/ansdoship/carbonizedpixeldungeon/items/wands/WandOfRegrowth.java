@@ -397,7 +397,7 @@ public class WandOfRegrowth extends Wand {
 
 		private int wandLvl = 0;
 
-		private void setLevel( int lvl ){
+		public void setLevel(int lvl){
 			wandLvl = lvl;
 			HP = HT = 25 + 3*lvl;
 		}

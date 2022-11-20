@@ -45,6 +45,13 @@ public class PotionOfPotentialBurst extends ExoticPotion {
 	@Override
 	public void apply(Hero hero) {
 		identify();
+		int[] points = new int[] { 0, 0, 0, 0, 0, 0, START_POINTS };
+		randomAddPoints( hero, points, new boolean[] { false, false, false, false, false, false } );
+		PotionOfPotential.addPoints( hero, points, null, null );
+		Buff.affect(hero, AdrenalineSurge.class).reset(2, 800f);
+	}
+
+	public static void randomAddPoints( Hero hero, int[] points, boolean[] block ) {
 		int[] STRpts = new int[] { 0 };
 		int[] CONpts = new int[] { 0 };
 		int[] DEXpts = new int[] { 0 };
@@ -52,23 +59,27 @@ public class PotionOfPotentialBurst extends ExoticPotion {
 		int[] WISpts = new int[] { 0 };
 		int[] CHApts = new int[] { 0 };
 		List<int[]> ALLpts = new ArrayList<>(6);
-		ALLpts.add(STRpts);
-		ALLpts.add(CONpts);
-		ALLpts.add(DEXpts);
-		ALLpts.add(INTpts);
-		ALLpts.add(WISpts);
-		ALLpts.add(CHApts);
-		int points = START_POINTS;
-		if (hero.heroClass == HeroClass.MAGE) {
+		if (!block[0]) ALLpts.add(STRpts);
+		if (!block[1]) ALLpts.add(CONpts);
+		if (!block[2]) ALLpts.add(DEXpts);
+		if (!block[3]) ALLpts.add(INTpts);
+		if (!block[4]) ALLpts.add(WISpts);
+		if (!block[5]) ALLpts.add(CHApts);
+		int npoints = points[6];
+		if (!block[3] && hero.heroClass == HeroClass.MAGE) {
 			INTpts[0] ++;
 			ALLpts.remove(INTpts);
-			points --;
+			npoints --;
 		}
-		for (int i = 0; i < points; i ++) {
+		for (int i = 0; i < npoints; i ++) {
 			ALLpts.remove(Random.Int(ALLpts.size()))[0] ++;
 		}
-		PotionOfPotential.addPoints( hero, new int[] { STRpts[0], CONpts[0], DEXpts[0], INTpts[0], WISpts[0], CHApts[0] }, null, null );
-		Buff.affect(hero, AdrenalineSurge.class).reset(2, 800f);
+		points[0] += STRpts[0];
+		points[1] += CONpts[0];
+		points[2] += DEXpts[0];
+		points[3] += INTpts[0];
+		points[4] += WISpts[0];
+		points[5] += CHApts[0];
 	}
 	
 }

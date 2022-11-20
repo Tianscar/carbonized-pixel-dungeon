@@ -37,7 +37,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.hero.abilities.huntress.Spiri
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Bestiary;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.YogFist;
-import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.Sheep;
+import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.MagicSheep;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.FlowParticle;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.WindParticle;
 import com.ansdoship.carbonizedpixeldungeon.items.Generator;
@@ -967,7 +967,7 @@ public abstract class Level implements Bundlable {
 			}
 			
 			//characters which are not the hero or a sheep 'soft' press cells
-			pressCell( ch.pos, ch instanceof Hero || ch instanceof Sheep);
+			pressCell( ch.pos, ch instanceof Hero || ch instanceof MagicSheep);
 		} else {
 			if (map[ch.pos] == Terrain.DOOR){
 				Door.enter( ch.pos );

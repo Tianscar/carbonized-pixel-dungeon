@@ -167,14 +167,27 @@ public class HornOfPlenty extends Artifact {
 				}
 
 				int oldImage = image;
-				if (charge >= 15)       image = ItemSpriteSheet.ARTIFACT_HORN4;
-				else if (charge >= 10)  image = ItemSpriteSheet.ARTIFACT_HORN3;
-				else if (charge >= 5)   image = ItemSpriteSheet.ARTIFACT_HORN2;
+				if (charge >= 8)        image = ItemSpriteSheet.ARTIFACT_HORN4;
+				else if (charge >= 5)   image = ItemSpriteSheet.ARTIFACT_HORN3;
+				else if (charge >= 2)   image = ItemSpriteSheet.ARTIFACT_HORN2;
 				else                    image = ItemSpriteSheet.ARTIFACT_HORN1;
 
 				updateQuickslot();
 			}
 		}
+	}
+
+	@Override
+	public void charge(int charge) {
+		super.charge(charge);
+		charge = this.charge;
+
+		if (charge >= 8)        image = ItemSpriteSheet.ARTIFACT_HORN4;
+		else if (charge >= 5)   image = ItemSpriteSheet.ARTIFACT_HORN3;
+		else if (charge >= 2)   image = ItemSpriteSheet.ARTIFACT_HORN2;
+		else                    image = ItemSpriteSheet.ARTIFACT_HORN1;
+
+		updateQuickslot();
 	}
 
 	@Override

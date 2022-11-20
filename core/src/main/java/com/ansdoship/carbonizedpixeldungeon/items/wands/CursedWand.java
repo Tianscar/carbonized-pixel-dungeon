@@ -40,7 +40,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Recharging;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.GoldenMimic;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mimic;
-import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.Sheep;
+import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.MagicSheep;
 import com.ansdoship.carbonizedpixeldungeon.effects.CellEmitter;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
 import com.ansdoship.carbonizedpixeldungeon.effects.MagicMissile;
@@ -264,7 +264,7 @@ public class CursedWand {
 				if (ch != null && !(ch instanceof Hero)
 						&& !ch.properties().contains(Char.Property.BOSS)
 						&& !ch.properties().contains(Char.Property.MINIBOSS)){
-					Sheep sheep = new Sheep();
+					MagicSheep sheep = new MagicSheep();
 					sheep.lifespan = 10;
 					sheep.pos = ch.pos;
 					ch.destroy();
@@ -363,7 +363,7 @@ public class CursedWand {
 				mimic.alignment = Char.Alignment.ENEMY;
 				Item reward;
 				do {
-					reward = Generator.random(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,
+					reward = Generator.random(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR_ALL,
 							Generator.Category.RING, Generator.Category.WAND));
 				} while (reward.level() < 1);
 				//play vfx/sfx manually as mimic isn't in the scene yet
@@ -419,7 +419,7 @@ public class CursedWand {
 				origin.detach(Dungeon.hero.belongings.backpack);
 				Item result;
 				do {
-					result = Generator.random(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,
+					result = Generator.random(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR_ALL,
 							Generator.Category.RING, Generator.Category.ARTIFACT));
 				} while (result.cursed);
 				if (result.isUpgradable()) result.upgrade();

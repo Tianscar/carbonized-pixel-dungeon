@@ -54,7 +54,7 @@ public class ItemSprite extends MovieClip {
 	public Heap heap;
 	
 	private Glowing glowing;
-	//FIXME: a lot of this emitter functionality isn't very well implemented.
+	//FIXME a lot of this emitter functionality isn't very well implemented.
 	//right now I want to ship 0.3.0, but should refactor in the future.
 	protected Emitter emitter;
 	private float phase;

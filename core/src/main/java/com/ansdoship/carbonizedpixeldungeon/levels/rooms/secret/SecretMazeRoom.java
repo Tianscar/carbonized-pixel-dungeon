@@ -99,7 +99,7 @@ public class SecretMazeRoom extends SecretRoom {
 			if (Random.Int(2) == 0) {
 				prize = Generator.randomWeapon((Dungeon.depth / 5) + 1);
 			} else {
-				prize = Generator.randomArmor((Dungeon.depth / 5) + 1);
+				prize = Generator.randomArmorAll((Dungeon.depth / 5) + 1);
 			}
 		} while (prize.cursed || Challenges.isItemBlocked(prize));
 		prize.cursedKnown = true;

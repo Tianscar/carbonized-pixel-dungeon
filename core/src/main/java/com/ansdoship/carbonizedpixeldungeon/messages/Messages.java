@@ -198,4 +198,10 @@ public class Messages {
 		//Otherwise, use sentence case
 		return capitalize(str);
 	}
+
+	public static String replaceComma( String str ) {
+		if (PDSettings.chinese()) str = str.replaceAll(", ", "、");
+		return str;
+	}
+
 }

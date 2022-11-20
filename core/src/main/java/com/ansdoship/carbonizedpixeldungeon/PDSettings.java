@@ -273,6 +273,11 @@ public class PDSettings extends GameSettings {
 			return Languages.matchCode(code);
 		}
 	}
+
+	public static boolean chinese() {
+		Languages languages = language();
+		return languages == Languages.CHINESE || languages == Languages.TR_CHINESE;
+	}
 	
 	public static void systemFont(boolean value){
 		put(KEY_SYSTEMFONT, value);

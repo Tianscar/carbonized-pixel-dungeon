@@ -73,11 +73,11 @@ public class RingOfElements extends Ring {
 		RESISTS.addAll( AntiMagic.RESISTS );
 	}
 	
-	public static float resist( Char target, Class effect ){
+	public static float resist( Char target, Class effect ) {
 		if (getBuffedBonus(target, Resistance.class) == 0) return 1f;
 		
-		for (Class c : RESISTS){
-			if (c.isAssignableFrom(effect)){
+		for (Class c : RESISTS) {
+			if (c.isAssignableFrom(effect)) {
 				return (float)Math.pow(0.825, getBuffedBonus(target, Resistance.class));
 			}
 		}

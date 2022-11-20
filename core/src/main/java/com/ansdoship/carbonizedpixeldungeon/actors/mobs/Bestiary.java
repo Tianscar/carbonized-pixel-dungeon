@@ -42,28 +42,38 @@ public class Bestiary {
 			
 			// Sewers
 			case 1: default:
-				//3x rat, 1x snake
+				//2x rat, 1x young rat, 1x old rat, 1x brown rat, 1x snake
 				return new ArrayList<>(Arrays.asList(
-						Rat.class, Rat.class, Rat.class,
+						Rat.class, Rat.class,
+						YoungRat.class,
+						OldRat.class,
+						BrownRat.class,
 						Snake.class));
 			case 2:
-				//2x rat, 1x snake, 2x gnoll
-				return new ArrayList<>(Arrays.asList(Rat.class, Rat.class,
+				//2x rat, 1x young rat, 1x old rat, 1x brown rat, 1x snake, 4x gnoll
+				return new ArrayList<>(Arrays.asList(
+						Rat.class, Rat.class,
+						YoungRat.class,
+						OldRat.class,
+						BrownRat.class,
 						Snake.class,
-						Gnoll.class, Gnoll.class));
+						Gnoll.class, Gnoll.class, Gnoll.class, Gnoll.class));
 			case 3:
-				//1x rat, 1x snake, 3x gnoll, 1x swarm, 1x crab
-				return new ArrayList<>(Arrays.asList(Rat.class,
+				//1x brown rat, 1x snake, 3x gnoll, 1x swarm, 1x crab
+				return new ArrayList<>(Arrays.asList(
+						BrownRat.class,
 						Snake.class,
 						Gnoll.class, Gnoll.class, Gnoll.class,
 						Swarm.class,
 						Crab.class));
 			case 4: case 5:
-				//1x gnoll, 1x swarm, 2x crab, 2x slime
-				return new ArrayList<>(Arrays.asList(Gnoll.class,
+				//1x brown rat, 2x gnoll, 1x swarm, 2x crab, 1x slime
+				return new ArrayList<>(Arrays.asList(
+						BrownRat.class,
+						Gnoll.class,
 						Swarm.class,
 						Crab.class, Crab.class,
-						Slime.class, Slime.class));
+						Slime.class));
 				
 			// Prison
 			case 6:
@@ -214,8 +224,8 @@ public class Bestiary {
 		for (int i = 0; i < rotation.size(); i++){
 			if (Random.Int( 50 ) == 0) {
 				Class<? extends Mob> cl = rotation.get(i);
-				if (cl == Rat.class) {
-					cl = Albino.class;
+				if (cl == Rat.class || cl == YoungRat.class || cl == OldRat.class || cl == BrownRat.class) {
+					cl = AlbinoRat.class;
 				} else if (cl == Slime.class) {
 					cl = CausticSlime.class;
 				} else if (cl == Thief.class) {

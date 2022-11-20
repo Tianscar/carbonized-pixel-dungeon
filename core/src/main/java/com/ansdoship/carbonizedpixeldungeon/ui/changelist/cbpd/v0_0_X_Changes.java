@@ -49,6 +49,7 @@ public class v0_0_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		add_v0_0_8p5_changes(changeInfos);
 		add_v0_0_8p4_changes(changeInfos);
 		add_v0_0_8p3_changes(changeInfos);
 		add_v0_0_8p2_changes(changeInfos);
@@ -82,13 +83,81 @@ public class v0_0_X_Changes {
 		add_v0_0_1_Changes(changeInfos);
 	}
 
-	public static void add_v0_0_8p4_changes( ArrayList<ChangeInfo> changeInfos ) {
-		ChangeInfo changes = new ChangeInfo("v0.0.8p3", false, "");
+	public static void add_v0_0_8p5_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.8p5", false, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
-				"更新了部分贴图（特别鸣谢_@大西洋秘制水煮H39_）"));
+				"_-_ 更新了部分贴图（特别鸣谢_大西洋秘制水煮H39_）\n" +
+						"_-_ 完全重做了英雄选择界面\n" +
+						"_-_ 更改了主界面的背景图（来自混合的像素地牢）\n" +
+						"_-_ 游戏内菜单的缩放调节按钮回归"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ELIXIR_MIGHT), "六属性改动",
+				"_削弱：_\n" +
+						"\n" +
+						"_-_ 降低了体质对生命上限的加成。\n" +
+						"_-_ 降低了敏捷对闪避率的加成。"));
+
+		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.ARMOR_FEATHER), "护甲体系重做！",
+				"_添加了8种护甲！现在护甲分为轻甲、重甲、通用甲和法袍了！_\n\n" +
+						"_- 重甲_拥有更高的护甲值成长和一定的法术/元素抗性，但是需要更多的力量点数来使用，并且因为多为金属制（金属护甲会影响施法）一般不能与法术流兼容。\n" +
+						"_- 轻甲_除力量需求外还有敏捷需求，但相对而言比较平均，护甲值成长与通用甲相当。\n" +
+						"_- 通用甲_只有力量需求，适合任何流派使用（就算是力量点数极少的法师通过一些小技巧也是能穿上皮甲的哦～）\n" +
+						"_- 法袍_几乎没有力量需求，取而代之的是智力需求，二阶以上的法袍护甲值成长比通用甲更低，但较强的法术/元素抗性弥补了这点。\n" +
+						"_- 装备金属护甲_现在会导致法杖的魔法混乱而随机" +
+						"\n\n" +
+						"通用甲：_布甲（1阶）_、_皮甲（2阶）_\n" +
+						"轻甲：_藤甲（3阶）_、_羽翎甲（4阶）_、_秘银甲（5阶）_\n" +
+						"重甲：_链甲（3阶）_、_鳞甲（4阶）_、_板甲（5阶）_\n" +
+						"法袍：_纯白法袍（1阶）_、_墨绿法袍（2阶）_、_黑白法袍（3阶）_、_深蓝法袍（4阶）_、_紫罗兰法袍（5阶）_\n" +
+						"金属护甲：_链甲_、_鳞甲_、_板甲_、_秘银甲_，其他为非金属护甲"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CROWN), "暂时移除英雄护甲",
+				"因为护甲体系重做，原有的英雄护甲出现了恶性bug，现决定暂时移除它们，预计v0.0.9版本修复。"));
+
+		changes.addButton( new ChangeButton( new Image(Assets.Sprites.MAGE, 0, 90, 12, 15), HeroClass.MAGE.title(),
+				"_法师重做！_\n\n" +
+						"战斗法师能使用奥术聚酯将法杖改造为魔炮，用奥术刻笔将魔炮改造为进阶魔炮！\n" +
+						"魔炮的最大充能数更多；进阶魔炮的火控系统更为优秀，可以消耗更多的充能释放威力更强的法术。\n\n" +
+						"_加入了新职业：博学士，作为术士的替代品！_\n\n" +
+						"博学士的老魔杖会自动记录他上一次释放的卷轴，最多记录1张，记录满后可以选择是否覆盖现有记录。无序魔典释放的卷轴无法被记录。\n" +
+						"博学士每10回合可以释放一次记录，卷轴消耗1充能，秘卷消耗2充能。\n" +
+						"博学士在阅读卷轴和秘卷时会获得额外效果取代原本效果，使得所有卷轴和秘卷对其完全无害。\n\n" +
+						"_还有更多细节改动不在此赘述，请在实际游玩过程中体验！_"));
+
+		changes.addButton( new ChangeButton( new Image(Assets.Sprites.WARRIOR, 0, 90, 12, 15), HeroClass.WARRIOR.title(),
+				"_削弱：_\n\n" +
+						"_- 丰盛一餐_的额外生命值回复从_5点/8点_降低为_3点/5点_。\n" +
+						"\n" +
+						"_-_ 盾卫必须要进入防御姿态才有额外格挡量了。\n" +
+						"_-_ 盾卫在防御姿态下_近战攻击力降低50%_。\n" +
+						"_-_ 盾卫在防御姿态下的加成从防御力和格挡量的_10%/20%/30%/40%_降低为_5%/10%/15%/20%_。" +
+						"\n\n" +
+						"_增强：_\n\n" +
+						"_- 刻印转移+2_可以携带护甲原有的刻印了。\n" +
+						"\n" +
+						"_-_ 角斗士现在随连击数增长会获得攻速加成了。"));
+
+		changes.addButton( new ChangeButton(new Image(Assets.Sprites.RAT, 0, 75, 16, 15), "老鼠、老鼠、老鼠、老鼠和佬鼠！",
+				"_三种新老鼠的贴图来自过度生长的像素地牢_\n\n" +
+						"添加了三种老鼠：\n" +
+						"_- 壮年老鼠_的体能更强，反应力也更快。\n" +
+						"_- 老年老鼠_的体能较弱，但丰富的战斗经验弥补了这一点。\n" +
+						"_- 棕色老鼠_是一种常见的啮齿小鼠品种，攻击伤害更低，但和白化老鼠一样，会造成流血效果。\n" +
+						"\n" +
+						"其他改动：\n" +
+						"_- 大佬鼠_的英文文本进行了微调。"));
+	}
+
+	public static void add_v0_0_8p4_changes( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v0.0.8p4", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"更新了部分贴图（特别鸣谢_大西洋秘制水煮H39_）"));
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了：\n" +

@@ -21,6 +21,7 @@
 
 package com.ansdoship.pixeldungeonclasses.noosa;
 
+import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
 import com.ansdoship.pixeldungeonclasses.input.ControllerHandler;
 import com.ansdoship.pixeldungeonclasses.utils.Callback;
 import com.ansdoship.pixeldungeonclasses.utils.PlatformSupport;
@@ -227,6 +228,10 @@ public class Game implements ApplicationListener {
 
 	public static Scene scene() {
 		return instance.scene;
+	}
+
+	public static boolean ingame() {
+		return instance.scene instanceof GameScene;
 	}
 
 	protected void step() {

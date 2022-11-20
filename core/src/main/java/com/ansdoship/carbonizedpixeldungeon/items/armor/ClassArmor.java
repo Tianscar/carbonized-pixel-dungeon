@@ -37,7 +37,7 @@ import com.ansdoship.pixeldungeonclasses.utils.Bundle;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-abstract public class ClassArmor extends Armor {
+public abstract class ClassArmor extends Armor {
 
 	private static final String AC_ABILITY = "ABILITY";
 	
@@ -48,8 +48,6 @@ abstract public class ClassArmor extends Armor {
 
 		bones = false;
 	}
-
-	private int armorTier;
 
 	private Charger charger;
 	public float charge = 0;
@@ -68,7 +66,7 @@ abstract public class ClassArmor extends Armor {
 	@Override
 	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
 		if (super.doUnequip( hero, collect, single )) {
-			if (charger != null){
+			if (charger != null) {
 				charger.detach();
 				charger = null;
 			}
@@ -80,7 +78,7 @@ abstract public class ClassArmor extends Armor {
 		}
 	}
 
-	public static ClassArmor upgrade (Hero owner, Armor armor ) {
+	public static ClassArmor upgrade ( Hero owner, Armor armor ) {
 		
 		ClassArmor classArmor = null;
 		
@@ -130,7 +128,7 @@ abstract public class ClassArmor extends Armor {
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		tier = bundle.getInt( ARMOR_TIER );
-		charge = bundle.getFloat(CHARGE);
+		charge = bundle.getFloat( CHARGE );
 	}
 	
 	@Override
@@ -143,8 +141,8 @@ abstract public class ClassArmor extends Armor {
 	}
 
 	@Override
-	public String actionName(String action, Hero hero) {
-		if (hero.armorAbility != null && action.equals(AC_ABILITY)){
+	public String actionName( String action, Hero hero ) {
+		if (hero.armorAbility != null && action.equals( AC_ABILITY )) {
 			return hero.armorAbility.name().toUpperCase();
 		} else {
 			return super.actionName(action, hero);
@@ -161,7 +159,7 @@ abstract public class ClassArmor extends Armor {
 
 		super.execute( hero, action );
 
-		if (action.equals(AC_ABILITY)){
+		if (action.equals( AC_ABILITY )) {
 
 			//for pre-0.9.3 saves
 			if (hero.armorAbility == null){
@@ -223,4 +221,5 @@ abstract public class ClassArmor extends Armor {
 			return true;
 		}
 	}
+
 }

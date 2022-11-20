@@ -30,6 +30,8 @@ import com.ansdoship.carbonizedpixeldungeon.items.KindOfWeapon;
 import com.ansdoship.carbonizedpixeldungeon.items.KindofMisc;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.Armor;
 import com.ansdoship.carbonizedpixeldungeon.items.armor.ClassArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.LightArmor;
+import com.ansdoship.carbonizedpixeldungeon.items.armor.Robe;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.Artifact;
 import com.ansdoship.carbonizedpixeldungeon.items.bags.Bag;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.Ring;
@@ -191,10 +193,19 @@ public class Belongings implements Iterable<Item> {
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
 		if (bundle.contains( ARMOR )){
 			Armor armor = ((Armor)bundle.get( ARMOR ));
-			if (armor instanceof ClassArmor){
-				info.armorTier = 6;
-			} else {
-				info.armorTier = armor.tier;
+			if (armor == null) info.armorTier = 0;
+			else {
+				final int tier = armor.tier;
+				if (armor instanceof Robe) {
+					info.armorTier = tier + 6;
+				}
+				else if (armor instanceof LightArmor) {
+					info.armorTier = tier + 9;
+				}
+				else if (armor instanceof ClassArmor) {
+					info.armorTier = 6;
+				}
+				else info.armorTier = tier;
 			}
 		} else {
 			info.armorTier = 0;
@@ -230,6 +241,10 @@ public class Belongings implements Iterable<Item> {
 		}
 		
 		return null;
+	}
+
+	public ArrayList<Item> getAllItems() {
+		return getAllItems(Item.class);
 	}
 
 	public<T extends Item> ArrayList<T> getAllItems( Class<T> itemClass ) {

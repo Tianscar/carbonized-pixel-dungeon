@@ -7,7 +7,6 @@ import com.ansdoship.carbonizedpixeldungeon.scenes.PixelScene;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.ui.*;
-import com.ansdoship.pixeldungeonclasses.noosa.ColorBlock;
 import com.ansdoship.pixeldungeonclasses.noosa.Game;
 
 public class WndFeedback extends Window {

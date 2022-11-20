@@ -24,9 +24,11 @@ package com.ansdoship.carbonizedpixeldungeon.items.scrolls.exotic;
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Foresight;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.effects.SpellSprite;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfForesight extends ExoticScroll {
 	
@@ -36,14 +38,25 @@ public class ScrollOfForesight extends ExoticScroll {
 	
 	@Override
 	public void doRead() {
-		SpellSprite.show( curUser, SpellSprite.MAP );
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-		
-		Buff.affect(curUser, Foresight.class, Foresight.DURATION);
 
-		identify();
-		
-		readAnimation();
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				SpellSprite.show( curUser, SpellSprite.MAP );
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+
+				float duration = Foresight.DURATION;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) duration = Math.round(duration * 1.5f);
+				Buff.affect(curUser, Foresight.class, duration);
+
+				identify();
+
+				readAnimation();
+
+			}
+		});
+
 	}
 	
 }

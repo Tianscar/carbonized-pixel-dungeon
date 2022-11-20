@@ -41,7 +41,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.ansdoship.carbonizedpixeldungeon.items.artifacts.HornOfPlenty;
 import com.ansdoship.carbonizedpixeldungeon.items.rings.Ring;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfRecharging;
-import com.ansdoship.carbonizedpixeldungeon.items.wands.Wand;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
@@ -84,15 +84,15 @@ public enum Talent {
 	SUSTAINED_RETRIBUTION(23, 4), SHRUG_IT_OFF(24, 4), EVEN_THE_ODDS(25, 4),
 
 	//Mage T1
-	EMPOWERING_MEAL(32), SCHOLARS_INTUITION(33), TESTED_HYPOTHESIS(34), BACKUP_BARRIER(35),
+	EMPOWERING_MEAL(32), SCHOLARS_INTUITION(33), ARCANE_STRIKE(34), CARRY_ON_BARRIER(35),
 	//Mage T2
-	ENERGIZING_MEAL(36), ENERGIZING_UPGRADE(37), WAND_PRESERVATION(38), ARCANE_VISION(39), SHIELD_BATTERY(40),
+	ENERGIZING_MEAL(36), MAGIC_OVERLOAD(37), WAND_PRESERVATION(38), ARCANE_VISION(39), SHIELD_BATTERY(40),
 	//Mage T3
 	EMPOWERING_SCROLLS(41, 3), ALLY_WARP(42, 3),
 	//Battlemage T3
 	EMPOWERED_STRIKE(43, 3), MYSTICAL_CHARGE(44, 3), EXCESS_CHARGE(45, 3),
-	//Warlock T3
-	SOUL_EATER(46, 3), SOUL_SIPHON(47, 3), NECROMANCERS_MINIONS(48, 3),
+	//Loremaster T3
+	MAGIC_TRACE(46, 3), KNOWLEDGE_IS_POWER(47, 3), FORBIDDEN_KNOWLEDGE(48, 3),
 	//Elemental Blast T4
 	BLAST_RADIUS(49, 4), ELEMENTAL_POWER(50, 4), REACTIVE_BARRIER(51, 4),
 	//Wild Magic T4
@@ -220,8 +220,8 @@ public enum Talent {
 	}
 
 	public int icon(){
-		if (this == HEROIC_ENERGY){
-			if (Dungeon.hero != null && Dungeon.hero.armorAbility instanceof Ratmogrify){
+		if (this == HEROIC_ENERGY) {
+			if (Dungeon.hero != null && Dungeon.hero.armorAbility instanceof Ratmogrify) {
 				return 127;
 			}
 			HeroClass cls = Dungeon.hero != null ? Dungeon.hero.heroClass : GamesInProgress.selectedClass;
@@ -259,13 +259,18 @@ public enum Talent {
 		return Messages.get(this, name() + ".desc");
 	}
 
-	public static void onTalentUpgraded( Hero hero, Talent talent){
+	public static void onTalentUpgraded( Hero hero, Talent talent ){
 		if (talent == NATURES_BOUNTY){
 			if ( hero.pointsInTalent(NATURES_BOUNTY) == 1) Buff.count(hero, NatureBerriesAvailable.class, 4);
 			else                                           Buff.count(hero, NatureBerriesAvailable.class, 2);
 		}
 
-		if (talent == ARMSMASTERS_INTUITION){
+		if (talent == FORBIDDEN_KNOWLEDGE) {
+			MagesStaff staff = hero.belongings.getItem(MagesStaff.class);
+			if (staff != null) staff.updateWand( hero, false );
+		}
+
+		if (talent == ARMSMASTERS_INTUITION) {
 			if (hero.belongings.weapon() != null) hero.belongings.weapon().identify();
 			if (hero.belongings.weapon2() != null) hero.belongings.weapon2().identify();
 			if (hero.belongings.armor() != null)  hero.belongings.armor.identify();
@@ -304,8 +309,8 @@ public enum Talent {
 
 	public static void onFoodEaten( Hero hero, float foodVal, Item foodSource ){
 		if (hero.hasTalent(HEARTY_MEAL)){
-			//heal for 5/8 HP
-			hero.HP = Math.min(hero.HP + 2 + 3 * hero.pointsInTalent(HEARTY_MEAL), hero.HT);
+			//heal for 3/5 HP
+			hero.HP = Math.min(hero.HP + 1 + 2 * hero.pointsInTalent(HEARTY_MEAL), hero.HT);
 			hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1+hero.pointsInTalent(HEARTY_MEAL));
 		}
 		if (hero.hasTalent(IRON_STOMACH)){
@@ -345,10 +350,6 @@ public enum Talent {
 		// 1.75x/2.5x speed with huntress talent
 		float factor = 1f + hero.pointsInTalent(SURVIVALISTS_INTUITION)*0.75f;
 
-		// 3x/instant for mage (see Wand.wandUsed())
-		if (item instanceof Wand){
-			factor *= 1f + 2*hero.pointsInTalent(SCHOLARS_INTUITION);
-		}
 		// 2x/instant for rogue (see onItemEqupped), also id's type on equip/on pickup
 		if (item instanceof Ring){
 			factor *= 1f + hero.pointsInTalent(THIEFS_INTUITION);
@@ -404,14 +405,6 @@ public enum Talent {
 	}
 
 	public static void onUpgradeScrollUsed( Hero hero ){
-		if (hero.hasTalent(ENERGIZING_UPGRADE)){
-			MagesStaff staff = hero.belongings.getItem(MagesStaff.class);
-			if (staff != null){
-				staff.gainCharge(1 + 2*hero.pointsInTalent(ENERGIZING_UPGRADE), true);
-				ScrollOfRecharging.charge( Dungeon.hero );
-				SpellSprite.show( hero, SpellSprite.CHARGE );
-			}
-		}
 		if (hero.hasTalent(MYSTICAL_UPGRADE)){
 			CloakOfShadows cloak = hero.belongings.getItem(CloakOfShadows.class);
 			if (cloak != null){
@@ -457,14 +450,24 @@ public enum Talent {
 				if (e != null) e.burst(Speck.factory(Speck.HEALING), hero.pointsInTalent(ARMSMASTERS_INTUITION));
 			}
 		}
-		if (hero.hasTalent(TESTED_HYPOTHESIS)){
-			//2/3 turns of wand recharging
-			Buff.affect(hero, Recharging.class, 1f + hero.pointsInTalent(TESTED_HYPOTHESIS));
+		if (hero.hasTalent(SCHOLARS_INTUITION) && hero.pointsInTalent(SCHOLARS_INTUITION) == 2) {
+			//3 turns of wand recharging
+			Buff.affect(hero, Recharging.class, 1f + hero.pointsInTalent(SCHOLARS_INTUITION));
 			ScrollOfRecharging.charge(hero);
 		}
 	}
 
-	public static int onAttackProc( Hero hero, Char enemy, int dmg ){
+	public static int onAttackProc( Hero hero, Char enemy, int dmg ) {
+		if (hero.hasTalent(Talent.ARCANE_STRIKE)
+				&& !(hero.belongings.weapon() instanceof MissileWeapon)
+				&& !(hero.belongings.weapon() instanceof SpiritBow)
+		        && enemy.buff(ArcaneStrikeTracker.class) != null) {
+			dmg += 1 + hero.pointsInTalent(Talent.ARCANE_STRIKE);
+			if (!(enemy instanceof Mob) || !((Mob) enemy).surprisedBy(hero)) {
+				Sample.INSTANCE.play( Assets.Sounds.HIT_MAGIC, 1, 1.2f );
+			}
+			enemy.buff(ArcaneStrikeTracker.class).detach();
+		}
 		if (hero.hasTalent(Talent.SUCKER_PUNCH)
 				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
 				&& enemy.buff(SuckerPunchTracker.class) == null){
@@ -473,7 +476,7 @@ public enum Talent {
 		}
 
 		if (hero.hasTalent(Talent.FOLLOWUP_STRIKE)) {
-			if (hero.belongings.weapon() instanceof MissileWeapon) {
+			if (hero.belongings.weapon() instanceof MissileWeapon || hero.belongings.weapon() instanceof SpiritBow) {
 				Buff.affect(enemy, FollowupStrikeTracker.class);
 			} else if (enemy.buff(FollowupStrikeTracker.class) != null){
 				dmg += 1 + hero.pointsInTalent(FOLLOWUP_STRIKE);
@@ -489,6 +492,7 @@ public enum Talent {
 
 	public static class SuckerPunchTracker extends Buff{};
 	public static class FollowupStrikeTracker extends Buff{};
+	public static class ArcaneStrikeTracker extends Buff{};
 
 	public static final int MAX_TALENT_TIERS = 4;
 
@@ -509,7 +513,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, HEARTY_MEAL, ARMSMASTERS_INTUITION, WEAKNESS_STRIKE, IRON_WILL);
 				break;
 			case MAGE:
-				Collections.addAll(tierTalents, EMPOWERING_MEAL, SCHOLARS_INTUITION, TESTED_HYPOTHESIS, BACKUP_BARRIER);
+				Collections.addAll(tierTalents, EMPOWERING_MEAL, SCHOLARS_INTUITION, ARCANE_STRIKE, CARRY_ON_BARRIER);
 				break;
 			case ROGUE:
 				Collections.addAll(tierTalents, CACHED_RATIONS, THIEFS_INTUITION, SUCKER_PUNCH, PROTECTIVE_SHADOWS);
@@ -529,7 +533,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, IRON_STOMACH, RESTORED_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
 			case MAGE:
-				Collections.addAll(tierTalents, ENERGIZING_MEAL, ENERGIZING_UPGRADE, WAND_PRESERVATION, ARCANE_VISION, SHIELD_BATTERY);
+				Collections.addAll(tierTalents, ENERGIZING_MEAL, MAGIC_OVERLOAD, WAND_PRESERVATION, ARCANE_VISION, SHIELD_BATTERY);
 				break;
 			case ROGUE:
 				Collections.addAll(tierTalents, MYSTICAL_MEAL, MYSTICAL_UPGRADE, WIDE_SEARCH, SILENT_STEPS, ROGUES_FORESIGHT);
@@ -591,8 +595,8 @@ public enum Talent {
 			case BATTLEMAGE:
 				Collections.addAll(tierTalents, EMPOWERED_STRIKE, MYSTICAL_CHARGE, EXCESS_CHARGE);
 				break;
-			case WARLOCK:
-				Collections.addAll(tierTalents, SOUL_EATER, SOUL_SIPHON, NECROMANCERS_MINIONS);
+			case LOREMASTER:
+				Collections.addAll(tierTalents, MAGIC_TRACE, KNOWLEDGE_IS_POWER, FORBIDDEN_KNOWLEDGE);
 				break;
 			case ASSASSIN:
 				Collections.addAll(tierTalents, ENHANCED_LETHALITY, ASSASSINS_REACH, BOUNTY_HUNTER);

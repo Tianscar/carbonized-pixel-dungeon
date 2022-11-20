@@ -45,6 +45,7 @@ import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfMagicMissile;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfPrismaticLight;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfTransfusion;
 import com.ansdoship.carbonizedpixeldungeon.items.wands.WandOfWarding;
+import com.ansdoship.carbonizedpixeldungeon.items.wands.spark.*;
 import com.ansdoship.carbonizedpixeldungeon.levels.traps.DisintegrationTrap;
 import com.ansdoship.carbonizedpixeldungeon.levels.traps.GrimTrap;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -79,6 +80,16 @@ public class AntiMagic extends Armor.Glyph {
 		RESISTS.add( WandOfTransfusion.class );
 		RESISTS.add( WandOfWarding.Ward.class );
 
+		RESISTS.add( SparkWandOfBlastWave.class );
+		RESISTS.add( SparkWandOfDisintegration.class );
+		RESISTS.add( SparkWandOfFireblast.class );
+		RESISTS.add( SparkWandOfFrost.class );
+		RESISTS.add( SparkWandOfLightning.class );
+		RESISTS.add( SparkWandOfLivingEarth.class );
+		RESISTS.add( SparkWandOfMagicMissile.class );
+		RESISTS.add( SparkWandOfPrismaticLight.class );
+		RESISTS.add( SparkWandOfTransfusion.class );
+
 		RESISTS.add( WarpBeacon.class );
 		
 		RESISTS.add( DM100.LightningBolt.class );
@@ -95,7 +106,7 @@ public class AntiMagic extends Armor.Glyph {
 		return damage;
 	}
 	
-	public static int drRoll( int level ){
+	public static int drRoll( int level ) {
 		return Random.NormalIntRange(level, 3 + Math.round(level*1.5f));
 	}
 

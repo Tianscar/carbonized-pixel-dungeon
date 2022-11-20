@@ -43,6 +43,9 @@ public class PDAction extends GameAction {
 	public static final GameAction LEFT_CLICK   = GameAction.LEFT_CLICK;
 	public static final GameAction RIGHT_CLICK  = GameAction.RIGHT_CLICK;
 	public static final GameAction MIDDLE_CLICK = GameAction.MIDDLE_CLICK;
+
+	public static final GameAction PREV  = GameAction.PREV;
+	public static final GameAction NEXT  = GameAction.NEXT;
 	//--
 
 	public static final GameAction N            = new PDAction("n");
@@ -93,15 +96,18 @@ public class PDAction extends GameAction {
 		defaultBindings.put( Input.Keys.BACKSPACE,      PDAction.BACK );
 		defaultBindings.put( Input.Keys.BUTTON_START,   PDAction.BACK );
 
+		defaultBindings.put( Input.Keys.PAGE_DOWN,      PDAction.PREV );
+		defaultBindings.put( Input.Keys.PAGE_UP,        PDAction.NEXT );
+
 		defaultBindings.put( Input.Keys.BUTTON_R2,      PDAction.LEFT_CLICK );
 		defaultBindings.put( Input.Keys.BUTTON_THUMBR,  PDAction.LEFT_CLICK );
 		defaultBindings.put( Input.Keys.BUTTON_L2,      PDAction.RIGHT_CLICK );
 		defaultBindings.put( Input.Keys.BUTTON_SELECT,  PDAction.MIDDLE_CLICK );
 
-		defaultBindings.put( Input.Keys.K,              PDAction.N );
-		defaultBindings.put( Input.Keys.H,              PDAction.W );
-		defaultBindings.put( Input.Keys.J,              PDAction.S );
-		defaultBindings.put( Input.Keys.L,              PDAction.E );
+		defaultBindings.put( Input.Keys.W,              PDAction.N );
+		defaultBindings.put( Input.Keys.A,              PDAction.W );
+		defaultBindings.put( Input.Keys.S,              PDAction.S );
+		defaultBindings.put( Input.Keys.D,              PDAction.E );
 		defaultBindings.put( Input.Keys.SPACE,          PDAction.WAIT );
 
 		defaultBindings.put( Input.Keys.Y,              PDAction.NW );
@@ -160,8 +166,8 @@ public class PDAction extends GameAction {
 		defaultBindings.put( Input.Keys.ENTER,          PDAction.TAG_LOOT );
 		defaultBindings.put( Input.Keys.R,              PDAction.TAG_RESUME );
 
-		//defaultBindings.put( Input.Keys.H,              PDAction.HERO_INFO );
-		//defaultBindings.put( Input.Keys.J,              PDAction.JOURNAL );
+		defaultBindings.put( Input.Keys.H,              PDAction.HERO_INFO );
+		defaultBindings.put( Input.Keys.J,              PDAction.JOURNAL );
 
 		defaultBindings.put( Input.Keys.PLUS,           PDAction.ZOOM_IN );
 		defaultBindings.put( Input.Keys.EQUALS,         PDAction.ZOOM_IN );

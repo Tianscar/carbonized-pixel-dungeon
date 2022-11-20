@@ -24,6 +24,7 @@ package com.ansdoship.carbonizedpixeldungeon.actors.buffs;
 import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Actor;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.ansdoship.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
@@ -102,7 +103,9 @@ public class PrismaticGuard extends Buff {
 	}
 	
 	public static int maxHP( Hero hero ){
-		return 10 + (int)Math.floor(hero.lvl * 2.5f); //half of hero's HP
+		int maxHP = 10 + (int)Math.floor(hero.lvl * 2.5f); //half of hero's HP
+		if (hero.subClass == HeroSubClass.LOREMASTER) maxHP *= 2;
+		return maxHP;
 	}
 	
 	@Override

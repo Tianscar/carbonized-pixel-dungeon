@@ -247,19 +247,21 @@ public class WndSettings extends WndTabbed {
 			}
 			add(chkFullscreen);
 
-			optSplashScreen = new OptionSlider(Messages.get(this, "splash_screen"),
-					Messages.get(this, "disable" ),
-					Messages.get( this, "full" ),
-					0, 2) {
-				@Override
-				protected void onChange() {
-					if (getSelectedValue() != PDSettings.splashScreen()) {
-						PDSettings.splashScreen(getSelectedValue());
+			if (!Game.ingame()) {
+				optSplashScreen = new OptionSlider(Messages.get(this, "splash_screen"),
+						Messages.get(this, "disable" ),
+						Messages.get( this, "full" ),
+						0, 2) {
+					@Override
+					protected void onChange() {
+						if (getSelectedValue() != PDSettings.splashScreen()) {
+							PDSettings.splashScreen(getSelectedValue());
+						}
 					}
-				}
-			};
-			optSplashScreen.setSelectedValue(PDSettings.splashScreen());
-			add(optSplashScreen);
+				};
+				optSplashScreen.setSelectedValue(PDSettings.splashScreen());
+				add(optSplashScreen);
+			}
 
 			optTransAnim = new OptionSlider(Messages.get(this, "trans_anim"),
 					Messages.get(this, "disable" ),
@@ -389,15 +391,23 @@ public class WndSettings extends WndTabbed {
 				bottom = btnOrientation.bottom();
 			}
 
-			if (width > 200 && optTransAnim != null) {
-				optSplashScreen.setRect(0, bottom + GAP, width/2-1, SLIDER_HEIGHT);
-				optTransAnim.setRect(optSplashScreen.right() + GAP, bottom + GAP, width/2-1, SLIDER_HEIGHT);
-				bottom = optSplashScreen.bottom();
+			if (!Game.ingame()) {
+				if (width > 200 && optTransAnim != null) {
+					optSplashScreen.setRect(0, bottom + GAP, width/2-1, SLIDER_HEIGHT);
+					optTransAnim.setRect(optSplashScreen.right() + GAP, bottom + GAP, width/2-1, SLIDER_HEIGHT);
+					bottom = optSplashScreen.bottom();
+				}
+				else {
+					optSplashScreen.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
+					bottom = optSplashScreen.bottom();
+
+					if (optTransAnim != null){
+						optTransAnim.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
+						bottom = optTransAnim.bottom();
+					}
+				}
 			}
 			else {
-				optSplashScreen.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
-				bottom = optSplashScreen.bottom();
-
 				if (optTransAnim != null){
 					optTransAnim.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
 					bottom = optTransAnim.bottom();

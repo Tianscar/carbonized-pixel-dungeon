@@ -86,29 +86,45 @@ public class MagicMissile extends Emitter {
 	public static final int PURPLE_CONE     = 111;
 	public static final int SPARK_CONE      = 112;
 	public static final int BLOOD_CONE      = 113;
+
+	public final void reset( int type, int from, int to, Callback callback ) {
+		reset( type, 1.0f, from, to, callback );
+	}
 	
-	public void reset( int type, int from, int to, Callback callback ) {
-		reset( type,
+	public void reset( int type, float speedFactor, int from, int to, Callback callback ) {
+		reset( type, speedFactor,
 				DungeonTilemap.raisedTileCenterToWorld( from ),
 				DungeonTilemap.raisedTileCenterToWorld( to ),
 				callback );
 	}
 
-	public void reset( int type, Visual from, Visual to, Callback callback ) {
-		reset( type,
+	public final void reset( int type, Visual from, Visual to, Callback callback ) {
+		reset( type, 1.0f, from, to, callback );
+	}
+
+	public void reset( int type, float speedFactor, Visual from, Visual to, Callback callback ) {
+		reset( type, speedFactor,
 				from.center(),
 				to.center(),
 				callback);
 	}
 
-	public void reset( int type, Visual from, int to, Callback callback ) {
-		reset( type,
+	public final void reset( int type, Visual from, int to, Callback callback ) {
+		reset( type, 1.0f, from, to, callback );
+	}
+
+	public void reset( int type, float speedFactor, Visual from, int to, Callback callback ) {
+		reset( type, speedFactor,
 				from.center(),
 				DungeonTilemap.raisedTileCenterToWorld( to ),
 				callback);
 	}
 
-	public void reset( int type, PointF from, PointF to, Callback callback ) {
+	public final void reset( int type, PointF from, PointF to, Callback callback ) {
+		reset( type, 1.0f, from, to, callback );
+	}
+
+	public void reset( int type, float speedFactor, PointF from, PointF to, Callback callback ) {
 		this.callback = callback;
 		
 		this.to = to;
@@ -119,10 +135,10 @@ public class MagicMissile extends Emitter {
 		height = 0;
 		
 		PointF d = PointF.diff( to, from );
-		PointF speed = new PointF( d ).normalize().scale( SPEED );
+		PointF speed = new PointF( d ).normalize().scale( SPEED * speedFactor );
 		sx = speed.x;
 		sy = speed.y;
-		time = d.length() / SPEED;
+		time = d.length() / (SPEED * speedFactor);
 
 		switch(type){
 			case MAGIC_MISSILE: default:
@@ -260,14 +276,18 @@ public class MagicMissile extends Emitter {
 	}
 
 	//convenience method for the common case of a bolt going from a character to a tile or enemy
-	public static MagicMissile boltFromChar(Group group, int type, Visual sprite, int to, Callback callback){
+	public static MagicMissile boltFromChar(Group group, int type, float speedFactor, Visual sprite, int to, Callback callback) {
 		MagicMissile missile = ((MagicMissile)group.recycle( MagicMissile.class ));
 		if (Actor.findChar(to) != null){
-			missile.reset(type, sprite.center(), Actor.findChar(to).sprite.destinationCenter(), callback);
+			missile.reset(type, speedFactor, sprite.center(), Actor.findChar(to).sprite.destinationCenter(), callback);
 		} else {
-			missile.reset(type, sprite, to, callback);
+			missile.reset(type, speedFactor, sprite, to, callback);
 		}
 		return missile;
+	}
+
+	public static MagicMissile boltFromChar(Group group, int type, Visual sprite, int to, Callback callback) {
+		return boltFromChar(group, type, 1.0f, sprite, to, callback);
 	}
 
 	@Override

@@ -4,9 +4,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.2.2'
     }
 }
+
+def snapshot = false
 
 allprojects {
 
@@ -15,8 +17,11 @@ allprojects {
         appVendor = 'AnsdoShip'
         appPackageName = 'com.ansdoship.carbonizedpixeldungeon'
 
-        appVersionCode = 32
-        appVersionName = '0.0.8p4-ALPHA'
+        appVersionCode = 56
+        appVersionName = '0.0.8p5-ALPHA'
+        if (snapshot) {
+            appVersionName += '-SNAPSHOT-' + java.time.LocalDateTime.now().format("yyyyMMddHHmmss")
+        }
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 

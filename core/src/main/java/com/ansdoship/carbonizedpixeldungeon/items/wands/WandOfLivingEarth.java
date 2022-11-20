@@ -224,15 +224,15 @@ public class WandOfLivingEarth extends DamageWand {
 	public static class RockArmor extends Buff {
 
 		private int wandLevel;
-		private int armor;
+		public int armor;
 
-		private void addArmor( int wandLevel, int toAdd ){
+		public void addArmor(int wandLevel, int toAdd){
 			this.wandLevel = Math.max(this.wandLevel, wandLevel);
 			armor += toAdd;
 			armor = Math.min(armor, 2*armorToGuardian());
 		}
 
-		private int armorToGuardian(){
+		public int armorToGuardian(){
 			return 8 + wandLevel*4;
 		}
 

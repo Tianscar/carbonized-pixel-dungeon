@@ -1,9 +1,6 @@
 /*
  * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2021 Evan Debenham
+ * Copyright (C) 2012-2014  Oleg Dolya
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,33 +15,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
 package com.ansdoship.carbonizedpixeldungeon.sprites;
 
 import com.ansdoship.carbonizedpixeldungeon.Assets;
 import com.ansdoship.pixeldungeonclasses.noosa.TextureFilm;
+import com.ansdoship.pixeldungeonclasses.utils.Random;
 
-public class AlbinoSprite extends MobSprite {
+public class CornerSheepSprite extends MobSprite {
 
-	public AlbinoSprite() {
+	public CornerSheepSprite() {
 		super();
-		
-		texture( Assets.Sprites.RAT );
-		
+
+		texture( Assets.Sprites.SHEEP );
+
 		TextureFilm frames = new TextureFilm( texture, 16, 15 );
-		
-		idle = new Animation( 2, true );
-		idle.frames( frames, 16, 16, 16, 17 );
-		
-		run = new Animation( 10, true );
-		run.frames( frames, 22, 23, 24, 25, 26 );
-		
-		attack = new Animation( 15, false );
-		attack.frames( frames, 18, 19, 20, 21 );
-		
-		die = new Animation( 10, false );
-		die.frames( frames, 27, 28, 29, 30 );
-		
+
+		idle = new Animation( 8, true );
+		idle.frames( frames, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 10, 11, 8 );
+
+		run = idle.clone();
+		attack = idle.clone();
+
+		die = new Animation( 20, false );
+		die.frames( frames, 0 );
+
 		play( idle );
+		curFrame = Random.Int( curAnim.frames.length );
 	}
 }

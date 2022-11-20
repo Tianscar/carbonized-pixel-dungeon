@@ -26,12 +26,14 @@ import com.ansdoship.carbonizedpixeldungeon.Dungeon;
 import com.ansdoship.carbonizedpixeldungeon.actors.Char;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.ansdoship.carbonizedpixeldungeon.actors.buffs.Terror;
+import com.ansdoship.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.ansdoship.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.ansdoship.carbonizedpixeldungeon.effects.Flare;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.ansdoship.carbonizedpixeldungeon.utils.GLog;
 import com.ansdoship.pixeldungeonclasses.noosa.audio.Sample;
+import com.ansdoship.pixeldungeonclasses.utils.Callback;
 
 public class ScrollOfTerror extends Scroll {
 
@@ -41,36 +43,46 @@ public class ScrollOfTerror extends Scroll {
 
 	@Override
 	public void doRead() {
-		
-		new Flare( 5, 32 ).color( 0xFF0000, true ).show( curUser.sprite, 2f );
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-		
-		int count = 0;
-		Mob affected = null;
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-			if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
-				Buff.affect( mob, Terror.class, Terror.DURATION ).object = curUser.id();
 
-				if (mob.buff(Terror.class) != null){
-					count++;
-					affected = mob;
+		doRecord(new Callback() {
+			@Override
+			public void call() {
+
+				new Flare( 5, 32 ).color( 0xFF0000, true ).show( curUser.sprite, 2f );
+				Sample.INSTANCE.play( Assets.Sounds.READ );
+
+				int count = 0;
+				Mob affected = null;
+				float duration = Terror.DURATION;
+				if (curUser.subClass == HeroSubClass.LOREMASTER) duration = Math.round(duration * 1.5f);
+				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
+						Buff.affect( mob, Terror.class, duration ).object = curUser.id();
+
+						if (mob.buff(Terror.class) != null){
+							count++;
+							affected = mob;
+						}
+					}
 				}
-			}
-		}
-		
-		switch (count) {
-		case 0:
-			GLog.i( Messages.get(this, "none") );
-			break;
-		case 1:
-			GLog.i( Messages.get(this, "one", affected.name()) );
-			break;
-		default:
-			GLog.i( Messages.get(this, "many") );
-		}
-		identify();
 
-		readAnimation();
+				switch (count) {
+					case 0:
+						GLog.i( Messages.get(ScrollOfTerror.this, "none") );
+						break;
+					case 1:
+						GLog.i( Messages.get(ScrollOfTerror.this, "one", affected.name()) );
+						break;
+					default:
+						GLog.i( Messages.get(ScrollOfTerror.this, "many") );
+				}
+				identify();
+
+				readAnimation();
+
+			}
+		});
+
 	}
 	
 	@Override

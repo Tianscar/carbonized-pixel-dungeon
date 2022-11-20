@@ -28,6 +28,7 @@ import com.ansdoship.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.ansdoship.carbonizedpixeldungeon.actors.hero.Hero;
 import com.ansdoship.carbonizedpixeldungeon.effects.particles.ShadowParticle;
 import com.ansdoship.carbonizedpixeldungeon.items.journal.Guidebook;
+import com.ansdoship.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.ansdoship.carbonizedpixeldungeon.journal.Document;
 import com.ansdoship.carbonizedpixeldungeon.messages.Messages;
 import com.ansdoship.carbonizedpixeldungeon.scenes.GameScene;
@@ -116,7 +117,7 @@ public abstract class EquipableItem extends Item {
 
 	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
 
-		if (cursed && hero.buff(MagicImmune.class) == null) {
+		if (cursed && hero.buff(MagicImmune.class) == null && !(this instanceof MagesStaff)) {
 			GLog.w(Messages.get(EquipableItem.class, "unequip_cursed"));
 			return false;
 		}
