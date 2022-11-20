@@ -26,24 +26,25 @@ Watabou (Pixel Dungeon's open source)
 Arcnor (libGDX port of Pixel Dungeon)
 ### Hero design
 Tianscar & Taolin  
-Evan Debenham & Aleksander Komitov (from Shattered Pixel Dungeon)
+Evan Debenham & Aleksander Komitov (Shattered Pixel Dungeon)  
+Watabou (Pixel Dungeon)
 ### Background music  
 Jasφn (title scene BGM)  
-Kristjan Haaristo (game scene BGM, from Shattered Pixel Dungeon)  
-Cube_Code (surface scene BGM, from Pixel Dungeon)  
-Misaerit & GILSIDISY (hero select scene BGM, from Remixed Dungeon)
+Kristjan Haaristo (game scene BGM, Shattered Pixel Dungeon)  
+Cube_Code (surface scene BGM, Pixel Dungeon)  
+Misaerit & GILSIDISY (hero select scene BGM, Remixed Dungeon)
 ### Sound FX
-Celesti (from Shattered Pixel Dungeon)  
-Watabou (from Pixel Dungeon)  
+Celesti (Shattered Pixel Dungeon)  
+Watabou (Pixel Dungeon)  
 freesound.org
-## Graphics  
+### Graphics  
 Tianscar & H39ClassBB  
-NYRDS & ThEnigma314 % Pavel Provotorov (from Remixed Dungeon)  
-Dachhack (from Sprouted Pixel Dungeon)  
-TypedScroll (from Overgrown Pixel Dungeon)  
-dreamdream2020 (from Scorched Pixel Dungeon)  
-Evan Debenham & Aleksander Komitov (from Shattered Pixel Dungeon)  
-Watabou (from Pixel Dungeon)
+NYRDS & ThEnigma314 % Pavel Provotorov (Remixed Dungeon)  
+Dachhack (Sprouted Pixel Dungeon)  
+TypedScroll (Overgrown Pixel Dungeon)  
+dreamdream2020 (Scorched Pixel Dungeon)  
+Evan Debenham & Aleksander Komitov (Shattered Pixel Dungeon)  
+Watabou (Pixel Dungeon)
 
 ## Special Thanks
 [IntelliJ IDEA](https://zh.wikipedia.org/zh-hans/IntelliJ_IDEA) is an IDE that maximizes the productivity of developers in all aspects, and is suitable for JVM platform languages.
