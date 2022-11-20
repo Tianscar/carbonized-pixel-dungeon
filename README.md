@@ -21,7 +21,6 @@ Tianscar
 ### Program  
 Tianscar  
 Dachhack (Sprouted Pixel Dungeon's open source)  
-TypedScroll (Overgrown Pixel Dungeon's open source)  
 Evan Debenham & Kevin MacMartin (Shattered Pixel Dungeon's open source)  
 Watabou (Pixel Dungeon's open source)  
 Arcnor (libGDX port of Pixel Dungeon)
