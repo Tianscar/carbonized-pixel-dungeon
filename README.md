@@ -45,6 +45,9 @@ TypedScroll (Overgrown Pixel Dungeon)
 dreamdream2020 (Scorched Pixel Dungeon)  
 Evan Debenham & Aleksander Komitov (Shattered Pixel Dungeon)  
 Watabou (Pixel Dungeon)
+### Font
+fusion-pixel-font (https://fusion-pixel-font.takwolf.com)
+Droid Sans Fallback (desktop only)
 
 ## Special Thanks
 [IntelliJ IDEA](https://zh.wikipedia.org/zh-hans/IntelliJ_IDEA) is an IDE that maximizes the productivity of developers in all aspects, and is suitable for JVM platform languages.
