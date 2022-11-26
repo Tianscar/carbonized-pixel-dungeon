@@ -24,7 +24,7 @@ Dachhack (Sprouted Pixel Dungeon's open source)
 Evan Debenham & Kevin MacMartin (Shattered Pixel Dungeon's open source)  
 Watabou (Pixel Dungeon's open source)  
 Arcnor (libGDX port of Pixel Dungeon)
-### Hero design
+### Item & hero design
 Tianscar & Taolin  
 Evan Debenham & Aleksander Komitov (Shattered Pixel Dungeon)  
 Watabou (Pixel Dungeon)
