@@ -51,7 +51,7 @@ Droid Sans Fallback (by Google, only be used in desktop version of the game)
 Pixel Font (from Shattered Pixel Dungeon)
 
 ## Special Thanks
-[IntelliJ IDEA](https://zh.wikipedia.org/zh-hans/IntelliJ_IDEA) is an IDE that maximizes the productivity of developers in all aspects, and is suitable for JVM platform languages.
+[IntelliJ IDEA](https://en.wikipedia.org/wiki/IntelliJ_IDEA) is an IDE that maximizes the productivity of developers in all aspects, and is suitable for JVM platform languages.
 
 ## License
 [GPL-3.0](https://github.com/AnsdoShip/carbonized-pixel-dungeon/blob/main/LICENSE.txt) (c) AnsdoShip Studio
