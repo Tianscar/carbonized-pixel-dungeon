@@ -24,11 +24,11 @@ Dachhack (Sprouted Pixel Dungeon's open source)
 Evan Debenham & Kevin MacMartin (Shattered Pixel Dungeon's open source)  
 Watabou (Pixel Dungeon's open source)  
 Arcnor (libGDX port of Pixel Dungeon)
-### Item & hero design
+### Item & Hero Design
 Tianscar & Taolin  
 Evan Debenham & Aleksander Komitov (Shattered Pixel Dungeon)  
 Watabou (Pixel Dungeon)
-### Background music  
+### Background Music  
 Jasφn (title scene BGM)  
 Kristjan Haaristo (game scene BGM, Shattered Pixel Dungeon)  
 Cube_Code (surface scene BGM, Pixel Dungeon)  
@@ -38,7 +38,7 @@ Celesti (Shattered Pixel Dungeon)
 Watabou (Pixel Dungeon)  
 freesound.org
 ### Graphics  
-Tianscar & H39ClassBB  
+Tianscar & Daniel Calan & H39ClassBB  
 NYRDS & ThEnigma314 & Pavel Provotorov (Remixed Dungeon)  
 Dachhack (Sprouted Pixel Dungeon)  
 TypedScroll (Overgrown Pixel Dungeon)  
