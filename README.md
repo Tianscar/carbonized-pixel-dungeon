@@ -1,7 +1,10 @@
+# IMPORTANT NOTE
+This project is no longer maintained since Nov 29, 2022, for the later version, see https://github.com/Tianscar/carbonized-pixel-dungeon-reloaded.
+
 # Carbonized Pixel Dungeon
 
-[![Discord](https://img.shields.io/discord/978644808102994020?logo=discord)](https://discord.gg/24Bykt4YfJ)
-[![QQ](https://img.shields.io/badge/join-QQ%20group-brightgreen?logo=tencentqq)](https://jq.qq.com/?_wv=1027&k=Af0aT21o)
+[![Discord](https://img.shields.io/discord/978644808102994020?style=for-the-badge&logo=discord)](https://discord.gg/24Bykt4YfJ)
+[![QQ](https://img.shields.io/badge/join-QQ%20group-brightgreen?style=for-the-badge&logo=tencentqq)](https://jq.qq.com/?_wv=1027&k=Af0aT21o)
 
 A traditional roguelike game, with randomly generated levels, items, enemies, and traps! Based on the [source code of Shattered Pixel Dungeon](https://github.com/00-Evan/shattered-pixel-dungeon), by [ShatteredPixel](https://shatteredpixel.com).
 
