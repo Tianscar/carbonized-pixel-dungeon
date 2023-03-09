@@ -1,4 +1,4 @@
-# Carbonized Pixel Dungeon - Reloaded!
+# Carbonized Pixel Dungeon
 [![Discord](https://img.shields.io/discord/978644808102994020?style=for-the-badge&logo=discord)](https://discord.gg/24Bykt4YfJ)
 ![Code Size](https://img.shields.io/github/languages/code-size/Tianscar/carbonized-pixel-dungeon-reloaded?style=for-the-badge)
 ![Latest Release Date](https://img.shields.io/github/release-date-pre/Tianscar/carbonized-pixel-dungeon-reloaded?style=for-the-badge)
