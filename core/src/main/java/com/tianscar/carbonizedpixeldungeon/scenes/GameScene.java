@@ -85,6 +85,7 @@ import com.tianscar.pixeldungeonclasses.noosa.Visual;
 import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
 import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
 import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
+import com.tianscar.pixeldungeonclasses.utils.Callback;
 import com.tianscar.pixeldungeonclasses.utils.GameMath;
 import com.tianscar.pixeldungeonclasses.utils.Random;
 
@@ -1093,8 +1094,6 @@ public class GameScene extends PixelScene {
 				restart.bottom() + 2
 		);
 		scene.add(menu);
-
-		Sample.INSTANCE.play( Assets.Sounds.DEATH );
 	}
 	
 	public static void bossSlain() {

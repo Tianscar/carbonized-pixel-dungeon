@@ -145,12 +145,7 @@ public class NewsScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				String link = "https://ShatteredPixel.com";
-				//tracking codes, so that the website knows where this pageview came from
-				link += "?utm_source=shatteredpd";
-				link += "&utm_medium=news_page";
-				link += "&utm_campaign=ingame_link";
-				Game.platform.openURI(link);
+				Game.platform.openURI("https://carbonizedpd.tianscar.com");
 			}
 		};
 		btnSite.icon(Icons.get(Icons.NEWS));
@@ -317,12 +312,7 @@ public class NewsScene extends PixelScene {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					String link = article.URL;
-					//tracking codes, so that the website knows where this pageview came from
-					link += "?utm_source=shatteredpd";
-					link += "&utm_medium=news_page";
-					link += "&utm_campaign=ingame_link";
-					Game.platform.openURI(link);
+					Game.platform.openURI(article.URL);
 				}
 			};
 			link.setRect(0, height + 2, width, BTN_HEIGHT);

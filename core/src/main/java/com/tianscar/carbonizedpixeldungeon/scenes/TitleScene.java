@@ -28,6 +28,7 @@ import com.tianscar.carbonizedpixeldungeon.PDSettings;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.effects.BannerSprites;
 import com.tianscar.carbonizedpixeldungeon.effects.Fireball;
+import com.tianscar.carbonizedpixeldungeon.effects.TitleSprites;
 import com.tianscar.carbonizedpixeldungeon.messages.Languages;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.services.news.News;
@@ -38,13 +39,14 @@ import com.tianscar.carbonizedpixeldungeon.ui.*;
 import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
 import com.tianscar.carbonizedpixeldungeon.windows.WndSettings;
 import com.tianscar.pixeldungeonclasses.glwrap.Blending;
-import com.tianscar.pixeldungeonclasses.noosa.BitmapText;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
+import com.tianscar.pixeldungeonclasses.input.PointerEvent;
+import com.tianscar.pixeldungeonclasses.noosa.*;
 import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
+import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
+import com.tianscar.pixeldungeonclasses.utils.Callback;
 import com.tianscar.pixeldungeonclasses.utils.ColorMath;
 import com.tianscar.pixeldungeonclasses.utils.Point;
+import com.tianscar.pixeldungeonclasses.utils.PointF;
 
 import java.util.Date;
 
@@ -68,6 +70,12 @@ public class TitleScene extends PixelScene {
 		Archs archs = new Archs();
 		archs.setSize( w, h );
 		add( archs );
+
+		Image sword = TitleSprites.get( TitleSprites.Type.SWORD );
+		add( sword );
+
+		Image shield = TitleSprites.get( TitleSprites.Type.SHIELD );
+		add( shield );
 		
 		Image title = BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON );
 		add( title );
@@ -79,13 +87,64 @@ public class TitleScene extends PixelScene {
 
 		align(title);
 
+		float leftTorchX = title.x + 28;
+		float torchY = title.y + 46;
+		float rightTorchX = title.x + title.width - 28;
+
+		float swordXInit = leftTorchX - sword.width / 2;
+
+		sword.x = swordXInit;
+		sword.y = torchY - sword.height / 2;
+
+		shield.x = rightTorchX - shield.width / 2;
+		shield.y = torchY - shield.height / 2;
+		shield.origin.set( shield.width / 2, shield.height / 2 );
+
+		align(sword);
+		align(shield);
+
+		add( new PointerArea( sword ) {
+			private boolean dragging = false;
+			private PointF lastPos = new PointF();
+			@Override
+			protected void onPointerUp( PointerEvent event ) {
+				if (dragging) {
+					dragging = false;
+				}
+			}
+			@Override
+			protected void onDrag( PointerEvent event ) {
+				if (dragging) {
+					sword.x = Math.max(swordXInit, Math.min(leftTorchX - 5.5f, swordXInit + event.current.x - lastPos.x));
+					align( sword );
+				} else if (PointF.distance( event.current, event.start ) >  PixelScene.defaultZoom * 8) {
+					dragging = true;
+					lastPos.set( event.current );
+				}
+			}
+		} );
+
+		add( new PointerArea( shield ) {
+			@Override
+			protected void onClick(PointerEvent event) {
+				if (shield.angularSpeed < 1f) shield.angularSpeed = 1f;
+				else if (shield.angularSpeed > 8192f) {
+					shield.angularSpeed = 0;
+					shield.angle = 0;
+				}
+				else shield.angularSpeed *= 2;
+			}
+		});
+
+		final float[] signsTimeFactor = {1.0f};
+
 		Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
 			private float time = 0;
 			@Override
 			public void update() {
 				super.update();
-				am = Math.max(0f, (float)Math.sin( time += Game.elapsed * Math.random() ));
-				if (time >= 1.5f*Math.PI*Math.random()) time = 0;
+				am = Math.max(0f, (float)Math.sin( time += Game.elapsed * signsTimeFactor[0]));
+				if (time >= 1.5f*Math.PI) time = 0;
 			}
 			@Override
 			public void draw() {
@@ -97,6 +156,35 @@ public class TitleScene extends PixelScene {
 		signs.x = title.x + (title.width() - signs.width())/2f;
 		signs.y = title.y;
 		add( signs );
+
+		Callback signsClickListener = new Callback() {
+			@Override
+			public void call() {
+				if (signsTimeFactor[0] < 1f) signsTimeFactor[0] = 1f;
+				else if (signsTimeFactor[0] > 128f) {
+					signsTimeFactor[0] = 1;
+				}
+				else signsTimeFactor[0] *= 2;
+			}
+		};
+		add( new PointerArea( title.x + 5, title.y + 4, 135, 28 ) {
+			@Override
+			protected void onClick(PointerEvent event) {
+				signsClickListener.call();
+			}
+		});
+		add( new PointerArea( title.x + 43, title.y + 32, 58, 28 ) {
+			@Override
+			protected void onClick(PointerEvent event) {
+				signsClickListener.call();
+			}
+		});
+		add( new PointerArea( title.x + 22, title.y + 55, 100, 31 ) {
+			@Override
+			protected void onClick(PointerEvent event) {
+				signsClickListener.call();
+			}
+		});
 
 		final Chrome.Type GREY_TR = Chrome.Type.GREY_BUTTON_TR;
 		
@@ -217,8 +305,21 @@ public class TitleScene extends PixelScene {
 		reloaded.y = title.y + title.height - reloaded.height;
 		align( reloaded );
 
-		placeTorch(title.x + 28, title.y + 46);
-		placeTorch(title.x + title.width - 28, title.y + 46);
+		add( new PointerArea( reloaded ) {
+			@Override
+			protected void onClick(PointerEvent event) {
+				sword.x = swordXInit;
+				align( sword );
+				shield.angularSpeed = 0;
+				shield.angle = 0;
+				signsTimeFactor[0] = 1;
+
+				Sample.INSTANCE.play( Assets.Sounds.VOI_RELOADED, 1, 1.1f );
+			}
+		});
+
+		placeTorch( leftTorchX, torchY );
+		placeTorch( rightTorchX, torchY );
 	}
 	
 	private void placeTorch( float x, float y ) {

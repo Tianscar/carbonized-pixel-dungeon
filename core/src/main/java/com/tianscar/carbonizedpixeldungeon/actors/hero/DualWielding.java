@@ -108,7 +108,7 @@ public class DualWielding {
         if (wep instanceof MissileWeapon || wep instanceof SpiritBow) return wep.accuracyFactor(owner);
         KindOfWeapon ext = extra();
         if (canWeaponAttack && canExtraAttack)
-            return Math.max(wep.accuracyFactor(owner), ext.accuracyFactor(owner)) * 1.1f;
+            return Math.max(wep.accuracyFactor(owner), ext.accuracyFactor(owner)) * 1.2f;
         else if (canWeaponAttack) return wep.accuracyFactor(owner);
         else if (canExtraAttack) return ext.accuracyFactor(owner);
         else return 0;

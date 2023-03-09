@@ -120,7 +120,7 @@ public class PrisonBossLevel extends Level {
 		bundle.put( STATE, state );
 		bundle.put( TENGU, tengu );
 		bundle.put( STORED_ITEMS, storedItems);
-		bundle.put(TRIGGERED, triggered );
+		bundle.put( TRIGGERED, triggered );
 	}
 	
 	@Override

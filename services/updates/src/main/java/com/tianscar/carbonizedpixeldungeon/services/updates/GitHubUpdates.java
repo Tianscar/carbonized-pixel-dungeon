@@ -29,6 +29,7 @@ import com.badlogic.gdx.Net;
 import com.tianscar.pixeldungeonclasses.utils.GameSettings;
 
 import javax.net.ssl.SSLProtocolException;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -91,8 +92,15 @@ public class GitHubUpdates extends UpdateService {
 						update.versionName = latestRelease.getString("name");
 						update.versionCode = latestVersionCode;
 						Matcher m;
-						String lang = GameSettings.getString("language", null);
-						if ("cn".equals(lang)) {
+						Locale defaultLocale = Locale.getDefault();
+						if (defaultLocale.getLanguage().equals("zh")) {
+							if (defaultLocale.getCountry().equals("HK") || defaultLocale.getCountry().equals("MO") || defaultLocale.getCountry().equals("TW")) {
+								defaultLocale = new Locale("tc");
+							}
+							else defaultLocale = new Locale("zh");
+						}
+						String lang = GameSettings.getString("language", defaultLocale.getLanguage());
+						if ("zh".equals(lang)) {
 							m = descPatternZH.matcher(latestRelease.getString("body"));
 						}
 						else if ("tc".equals(lang)) {

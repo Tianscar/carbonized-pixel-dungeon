@@ -42,11 +42,17 @@ public class Assets {
 		public static final String TILES_CITY	= "environment/tiles_city.png";
 		public static final String TILES_HALLS	= "environment/tiles_halls.png";
 
-		public static final String WATER_SEWERS	= "environment/water0.png";
-		public static final String WATER_PRISON	= "environment/water1.png";
-		public static final String WATER_CAVES	= "environment/water2.png";
-		public static final String WATER_CITY	= "environment/water3.png";
-		public static final String WATER_HALLS	= "environment/water4.png";
+		public static final String TILES_INN	= "environment/tiles_inn.png";
+		public static final String TILES_SOKOBAN= "environment/tiles_inn.png";
+
+		public static final String WATER_SEWERS	= "environment/water_sewers.png";
+		public static final String WATER_PRISON	= "environment/water_prison.png";
+		public static final String WATER_CAVES	= "environment/water_caves.png";
+		public static final String WATER_CITY	= "environment/water_city.png";
+		public static final String WATER_HALLS	= "environment/water_halls.png";
+
+		public static final String WATER_INN	= "environment/water_inn.png";
+		public static final String WATER_SOKOBAN= "environment/water_sokoban.png";
 
 		public static final String WEAK_FLOOR       = "environment/custom_tiles/weak_floor.png";
 		public static final String SEWER_BOSS       = "environment/custom_tiles/sewer_boss.png";
@@ -67,6 +73,8 @@ public class Assets {
 		public static final String ARCS_FG  = "interfaces/arcs2.png";
 
 		public static final String BANNERS	= "interfaces/banners.png";
+
+		public static final String TITLE    = "interfaces/banners2.png";
 		public static final String RELOADED	= "interfaces/reloaded.png";
 		public static final String BADGES	= "interfaces/badges.png";
 		public static final String LOCKED	= "interfaces/locked_badge.png";
@@ -90,6 +98,9 @@ public class Assets {
 		public static final String LOADING_CAVES	= "interfaces/loading_caves.png";
 		public static final String LOADING_CITY	    = "interfaces/loading_city.png";
 		public static final String LOADING_HALLS	= "interfaces/loading_halls.png";
+
+		public static final String LOADING_INN	    = "interfaces/loading_inn.png";
+		public static final String LOADING_SOKOBAN	= "interfaces/loading_sokoban.png";
 
 		public static final String BUFFS_SMALL	= "interfaces/buffs.png";
 		public static final String BUFFS_LARGE	= "interfaces/large_buffs.png";
@@ -115,23 +126,25 @@ public class Assets {
 
 	public static class Music {
 
-		public static final String TITLE     	= "music/title.ogg";
+		public static final String THEME  	    = "music/theme.ogg";
 
 		public static final String THEME_1  	= "music/theme_1.ogg";
 		public static final String THEME_2	    = "music/theme_2.ogg";
 
+		public static final String TITLE     	= "music/title.ogg";
+		public static final String RANKINGS  	= "music/rankings.ogg";
+		public static final String HERO_SELECT  = "music/hero_select.ogg";
 		public static final String SURFACE  	= "music/surface.ogg";
 
-		public static final String HERO_SELECT  = "music/hero_select.ogg";
-
 		public static final String INN          = "music/inn.png";
+
+		public static final String SOKOBAN  	= "music/sokoban.ogg";
+
+		public static final String GAME  	    = "music/game.ogg";
 
 		public static final String SEWERS_1     = "music/sewers_1.ogg";
 		public static final String SEWERS_2     = "music/sewers_2.ogg";
 		public static final String SEWERS_BOSS  = "music/sewers_boss.ogg";
-
-		public static final String SOKOBAN  	= "music/sokoban.ogg";
-
 
 		public static final String PRISON_1     = "music/prison_1.ogg";
 		public static final String PRISON_2     = "music/prison_2.ogg";
@@ -226,6 +239,8 @@ public class Assets {
 		public static final String SCAN     = "sounds/scan.mp3";
 		public static final String SHEEP    = "sounds/sheep.mp3";
 
+		public static final String VOI_RELOADED   = "sounds/voi_reloaded.mp3";
+
 		public static final String[] all = new String[]{
 				CLICK, BADGE, GOLD,
 
@@ -237,7 +252,9 @@ public class Assets {
 				DESCEND, EAT, READ, LULLABY, DRINK, SHATTER, ZAP, LIGHTNING, LEVELUP, DEATH,
 				CHALLENGE, CURSED, TRAP, EVOKE, TOMB, ALERT, MELD, BOSS, BLAST, PLANT, RAY, BEACON,
 				TELEPORT, CHARMS, MASTERY, PUFF, ROCKS, BURNING, FALLING, GHOST, SECRET, BONES,
-				BEE, DEGRADE, MIMIC, DEBUFF, CHARGEUP, GAS, CHAINS, SCAN, SHEEP
+				BEE, DEGRADE, MIMIC, DEBUFF, CHARGEUP, GAS, CHAINS, SCAN, SHEEP,
+
+				VOI_RELOADED
 		};
 	}
 
@@ -249,6 +266,7 @@ public class Assets {
 		public static final String MAGE		= "sprites/mage.png";
 		public static final String ROGUE	= "sprites/rogue.png";
 		public static final String HUNTRESS	= "sprites/huntress.png";
+		public static final String ARCHER	= "sprites/archer.png";
 		public static final String AVATARS	= "sprites/avatars.png";
 		public static final String PET		= "sprites/pet.png";
 		public static final String AMULET	= "sprites/amulet.png";
@@ -307,5 +325,6 @@ public class Assets {
 		public static final String LOTUS	= "sprites/lotus.png";
 		public static final String NINJA_LOG= "sprites/ninja_log.png";
 		public static final String SPIRIT_HAWK= "sprites/spirit_hawk.png";
+		public static final String TIANSCAR = "sprites/tianscar.png";
 	}
 }

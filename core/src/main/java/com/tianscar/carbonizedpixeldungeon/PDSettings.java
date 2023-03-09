@@ -134,15 +134,10 @@ public class PDSettings extends GameSettings {
 	}
 	
 	//Interface
-	
-	public static final String KEY_QUICKSLOTS	= "quickslots";
+
 	public static final String KEY_FLIPTOOLBAR	= "flipped_ui";
 	public static final String KEY_FLIPTAGS 	= "flip_tags";
 	public static final String KEY_BARMODE		= "toolbar_mode";
-	
-	public static void quickSlots( int value ){ put( KEY_QUICKSLOTS, value ); }
-	
-	public static int quickSlots(){ return getInt( KEY_QUICKSLOTS, 0, 0, 8); }
 	
 	public static void flipToolbar( boolean value) {
 		put(KEY_FLIPTOOLBAR, value );
@@ -303,7 +298,7 @@ public class PDSettings extends GameSettings {
 	}
 
 	public static boolean betas(){
-		return getBoolean(KEY_BETAS, Game.version.contains("ALPHA") || Game.version.contains("BETA") || Game.version.contains("RC"));
+		return getBoolean(KEY_BETAS, Game.version.contains("ALPHA") || Game.version.contains("BETA") || Game.version.contains("RC") || Game.version.contains("INDEV"));
 	}
 
 	public static void WiFi(boolean value){

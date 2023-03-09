@@ -91,8 +91,10 @@ public class RenderedText extends Image {
 		
 		font = Game.platform.getFont(size, text, true, true, false);
 		
-		if (font != null){
-			GlyphLayout glyphs = new GlyphLayout( font, text);
+		if (font != null) {
+			GlyphLayout glyphs = new GlyphLayout( font, text );
+			float glyphsWidth = glyphs.width;
+			float glyphsHeight = glyphs.height;
 
 			for (char c : text.toCharArray()) {
 				BitmapFont.Glyph g = font.getData().getGlyph(c);
@@ -117,14 +119,14 @@ public class RenderedText extends Image {
 			// with fullwidth punctuation marks in some asian scripts
 			BitmapFont.Glyph lastGlyph = font.getData().getGlyph(text.charAt(text.length()-1));
 			if (lastGlyph != null && lastGlyph.xadvance > lastGlyph.width*1.5f){
-				width = glyphs.width - lastGlyph.width + lastGlyph.xadvance;
+				width = glyphsWidth - lastGlyph.width + lastGlyph.xadvance;
 			} else {
-				width = glyphs.width;
+				width = glyphsWidth;
 			}
 			
 			//this is identical to l.height in most cases, but we force this for consistency.
 			height = Math.round(size*0.75f);
-			renderedHeight = glyphs.height;
+			renderedHeight = glyphsHeight;
 		}
 	}
 	

@@ -31,6 +31,8 @@ import java.util.Collection;
 
 public class QuickSlot {
 
+	public int quickslots = 0;
+
 	/**
 	 * Slots contain objects which are also in a player's inventory. The one exception to this is when quantity is 0,
 	 * which can happen for a stackable item that has been 'used up', these are refered to a placeholders.
@@ -113,8 +115,9 @@ public class QuickSlot {
 		return Random.element(result);
 	}
 
-	private final String PLACEHOLDERS = "placeholders";
-	private final String PLACEMENTS = "placements";
+	private static final String PLACEHOLDERS = "placeholders";
+	private static final String PLACEMENTS = "placements";
+	private static final String QUICKSLOTS = "quickslots";
 
 	/**
 	 * Placements array is used as order is preserved while bundling, but exact index is not, so if we
@@ -133,11 +136,13 @@ public class QuickSlot {
 			}
 		bundle.put( PLACEHOLDERS, placeholders );
 		bundle.put( PLACEMENTS, placements );
+		bundle.put( QUICKSLOTS, quickslots );
 	}
 
 	public void restorePlaceholders(Bundle bundle){
-		Collection<Bundlable> placeholders = bundle.getCollection(PLACEHOLDERS);
+		Collection<Bundlable> placeholders = bundle.getCollection( PLACEHOLDERS );
 		boolean[] placements = bundle.getBooleanArray( PLACEMENTS );
+		quickslots = bundle.getInt( QUICKSLOTS );
 
 		int i = 0;
 		for (Bundlable item : placeholders){

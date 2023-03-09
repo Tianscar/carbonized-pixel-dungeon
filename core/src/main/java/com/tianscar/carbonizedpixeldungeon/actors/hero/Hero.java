@@ -298,8 +298,7 @@ public class Hero extends Char {
 		lvl = bundle.getInt( LEVEL );
 		exp = bundle.getInt( EXPERIENCE );
 
-		HTBoost = bundle.getInt(HTBOOST);
-
+		HTBoost = bundle.getInt( HTBOOST );
 		HGRecorded = bundle.getInt( HGRECORDED );
 
 		super.restoreFromBundle( bundle );
@@ -1749,7 +1748,13 @@ public class Hero extends Char {
 			}
 		}
 
-		GameScene.gameOver();
+		Game.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				GameScene.gameOver();
+				Sample.INSTANCE.play( Assets.Sounds.DEATH );
+			}
+		});
 		
 		if (cause instanceof Hero.Doom) {
 			((Hero.Doom)cause).onDeath();

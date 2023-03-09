@@ -60,7 +60,7 @@ public class RankingsScene extends PixelScene {
 		super.create();
 
 		Music.INSTANCE.playTracks(
-				new String[]{Assets.Music.TITLE},
+				new String[]{Assets.Music.RANKINGS},
 				new float[]{1},
 				false);
 

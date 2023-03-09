@@ -44,9 +44,9 @@ public class Toolbar extends Component {
 	private Tool btnWait;
 	private Tool btnExamine;
 	private Tool btnInventory;
-	private SwitchQuickSlotTool btnChangeSlot;
+	private SwitchQuickSlotTool btnSwitchSlot;
 	private QuickslotTool[] btnQuick;
-	private int sumVisibleSlots;
+	private int numVisibleSlots;
 
 	private PickedUpItem pickedUp;
 
@@ -72,18 +72,18 @@ public class Toolbar extends Component {
 	@Override
 	protected void createChildren() {
 
-		sumVisibleSlots = 2;
-		if (PixelScene.uiCamera.width > 120) sumVisibleSlots++;
-		if (PixelScene.uiCamera.width > 138) sumVisibleSlots++;
-		if (PixelScene.uiCamera.width > 156) sumVisibleSlots++;
-		if (PixelScene.uiCamera.width > 174) sumVisibleSlots++;
-		if (PixelScene.uiCamera.width > 192) sumVisibleSlots++;
-		if (PixelScene.uiCamera.width > 210) sumVisibleSlots++;
-		if (PixelScene.uiCamera.width > 228) sumVisibleSlots++;
+		numVisibleSlots = 2;
+		if (PixelScene.uiCamera.width > 120) numVisibleSlots++;
+		if (PixelScene.uiCamera.width > 138) numVisibleSlots++;
+		if (PixelScene.uiCamera.width > 156) numVisibleSlots++;
+		if (PixelScene.uiCamera.width > 174) numVisibleSlots++;
+		if (PixelScene.uiCamera.width > 192) numVisibleSlots++;
+		if (PixelScene.uiCamera.width > 210) numVisibleSlots++;
+		if (PixelScene.uiCamera.width > 228) numVisibleSlots++;
 
-		if (sumVisibleSlots < QuickSlot.SIZE) {
-			sumVisibleSlots--;
-			add( btnChangeSlot = new SwitchQuickSlotTool( 125, 0, 16, 16) );
+		if (numVisibleSlots < QuickSlot.SIZE) {
+			numVisibleSlots--;
+			add( btnSwitchSlot = new SwitchQuickSlotTool( 125, 0, 16, 16) );
 		}
 
 		btnQuick = new QuickslotTool[QuickSlot.SIZE];
@@ -190,7 +190,7 @@ public class Toolbar extends Component {
 
 			@Override
 			protected boolean onLongClick() {
-				GameScene.show(new WndQuickBag(null));
+				GameScene.show(new WndQuickBag());
 				return true;
 			}
 
@@ -216,16 +216,16 @@ public class Toolbar extends Component {
 
 		float right = width;
 
-		final int quickSlots = sumVisibleSlots == QuickSlot.SIZE ? 0 : PDSettings.quickSlots();
+		final int quickSlots = numVisibleSlots == QuickSlot.SIZE ? 0 : Dungeon.quickslot.quickslots;
 		int slotIndex;
-		for(int i = 0; i < sumVisibleSlots; i++) {
+		for(int i = 0; i < numVisibleSlots; i++) {
 			slotIndex = boundIndex(quickSlots + i);
 			if (i == 0 && !PDSettings.flipToolbar() ||
-					i == sumVisibleSlots-1 && PDSettings.flipToolbar()){
+					i == numVisibleSlots -1 && PDSettings.flipToolbar()){
 				btnQuick[slotIndex].border(0, 2);
 				btnQuick[slotIndex].frame(106, 0, 19, 24);
 			} else if (i == 0 && PDSettings.flipToolbar() ||
-					i == sumVisibleSlots-1 && !PDSettings.flipToolbar()){
+					i == numVisibleSlots -1 && !PDSettings.flipToolbar()){
 				btnQuick[slotIndex].border(2, 1);
 				btnQuick[slotIndex].frame(86, 0, 20, 24);
 			} else {
@@ -245,12 +245,12 @@ public class Toolbar extends Component {
 				btnInventory.setPos(right - btnInventory.width(), y);
 
 				btnQuick[slotIndex].setPos(btnInventory.left() - btnQuick[slotIndex].width(), y + 2);
-				for (int i = 1; i < sumVisibleSlots; i++) {
+				for (int i = 1; i < numVisibleSlots; i++) {
 					slotIndex = boundIndex(quickSlots + i);
 					visible[slotIndex] = true;
 					btnQuick[slotIndex].setPos(btnQuick[boundIndex(quickSlots+i-1)].left() - btnQuick[slotIndex].width(), y + 2);
 				}
-				if (sumVisibleSlots < QuickSlot.SIZE) btnChangeSlot.setPos(btnQuick[slotIndex].left() - btnChangeSlot.width(), y + 10);
+				if (numVisibleSlots < QuickSlot.SIZE) btnSwitchSlot.setPos(btnQuick[slotIndex].left() - btnSwitchSlot.width(), y + 10);
 
 				break;
 
@@ -260,7 +260,7 @@ public class Toolbar extends Component {
 				for(Button slot : btnQuick){
 					if (slot.visible) toolbarWidth += slot.width();
 				}
-				if (sumVisibleSlots < QuickSlot.SIZE) toolbarWidth += btnChangeSlot.width();
+				if (numVisibleSlots < QuickSlot.SIZE) toolbarWidth += btnSwitchSlot.width();
 				right = (width + toolbarWidth)/2;
 
 			case GROUP:
@@ -269,12 +269,12 @@ public class Toolbar extends Component {
 				btnInventory.setPos(btnExamine.left() - btnInventory.width(), y);
 
 				btnQuick[slotIndex].setPos(btnInventory.left() - btnQuick[slotIndex].width(), y + 2);
-				for (int i = 1; i < sumVisibleSlots; i++) {
+				for (int i = 1; i < numVisibleSlots; i++) {
 					slotIndex = boundIndex(quickSlots + i);
 					visible[slotIndex] = true;
 					btnQuick[slotIndex].setPos(btnQuick[boundIndex(quickSlots+i-1)].left() - btnQuick[slotIndex].width(), y + 2);
 				}
-				if (sumVisibleSlots < QuickSlot.SIZE) btnChangeSlot.setPos(btnQuick[slotIndex].left() - btnChangeSlot.width(), y + 10);
+				if (numVisibleSlots < QuickSlot.SIZE) btnSwitchSlot.setPos(btnQuick[slotIndex].left() - btnSwitchSlot.width(), y + 10);
 
 				break;
 		}
@@ -290,11 +290,11 @@ public class Toolbar extends Component {
 			btnExamine.setPos( (right - btnExamine.right()), y);
 			btnInventory.setPos( (right - btnInventory.right()), y);
 
-			for(int i = 0; i < sumVisibleSlots; i++) {
+			for(int i = 0; i < numVisibleSlots; i++) {
 				slotIndex = boundIndex(quickSlots + i);
 				btnQuick[slotIndex].setPos( right - btnQuick[slotIndex].right(), y+2);
 			}
-			if (sumVisibleSlots < QuickSlot.SIZE) btnChangeSlot.setPos(right - btnChangeSlot.right(), y+10);
+			if (numVisibleSlots < QuickSlot.SIZE) btnSwitchSlot.setPos(right - btnSwitchSlot.right(), y+10);
 
 		}
 
@@ -360,7 +360,7 @@ public class Toolbar extends Component {
 
 		@Override
 		protected void onClick() {
-			PDSettings.quickSlots(instance.boundIndex(PDSettings.quickSlots() + instance.sumVisibleSlots));
+			Dungeon.quickslot.quickslots = instance.boundIndex(Dungeon.quickslot.quickslots + instance.numVisibleSlots);
 			instance.layout();
 		}
 
@@ -381,7 +381,7 @@ public class Toolbar extends Component {
 
 		protected void setFill(int quickslots) {
 			boolean[] visible = new boolean[9];
-			for (int i = 0; i < instance.sumVisibleSlots; i ++) {
+			for (int i = 0; i < instance.numVisibleSlots; i ++) {
 				visible[instance.boundIndex(i + quickslots)] = true;
 			}
 			fill[0].x = fill[3].x = fill[6].x = x + 2;
@@ -408,7 +408,7 @@ public class Toolbar extends Component {
 			bg.y = y;
 			PixelScene.align(bg);
 			super.layout();
-			setFill(PDSettings.quickSlots());
+			setFill(Dungeon.quickslot.quickslots);
 		}
 
 		@Override
@@ -419,6 +419,12 @@ public class Toolbar extends Component {
 		@Override
 		protected String hoverText() {
 			return Messages.titleCase(Messages.get(WndKeyBindings.class, "quickslot_switch"));
+		}
+
+		@Override
+		protected boolean onLongClick() {
+			GameScene.show(new WndQuickBag(Dungeon.quickslot));
+			return true;
 		}
 
 	}

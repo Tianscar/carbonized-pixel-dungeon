@@ -21,6 +21,7 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd;
 
+import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -29,6 +30,7 @@ import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
+import com.tianscar.pixeldungeonclasses.noosa.Image;
 
 import java.util.ArrayList;
 
@@ -39,7 +41,41 @@ public class v0_1_X_Changes {
 		ChangeInfo changes = new ChangeInfo( "v0.1.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_1_1_Changes( changeInfos );
 		add_v0_1_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_1_1_Changes( ArrayList<ChangeInfo> changeInfos ){
+
+		ChangeInfo changes = new ChangeInfo("v0.1.1", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new Image(Assets.Sprites.RAT, 0, 75, 16, 15), "老鼠、老鼠和老鼠！",
+				"_三种新老鼠的贴图来自过度生长的像素地牢_\n\n" +
+						"添加了三种老鼠：\n" +
+						"_- 壮年老鼠_的体能更强，反应力也更快。\n" +
+						"_- 老年老鼠_的体能较弱，但丰富的战斗经验弥补了这一点。\n" +
+						"_- 棕色老鼠_是一种常见的啮齿小鼠品种，攻击伤害更低，但和白化老鼠一样，会造成流血效果。"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "BGM更新",
+						"_-_ 关于界面（破碎的像素地牢部分）：来自破碎的像素地牢\n" +
+						"_-_ 排行榜界面：破碎的像素地牢的已废弃幸福结局BGM"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"_-_ 修改了标题界面（有彩蛋！）\n" +
+						"_-_ 修改了部分贴图（来自Daniel Calan）\n" +
+						"_-_ 修改了英雄选择界面，加回了标题，并且背景图现在每小时都会不一样！"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SAI, null), "武器双持改动",
+				"现在武器双持的命中率为双武器最大值的1.2倍。"));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.1.0的bug）：\n" +
+						"_-_ 死亡界面的崩溃问题" +
+						"_-_ 更新界面只有英文的问题"));
 
 	}
 
@@ -50,7 +86,6 @@ public class v0_1_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.CAPD), "开发者的留言",
-				"_我不会再停更了，无论出于什么原因。_\n\n" +
 						"_-_ 2023年2月25日更新\n" +
 						"\n" +
 						"v0.1.0是碳素地牢的第一个重载版本！这次完全是重制。该版本仍然基于破碎的像素地牢v1.0.3。\n" +

@@ -612,7 +612,7 @@ public class WndSettings extends WndTabbed {
 						@Override
 						protected void onClick() {
 							super.onClick();
-							PDSettings.updates(checked());
+							PDSettings.betas(checked());
 							Updates.clearUpdate();
 						}
 					};

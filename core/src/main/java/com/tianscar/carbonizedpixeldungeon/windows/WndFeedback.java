@@ -47,7 +47,7 @@ public class WndFeedback extends Window {
         message += "\n\n" + Messages.get(this, "feedback_msg");
         message += "\n" + Messages.get(this, "feedback_msg_pr");
         message += "\n\n" + Messages.get(this, "thanks");
-        message += "\n\n_-_ Karstian";
+        message += "\n\n_-_ Tianscar";
 
         RenderedTextBlock text = PixelScene.renderTextBlock( 6 );
         text.text( message, width );

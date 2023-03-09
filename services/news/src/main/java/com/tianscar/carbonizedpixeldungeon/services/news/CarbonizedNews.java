@@ -71,7 +71,7 @@ public class CarbonizedNews extends NewsService {
 					}
 					article.summary = xmlArticle.get("summary").trim()
 							.replaceAll("-", "_-_")
-							.replaceAll("<p>", "")
+							.replaceAll("<p>", "\n")
 							.replaceAll("</p>", "")
 							.replaceAll("<br>", "\n")
 							.replaceAll("<br/>", "\n");

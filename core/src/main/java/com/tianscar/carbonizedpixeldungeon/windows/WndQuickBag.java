@@ -3,6 +3,7 @@ package com.tianscar.carbonizedpixeldungeon.windows;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.QuickSlot;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.LostInventory;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.items.EquipableItem;
@@ -12,7 +13,6 @@ import com.tianscar.carbonizedpixeldungeon.items.artifacts.Artifact;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
-import com.tianscar.carbonizedpixeldungeon.messages.Languages;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
@@ -28,12 +28,11 @@ import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class WndQuickBag extends Window {
 
-	private static Item bag;
-
-	public WndQuickBag(Bag bag){
+	public WndQuickBag(List<Item> items) {
 		super(0, 0, 0, Chrome.get(Chrome.Type.TOAST_TR));
 
 		if( WndBag.INSTANCE != null ){
@@ -41,33 +40,12 @@ public class WndQuickBag extends Window {
 		}
 		WndBag.INSTANCE = this;
 
-		WndQuickBag.bag = bag;
-
 		float width = 0, height = 0;
 		int maxWidth = PixelScene.landscape() ? 240 : 135;
 		int left = 0;
 		int top = 10;
 
-		ArrayList<Item> items = new ArrayList<>();
-
-		for (Item i : bag == null ? Dungeon.hero.belongings : bag){
-			if (i.defaultAction == null){
-				continue;
-			}
-			if (i instanceof Bag) {
-				continue;
-			}
-			if (i instanceof Artifact
-					&& !i.isEquipped(Dungeon.hero)
-					&& (!(i instanceof CloakOfShadows) || !Dungeon.hero.hasTalent(Talent.LIGHT_CLOAK))){
-				continue;
-			}
-			items.add(i);
-		}
-
-		Collections.sort(items, quickBagComparator);
-
-		if (items.isEmpty()){
+		if (items == null || items.isEmpty()){
 			hide();
 			return;
 		}
@@ -121,7 +99,52 @@ public class WndQuickBag extends Window {
 
 		//offset to be above the toolbar
 		offset((int) (bottom/2 - 30 - height/2));
+	}
 
+	public WndQuickBag(QuickSlot quickslot) {
+		this(getQuickSlotItems(quickslot));
+	}
+
+	private static List<Item> getQuickSlotItems(QuickSlot quickslot) {
+		ArrayList<Item> items = new ArrayList<>();
+		Item item;
+		for (int i = 0; i < QuickSlot.SIZE; i ++) {
+			if ((item = quickslot.getItem(i)) != null) {
+				items.add(item);
+			}
+		}
+		return items;
+	}
+
+	public WndQuickBag(Bag bag) {
+		this(getBagItems(bag));
+	}
+
+	public WndQuickBag() {
+		this((Bag) null);
+	}
+
+	private static List<Item> getBagItems( Bag bag ) {
+		ArrayList<Item> items = new ArrayList<>();
+
+		for (Item i : bag == null ? Dungeon.hero.belongings : bag){
+			if (i.defaultAction == null){
+				continue;
+			}
+			if (i instanceof Bag) {
+				continue;
+			}
+			if (i instanceof Artifact
+					&& !i.isEquipped(Dungeon.hero)
+					&& (!(i instanceof CloakOfShadows) || !Dungeon.hero.hasTalent(Talent.LIGHT_CLOAK))){
+				continue;
+			}
+			items.add(i);
+		}
+
+		Collections.sort(items, quickBagComparator);
+
+		return items;
 	}
 
 	public static final Comparator<Item> quickBagComparator = new Comparator<Item>() {
@@ -226,8 +249,8 @@ public class WndQuickBag extends Window {
 
 			hide();
 			item.execute(Dungeon.hero);
-			if (item.usesTargeting && bag != null){
-				int idx = Dungeon.quickslot.getSlot(WndQuickBag.bag);
+			if (item.usesTargeting){
+				int idx = Dungeon.quickslot.getSlot(item);
 				if (idx != -1){
 					QuickSlotButton.useTargeting(idx);
 				}

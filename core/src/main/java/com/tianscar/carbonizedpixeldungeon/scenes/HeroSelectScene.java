@@ -23,6 +23,7 @@ package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.*;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
+import com.tianscar.carbonizedpixeldungeon.effects.BannerSprites;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.ui.*;
 import com.tianscar.carbonizedpixeldungeon.windows.WndChallenges;
@@ -46,7 +47,7 @@ import java.util.Calendar;
 
 public class HeroSelectScene extends PixelScene {
 
-	private static HeroClass[] heroClasses = new HeroClass[] {
+	private static final HeroClass[] heroClasses = new HeroClass[] {
 			HeroClass.WARRIOR,
 			HeroClass.MAGE,
 			HeroClass.ROGUE,
@@ -62,6 +63,8 @@ public class HeroSelectScene extends PixelScene {
 	private static HeroClass heroClass() {
 		return heroClasses[heroClassIndex];
 	}
+
+	private static final int TITLE_HEIGHT = 22;
 
 	private static final int FRAME_WIDTH    = 88;
 	private static final int FRAME_HEIGHT    = 125;
@@ -105,7 +108,7 @@ public class HeroSelectScene extends PixelScene {
 		
 		int w = Camera.main.width;
 		int h = Camera.main.height;
-		
+
 		Archs archs = new Archs();
 		archs.setSize( w, h );
 		add( archs );
@@ -113,20 +116,42 @@ public class HeroSelectScene extends PixelScene {
 		//darkens the arches
 		add(new ColorBlock(w, h, 0x88000000));
 
-		float vx = align((w - SKY_WIDTH) / 2f);
-		float vy = align((h - SKY_HEIGHT - BUTTON_HEIGHT) / 2f);
+		boolean addTitle = true;
 
-		Point s = Camera.main.cameraToScreen( vx, vy );
+		float vx = align((w - SKY_WIDTH) / 2f);
+		float vh = SKY_HEIGHT + BUTTON_HEIGHT + TITLE_HEIGHT + FRAME_MARGIN_TOP * 2;
+		if (vh >= h) {
+			vh -= (TITLE_HEIGHT + FRAME_MARGIN_TOP * 2);
+			addTitle = false;
+		}
+		float vy = align((h - vh) / 2f);
+
+		float titleBottom;
+
+		if (addTitle) {
+			Image title = BannerSprites.get( BannerSprites.Type.SELECT_YOUR_HERO );
+
+			add( title );
+
+			title.x = align( (w - title.width()) / 2 );
+			title.y = align( vy + title.height() / 2 - FRAME_MARGIN_TOP );
+
+			titleBottom = align( title.y + title.height() + FRAME_MARGIN_TOP );
+		}
+		else titleBottom = vy;
+
+		Point s = Camera.main.cameraToScreen( vx, titleBottom );
 		viewport = new Camera( s.x, s.y, SKY_WIDTH, SKY_HEIGHT, defaultZoom );
 		Camera.add( viewport );
 		
 		Group window = new Group();
 		window.camera = viewport;
 		add( window );
+
+		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		boolean dayTime = hour >= 7 && hour <= 18;
 		
-		boolean dayTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 7;
-		
-		Sky sky = new Sky( dayTime );
+		Sky sky = new Sky( hour );
 		sky.scale.set( SKY_WIDTH, SKY_HEIGHT );
 		window.add( sky );
 		
@@ -183,7 +208,7 @@ public class HeroSelectScene extends PixelScene {
 
 		frame.frame( FRAME_WIDTH + GrassPatch.WIDTH*4, 0, FRAME_WIDTH, FRAME_HEIGHT );
 		frame.x = vx - FRAME_MARGIN_X;
-		frame.y = vy - FRAME_MARGIN_TOP;
+		frame.y = titleBottom - FRAME_MARGIN_TOP;
 		add( frame );
 
 		if (dayTime) {
@@ -373,17 +398,44 @@ public class HeroSelectScene extends PixelScene {
 	}
 	
 	private static class Sky extends Visual {
-		
+
 		private static final int[] day		= {0xFF4488FF, 0xFFCCEEFF};
 		private static final int[] night	= {0xFF001155, 0xFF335980};
+
+		private static final int[][] gradients = new int[][] {
+				{ 0xff012459, 0xff001322 },
+				{ 0xff003972, 0xff001322 },
+				{ 0xff003972, 0xff001322 },
+				{ 0xff004372, 0xff00182b },
+				{ 0xff004372, 0xff011d34 },
+				{ 0xff016792, 0xff00182b },
+				{ 0xff07729f, 0xff042c47 },
+				{ 0xff12a1c0, 0xff07506e },
+				{ 0xff74d4cc, 0xff1386a6 },
+				{ 0xffefeebc, 0xff61d0cf },
+				{ 0xfffee154, 0xffa3dec6 },
+				{ 0xfffdc352, 0xffe8ed92 },
+				{ 0xffffac6f, 0xffffe467 },
+				{ 0xfffda65a, 0xffffe467 },
+				{ 0xfffd9e58, 0xffffe467 },
+				{ 0xfff18448, 0xffffd364 },
+				{ 0xfff06b7e, 0xfff9a856 },
+				{ 0xffca5a92, 0xfff4896b },
+				{ 0xff5b2c83, 0xffd1628b },
+				{ 0xff371a79, 0xff713684 },
+				{ 0xff28166b, 0xff45217c },
+				{ 0xff192861, 0xff372074 },
+				{ 0xff040b3c, 0xff233072 },
+				{ 0xff040b3c, 0xff012459 },
+		};
 		
 		private SmartTexture texture;
 		private FloatBuffer verticesBuffer;
 		
-		public Sky( boolean dayTime ) {
+		public Sky( int hour ) {
 			super( 0, 0, 1, 1 );
 
-			texture = TextureCache.createGradient( dayTime ? day : night );
+			texture = TextureCache.createGradient( gradients[hour] );
 			
 			float[] vertices = new float[16];
 			verticesBuffer = Quad.create();
