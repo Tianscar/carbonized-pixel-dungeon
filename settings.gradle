@@ -1,7 +1,14 @@
 //core game code modules
+include ':PD-classes'
 include ':core'
 
 //platform modules
 include ':android'
-include ':ios'
 include ':desktop'
+
+//service modules
+include ':services'
+    //updates
+    include ':services:updates'
+    //news
+    include ':services:news'

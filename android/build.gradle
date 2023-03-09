@@ -16,8 +16,9 @@ android {
         //noinspection MinSdkTooLow
         minSdkVersion appAndroidMinSDK
         targetSdkVersion appAndroidTargetSDK
-        resConfigs 'en_US', 'cs', 'tr', 'ca', 'ko', 'pl', 'it', 'ja', 'eo', 'ru', 'zh_CN', 'zh_TW', 'de', 'fr', 'es', 'pt', 'fi', 'hu', 'in'
 
+        resConfigs "en_US", "cs", "tr", "ca", "ko", "pl", "it", "ja",
+                "eo", "ru", 'zh_CN', 'zh_TW', "de", "fr", "es", "pt", "fi", "hu", "in"
     }
 
     buildTypes {
@@ -26,18 +27,20 @@ android {
             versionNameSuffix '-INDEV'
         }
         release {
+            applicationIdSuffix ".alpha"
+            versionNameSuffix '-ALPHA'
 
             //These lines enable R8, which is a code shrinker/optimizer/obfuscator.
             //This makes release APKs smaller and more efficient, but also makes debugging trickier
             //as the information produced in stack traces must be de-obfuscated.
             //See here: https://developer.android.com/studio/build/shrink-code#decode-stack-trace
-            shrinkResources false
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
         }
     }
-    namespace 'com.ansdoship.carbonizedpixeldungeon.android'
+
+    namespace 'com.tianscar.carbonizedpixeldungeon.android'
     applicationVariants.all { variant ->
         if (variant.buildType.name == 'release') {
             variant.outputs.all {
@@ -57,6 +60,8 @@ configurations { natives }
 
 dependencies {
     implementation project(':core')
+    implementation project(':services:updates')
+    implementation project(':services:news')
 
     implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
     natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"

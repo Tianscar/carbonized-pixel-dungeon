@@ -4,10 +4,7 @@ apply plugin: 'java-library'
 sourceCompatibility = targetCompatibility = appJavaCompatibility
 
 dependencies {
-    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-    implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-    implementation "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
-
-    //noinspection GradleDependency , later JSON versions cause crashes on old versions of android
-    implementation "org.json:json:20170516"
+    api project(':PD-classes')//TODO might be nice to remove this, should decide
+    implementation project(':services:updates')
+    implementation project(':services:news')
 }

@@ -1,0 +1,137 @@
+/*
+ * Pixel Dungeon
+ * Copyright (C) 2012-2015 Oleg Dolya
+ *
+ * Shattered Pixel Dungeon
+ * Copyright (C) 2014-2021 Evan Debenham
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+package com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd;
+
+import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.Window;
+import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
+import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
+
+import java.util.ArrayList;
+
+public class v0_1_X_Changes {
+	
+	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ) {
+
+		ChangeInfo changes = new ChangeInfo( "v0.1.X", true, "");
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add( changes );
+		add_v0_1_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_1_0_Changes( ArrayList<ChangeInfo> changeInfos ){
+
+		ChangeInfo changes = new ChangeInfo("v0.1.0", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.CAPD), "开发者的留言",
+				"_我不会再停更了，无论出于什么原因。_\n\n" +
+						"_-_ 2023年2月25日更新\n" +
+						"\n" +
+						"v0.1.0是碳素地牢的第一个重载版本！这次完全是重制。该版本仍然基于破碎的像素地牢v1.0.3。\n" +
+						"\n" +
+						"理由仍是如此：因为不喜欢炼金能量更新，所以我选择了基于炼金能量更新之前的最后一个版本来修改。\n" +
+						"\n" +
+						"这个版本合入了部分原碳素地牢的内容，包括武器双持，不包括六属性、炼金/神器/药水/卷轴更新、护甲更新、职业更新、大佬鼠等。\n" +
+						"六属性以后应该不会再加入了，其他的看情况吧，如果希望某些元素回归可以直接邮件/Discord联系我给我发信息。"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "BGM更新",
+						"_-_ 标题界面：由Progressive Tune厂牌的Jasφn创作\n" +
+						"_-_ 英雄选择界面：来自NYRDS的Remixed Dungeon\n" +
+						"_-_ 地牢各个区域：来自后续版本的破碎的像素地牢"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.NEWS), "游戏新闻",
+				"_现在游戏新闻界面会显示碳素地牢的游戏新闻了！_\n\n" +
+						"这个功能会从carbonizedpd.tianscar.com拉来博客文章，然后在游戏中显示。它还会在有新文章时通知玩家。\n\n" +
+						"感谢Evan的Atom订阅代码和Hexo博客框架！我以后会尽量保持游戏新闻的更新的！"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"_-_ 现在英雄的饱食度会在状态栏上显示\n" +
+						"_-_ 快捷栏增加到最多9格，并且可以自由切换以适配窄屏幕\n" +
+						"_-_ 修改了关于界面\n" +
+						"_-_ 完全重做了英雄选择界面\n" +
+						"_-_ 更改了应用图标\n" +
+						"_-_ 添加了针对东亚语言的自定义像素字体（来自TakWolf）\n" +
+						"_-_ 更新了部分物品/界面贴图（来自Daniel Calan）\n" +
+						"_-_ 更改了主界面的背景图（来自Remixed Dungeon）\n" +
+						"_-_ 游戏内菜单的缩放调节按钮回归\n" +
+						"_-_ 对部分其他界面进行了小的调整/改进"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
+				"_-_ 新的语言：繁体中文！\n" +
+						"_-_ 添加了安卓/桌面端的简体/繁体中文崩溃界面\n" +
+						"_-_ 添加了简体/繁体中文的GitHub更新解析"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.BACKPACK), "背包增强",
+				"背包储存空间从20格提升到30格，其他容器从19格提升到29格。"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SAI, null), "新机制：武器双持",
+				"_将近战武器分为单手和双手，现在可以同时装备两把单手武器了！_\n\n" +
+						"武器双持的效果：\n" +
+						"_-_ 如果其中一个武器导致无法伏击，则无法伏击\n" +
+						"_-_ 格挡量为双武器格挡量的总和\n" +
+						"_-_ 双武器都能攻击到敌人时，“武器双持”生效\n" +
+						"_-_ “武器双持”生效时，命中率取双武器最大值的1.1倍，伤害/攻速取平均值，双武器附魔各检定一次" +
+						"\n\n" +
+						"以下为单手武器:\n" +
+						"_暗杀之刃_" +
+						"，_小刀_" +
+						"，_长匕首_" +
+						"，_手斧_" +
+						"，_铁头棍_" +
+						"，_硬头锤_" +
+						"，_老魔杖_" +
+						"，_圆盾_" +
+						"，_符文之刃_" +
+						"，_弯刀_" +
+						"，_短剑_" +
+						"，_单手剑_" +
+						"，_长鞭_" +
+						"，_链锤_" +
+						"，_破损的短剑_" +
+						"\n\n" +
+						"以下为双手武器:\n" +
+						"_战斧_" +
+						"，_十字弩_" +
+						"，_魔岩拳套_" +
+						"，_关刀_" +
+						"，_镶钉手套_" +
+						"，_巨斧_" +
+						"，_巨型方盾_" +
+						"，_巨剑_" +
+						"，_长剑_" +
+						"，_双钗_" +
+						"，_长矛_" +
+						"，_战锤_"));
+
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ANKH), "重生十字章增强",
+				"现在未祝福的重生十字章可以保留三个物品了。"));
+
+	}
+	
+}
