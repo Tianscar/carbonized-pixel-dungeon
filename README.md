@@ -1,8 +1,8 @@
 # Carbonized Pixel Dungeon
 [![Discord](https://img.shields.io/discord/978644808102994020?style=for-the-badge&logo=discord)](https://discord.gg/24Bykt4YfJ)
-![Code Size](https://img.shields.io/github/languages/code-size/Tianscar/carbonized-pixel-dungeon-reloaded?style=for-the-badge)
-![Latest Release Date](https://img.shields.io/github/release-date-pre/Tianscar/carbonized-pixel-dungeon-reloaded?style=for-the-badge)
-![Latest Release](https://img.shields.io/github/v/release/Tianscar/carbonized-pixel-dungeon-reloaded?include_prereleases&style=for-the-badge)
+![Code Size](https://img.shields.io/github/languages/code-size/Tianscar/carbonized-pixel-dungeon?style=for-the-badge)
+![Latest Release Date](https://img.shields.io/github/release-date-pre/Tianscar/carbonized-pixel-dungeon?style=for-the-badge)
+![Latest Release](https://img.shields.io/github/v/release/Tianscar/carbonized-pixel-dungeon?include_prereleases&style=for-the-badge)
 
 A Roguelike RPG, with randomly generated levels, items, enemies, and traps! Based on the [source code of Shattered Pixel Dungeon](https://github.com/00-Evan/shattered-pixel-dungeon), by [ShatteredPixel](https://shatteredpixel.com).
 
