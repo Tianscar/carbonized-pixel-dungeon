@@ -61,6 +61,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Gloves;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Buckler;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
@@ -141,6 +142,7 @@ public enum HeroClass {
 
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
+		(hero.belongings.extra = new Buckler()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
 		Dungeon.quickslot.setSlot(0, stones);

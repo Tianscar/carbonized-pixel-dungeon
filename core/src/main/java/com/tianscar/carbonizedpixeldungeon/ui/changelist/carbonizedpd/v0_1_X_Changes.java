@@ -22,6 +22,7 @@
 package com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Buckler;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -41,8 +42,28 @@ public class v0_1_X_Changes {
 		ChangeInfo changes = new ChangeInfo( "v0.1.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_1_2_Changes( changeInfos );
 		add_v0_1_1_Changes( changeInfos );
 		add_v0_1_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_1_2_Changes( ArrayList<ChangeInfo> changeInfos ){
+
+		ChangeInfo changes = new ChangeInfo("v0.1.2", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.BUCKLER), Messages.titleCase(Messages.get(Buckler.class, "name")),
+						"_战士开局携带第二把初始武器：小型圆盾_\n\n" +
+								Messages.get(Buckler.class, "desc")));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+						"_-_ 修改了部分贴图（来自Daniel Calan）\n" +
+						"_-_ 修改了幸福结局界面"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING), "删档警告",
+				"因为下个版本将全面重做天赋系统，所以将不兼容以前的存档"));
 
 	}
 
@@ -74,7 +95,7 @@ public class v0_1_X_Changes {
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
 				Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了（v0.1.0的bug）：\n" +
-						"_-_ 死亡界面的崩溃问题" +
+						"_-_ 死亡界面的崩溃问题\n" +
 						"_-_ 更新界面只有英文的问题"));
 
 	}

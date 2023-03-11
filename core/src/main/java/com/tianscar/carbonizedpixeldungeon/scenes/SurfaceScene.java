@@ -23,6 +23,7 @@ package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Badges;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.Ratmogrify;
@@ -110,10 +111,17 @@ public class SurfaceScene extends PixelScene {
 		Group window = new Group();
 		window.camera = viewport;
 		add( window );
-		
-		boolean dayTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 7;
-		
-		Sky sky = new Sky( dayTime );
+
+		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		boolean dayTime = hour >= 7 && hour <= 18;
+
+		Sky sky = new Sky( hour ) {
+			@Override
+			public void update() {
+				super.update();
+				if (hour != Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) CarbonizedPixelDungeon.seamlessResetScene();
+			}
+		};
 		sky.scale.set( SKY_WIDTH, SKY_HEIGHT );
 		window.add( sky );
 		
@@ -285,102 +293,129 @@ public class SurfaceScene extends PixelScene {
 	@Override
 	public void onBackPressed() {
 	}
-	
-	private static class Sky extends Visual {
-		
+
+	static class Sky extends Visual {
+
 		private static final int[] day		= {0xFF4488FF, 0xFFCCEEFF};
 		private static final int[] night	= {0xFF001155, 0xFF335980};
-		
+
+		private static final int[][] gradients = new int[][] {
+				{ 0xff012459, 0xff001322 },
+				{ 0xff003972, 0xff001322 },
+				{ 0xff003972, 0xff001322 },
+				{ 0xff004372, 0xff00182b },
+				{ 0xff004372, 0xff011d34 },
+				{ 0xff016792, 0xff00182b },
+				{ 0xff07729f, 0xff042c47 },
+				{ 0xff12a1c0, 0xff07506e },
+				{ 0xff74d4cc, 0xff1386a6 },
+				{ 0xffefeebc, 0xff61d0cf },
+				{ 0xfffee154, 0xffa3dec6 },
+				{ 0xfffdc352, 0xffe8ed92 },
+				{ 0xffffac6f, 0xffffe467 },
+				{ 0xfffda65a, 0xffffe467 },
+				{ 0xfffd9e58, 0xffffe467 },
+				{ 0xfff18448, 0xffffd364 },
+				{ 0xfff06b7e, 0xfff9a856 },
+				{ 0xffca5a92, 0xfff4896b },
+				{ 0xff5b2c83, 0xffd1628b },
+				{ 0xff371a79, 0xff713684 },
+				{ 0xff28166b, 0xff45217c },
+				{ 0xff192861, 0xff372074 },
+				{ 0xff040b3c, 0xff233072 },
+				{ 0xff040b3c, 0xff012459 },
+		};
+
 		private SmartTexture texture;
 		private FloatBuffer verticesBuffer;
-		
-		public Sky( boolean dayTime ) {
+
+		public Sky( int hour ) {
 			super( 0, 0, 1, 1 );
 
-			texture = TextureCache.createGradient( dayTime ? day : night );
-			
+			texture = TextureCache.createGradient( gradients[hour] );
+
 			float[] vertices = new float[16];
 			verticesBuffer = Quad.create();
-			
+
 			vertices[2]		= 0.25f;
 			vertices[6]		= 0.25f;
 			vertices[10]	= 0.75f;
 			vertices[14]	= 0.75f;
-			
+
 			vertices[3]		= 0;
 			vertices[7]		= 1;
 			vertices[11]	= 1;
 			vertices[15]	= 0;
-			
-			
+
+
 			vertices[0] 	= 0;
 			vertices[1] 	= 0;
-			
+
 			vertices[4] 	= 1;
 			vertices[5] 	= 0;
-			
+
 			vertices[8] 	= 1;
 			vertices[9] 	= 1;
-			
+
 			vertices[12]	= 0;
 			vertices[13]	= 1;
 
 			((Buffer)verticesBuffer).position( 0 );
 			verticesBuffer.put( vertices );
 		}
-		
+
 		@Override
 		public void draw() {
-			
+
 			super.draw();
 
 			NoosaScript script = NoosaScript.get();
-			
+
 			texture.bind();
-			
+
 			script.camera( camera() );
-			
+
 			script.uModel.valueM4( matrix );
 			script.lighting(
-				rm, gm, bm, am,
-				ra, ga, ba, aa );
-			
+					rm, gm, bm, am,
+					ra, ga, ba, aa );
+
 			script.drawQuad( verticesBuffer );
 		}
 	}
-	
-	private static class Cloud extends Image {
-		
+
+	static class Cloud extends Image {
+
 		private static int lastIndex = -1;
-		
+
 		public Cloud( float y, boolean dayTime ) {
 			super( Assets.Interfaces.SURFACE );
-			
+
 			int index;
 			do {
 				index = Random.Int( 3 );
 			} while (index == lastIndex);
-			
+
 			switch (index) {
-			case 0:
-				frame( 88, 0, 49, 20 );
-				break;
-			case 1:
-				frame( 88, 20, 49, 22 );
-				break;
-			case 2:
-				frame( 88, 42, 50, 18 );
-				break;
+				case 0:
+					frame( 88, 0, 49, 20 );
+					break;
+				case 1:
+					frame( 88, 20, 49, 22 );
+					break;
+				case 2:
+					frame( 88, 42, 50, 18 );
+					break;
 			}
-			
+
 			lastIndex = index;
-			
+
 			this.y = y;
 
 			scale.set( 1 - y / SKY_HEIGHT );
 			x = Random.Float( SKY_WIDTH + width() ) - width();
 			speed.x = scale.x * (dayTime ? +8 : -8);
-			
+
 			if (dayTime) {
 				tint( 0xCCEEFF, 1 - scale.y );
 			} else {
@@ -388,7 +423,7 @@ public class SurfaceScene extends PixelScene {
 				ra = ga = ba = -2.1f;
 			}
 		}
-		
+
 		@Override
 		public void update() {
 			super.update();
@@ -400,15 +435,20 @@ public class SurfaceScene extends PixelScene {
 		}
 	}
 
-	private static class Avatar extends Image {
-		
+	static class Avatar extends Image {
+
 		private static final int WIDTH	= 24;
 		private static final int HEIGHT	= 32;
-		
+
 		public Avatar( HeroClass cl ) {
 			super( Assets.Sprites.AVATARS );
 			frame( new TextureFilm( texture, WIDTH, HEIGHT ).get( cl.ordinal() ) );
 		}
+
+		public void heroClass( HeroClass cl ) {
+			frame( new TextureFilm( texture, WIDTH, HEIGHT ).get( cl.ordinal() ) );
+		}
+
 	}
 	
 	private static class Pet extends RatSprite {
@@ -424,48 +464,49 @@ public class SurfaceScene extends PixelScene {
 			}
 		}
 	}
-	
-	private static class GrassPatch extends Image {
-		
+
+	static class GrassPatch extends Image {
+
 		public static final int WIDTH	= 16;
 		public static final int HEIGHT	= 14;
-		
+
 		private float tx;
 		private float ty;
-		
+
 		private double a = Random.Float( 5 );
 		private double angle;
-		
+
 		private boolean forward;
-		
+
 		public GrassPatch( float tx, float ty, boolean forward ) {
-			
+
 			super( Assets.Interfaces.SURFACE );
-			
+
 			frame( 88 + Random.Int( 4 ) * WIDTH, 60, WIDTH, HEIGHT );
-			
+
 			this.tx = tx;
 			this.ty = ty;
-			
+
 			this.forward = forward;
 		}
-		
+
 		@Override
 		public void update() {
 			super.update();
 			a += Random.Float( Game.elapsed * 5 );
 			angle = (2 + Math.cos( a )) * (forward ? +0.2 : -0.2);
-			
+
 			scale.y = (float)Math.cos( angle );
-			
+
 			x = tx + (float)Math.tan( angle ) * width;
 			y = ty - scale.y * height;
 		}
-		
+
 		@Override
 		protected void updateMatrix() {
 			super.updateMatrix();
 			Matrix.skewX( matrix, (float)(angle / Matrix.G2RAD) );
 		}
 	}
+
 }

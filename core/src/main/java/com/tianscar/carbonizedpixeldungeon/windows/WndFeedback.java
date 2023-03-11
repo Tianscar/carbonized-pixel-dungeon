@@ -74,7 +74,7 @@ public class WndFeedback extends Window {
             @Override
             protected void onClick() {
                 super.onClick();
-                String link = "https://github.com/Tianscar/carbonized-pixel-dungeon-reloaded";
+                String link = "https://github.com/AnsdoShip/carbonized-pixel-dungeon";
                 Game.platform.openURI(link);
             }
         };

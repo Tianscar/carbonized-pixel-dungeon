@@ -43,7 +43,7 @@ public class Assets {
 		public static final String TILES_HALLS	= "environment/tiles_halls.png";
 
 		public static final String TILES_INN	= "environment/tiles_inn.png";
-		public static final String TILES_SOKOBAN= "environment/tiles_inn.png";
+		public static final String TILES_SOKOBAN= "environment/tiles_sokoban.png";
 
 		public static final String WATER_SEWERS	= "environment/water_sewers.png";
 		public static final String WATER_PRISON	= "environment/water_prison.png";
@@ -61,6 +61,8 @@ public class Assets {
 		public static final String CAVES_BOSS       = "environment/custom_tiles/caves_boss.png";
 		public static final String CITY_BOSS        = "environment/custom_tiles/city_boss.png";
 		public static final String HALLS_SP         = "environment/custom_tiles/halls_special.png";
+
+		public static final String INN_EXTRA        = "environment/custom_tiles/inn_extra.png";
 	}
 	
 	//TODO include other font assets here? Some are platform specific though...
@@ -106,6 +108,7 @@ public class Assets {
 		public static final String BUFFS_LARGE	= "interfaces/large_buffs.png";
 
 		public static final String TALENT_ICONS	 = "interfaces/talent_icons.png";
+		public static final String TALENT_ICONS_OLD= "interfaces/talent_icons_old.png";
 		public static final String TALENT_BUTTON = "interfaces/talent_button.png";
 
 		public static final String HERO_ICONS	= "interfaces/hero_icons.png";
@@ -267,6 +270,9 @@ public class Assets {
 		public static final String ROGUE	= "sprites/rogue.png";
 		public static final String HUNTRESS	= "sprites/huntress.png";
 		public static final String ARCHER	= "sprites/archer.png";
+		public static final String LANCER	= "sprites/lancer.png";
+		public static final String BARD	    = "sprites/bard.png";
+		public static final String BARBARIAN= "sprites/barbarian.png";
 		public static final String AVATARS	= "sprites/avatars.png";
 		public static final String PET		= "sprites/pet.png";
 		public static final String AMULET	= "sprites/amulet.png";

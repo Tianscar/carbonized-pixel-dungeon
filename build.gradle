@@ -11,11 +11,10 @@ buildscript {
 allprojects {
 
     ext {
-        appName = 'Carbonized Pixel Dungeon'
         appPackageName = 'com.tianscar.carbonizedpixeldungeon'
 
-        appVersionCode = 101
-        appVersionName = '0.1.1'
+        appVersionCode = 102
+        appVersionName = '0.1.2'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 

@@ -21,6 +21,7 @@
 
 package com.tianscar.pixeldungeonclasses.utils;
 
+@FunctionalInterface
 public interface Callback {
 
 	void call();

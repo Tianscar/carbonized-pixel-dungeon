@@ -109,7 +109,6 @@ public enum Icons {
 	CUBE_CODE,
 	PURIGRO,
 	ARCNOR,
-	TIANSCAR,
 	PTR;
 
 	public Image get() {
@@ -117,6 +116,12 @@ public enum Icons {
 	}
 	
 	public static Image get( Icons type ) {
+
+		switch (type) {
+			case BACKPACK_LRG:
+				return new ItemSprite( ItemSpriteSheet.BACKPACK );
+		}
+
 		Image icon = new Image( Assets.Interfaces.ICONS );
 		switch (type) {
 		case CHECKED:
@@ -271,9 +276,6 @@ public enum Icons {
 		case CAPD:
 			icon.frame( icon.texture.uvRect( 119, 64, 135, 80 ) );
 			break;
-		case BACKPACK_LRG:
-			icon.frame( icon.texture.uvRect( 136, 64, 152, 80 ) );
-			break;
 		case DISCORD:
 			icon.frame( icon.texture.uvRect( 153, 64, 169, 80 ) );
 			break;
@@ -321,10 +323,6 @@ public enum Icons {
 			break;
 		case PURIGRO:
 			icon.frame( icon.texture.uvRect( 96, 96, 128, 128 ) );
-			icon.scale.set(PixelScene.align(0.49f));
-			break;
-		case TIANSCAR:
-			icon.frame( icon.texture.uvRect( 128, 96, 160, 128 ) );
 			icon.scale.set(PixelScene.align(0.49f));
 			break;
 		case CUBE_CODE:
