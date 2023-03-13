@@ -257,8 +257,8 @@ public class Toolbar extends Component {
 			//center = group but.. well.. centered, so all we need to do is pre-emptively set the right side further in.
 			case CENTER:
 				float toolbarWidth = btnWait.width() + btnExamine.width() + btnInventory.width();
-				for(Button slot : btnQuick){
-					if (slot.visible) toolbarWidth += slot.width();
+				for (int i = 0; i < numVisibleSlots; i++) {
+					toolbarWidth += btnQuick[boundIndex(quickSlots + i)].width();
 				}
 				if (numVisibleSlots < QuickSlot.SIZE) toolbarWidth += btnSwitchSlot.width();
 				right = (width + toolbarWidth)/2;

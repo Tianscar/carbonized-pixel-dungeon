@@ -42,9 +42,28 @@ public class v0_1_X_Changes {
 		ChangeInfo changes = new ChangeInfo( "v0.1.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_1_3_Changes( changeInfos );
 		add_v0_1_2_Changes( changeInfos );
 		add_v0_1_1_Changes( changeInfos );
 		add_v0_1_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_1_3_Changes( ArrayList<ChangeInfo> changeInfos ){
+
+		ChangeInfo changes = new ChangeInfo("v0.1.3", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.1.0的bug）：\n" +
+						"_-_ 镜像/虹卫无限连刃、暗影映像没伤害的问题\n" +
+						"_-_ 物品栏居中显示错误的问题\n" +
+						"_-_ 场景BGM不能正确播放的问题"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING), "删档警告",
+				"因为下个版本将全面重做天赋系统，所以将不兼容以前的存档"));
 
 	}
 
@@ -61,9 +80,6 @@ public class v0_1_X_Changes {
 		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
 						"_-_ 修改了部分贴图（来自Daniel Calan）\n" +
 						"_-_ 修改了幸福结局界面"));
-
-		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING), "删档警告",
-				"因为下个版本将全面重做天赋系统，所以将不兼容以前的存档"));
 
 	}
 

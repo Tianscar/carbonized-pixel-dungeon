@@ -162,11 +162,8 @@ public class GameScene extends PixelScene {
 			CarbonizedPixelDungeon.switchNoFade(TitleScene.class);
 			return;
 		}
-		
-		Music.INSTANCE.playTracks(
-				new String[]{Assets.Music.SEWERS_1, Assets.Music.SEWERS_2, Assets.Music.SEWERS_2},
-				new float[]{1, 1, 0.5f},
-				false);
+
+		Dungeon.level.playLevelMusic();
 
 		PDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		

@@ -27,6 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Invisibility;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.DualWielding;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -148,11 +149,17 @@ public class ShadowClone extends ArmorAbility {
 			immunities.add(Corruption.class);
 		}
 
-		public ShadowAlly(){
+		private DualWielding dualWielding;
+		private DualWielding dualWielding() {
+			if (dualWielding == null) dualWielding = new DualWielding( Dungeon.hero );
+			return dualWielding;
+		}
+
+		public ShadowAlly() {
 			super();
 		}
 
-		public ShadowAlly( int heroLevel ){
+		public ShadowAlly( int heroLevel ) {
 			super();
 			int hpBonus = 15 + 5*heroLevel;
 			hpBonus = Math.round(0.1f * Dungeon.hero.pointsInTalent(Talent.PERFECT_COPY) * hpBonus);
@@ -194,8 +201,8 @@ public class ShadowClone extends ArmorAbility {
 		@Override
 		public int damageRoll() {
 			int damage = Random.NormalIntRange(10, 20);
-			int heroDamage = Dungeon.hero.damageRoll();
-			heroDamage /= Dungeon.hero.attackDelay(); //normalize hero damage based on atk speed
+			int heroDamage = Dungeon.hero.damageRoll(dualWielding());
+			heroDamage /= Dungeon.hero.attackDelay(dualWielding()); //normalize hero damage based on atk speed
 			heroDamage = Math.round(0.075f * Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE) * heroDamage);
 			if (heroDamage > 0){
 				damage += heroDamage;
@@ -207,11 +214,16 @@ public class ShadowClone extends ArmorAbility {
 		public int attackProc( Char enemy, int damage ) {
 			damage = super.attackProc( enemy, damage );
 			if (Random.Int(4) < Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE)
-					&& Dungeon.hero.dualWielding.weaponNotNull()){
-				return Dungeon.hero.dualWielding.weaponProc( this, enemy, damage );
+					&& dualWielding().weaponNotNull()){
+				return dualWielding().weaponProc( this, enemy, damage );
 			} else {
 				return damage;
 			}
+		}
+
+		@Override
+		protected boolean canAttack(Char enemy) {
+			return dualWielding().weaponCanAttack(this, enemy) || super.canAttack(enemy);
 		}
 
 		@Override

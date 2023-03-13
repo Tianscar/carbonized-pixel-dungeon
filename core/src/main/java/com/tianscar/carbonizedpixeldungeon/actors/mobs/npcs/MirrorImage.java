@@ -57,16 +57,16 @@ public class MirrorImage extends NPC {
 	}
 	
 	private Hero hero;
+	private DualWielding dualWielding;
 	private int heroID;
 	public int armTier;
 
-	public DualWielding dualWielding = new DualWielding();
-	
 	@Override
 	protected boolean act() {
 		
-		if ( hero == null ){
+		if ( hero == null ) {
 			hero = (Hero)Actor.findById(heroID);
+			dualWielding = new DualWielding( hero );
 			if ( hero == null ){
 				die(null);
 				sprite.killAndErase();
@@ -98,24 +98,20 @@ public class MirrorImage extends NPC {
 	
 	public void duplicate( Hero hero ) {
 		this.hero = hero;
+		dualWielding = new DualWielding( hero );
 		heroID = this.hero.id();
 		Buff.affect(this, MirrorInvis.class, Short.MAX_VALUE);
 	}
 	
 	@Override
 	public int damageRoll() {
-		int damage;
-		if (dualWielding.weaponNotNull()){
-			damage = dualWielding.weaponDamageRoll(this);
-		} else {
-			damage = hero.damageRoll(); //handles ring of force
-		}
+		int damage = hero.damageRoll( dualWielding );
 		return (damage+1)/2; //half hero damage, rounded up
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return hero.attackSkill(target);
+		return hero.attackSkill( dualWielding, target );
 	}
 	
 	@Override
@@ -133,17 +129,17 @@ public class MirrorImage extends NPC {
 	
 	@Override
 	public float attackDelay() {
-		return hero.attackDelay(); //handles ring of furor
+		return hero.attackDelay( dualWielding ); //handles ring of furor
 	}
 	
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return super.canAttack(enemy) || (dualWielding.weaponCanAttack(this, enemy));
+		return dualWielding.weaponCanAttack(this, enemy) || super.canAttack(enemy);
 	}
 	
 	@Override
 	public int drRoll() {
-		if (hero != null && dualWielding.weaponNotNull()){
+		if (hero != null && dualWielding.weaponNotNull()) {
 			return Random.NormalIntRange(0, dualWielding.weaponDefenseFactor(this)/2);
 		} else {
 			return 0;

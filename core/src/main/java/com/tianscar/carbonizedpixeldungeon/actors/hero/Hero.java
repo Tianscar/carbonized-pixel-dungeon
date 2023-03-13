@@ -206,7 +206,7 @@ public class Hero extends Char {
 		STR = STARTING_STR;
 		
 		belongings = new Belongings( this );
-		dualWielding = new DualWielding();
+		dualWielding = new DualWielding( this );
 		
 		visibleEnemies = new ArrayList<>();
 	}
@@ -436,14 +436,13 @@ public class Hero extends Char {
 
 		return hit;
 	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		KindOfWeapon wep = belongings.weapon();
-		
+
+	public int attackSkill( DualWielding dualWielding, Char target ) {
+		KindOfWeapon wep = dualWielding.weapon();
+
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
-		
+
 		if (wep instanceof MissileWeapon){
 			if (Dungeon.level.adjacent( pos, target.pos )) {
 				accuracy *= (0.5f + 0.2f*pointsInTalent(Talent.POINT_BLANK));
@@ -451,12 +450,17 @@ public class Hero extends Char {
 				accuracy *= 1.5f;
 			}
 		}
-		
+
 		if (dualWielding.weaponNotNull()) {
 			return (int)(attackSkill * accuracy * dualWielding.weaponAccuracyFactor( this ));
 		} else {
 			return (int)(attackSkill * accuracy);
 		}
+	}
+	
+	@Override
+	public int attackSkill( Char target ) {
+		return attackSkill(dualWielding, target);
 	}
 	
 	@Override
@@ -538,10 +542,9 @@ public class Hero extends Char {
 		
 		return dr;
 	}
-	
-	@Override
-	public int damageRoll() {
-		KindOfWeapon wep = belongings.weapon();
+
+	public int damageRoll(DualWielding dualWielding) {
+		KindOfWeapon wep = dualWielding.weapon();
 		int dmg;
 
 		if (dualWielding.weaponNotNull()) {
@@ -551,8 +554,13 @@ public class Hero extends Char {
 			dmg = RingOfForce.damageRoll(this);
 		}
 		if (dmg < 0) dmg = 0;
-		
+
 		return dmg;
+	}
+	
+	@Override
+	public int damageRoll() {
+		return damageRoll(dualWielding);
 	}
 	
 	@Override
@@ -598,8 +606,8 @@ public class Hero extends Char {
 	public boolean canAttack(Char enemy){
 		return dualWielding.weaponCanAttack(this, enemy);
 	}
-	
-	public float attackDelay() {
+
+	public float attackDelay(DualWielding dualWielding) {
 		if (buff(Talent.LethalMomentumTracker.class) != null){
 			buff(Talent.LethalMomentumTracker.class).detach();
 			return 0;
@@ -608,13 +616,17 @@ public class Hero extends Char {
 		if (dualWielding.weaponNotNull()) {
 
 			return dualWielding.weaponDelayFactor( this );
-			
+
 		} else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
 			//But there's going to be that one guy who gets a furor+force ring combo
 			//This is for that one guy, you shall get your fists of fury!
 			return 1f/RingOfFuror.attackSpeedMultiplier(this);
 		}
+	}
+
+	public float attackDelay() {
+		return attackDelay(dualWielding);
 	}
 
 	@Override

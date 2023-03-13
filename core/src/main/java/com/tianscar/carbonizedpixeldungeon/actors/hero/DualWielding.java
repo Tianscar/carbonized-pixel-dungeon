@@ -7,19 +7,30 @@ import com.tianscar.carbonizedpixeldungeon.items.KindOfWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.tianscar.pixeldungeonclasses.utils.QuietCallable;
 
 // TODO Improve this
 public class DualWielding {
+
+    private final QuietCallable<KindOfWeapon> weapon, extra;
+    public DualWielding( QuietCallable<KindOfWeapon> weapon, QuietCallable<KindOfWeapon> extra ) {
+        this.weapon = weapon;
+        this.extra = extra;
+    }
+
+    public DualWielding( Hero hero ) {
+        this(hero.belongings::weapon, hero.belongings::extra);
+    }
 
     public boolean canWeaponAttack = false;
     public boolean canExtraAttack = false;
 
     public KindOfWeapon weapon() {
-        return Dungeon.hero.belongings.weapon();
+        return weapon.call();
     }
 
     public KindOfWeapon extra() {
-        return Dungeon.hero.belongings.extra();
+        return extra.call();
     }
 
     public void weaponHitSound(float pitch) {

@@ -86,8 +86,8 @@ public class WelcomeScene extends PixelScene {
 
 		align(title);
 
-		placeTorch(title.x + 22, title.y + 46);
-		placeTorch(title.x + title.width - 22, title.y + 46);
+		placeTorch(title.x + 28, title.y + 46);
+		placeTorch(title.x + title.width - 28, title.y + 46);
 
 		Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
 			private float time = 0;
@@ -161,9 +161,9 @@ public class WelcomeScene extends PixelScene {
 				//TODO: change the messages here in accordance with the type of patch.
 				message = Messages.get(this, "patch_intro");
 				message += "\n";
-				message += "\n" + Messages.get(this, "patch_balance");
+				//message += "\n" + Messages.get(this, "patch_balance");
 				message += "\n" + Messages.get(this, "patch_bugfixes");
-				message += "\n" + Messages.get(this, "patch_contents");
+				//message += "\n" + Messages.get(this, "patch_contents");
 				//message += "\n" + Messages.get(this, "patch_translations");
 
 			}
@@ -174,6 +174,8 @@ public class WelcomeScene extends PixelScene {
 		float textSpace = okay.top() - topRegion - 4;
 		text.setPos((w - text.width()) / 2f, (topRegion + 2) + (textSpace - text.height())/2);
 		add(text);
+
+		fadeIn();
 
 	}
 
