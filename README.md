@@ -30,7 +30,7 @@ Evan Debenham & Aleksander Komitov (Shattered Pixel Dungeon)
 Watabou (Pixel Dungeon)
 ### Background Music  
 Jasφn (title scene BGM)  
-Evan Debenham (Ranking scene BGM, Shattered Pixel Dungeon)  
+Evan Debenham (ranking scene BGM, Shattered Pixel Dungeon)  
 Kristjan Haaristo (game scene/about scene (ShatteredPD) BGM, Shattered Pixel Dungeon)  
 Cube_Code (surface scene BGM, Pixel Dungeon)  
 Misaerit & GILSIDISY (hero select scene BGM, Remixed Dungeon)
