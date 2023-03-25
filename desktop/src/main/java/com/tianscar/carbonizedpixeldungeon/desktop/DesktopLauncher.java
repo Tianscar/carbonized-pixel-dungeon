@@ -110,17 +110,17 @@ public class DesktopLauncher {
 
 		String basePath = "";
 		if (SharedLibraryLoader.isWindows) {
-			if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
-				basePath = "Application Data/AnsdoShip/Carbonized Pixel Dungeon/";
+			if (System.getProperty("os.name").equals("Windows XP")) {
+				basePath = "Application Data/Tianscar/Carbonized Pixel Dungeon/";
 			} else {
-				basePath = "AppData/Roaming/AnsdoShip/Carbonized Pixel Dungeon/";
+				basePath = "AppData/Roaming/Tianscar/Carbonized Pixel Dungeon/";
 			}
 		} else if (SharedLibraryLoader.isMac) {
 			basePath = "Library/Application Support/Carbonized Pixel Dungeon/";
 		} else if (SharedLibraryLoader.isLinux) {
 			String XDGHome = System.getenv().get("XDG_DATA_HOME");
 			if (XDGHome == null) XDGHome = ".local/share/";
-			basePath = XDGHome + "ansdoship/carbonized-pixel-dungeon/";
+			basePath = XDGHome + "tianscar/carbonized-pixel-dungeon/";
 		}
 
 		//copy over prefs from old file location from legacy desktop codebase
