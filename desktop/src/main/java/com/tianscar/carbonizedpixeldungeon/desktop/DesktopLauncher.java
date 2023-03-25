@@ -41,6 +41,10 @@ import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class DesktopLauncher {
 
@@ -102,21 +106,21 @@ public class DesktopLauncher {
 		
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
-		config.setTitle( title + " - v" + Game.version + String.format("#%08x", Game.versionCode) );
+		config.setTitle( TEXT(title + " - v" + Game.version + String.format("#%08x", Game.versionCode)) );
 
 		String basePath = "";
 		if (SharedLibraryLoader.isWindows) {
 			if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
-				basePath = "Application Data/Tianscar/Carbonized Pixel Dungeon/";
+				basePath = "Application Data/AnsdoShip/Carbonized Pixel Dungeon/";
 			} else {
-				basePath = "AppData/Roaming/Tianscar/Carbonized Pixel Dungeon/";
+				basePath = "AppData/Roaming/AnsdoShip/Carbonized Pixel Dungeon/";
 			}
 		} else if (SharedLibraryLoader.isMac) {
 			basePath = "Library/Application Support/Carbonized Pixel Dungeon/";
 		} else if (SharedLibraryLoader.isLinux) {
 			String XDGHome = System.getenv().get("XDG_DATA_HOME");
 			if (XDGHome == null) XDGHome = ".local/share/";
-			basePath = XDGHome + "tianscar/carbonized-pixel-dungeon/";
+			basePath = XDGHome + "ansdoship/carbonized-pixel-dungeon/";
 		}
 
 		//copy over prefs from old file location from legacy desktop codebase
@@ -148,6 +152,17 @@ public class DesktopLauncher {
 				"icons/icon_128.png", "icons/icon_256.png");
 
 		new Lwjgl3Application(new CarbonizedPixelDungeon(new DesktopPlatformSupport(listener)), config);
+	}
+
+	private static String TEXT(String text) {
+		Charset charset = Charset.defaultCharset();
+		if (charset.equals(StandardCharsets.UTF_8)) return text;
+		try {
+			return charset.newDecoder().decode(charset.newEncoder().encode(CharBuffer.wrap(text))).toString();
+		}
+		catch (CharacterCodingException e) {
+			return text;
+		}
 	}
 
 }

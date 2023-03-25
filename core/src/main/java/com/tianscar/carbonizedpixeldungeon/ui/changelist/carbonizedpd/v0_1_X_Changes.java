@@ -42,10 +42,24 @@ public class v0_1_X_Changes {
 		ChangeInfo changes = new ChangeInfo( "v0.1.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_1_4_Changes( changeInfos );
 		add_v0_1_3_Changes( changeInfos );
 		add_v0_1_2_Changes( changeInfos );
 		add_v0_1_1_Changes( changeInfos );
 		add_v0_1_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_1_4_Changes( ArrayList<ChangeInfo> changeInfos ){
+
+		ChangeInfo changes = new ChangeInfo("v0.1.4", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.1.0的bug）：\n" +
+						"_-_ 桌面端窗口标题乱码的bug"));
 
 	}
 
