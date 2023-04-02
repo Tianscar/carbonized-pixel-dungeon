@@ -154,15 +154,16 @@ public class WelcomeScene extends PixelScene {
 		if (previousVersion == 0 || PDSettings.intro()) {
 			message = Messages.get(this, "welcome_msg");
 		} else if (previousVersion <= CarbonizedPixelDungeon.versionCode) {
-			if (previousVersion < LATEST_UPDATE){
+			if (previousVersion < LATEST_UPDATE) {
 				message = Messages.get(this, "update_intro");
 				message += "\n\n" + Messages.get(this, "update_msg");
 			} else {
 				//TODO: change the messages here in accordance with the type of patch.
 				message = Messages.get(this, "patch_intro");
 				message += "\n";
+				message += "null";
 				//message += "\n" + Messages.get(this, "patch_balance");
-				message += "\n" + Messages.get(this, "patch_bugfixes");
+				//message += "\n" + Messages.get(this, "patch_bugfixes");
 				//message += "\n" + Messages.get(this, "patch_contents");
 				//message += "\n" + Messages.get(this, "patch_translations");
 
