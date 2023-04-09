@@ -13,8 +13,8 @@ allprojects {
     ext {
         appPackageName = 'com.tianscar.carbonizedpixeldungeon'
 
-        appVersionCode = 105
-        appVersionName = '0.1.5'
+        appVersionCode = 106
+        appVersionName = '0.1.6'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
