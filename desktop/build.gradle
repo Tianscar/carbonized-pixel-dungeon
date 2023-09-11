@@ -41,7 +41,7 @@ task release(dependsOn: compileForRelease, type: Jar) {
         attributes 'Implementation-Version': appVersionCode
     }
 
-    archiveName('CarbonizedPD-v' + appVersionName + '-Desktop.jar');
+    archivesBaseName('carbonizedpd-desktop');
 }
 
 dependencies {
@@ -56,8 +56,8 @@ dependencies {
     implementation "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
 
     //we use LWJGL tinyFD directly to display crash messages and (for now) single-line text input
-    implementation "org.lwjgl:lwjgl-tinyfd:3.2.3"
-    implementation "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-windows"
-    implementation "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-macos"
-    implementation "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-linux"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.2"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.2:natives-windows"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.2:natives-macos"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.2:natives-linux"
 }

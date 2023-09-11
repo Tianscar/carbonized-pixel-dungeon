@@ -1,6 +1,6 @@
 //core game code modules
-include ':PD-classes'
 include ':core'
+include ':engine'
 
 //platform modules
 include ':android'

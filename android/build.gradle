@@ -43,7 +43,7 @@ android {
     applicationVariants.all { variant ->
         if (variant.buildType.name == 'release') {
             variant.outputs.all {
-                outputFileName = "CarbonizedPD-v${defaultConfig.versionName}-Android.apk"
+                outputFileName = "carbonizedpd-android-${defaultConfig.versionName}.apk"
             }
         }
     }
