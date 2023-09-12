@@ -44,7 +44,7 @@ public class Toolbar extends Component {
 	private Tool btnWait;
 	private Tool btnExamine;
 	private Tool btnInventory;
-	private SwitchQuickSlotTool btnSwitchSlot;
+	private ChangeQuickSlotTool btnChangeSlot;
 	private QuickslotTool[] btnQuick;
 	private int numVisibleSlots;
 
@@ -83,7 +83,7 @@ public class Toolbar extends Component {
 
 		if (numVisibleSlots < QuickSlot.SIZE) {
 			numVisibleSlots--;
-			add( btnSwitchSlot = new SwitchQuickSlotTool( 125, 0, 16, 16) );
+			add( btnChangeSlot = new ChangeQuickSlotTool( 125, 0, 18, 18) );
 		}
 
 		btnQuick = new QuickslotTool[QuickSlot.SIZE];
@@ -250,7 +250,7 @@ public class Toolbar extends Component {
 					visible[slotIndex] = true;
 					btnQuick[slotIndex].setPos(btnQuick[boundIndex(quickSlots+i-1)].left() - btnQuick[slotIndex].width(), y + 2);
 				}
-				if (numVisibleSlots < QuickSlot.SIZE) btnSwitchSlot.setPos(btnQuick[slotIndex].left() - btnSwitchSlot.width(), y + 10);
+				if (numVisibleSlots < QuickSlot.SIZE) btnChangeSlot.setPos(btnQuick[slotIndex].left() - btnChangeSlot.width(), y + 8);
 
 				break;
 
@@ -260,7 +260,7 @@ public class Toolbar extends Component {
 				for (int i = 0; i < numVisibleSlots; i++) {
 					toolbarWidth += btnQuick[boundIndex(quickSlots + i)].width();
 				}
-				if (numVisibleSlots < QuickSlot.SIZE) toolbarWidth += btnSwitchSlot.width();
+				if (numVisibleSlots < QuickSlot.SIZE) toolbarWidth += btnChangeSlot.width();
 				right = (width + toolbarWidth)/2;
 
 			case GROUP:
@@ -274,7 +274,7 @@ public class Toolbar extends Component {
 					visible[slotIndex] = true;
 					btnQuick[slotIndex].setPos(btnQuick[boundIndex(quickSlots+i-1)].left() - btnQuick[slotIndex].width(), y + 2);
 				}
-				if (numVisibleSlots < QuickSlot.SIZE) btnSwitchSlot.setPos(btnQuick[slotIndex].left() - btnSwitchSlot.width(), y + 10);
+				if (numVisibleSlots < QuickSlot.SIZE) btnChangeSlot.setPos(btnQuick[slotIndex].left() - btnChangeSlot.width(), y + 8);
 
 				break;
 		}
@@ -294,7 +294,7 @@ public class Toolbar extends Component {
 				slotIndex = boundIndex(quickSlots + i);
 				btnQuick[slotIndex].setPos( right - btnQuick[slotIndex].right(), y+2);
 			}
-			if (numVisibleSlots < QuickSlot.SIZE) btnSwitchSlot.setPos(right - btnSwitchSlot.right(), y+10);
+			if (numVisibleSlots < QuickSlot.SIZE) btnChangeSlot.setPos(right - btnChangeSlot.right(), y+8);
 
 		}
 
@@ -337,7 +337,7 @@ public class Toolbar extends Component {
 		return result;
 	}
 
-	private static CellSelector.Listener informer = new CellSelector.Listener() {
+	private static final CellSelector.Listener informer = new CellSelector.Listener() {
 		@Override
 		public void onSelect( Integer cell ) {
 			instance.examining = false;
@@ -349,12 +349,12 @@ public class Toolbar extends Component {
 		}
 	};
 
-	private static class SwitchQuickSlotTool extends Tool {
+	private static class ChangeQuickSlotTool extends Tool {
 
 		ColorBlock bg;
 		ColorBlock[] fill;
 
-		public SwitchQuickSlotTool(int x, int y, int width, int height) {
+		public ChangeQuickSlotTool(int x, int y, int width, int height) {
 			super(x, y, width, height);
 		}
 
@@ -367,10 +367,10 @@ public class Toolbar extends Component {
 		@Override
 		protected void createChildren() {
 
-			bg = new ColorBlock(16, 16, 0xFF3E4039);
+			bg = new ColorBlock(18, 18, 0xFF3E4039);
 			add(bg);
 			fill = new ColorBlock[9];
-			for (int i = 0; i < fill.length; i ++) {
+			for (int i = 0; i < 9; i ++) {
 				fill[i] = new ColorBlock(4, 4, 0xFFFFFF44);
 				add(fill[i]);
 			}
@@ -379,17 +379,17 @@ public class Toolbar extends Component {
 
 		}
 
-		protected void setFill(int quickslots) {
+		protected void updateFill(int quickslots) {
 			boolean[] visible = new boolean[9];
 			for (int i = 0; i < instance.numVisibleSlots; i ++) {
 				visible[instance.boundIndex(i + quickslots)] = true;
 			}
 			fill[0].x = fill[3].x = fill[6].x = x + 2;
-			fill[1].x = fill[4].x = fill[7].x = x + 6;
-			fill[2].x = fill[5].x = fill[8].x = x + 10;
+			fill[1].x = fill[4].x = fill[7].x = x + 7;
+			fill[2].x = fill[5].x = fill[8].x = x + 12;
 			fill[0].y = fill[1].y = fill[2].y = y + 2;
-			fill[3].y = fill[4].y = fill[5].y = y + 6;
-			fill[6].y = fill[7].y = fill[8].y = y + 10;
+			fill[3].y = fill[4].y = fill[5].y = y + 7;
+			fill[6].y = fill[7].y = fill[8].y = y + 12;
 			for (int i = 0; i < visible.length; i ++) {
 				PixelScene.align(fill[i]);
 				fill[i].visible = visible[i];
@@ -408,7 +408,7 @@ public class Toolbar extends Component {
 			bg.y = y;
 			PixelScene.align(bg);
 			super.layout();
-			setFill(Dungeon.quickslot.quickslots);
+			updateFill(Dungeon.quickslot.quickslots);
 		}
 
 		@Override

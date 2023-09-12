@@ -67,7 +67,7 @@ public class Assets {
 	
 	//TODO include other font assets here? Some are platform specific though...
 	public static class Fonts {
-		public static final String PIXELFONT= "fonts/pixel_font.png";
+		public static final String PIXELFONT= "fonts/pixel_font_ascii.png";
 	}
 
 	public static class Interfaces {
@@ -242,7 +242,9 @@ public class Assets {
 		public static final String SCAN     = "sounds/scan.mp3";
 		public static final String SHEEP    = "sounds/sheep.mp3";
 
-		public static final String VOI_RELOADED   = "sounds/voi_reloaded.mp3";
+		public static final String VOI_RELOADED  = "sounds/voi_reloaded.mp3";
+		public static final String VOI_THANKS    = "sounds/voi_thanks.mp3";
+		public static final String VOI_NOTHING   = "sounds/voi_nothing.mp3";
 
 		public static final String[] all = new String[]{
 				CLICK, BADGE, GOLD,
@@ -257,7 +259,7 @@ public class Assets {
 				TELEPORT, CHARMS, MASTERY, PUFF, ROCKS, BURNING, FALLING, GHOST, SECRET, BONES,
 				BEE, DEGRADE, MIMIC, DEBUFF, CHARGEUP, GAS, CHAINS, SCAN, SHEEP,
 
-				VOI_RELOADED
+				VOI_RELOADED, VOI_THANKS, VOI_NOTHING
 		};
 	}
 

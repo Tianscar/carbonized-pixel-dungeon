@@ -126,9 +126,8 @@ public class Game implements ApplicationListener {
 
 			Game.width = width;
 			Game.height = height;
-			
-			//TODO might be better to put this in platform support
-			if (Gdx.app.getType() != Application.ApplicationType.Android){
+
+			if (!platform.isAndroid()) {
 				Game.dispWidth = Game.width;
 				Game.dispHeight = Game.height;
 			}
@@ -212,6 +211,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void switchScene(Class<? extends Scene> c, SceneChangeCallback callback) {
+		platform.titleHashCode(c.getName());
 		instance.sceneClass = c;
 		instance.requestedReset = true;
 		instance.onChange = callback;
@@ -282,7 +282,7 @@ public class Game implements ApplicationListener {
 			PrintWriter pw = new PrintWriter(sw);
 			tr.printStackTrace(pw);
 			pw.flush();
-			System.err.println(sw.toString());
+			System.err.println(sw);
 		}
 	}
 	

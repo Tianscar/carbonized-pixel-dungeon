@@ -41,13 +41,11 @@ task release(dependsOn: compileForRelease, type: Jar) {
         attributes 'Implementation-Version': appVersionCode
     }
 
-    archivesBaseName('carbonizedpd-desktop');
+    archiveFileName = "carbonizedpd-${appVersionName}-alpha-desktop.jar"
 }
 
 dependencies {
     implementation project(':core')
-    implementation project(':services:updates')
-    implementation project(':services:news')
 
     implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"

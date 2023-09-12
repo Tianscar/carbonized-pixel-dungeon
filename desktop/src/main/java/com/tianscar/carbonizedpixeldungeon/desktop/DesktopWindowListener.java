@@ -46,10 +46,15 @@ public class DesktopWindowListener implements Lwjgl3WindowListener {
 		windowPosRecords[2] = windowPosRecords[0];
 		windowPosRecords[3] = windowPosRecords[1];
 	}
+
+	private long window = 0L;
+	public long getWindow() {
+		return window;
+	}
 	
 	@Override
 	public void created ( Lwjgl3Window lwjgl3Window ) {
-		long window = lwjgl3Window.getWindowHandle();
+		window = lwjgl3Window.getWindowHandle();
 		lwjgl3Window.postRunnable(new Runnable() {
 			@Override
 			public void run() {
@@ -82,7 +87,10 @@ public class DesktopWindowListener implements Lwjgl3WindowListener {
 	}
 	public void focusLost () { }
 	public void focusGained () { }
-	public boolean closeRequested () { return true; }
+	public boolean closeRequested () {
+		window = 0L;
+		return true;
+	}
 	public void filesDropped ( String[] strings ) { }
 	public void refreshRequested () { }
 

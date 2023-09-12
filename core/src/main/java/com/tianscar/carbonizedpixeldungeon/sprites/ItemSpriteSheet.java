@@ -244,7 +244,7 @@ public class ItemSpriteSheet {
 		assignItemRect(SCIMITAR,        13, 16);
 		assignItemRect(ROUND_SHIELD,    16, 16);
 		assignItemRect(SAI,             16, 16);
-		assignItemRect(WHIP,            13, 15);
+		assignItemRect(WHIP,            14, 15);
 	}
 
 	private static final int WEP_TIER4      =                               xy(17, 8);   //16 slots

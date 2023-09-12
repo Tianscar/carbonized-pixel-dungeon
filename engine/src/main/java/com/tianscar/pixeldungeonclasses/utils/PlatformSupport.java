@@ -237,4 +237,17 @@ public abstract class PlatformSupport {
 		return !Gdx.app.getClipboard().hasContents();
 	}
 
+	protected abstract String getAppName();
+	protected abstract void setTitle(String title);
+
+	public void titleHashCode(String... title) {
+		StringBuilder builder = new StringBuilder(getAppName());
+		builder.append(String.format(" [%08X", Game.versionCode));
+		for (String s : title) {
+			builder.append(String.format(", %08X", s == null ? 0 : s.hashCode()));
+		}
+		builder.append("]");
+		setTitle(builder.toString());
+	}
+
 }

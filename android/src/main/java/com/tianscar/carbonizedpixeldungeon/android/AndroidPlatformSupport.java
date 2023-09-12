@@ -202,11 +202,11 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		}
 		if (!systemfont) {
 			if (basicFontGenerator == null) {
-				basicFontGenerator = fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
+				basicFontGenerator = fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font_latin1.ttf"));
 			}
 			else {
 				fallbackFontGenerator = basicFontGenerator;
-				basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
+				basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font_latin1.ttf"));
 			}
 		}
 		
@@ -288,7 +288,10 @@ public class AndroidPlatformSupport extends PlatformSupport {
 					fallbackFontGenerator = JPFontGenerator;
 					break;
 			}
-			KRFontGenerator = SCFontGenerator = TCFontGenerator = JPFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel.ttf"));
+			KRFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_kr.ttf"));
+			SCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_sc.ttf"));
+			TCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_tc.ttf"));
+			JPFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_jp.ttf"));
 		}
 		
 		if (basicFontGenerator != null) fonts.put(basicFontGenerator, new HashMap<>());
@@ -302,9 +305,9 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		packer = new PixmapPacker(pageSize, pageSize, Pixmap.Format.RGBA8888, 1, false);
 	}
 
-	private static Matcher KRMatcher = Pattern.compile("\\p{InHangul_Syllables}").matcher("");
-	private static Matcher CNMatcher = Pattern.compile("\\p{InCJK_Unified_Ideographs}|\\p{InCJK_Symbols_and_Punctuation}|\\p{InHalfwidth_and_Fullwidth_Forms}").matcher("");
-	private static Matcher JPMatcher = Pattern.compile("\\p{InHiragana}|\\p{InKatakana}").matcher("");
+	private static final Matcher KRMatcher = Pattern.compile("\\p{InHangul_Syllables}").matcher("");
+	private static final Matcher CNMatcher = Pattern.compile("\\p{InCJK_Unified_Ideographs}|\\p{InCJK_Symbols_and_Punctuation}|\\p{InHalfwidth_and_Fullwidth_Forms}").matcher("");
+	private static final Matcher JPMatcher = Pattern.compile("\\p{InHiragana}|\\p{InKatakana}").matcher("");
 
 	@Override
 	protected FreeTypeFontGenerator getGeneratorForString( String input ){
@@ -326,7 +329,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 	}
 	
 	//splits on each non-hangul character. Needed for weird android 6.0 font files
-	private static Pattern android6KRSplitter = Pattern.compile(
+	private static final Pattern android6KRSplitter = Pattern.compile(
 			"(?<= )|(?= )|(?<=\n)|(?=\n)|(?<=_)|(?=_)|(?<=\\\\)|(?=\\\\)|" +
 					"(?!\\p{InHangul_Syllables})|(?<!\\p{InHangul_Syllables})");
 	
@@ -354,6 +357,21 @@ public class AndroidPlatformSupport extends PlatformSupport {
 	@Override
 	public boolean isDesktop() {
 		return false;
+	}
+
+	@Override
+	public String getAppName() {
+		return AndroidGame.instance.getString(R.string.app_name);
+	}
+
+	@Override
+	public void setTitle(String title) {
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				AndroidGame.instance.setTitle(title);
+			}
+		});
 	}
 
 }

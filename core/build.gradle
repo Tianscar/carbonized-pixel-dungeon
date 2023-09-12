@@ -5,6 +5,4 @@ sourceCompatibility = targetCompatibility = appJavaCompatibility
 
 dependencies {
     api project(':engine')//TODO might be nice to remove this, should decide
-    implementation project(':services:updates')
-    implementation project(':services:news')
 }

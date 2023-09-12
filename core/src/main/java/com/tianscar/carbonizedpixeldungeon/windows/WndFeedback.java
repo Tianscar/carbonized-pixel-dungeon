@@ -13,7 +13,7 @@ public class WndFeedback extends Window {
     private static final int BTN_HEIGHT	    = 18;
     private static final float GAP          = 2;
 
-    public WndFeedback(boolean ingame){
+    public WndFeedback(boolean ingame) {
 
         int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
 
@@ -74,7 +74,7 @@ public class WndFeedback extends Window {
             @Override
             protected void onClick() {
                 super.onClick();
-                String link = "https://github.com/AnsdoShip/carbonized-pixel-dungeon";
+                String link = "https://github.com/Tianscar/carbonized-pixel-dungeon";
                 Game.platform.openURI(link);
             }
         };

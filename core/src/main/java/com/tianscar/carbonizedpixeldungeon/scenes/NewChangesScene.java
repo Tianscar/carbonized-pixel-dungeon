@@ -29,6 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.ui.*;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd.v0_1_X_Changes;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeSelection;
+import com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd.v0_2_X_Changes;
 import com.tianscar.pixeldungeonclasses.noosa.Camera;
 import com.tianscar.pixeldungeonclasses.noosa.NinePatch;
 import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
@@ -83,6 +84,7 @@ public class NewChangesScene extends PixelScene {
 		
 		switch (changesSelected){
 			case 0: default:
+				v0_2_X_Changes.addAllChanges(changeInfos);
 				v0_1_X_Changes.addAllChanges(changeInfos);
 				break;
 		}
@@ -156,7 +158,7 @@ public class NewChangesScene extends PixelScene {
 		if (content.height() <= list.height()) list.scrollTo(0, 0);
 		else list.scrollTo(0, fromChangesScene ? posY - list.height() : 0);
 
-		StyledButton btnBeta = new StyledButton(Chrome.Type.TOAST, "0.1.X") {
+		StyledButton btnBeta = new StyledButton(Chrome.Type.TOAST, "0.2-0.1") {
 			@Override
 			protected void onClick() {
 				super.onClick();

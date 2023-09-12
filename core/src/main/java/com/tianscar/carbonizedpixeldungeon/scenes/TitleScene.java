@@ -47,6 +47,7 @@ import com.tianscar.pixeldungeonclasses.utils.Callback;
 import com.tianscar.pixeldungeonclasses.utils.ColorMath;
 import com.tianscar.pixeldungeonclasses.utils.Point;
 import com.tianscar.pixeldungeonclasses.utils.PointF;
+import com.tianscar.pixeldungeonclasses.utils.Random;
 
 import java.util.Date;
 
@@ -314,7 +315,17 @@ public class TitleScene extends PixelScene {
 				shield.angle = 0;
 				signsTimeFactor[0] = 1;
 
-				Sample.INSTANCE.play( Assets.Sounds.VOI_RELOADED, 1, 1.1f );
+				switch (Random.Int(3)) {
+					case 0:
+						Sample.INSTANCE.play( Assets.Sounds.VOI_RELOADED, 1, 1.1f );
+						break;
+					case 1:
+						Sample.INSTANCE.play( Assets.Sounds.VOI_THANKS, 1 );
+						break;
+					case 2:
+						Sample.INSTANCE.play( Assets.Sounds.VOI_NOTHING, 1 );
+						break;
+				}
 			}
 		});
 

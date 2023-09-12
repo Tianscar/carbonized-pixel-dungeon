@@ -30,9 +30,9 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
+import com.tianscar.carbonizedpixeldungeon.services.news.CarbonizedNews;
 import com.tianscar.carbonizedpixeldungeon.services.news.News;
-import com.tianscar.carbonizedpixeldungeon.services.news.NewsImpl;
-import com.tianscar.carbonizedpixeldungeon.services.updates.UpdateImpl;
+import com.tianscar.carbonizedpixeldungeon.services.updates.CarbonizedUpdates;
 import com.tianscar.carbonizedpixeldungeon.services.updates.Updates;
 import com.tianscar.pixeldungeonclasses.noosa.Game;
 import com.tianscar.pixeldungeonclasses.utils.FileUtils;
@@ -50,15 +50,15 @@ public class DesktopLauncher {
 
 	public static void main (String[] args) {
 
-		if (!DesktopLaunchValidator.verifyValidJVMState(args)){
-			return;
-		}
+		if (!DesktopLaunchValidator.verifyValidJVMState(args)) return;
 
 		final String title = DesktopMessages.get(DesktopLauncher.class, "app_name");
 
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
 			public void uncaughtException(Thread thread, Throwable throwable) {
+				System.err.println(DesktopMessages.get(DesktopLauncher.class, "crash_msg", title, Game.version));
+
 				Game.reportException(throwable);
 				StringWriter sw = new StringWriter();
 				PrintWriter pw = new PrintWriter(sw);
@@ -69,6 +69,7 @@ public class DesktopLauncher {
 				//shorten/simplify exception message to make it easier to fit into a message box
 				exceptionMsg = exceptionMsg.replaceAll("\\(.*:([0-9]*)\\)", "($1)");
 				exceptionMsg = exceptionMsg.replace("com.tianscar.carbonizedpixeldungeon.", "");
+				exceptionMsg = exceptionMsg.replace("com.tianscar.pixeldungeonclasses.", "");
 				exceptionMsg = exceptionMsg.replace("com.badlogic.gdx.", "");
 				exceptionMsg = exceptionMsg.replace("\t", "    ");
 
@@ -77,7 +78,6 @@ public class DesktopLauncher {
 							DesktopMessages.get(DesktopLauncher.class, "crash_msg_gl", title, Game.version) + "\n" + exceptionMsg,
 							"ok", "error", false);
 				} else {
-					System.out.print(DesktopMessages.get(DesktopLauncher.class, "crash_msg", title, Game.version));
 					TinyFileDialogs.tinyfd_messageBox(DesktopMessages.get(DesktopLauncher.class, "crash_title", title, Game.version),
 							DesktopMessages.get(DesktopLauncher.class, "crash_msg", title, Game.version) + "\n" + exceptionMsg,
 							"ok", "error", false);
@@ -97,16 +97,12 @@ public class DesktopLauncher {
 			Game.versionCode = Integer.parseInt(System.getProperty("Implementation-Version"));
 		}
 
-		if (UpdateImpl.supportsUpdates()){
-			Updates.service = UpdateImpl.getUpdateService();
-		}
-		if (NewsImpl.supportsNews()){
-			News.service = NewsImpl.getNewsService();
-		}
+		Updates.service = new CarbonizedUpdates();
+		News.service = new CarbonizedNews();
 		
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
-		config.setTitle( TEXT(title + " - v" + Game.version + String.format("#%08x", Game.versionCode)) );
+		config.setTitle( TEXT(title) );
 
 		String basePath = "";
 		if (SharedLibraryLoader.isWindows) {

@@ -165,13 +165,13 @@ public class CarbonizedPixelDungeon extends Game {
 	
 	@Override
 	public void resize( int width, int height ) {
-		if (width == 0 || height == 0){
+		if (width == 0 || height == 0) {
 			return;
 		}
 
 		if (scene instanceof PixelScene &&
 				(height != Game.height || width != Game.width)) {
-			PixelScene.noFade = true;
+			//PixelScene.noFade = true;
 			((PixelScene) scene).saveWindows();
 		}
 

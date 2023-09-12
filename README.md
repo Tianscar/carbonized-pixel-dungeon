@@ -1,8 +1,8 @@
 # Carbonized Pixel Dungeon
 [![Discord](https://img.shields.io/discord/978644808102994020?style=for-the-badge&logo=discord)](https://discord.gg/24Bykt4YfJ)
-![Code Size](https://img.shields.io/github/languages/code-size/AnsdoShip/carbonized-pixel-dungeon?style=for-the-badge)
-![Latest Release Date](https://img.shields.io/github/release-date-pre/AnsdoShip/carbonized-pixel-dungeon?style=for-the-badge)
-![Latest Release](https://img.shields.io/github/v/release/AnsdoShip/carbonized-pixel-dungeon?include_prereleases&style=for-the-badge)
+![Code Size](https://img.shields.io/github/languages/code-size/Tianscar/carbonized-pixel-dungeon?style=for-the-badge)
+![Latest Release Date](https://img.shields.io/github/release-date-pre/Tianscar/carbonized-pixel-dungeon?style=for-the-badge)
+![Latest Release](https://img.shields.io/github/v/release/Tianscar/carbonized-pixel-dungeon?include_prereleases&style=for-the-badge)
 
 A Roguelike RPG, with randomly generated levels, items, enemies, and traps! Based on the [source code of Shattered Pixel Dungeon](https://github.com/00-Evan/shattered-pixel-dungeon), by [ShatteredPixel](https://shatteredpixel.com).
 
@@ -56,4 +56,4 @@ Pixel Font (from Shattered Pixel Dungeon)
 [IntelliJ IDEA](https://en.wikipedia.org/wiki/IntelliJ_IDEA) is an IDE that maximizes the productivity of developers in all aspects, and is suitable for JVM platform languages.
 
 ## License
-[GPL-3.0](https://github.com/AnsdoShip/carbonized-pixel-dungeon/blob/main/LICENSE.txt) (c) AnsdoShip Studio
+[GPL-3.0](https://github.com/Tianscar/carbonized-pixel-dungeon/blob/main/LICENSE.txt) (c) Karstian Lee

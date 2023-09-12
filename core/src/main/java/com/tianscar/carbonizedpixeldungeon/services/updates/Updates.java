@@ -21,6 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.services.updates;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
 import com.tianscar.pixeldungeonclasses.utils.Callback;
 
@@ -28,9 +30,9 @@ import java.util.Date;
 
 public class Updates {
 
-	public static UpdateService service;
+	public static UpdatesService service;
 
-	public static boolean supportsUpdates(){
+	public static boolean supportsUpdates() {
 		return service != null;
 	}
 
@@ -54,7 +56,11 @@ public class Updates {
 			PDSettings.betas(true);
 		}
 
-		service.checkForUpdate(!PDSettings.WiFi(), PDSettings.betas(), new UpdateService.UpdateResultCallback() {
+		boolean useHTTPS = true;
+		if (Gdx.app.getType() == Application.ApplicationType.Android && Gdx.app.getVersion() < 20) {
+			useHTTPS = false; //android versions below 5.0 don't support TLSv1.2 by default
+		}
+		service.checkForUpdate(!PDSettings.WiFi(), PDSettings.betas(), useHTTPS, new UpdatesService.UpdateResultCallback() {
 			@Override
 			public void onUpdateAvailable(AvailableUpdateData update) {
 				lastCheck = new Date();
@@ -108,7 +114,7 @@ public class Updates {
 
 	public static void launchReview(Callback callback){
 		if (supportsUpdates()){
-			service.initializeReview(new UpdateService.ReviewResultCallback() {
+			service.initializeReview(new UpdatesService.ReviewResultCallback() {
 				@Override
 				public void onComplete() {
 					callback.call();

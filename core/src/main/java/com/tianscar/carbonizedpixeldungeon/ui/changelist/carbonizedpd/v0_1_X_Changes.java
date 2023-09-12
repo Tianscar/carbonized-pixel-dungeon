@@ -58,8 +58,8 @@ public class v0_1_X_Changes {
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
 				Messages.get(ChangesScene.class, "bugfixes"),
-				"尝试修复了（v0.1.0的bug）：\n" +
-						"_-_ 桌面端窗口标题乱码的bug"));
+				"尝试修复了（v0.1.0的 Bug）：\n" +
+						"_-_ 桌面端窗口标题乱码的 Bug"));
 
 	}
 
@@ -71,13 +71,13 @@ public class v0_1_X_Changes {
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
 				Messages.get(ChangesScene.class, "bugfixes"),
-				"尝试修复了（v0.1.0的bug）：\n" +
+				"尝试修复了（v0.1.0 的 Bug）：\n" +
 						"_-_ 镜像/虹卫无限连刃、暗影映像没伤害的问题\n" +
 						"_-_ 物品栏居中显示错误的问题\n" +
-						"_-_ 场景BGM不能正确播放的问题"));
+						"_-_ 场景 BGM 不能正确播放的问题"));
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING), "删档警告",
-				"因为下个版本将全面重做天赋系统，所以将不兼容以前的存档"));
+				"因为下个大版本将全面重做天赋系统，所以将不兼容以前的存档"));
 
 	}
 
@@ -116,7 +116,7 @@ public class v0_1_X_Changes {
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
 				"_-_ 修改了标题界面（有彩蛋！）\n" +
-						"_-_ 修改了部分贴图（来自Daniel Calan）\n" +
+						"_-_ 修改了部分贴图（来自 Daniel Calan）\n" +
 						"_-_ 修改了英雄选择界面，加回了标题，并且背景图现在每小时都会不一样！"));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SAI, null), "武器双持改动",
@@ -124,7 +124,7 @@ public class v0_1_X_Changes {
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
 				Messages.get(ChangesScene.class, "bugfixes"),
-				"尝试修复了（v0.1.0的bug）：\n" +
+				"尝试修复了（v0.1.0 的 bug）：\n" +
 						"_-_ 死亡界面的崩溃问题\n" +
 						"_-_ 更新界面只有英文的问题"));
 
@@ -137,44 +137,44 @@ public class v0_1_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.CAPD), "开发者的留言",
-						"_-_ 2023年2月25日更新\n" +
+						"_-_ 2023 年 2 月 25 日 更新\n" +
 						"\n" +
-						"v0.1.0是碳素地牢的第一个重载版本！这次完全是重制。该版本仍然基于破碎的像素地牢v1.0.3。\n" +
+						"v0.1.0 是碳素地牢的第一个重载版本！这次完全是重制。该版本仍然基于破碎的像素地牢 v1.0.3。\n" +
 						"\n" +
 						"理由仍是如此：因为不喜欢炼金能量更新，所以我选择了基于炼金能量更新之前的最后一个版本来修改。\n" +
 						"\n" +
 						"这个版本合入了部分原碳素地牢的内容，包括武器双持，不包括六属性、炼金/神器/药水/卷轴更新、护甲更新、职业更新、大佬鼠等。\n" +
-						"六属性以后应该不会再加入了，其他的看情况吧，如果希望某些元素回归可以直接邮件/Discord联系我给我发信息。"));
+						"六属性以后应该不会再加入了，其他的看情况吧，如果希望某些元素回归可以直接邮件/Discord 联系我给我发信息。"));
 
-		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "BGM更新",
-						"_-_ 标题界面：由Progressive Tune厂牌的Jasφn创作\n" +
-						"_-_ 英雄选择界面：来自NYRDS的Remixed Dungeon\n" +
+		changes.addButton( new ChangeButton(Icons.get(Icons.AUDIO), "BGM 更新",
+						"_-_ 标题界面：由 Progressive Tune 厂牌的 Jasφn 创作\n" +
+						"_-_ 英雄选择界面：来自 NYRDS 的 Remixed Dungeon\n" +
 						"_-_ 地牢各个区域：来自后续版本的破碎的像素地牢"));
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.NEWS), "游戏新闻",
 				"_现在游戏新闻界面会显示碳素地牢的游戏新闻了！_\n\n" +
-						"这个功能会从carbonizedpd.tianscar.com拉来博客文章，然后在游戏中显示。它还会在有新文章时通知玩家。\n\n" +
-						"感谢Evan的Atom订阅代码和Hexo博客框架！我以后会尽量保持游戏新闻的更新的！"));
+						"这个功能会从 carbonizedpd.tianscar.com 拉来博客文章，然后在游戏中显示。它还会在有新文章时通知玩家。\n\n" +
+						"感谢 Evan 的 Atom 订阅代码和 Hexo 博客框架！我以后会尽量保持游戏新闻的更新的！"));
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
 				"_-_ 现在英雄的饱食度会在状态栏上显示\n" +
-						"_-_ 快捷栏增加到最多9格，并且可以自由切换以适配窄屏幕\n" +
+						"_-_ 快捷栏增加到最多 9 格，并且可以自由切换以适配窄屏幕\n" +
 						"_-_ 修改了关于界面\n" +
 						"_-_ 完全重做了英雄选择界面\n" +
 						"_-_ 更改了应用图标\n" +
-						"_-_ 添加了针对东亚语言的自定义像素字体（来自TakWolf）\n" +
-						"_-_ 更新了部分物品/界面贴图（来自Daniel Calan）\n" +
-						"_-_ 更改了主界面的背景图（来自Remixed Dungeon）\n" +
+						"_-_ 添加了针对东亚语言的自定义像素字体（来自 TakWolf）\n" +
+						"_-_ 更新了部分物品/界面贴图（来自 Daniel Calan）\n" +
+						"_-_ 更改了主界面的背景图（来自 Remixed Dungeon）\n" +
 						"_-_ 游戏内菜单的缩放调节按钮回归\n" +
 						"_-_ 对部分其他界面进行了小的调整/改进"));
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
 				"_-_ 新的语言：繁体中文！\n" +
 						"_-_ 添加了安卓/桌面端的简体/繁体中文崩溃界面\n" +
-						"_-_ 添加了简体/繁体中文的GitHub更新解析"));
+						"_-_ 添加了简体/繁体中文的 GitHub 更新解析"));
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.BACKPACK), "背包增强",
-				"背包储存空间从20格提升到30格，其他容器从19格提升到29格。"));
+				"背包储存空间从 20 格提升到 30 格，其他容器从 19 格提升到 29 格。"));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SAI, null), "新机制：武器双持",
 				"_将近战武器分为单手和双手，现在可以同时装备两把单手武器了！_\n\n" +
@@ -182,7 +182,7 @@ public class v0_1_X_Changes {
 						"_-_ 如果其中一个武器导致无法伏击，则无法伏击\n" +
 						"_-_ 格挡量为双武器格挡量的总和\n" +
 						"_-_ 双武器都能攻击到敌人时，“武器双持”生效\n" +
-						"_-_ “武器双持”生效时，命中率取双武器最大值的1.1倍，伤害/攻速取平均值，双武器附魔各检定一次" +
+						"_-_ “武器双持”生效时，命中率取双武器最大值的 1.1 倍，伤害/攻速取平均值，双武器附魔各检定一次" +
 						"\n\n" +
 						"以下为单手武器:\n" +
 						"_暗杀之刃_" +

@@ -5,10 +5,3 @@ include ':engine'
 //platform modules
 include ':android'
 include ':desktop'
-
-//service modules
-include ':services'
-    //updates
-    include ':services:updates'
-    //news
-    include ':services:news'

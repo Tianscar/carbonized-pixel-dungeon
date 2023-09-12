@@ -29,9 +29,8 @@ import com.tianscar.carbonizedpixeldungeon.PDSettings;
 import com.tianscar.pixeldungeonclasses.noosa.Game;
 import com.tianscar.pixeldungeonclasses.utils.PlatformSupport;
 import com.tianscar.pixeldungeonclasses.utils.Point;
+import org.lwjgl.glfw.GLFW;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,8 +71,14 @@ public class DesktopPlatformSupport extends PlatformSupport {
 	
 	//custom pixel fonts, for use with Latin and Cyrillic languages
 	private static FreeTypeFontGenerator basicFontGenerator;
-	//droid sans fallback, for asian fonts
-	private static FreeTypeFontGenerator asianFontGenerator;
+	//droid sans fallback, for use with Korean
+	private static FreeTypeFontGenerator KRFontGenerator;
+	//droid sans fallback, for use with Simplified Chinese
+	private static FreeTypeFontGenerator SCFontGenerator;
+	//droid sans fallback, for use with Traditional Chinese
+	private static FreeTypeFontGenerator TCFontGenerator;
+	//droid sans fallback, for use with Japanese
+	private static FreeTypeFontGenerator JPFontGenerator;
 	
 	@Override
 	public void setupFontGenerators(int pageSize, boolean systemfont) {
@@ -88,28 +93,45 @@ public class DesktopPlatformSupport extends PlatformSupport {
 		fonts = new HashMap<>();
 
 		if (systemfont) {
-			basicFontGenerator = asianFontGenerator = fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			basicFontGenerator = KRFontGenerator = SCFontGenerator = TCFontGenerator = JPFontGenerator
+					= fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans_fallback.ttf"));
 		} else {
-			basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
-			asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel.ttf"));
-			fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font_latin1.ttf"));
+			KRFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_kr.ttf"));
+			SCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_sc.ttf"));
+			TCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_tc.ttf"));
+			JPFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_jp.ttf"));
+			fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans_fallback.ttf"));
 		}
-		
+
 		fonts.put(basicFontGenerator, new HashMap<>());
-		fonts.put(asianFontGenerator, new HashMap<>());
+		fonts.put(KRFontGenerator, new HashMap<>());
+		fonts.put(SCFontGenerator, new HashMap<>());
+		fonts.put(TCFontGenerator, new HashMap<>());
+		fonts.put(JPFontGenerator, new HashMap<>());
 		fonts.put(fallbackFontGenerator, new HashMap<>());
 		
 		packer = new PixmapPacker(pageSize, pageSize, Pixmap.Format.RGBA8888, 1, false);
 	}
-	
-	private static final Matcher asianMatcher = Pattern.compile("\\p{InHangul_Syllables}|" +
-			"\\p{InCJK_Unified_Ideographs}|\\p{InCJK_Symbols_and_Punctuation}|\\p{InHalfwidth_and_Fullwidth_Forms}|" +
-			"\\p{InHiragana}|\\p{InKatakana}").matcher("");
+
+	private static final Matcher KRMatcher = Pattern.compile("\\p{InHangul_Syllables}").matcher("");
+	private static final Matcher CNMatcher = Pattern.compile("\\p{InCJK_Unified_Ideographs}|\\p{InCJK_Symbols_and_Punctuation}|\\p{InHalfwidth_and_Fullwidth_Forms}").matcher("");
+	private static final Matcher JPMatcher = Pattern.compile("\\p{InHiragana}|\\p{InKatakana}").matcher("");
 
 	@Override
 	protected FreeTypeFontGenerator getGeneratorForString( String input ){
-		if (asianMatcher.reset(input).find()){
-			return asianFontGenerator;
+		if (KRMatcher.reset(input).find()){
+			return KRFontGenerator;
+		} else if (CNMatcher.reset(input).find()){
+			switch (PDSettings.language()) {
+				case SI_CHINESE:
+				default:
+					return SCFontGenerator;
+				case TR_CHINESE:
+					return TCFontGenerator;
+			}
+		} else if (JPMatcher.reset(input).find()){
+			return JPFontGenerator;
 		} else {
 			return basicFontGenerator;
 		}
@@ -130,55 +152,20 @@ public class DesktopPlatformSupport extends PlatformSupport {
 		return true;
 	}
 
-	/*
 	@Override
-	public void openURI(String URI) {
-		if (SharedLibraryLoader.isLinux) {
-			try {
-				Process process = new ProcessBuilder("xdg-open", new URI(URI).toString()).start();
-				skipAllBytes(process.getInputStream());
-			} catch (IOException | URISyntaxException e) {
-				e.printStackTrace();
-			}
-		}
-		else if (SharedLibraryLoader.isMac) {
-			try {
-				Process process = new ProcessBuilder("open", new URI(URI).toString()).start();
-				skipAllBytes(process.getInputStream());
-			} catch (IOException | URISyntaxException e) {
-				e.printStackTrace();
-			}
-		}
-		else if (SharedLibraryLoader.isWindows) {
-
-		}
-		else super.openURI(URI);
-	}
-	 */
-
-	private static void skipAllBytes(InputStream in) throws IOException {
-		skipNBytes(in, Integer.MAX_VALUE);
+	public String getAppName() {
+		return DesktopMessages.get(DesktopLauncher.class, "app_name");
 	}
 
-	private static void skipNBytes(InputStream in, int n) throws IOException {
-		while (n > 0) {
-			long ns = in.skip(n);
-			if (ns > 0 && ns <= n) {
-				// adjust number to skip
-				n -= ns;
+	@Override
+	public void setTitle(String title) {
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				long window = windowListener.getWindow();
+				if (window != 0L) GLFW.glfwSetWindowTitle(window, title);
 			}
-			else if (ns == 0) { // no bytes skipped
-				// read one byte to check for EOS
-				if (in.read() == -1) {
-					break;
-				}
-				// one byte read so decrement number to skip
-				n--;
-			}
-			else { // skipped negative or too many bytes
-				throw new IOException("Unable to skip exactly");
-			}
-		}
+		});
 	}
 
 }

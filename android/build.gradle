@@ -16,8 +16,12 @@ android {
         minSdkVersion appAndroidMinSDK
         targetSdkVersion appAndroidTargetSDK
 
+        multiDexEnabled true
+
         resConfigs "en_US", "cs", "tr", "ca", "ko", "pl", "it", "ja",
                 "eo", "ru", 'zh_CN', 'zh_TW', "de", "fr", "es", "pt", "fi", "hu", "in"
+
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,8 +37,8 @@ android {
             //This makes release APKs smaller and more efficient, but also makes debugging trickier
             //as the information produced in stack traces must be de-obfuscated.
             //See here: https://developer.android.com/studio/build/shrink-code#decode-stack-trace
-            shrinkResources true
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -43,7 +47,7 @@ android {
     applicationVariants.all { variant ->
         if (variant.buildType.name == 'release') {
             variant.outputs.all {
-                outputFileName = "carbonizedpd-android-${defaultConfig.versionName}.apk"
+                outputFileName = "carbonizedpd-${defaultConfig.versionName}-alpha-android.apk"
             }
         }
     }
@@ -59,8 +63,8 @@ configurations { natives }
 
 dependencies {
     implementation project(':core')
-    implementation project(':services:updates')
-    implementation project(':services:news')
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
     natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
