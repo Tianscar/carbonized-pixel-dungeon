@@ -42,7 +42,7 @@ public class BossHealthBar extends Component {
 	private Image skull;
 	private Emitter blood;
 
-	private static String asset = Assets.Interfaces.BOSSHP;
+	private static final String asset = Assets.Interfaces.BOSSHP;
 
 	private static BossHealthBar instance;
 	private static boolean bleeding;
@@ -97,8 +97,8 @@ public class BossHealthBar extends Component {
 	@Override
 	public void update() {
 		super.update();
-		if (boss != null){
-			if (!boss.isAlive() || !Dungeon.level.mobs.contains(boss)){
+		if (boss != null) {
+			if (!boss.isAlive() || !Dungeon.level.mobs.contains(boss)) {
 				boss = null;
 				visible = active = false;
 			} else {
@@ -113,7 +113,7 @@ public class BossHealthBar extends Component {
 
 				if (hp.scale.x < 0.25f) bleed( true );
 
-				if (bleeding != blood.on){
+				if (bleeding != blood.on) {
 					if (bleeding)   skull.tint( 0xcc0000, 0.6f );
 					else            skull.resetColor();
 					blood.on = bleeding;
@@ -122,7 +122,7 @@ public class BossHealthBar extends Component {
 		}
 	}
 
-	public static void assignBoss(Mob boss){
+	public static void assignBoss(Mob boss) {
 		BossHealthBar.boss = boss;
 		bleed(false);
 		if (instance != null) {
@@ -130,7 +130,7 @@ public class BossHealthBar extends Component {
 		}
 	}
 	
-	public static boolean isAssigned(){
+	public static boolean isAssigned() {
 		return boss != null && boss.isAlive() && Dungeon.level.mobs.contains(boss);
 	}
 

@@ -59,7 +59,7 @@ public class v0_1_X_Changes {
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
 				Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了（v0.1.0的 Bug）：\n" +
-						"_-_ 桌面端窗口标题乱码的 Bug"));
+						"_-_ 桌面端窗口标题乱码的问题"));
 
 	}
 
@@ -124,7 +124,7 @@ public class v0_1_X_Changes {
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
 				Messages.get(ChangesScene.class, "bugfixes"),
-				"尝试修复了（v0.1.0 的 bug）：\n" +
+				"尝试修复了（v0.1.0 的 Bug）：\n" +
 						"_-_ 死亡界面的崩溃问题\n" +
 						"_-_ 更新界面只有英文的问题"));
 

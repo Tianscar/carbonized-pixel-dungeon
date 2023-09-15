@@ -41,7 +41,7 @@ public abstract class PlatformSupport {
 
 	public abstract boolean connectedToUnmeteredNetwork();
 
-	public void vibrate( int millis ){
+	public void vibrate( int millis ) {
 		//regular GDX vibration by default
 		Gdx.input.vibrate( millis );
 	}
@@ -239,15 +239,5 @@ public abstract class PlatformSupport {
 
 	protected abstract String getAppName();
 	protected abstract void setTitle(String title);
-
-	public void titleHashCode(String... title) {
-		StringBuilder builder = new StringBuilder(getAppName());
-		builder.append(String.format(" [%08X", Game.versionCode));
-		for (String s : title) {
-			builder.append(String.format(", %08X", s == null ? 0 : s.hashCode()));
-		}
-		builder.append("]");
-		setTitle(builder.toString());
-	}
 
 }

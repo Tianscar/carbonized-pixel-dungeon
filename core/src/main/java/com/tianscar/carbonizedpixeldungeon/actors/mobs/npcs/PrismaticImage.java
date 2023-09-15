@@ -30,7 +30,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.PrismaticGuard;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.DualWielding;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Wieldings;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
@@ -63,7 +63,7 @@ public class PrismaticImage extends NPC {
 	}
 	
 	private Hero hero;
-	private DualWielding dualWielding;
+	private Wieldings wieldings;
 	private int heroID;
 	public int armTier;
 	
@@ -93,7 +93,7 @@ public class PrismaticImage extends NPC {
 		
 		if ( hero == null ){
 			hero = (Hero) Actor.findById(heroID);
-			dualWielding = new DualWielding( hero );
+			wieldings = new Wieldings( hero );
 			if ( hero == null ){
 				destroy();
 				sprite.die();
@@ -140,7 +140,7 @@ public class PrismaticImage extends NPC {
 	
 	public void duplicate( Hero hero, int HP ) {
 		this.hero = hero;
-		dualWielding = new DualWielding( hero );
+		wieldings = new Wieldings( hero );
 		heroID = this.hero.id();
 		this.HP = HP;
 		HT = PrismaticGuard.maxHP( hero );
@@ -158,7 +158,7 @@ public class PrismaticImage extends NPC {
 	@Override
 	public int attackSkill( Char target ) {
 		if (hero != null) {
-			return hero.attackSkill( dualWielding, target );
+			return hero.attackSkill(wieldings, target );
 		} else {
 			return 0;
 		}
@@ -179,7 +179,7 @@ public class PrismaticImage extends NPC {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return dualWielding.weaponCanAttack(this, enemy) || super.canAttack(enemy);
+		return wieldings.weaponCanAttack(this, enemy) || super.canAttack(enemy);
 	}
 	
 	@Override

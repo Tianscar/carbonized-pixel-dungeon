@@ -10,15 +10,15 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.pixeldungeonclasses.utils.QuietCallable;
 
 // TODO Improve this
-public class DualWielding {
+public class Wieldings {
 
     private final QuietCallable<KindOfWeapon> weapon, extra;
-    public DualWielding( QuietCallable<KindOfWeapon> weapon, QuietCallable<KindOfWeapon> extra ) {
+    public Wieldings(QuietCallable<KindOfWeapon> weapon, QuietCallable<KindOfWeapon> extra ) {
         this.weapon = weapon;
         this.extra = extra;
     }
 
-    public DualWielding( Hero hero ) {
+    public Wieldings( Hero hero ) {
         this(hero.belongings::weapon, hero.belongings::extra);
     }
 

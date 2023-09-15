@@ -7,6 +7,8 @@ import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.effects.Splash;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
 import com.tianscar.carbonizedpixeldungeon.items.bags.MagicalHolster;
+import com.tianscar.carbonizedpixeldungeon.items.food.MysteryMeat;
+import com.tianscar.carbonizedpixeldungeon.items.food.StewedMeat;
 import com.tianscar.carbonizedpixeldungeon.items.potions.Potion;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts.TippedDart;
@@ -145,8 +147,8 @@ public class LiquidMetal extends Item {
 
 		@Override
 		public boolean testIngredients(ArrayList<Item> ingredients) {
-			for (Item i : ingredients){
-				if (!(i instanceof MissileWeapon)){
+			for (Item i : ingredients) {
+				if (!(i instanceof MissileWeapon)) {
 					return false;
 				}
 			}
@@ -157,7 +159,7 @@ public class LiquidMetal extends Item {
 		@Override
 		public int cost(ArrayList<Item> ingredients) {
 			int cost = 1;
-			for (Item i : ingredients){
+			for (Item i : ingredients) {
 				cost += i.quantity();
 			}
 			return cost;
@@ -167,7 +169,7 @@ public class LiquidMetal extends Item {
 		public Item brew(ArrayList<Item> ingredients) {
 			Item result = sampleOutput(ingredients);
 
-			for (Item i : ingredients){
+			for (Item i : ingredients) {
 				i.quantity(0);
 			}
 
@@ -178,7 +180,7 @@ public class LiquidMetal extends Item {
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			int metalQuantity = 0;
 
-			for (Item i : ingredients){
+			for (Item i : ingredients) {
 				MissileWeapon m = (MissileWeapon) i;
 				float quantity = m.quantity()-1;
 				quantity += 0.25f + 0.0075f*m.durabilityLeft();
@@ -187,6 +189,42 @@ public class LiquidMetal extends Item {
 			}
 
 			return new LiquidMetal().quantity(metalQuantity);
+		}
+	}
+
+	public static class oneSteel extends com.tianscar.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
+		{
+			inputs =  new Class[]{CarbonSteel.class};
+			inQuantity = new int[]{1};
+
+			cost = 0;
+
+			output = LiquidMetal.class;
+			outQuantity = 2;
+		}
+	}
+
+	public static class twoSteel extends com.tianscar.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
+		{
+			inputs =  new Class[]{CarbonSteel.class};
+			inQuantity = new int[]{2};
+
+			cost = 0;
+
+			output = LiquidMetal.class;
+			outQuantity = 4;
+		}
+	}
+
+	public static class threeSteel extends com.tianscar.carbonizedpixeldungeon.items.Recipe.SimpleRecipe {
+		{
+			inputs =  new Class[]{CarbonSteel.class};
+			inQuantity = new int[]{3};
+
+			cost = 0;
+
+			output = LiquidMetal.class;
+			outQuantity = 6;
 		}
 	}
 

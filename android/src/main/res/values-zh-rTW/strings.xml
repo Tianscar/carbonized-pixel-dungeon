@@ -6,7 +6,7 @@
     <string name="customactivityoncrash_error_activity_error_details">錯誤詳情</string>
     <string name="customactivityoncrash_error_activity_error_details_clipboard_label">錯誤訊息</string>
     <string name="customactivityoncrash_error_activity_error_details_close">關閉</string>
-    <string name="customactivityoncrash_error_activity_error_details_copied">已複製到剪貼板！</string>
+    <string name="customactivityoncrash_error_activity_error_details_copied">已複製到剪貼板</string>
     <string name="customactivityoncrash_error_activity_error_details_copy">複製到剪貼板</string>
     <string name="customactivityoncrash_error_activity_error_details_title">錯誤詳情</string>
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">十分抱歉！發生了一個意外的錯誤。\n\n

@@ -76,7 +76,7 @@ public class PixelScene extends Scene {
 		GameScene.scene = null;
 
 		//flush the texture cache whenever moving from ingame to menu, helps reduce memory load
-		if (!inGameScene && InterlevelScene.lastRegion != -1){
+		if (!inGameScene && InterlevelScene.lastRegion != -1) {
 			InterlevelScene.lastRegion = -1;
 			TextureCache.clear();
 		}
@@ -182,21 +182,21 @@ public class PixelScene extends Scene {
 	private static ArrayList<Class<?extends Window>> savedWindows = new ArrayList<>();
 	private static Class<?extends PixelScene> savedClass = null;
 
-	public synchronized void saveWindows(){
+	public synchronized void saveWindows() {
 		if (members == null) return;
 
 		savedWindows.clear();
 		savedClass = getClass();
-		for (Gizmo g : members.toArray(new Gizmo[0])){
-			if (g instanceof Window){
+		for (Gizmo g : members.toArray(new Gizmo[0])) {
+			if (g instanceof Window) {
 				savedWindows.add((Class<? extends Window>) g.getClass());
 			}
 		}
 	}
 
-	public synchronized void restoreWindows(){
-		if (getClass().equals(savedClass)){
-			for (Class<?extends Window> w : savedWindows){
+	public synchronized void restoreWindows() {
+		if (getClass().equals(savedClass)) {
+			for (Class<?extends Window> w : savedWindows) {
 				try{
 					add(Reflection.newInstanceUnhandled(w));
 				} catch (Exception e){
@@ -252,7 +252,7 @@ public class PixelScene extends Scene {
 	protected void fadeIn() {
 		if (noFade) {
 			noFade = false;
-		} else if (PDSettings.transAnim() > 0){
+		} else if (PDSettings.cutscene() > 0){
 			fadeIn( 0xFF000000, false );
 		}
 	}

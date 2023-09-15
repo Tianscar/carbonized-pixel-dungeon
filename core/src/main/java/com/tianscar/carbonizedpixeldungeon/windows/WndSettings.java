@@ -215,7 +215,7 @@ public class WndSettings extends WndTabbed {
 		ColorBlock sep1;
 		CheckBox chkFullscreen;
 		OptionSlider optScale;
-		OptionSlider optTransAnim;
+		OptionSlider optCutscene;
 		CheckBox chkSaver;
 		RedButton btnOrientation;
 		ColorBlock sep2;
@@ -246,19 +246,19 @@ public class WndSettings extends WndTabbed {
 			}
 			add(chkFullscreen);
 
-			optTransAnim = new OptionSlider(Messages.get(this, "trans_anim"),
+			optCutscene = new OptionSlider(Messages.get(this, "cutscene"),
 					Messages.get(this, "disable" ),
 					Messages.get( this, "full" ),
 					0, 2) {
 				@Override
 				protected void onChange() {
-					if (getSelectedValue() != PDSettings.transAnim()) {
-						PDSettings.transAnim(getSelectedValue());
+					if (getSelectedValue() != PDSettings.cutscene()) {
+						PDSettings.cutscene(getSelectedValue());
 					}
 				}
 			};
-			optTransAnim.setSelectedValue(PDSettings.transAnim());
-			add(optTransAnim);
+			optCutscene.setSelectedValue(PDSettings.cutscene());
+			add(optCutscene);
 
 			if ((int)Math.ceil(2* Game.density) < PixelScene.maxDefaultZoom) {
 				optScale = new OptionSlider(Messages.get(this, "scale"),
@@ -374,9 +374,9 @@ public class WndSettings extends WndTabbed {
 				bottom = btnOrientation.bottom();
 			}
 
-			if (optTransAnim != null){
-				optTransAnim.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
-				bottom = optTransAnim.bottom();
+			if (optCutscene != null){
+				optCutscene.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
+				bottom = optCutscene.bottom();
 			}
 
 			if (optScale != null){

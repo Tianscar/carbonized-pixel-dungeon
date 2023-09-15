@@ -98,7 +98,7 @@ public class DesktopPlatformSupport extends PlatformSupport {
 		} else {
 			basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font_latin1.ttf"));
 			KRFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_kr.ttf"));
-			SCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_sc.ttf"));
+			SCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_zh.ttf"));
 			TCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_tc.ttf"));
 			JPFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_jp.ttf"));
 			fallbackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans_fallback.ttf"));

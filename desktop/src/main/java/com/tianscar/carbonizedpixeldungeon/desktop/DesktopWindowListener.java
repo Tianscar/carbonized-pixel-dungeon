@@ -58,6 +58,7 @@ public class DesktopWindowListener implements Lwjgl3WindowListener {
 		lwjgl3Window.postRunnable(new Runnable() {
 			@Override
 			public void run() {
+				DesktopCrashDialog.DENSITY = Gdx.graphics.getDensity();
 				if (PDSettings.fullscreen()) {
 					Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 				}

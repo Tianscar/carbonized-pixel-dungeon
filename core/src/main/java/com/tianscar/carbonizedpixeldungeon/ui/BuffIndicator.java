@@ -104,7 +104,7 @@ public class BuffIndicator extends Component {
 	
 	private static BuffIndicator heroInstance;
 	
-	private LinkedHashMap<Buff, BuffButton> buffButtons = new LinkedHashMap<>();
+	private final LinkedHashMap<Buff, BuffButton> buffButtons = new LinkedHashMap<>();
 	private boolean needsRefresh;
 	private Char ch;
 	
@@ -146,7 +146,7 @@ public class BuffIndicator extends Component {
 		}
 		
 		//remove any icons no longer present
-		for (Buff buff : buffButtons.keySet().toArray(new Buff[0])){
+		for (Buff buff : buffButtons.keySet().toArray(new Buff[0])) {
 			if (!newBuffs.contains(buff)){
 				Image icon = buffButtons.get( buff ).icon;
 				icon.origin.set( SIZE / 2f );

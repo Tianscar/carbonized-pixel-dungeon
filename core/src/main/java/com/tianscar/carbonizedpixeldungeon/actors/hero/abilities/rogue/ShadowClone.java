@@ -27,7 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Invisibility;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.DualWielding;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Wieldings;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -149,10 +149,10 @@ public class ShadowClone extends ArmorAbility {
 			immunities.add(Corruption.class);
 		}
 
-		private DualWielding dualWielding;
-		private DualWielding dualWielding() {
-			if (dualWielding == null) dualWielding = new DualWielding( Dungeon.hero );
-			return dualWielding;
+		private Wieldings wieldings;
+		private Wieldings dualWielding() {
+			if (wieldings == null) wieldings = new Wieldings( Dungeon.hero );
+			return wieldings;
 		}
 
 		public ShadowAlly() {

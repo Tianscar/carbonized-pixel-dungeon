@@ -181,7 +181,7 @@ public class Hero extends Char {
 	
 	public Belongings belongings;
 
-	public DualWielding dualWielding;
+	public Wieldings wieldings;
 	
 	public int STR;
 	
@@ -206,7 +206,7 @@ public class Hero extends Char {
 		STR = STARTING_STR;
 		
 		belongings = new Belongings( this );
-		dualWielding = new DualWielding( this );
+		wieldings = new Wieldings( this );
 		
 		visibleEnemies = new ArrayList<>();
 	}
@@ -382,8 +382,8 @@ public class Hero extends Char {
 
 	@Override
 	public void hitSound(float pitch) {
-		if ( dualWielding.weaponNotNull() ){
-			dualWielding.weaponHitSound(pitch);
+		if ( wieldings.weaponNotNull() ){
+			wieldings.weaponHitSound(pitch);
 		} else if (RingOfForce.getBuffedBonus(this, RingOfForce.Force.class) > 0) {
 			//pitch deepens by 2.5% (additive) per point of strength, down to 75%
 			super.hitSound( pitch * GameMath.gate( 0.75f, 1.25f - 0.025f*STR(), 1f) );
@@ -394,7 +394,7 @@ public class Hero extends Char {
 
 	@Override
 	public boolean blockSound(float pitch) {
-		if ( dualWielding.weaponDefenseFactor(this) >= 4 ){
+		if ( wieldings.weaponDefenseFactor(this) >= 4 ){
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
 			return true;
 		}
@@ -410,7 +410,7 @@ public class Hero extends Char {
 	}
 	
 	public int tier() {
-		if (belongings.armor() instanceof ClassArmor){
+		if (belongings.armor() instanceof ClassArmor) {
 			return 6;
 		} else if (belongings.armor() != null){
 			return belongings.armor().tier;
@@ -430,15 +430,15 @@ public class Hero extends Char {
 		Invisibility.dispel();
 		belongings.thrownWeapon = null;
 		
-		if (hit && subClass == HeroSubClass.GLADIATOR){
+		if (hit && subClass == HeroSubClass.GLADIATOR) {
 			Buff.affect( this, Combo.class ).hit( enemy );
 		}
 
 		return hit;
 	}
 
-	public int attackSkill( DualWielding dualWielding, Char target ) {
-		KindOfWeapon wep = dualWielding.weapon();
+	public int attackSkill(Wieldings wieldings, Char target ) {
+		KindOfWeapon wep = wieldings.weapon();
 
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
@@ -451,8 +451,8 @@ public class Hero extends Char {
 			}
 		}
 
-		if (dualWielding.weaponNotNull()) {
-			return (int)(attackSkill * accuracy * dualWielding.weaponAccuracyFactor( this ));
+		if (wieldings.weaponNotNull()) {
+			return (int)(attackSkill * accuracy * wieldings.weaponAccuracyFactor( this ));
 		} else {
 			return (int)(attackSkill * accuracy);
 		}
@@ -460,7 +460,7 @@ public class Hero extends Char {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return attackSkill(dualWielding, target);
+		return attackSkill(wieldings, target);
 	}
 	
 	@Override
@@ -513,8 +513,8 @@ public class Hero extends Char {
 			}
 			if (armDr > 0) dr += armDr;
 		}
-		if (dualWielding.weaponNotNull())  {
-			int wepDr = Random.NormalIntRange( 0 , dualWielding.weaponDefenseFactor( this ) );
+		if (wieldings.weaponNotNull())  {
+			int wepDr = Random.NormalIntRange( 0 , wieldings.weaponDefenseFactor( this ) );
 			if (belongings.weapon() != null && belongings.extra() != null) {
 				if (STR() < ((Weapon)belongings.weapon()).STRReq()){
 					wepDr -= (((Weapon)belongings.weapon()).STRReq() - STR());
@@ -543,12 +543,12 @@ public class Hero extends Char {
 		return dr;
 	}
 
-	public int damageRoll(DualWielding dualWielding) {
-		KindOfWeapon wep = dualWielding.weapon();
+	public int damageRoll(Wieldings wieldings) {
+		KindOfWeapon wep = wieldings.weapon();
 		int dmg;
 
-		if (dualWielding.weaponNotNull()) {
-			dmg = dualWielding.weaponDamageRoll( this );
+		if (wieldings.weaponNotNull()) {
+			dmg = wieldings.weaponDamageRoll( this );
 			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
 		} else {
 			dmg = RingOfForce.damageRoll(this);
@@ -560,7 +560,7 @@ public class Hero extends Char {
 	
 	@Override
 	public int damageRoll() {
-		return damageRoll(dualWielding);
+		return damageRoll(wieldings);
 	}
 	
 	@Override
@@ -592,7 +592,7 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack(){
-		if (!dualWielding.weaponNotNull())    													return true;
+		if (!wieldings.weaponNotNull())    													return true;
 		if (!(belongings.weapon() instanceof Weapon)
 				&& !(belongings.extra() instanceof Weapon))   								return true;
 		if (belongings.weapon() instanceof Flail)                                       	return false;
@@ -604,18 +604,18 @@ public class Hero extends Char {
 	}
 
 	public boolean canAttack(Char enemy){
-		return dualWielding.weaponCanAttack(this, enemy);
+		return wieldings.weaponCanAttack(this, enemy);
 	}
 
-	public float attackDelay(DualWielding dualWielding) {
+	public float attackDelay(Wieldings wieldings) {
 		if (buff(Talent.LethalMomentumTracker.class) != null){
 			buff(Talent.LethalMomentumTracker.class).detach();
 			return 0;
 		}
 
-		if (dualWielding.weaponNotNull()) {
+		if (wieldings.weaponNotNull()) {
 
-			return dualWielding.weaponDelayFactor( this );
+			return wieldings.weaponDelayFactor( this );
 
 		} else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
@@ -626,7 +626,7 @@ public class Hero extends Char {
 	}
 
 	public float attackDelay() {
-		return attackDelay(dualWielding);
+		return attackDelay(wieldings);
 	}
 
 	@Override
@@ -1150,7 +1150,7 @@ public class Hero extends Char {
 
 		KindOfWeapon wep = belongings.weapon();
 
-		if (dualWielding.weaponNotNull()) damage = dualWielding.weaponProc( this, enemy, damage );
+		if (wieldings.weaponNotNull()) damage = wieldings.weaponProc( this, enemy, damage );
 
 		if (buff(Talent.SpiritBladesTracker.class) != null
 				&& Random.Int(10) < 3*pointsInTalent(Talent.SPIRIT_BLADES)){

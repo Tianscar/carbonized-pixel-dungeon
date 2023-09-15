@@ -151,14 +151,14 @@ public class CarbonizedPixelDungeon extends Game {
 		}
 	}
 	
-	public static void seamlessResetScene(){
+	public static void seamlessResetScene() {
 		seamlessResetScene(null);
 	}
-	
+
 	@Override
 	protected void switchScene() {
 		super.switchScene();
-		if (scene instanceof PixelScene){
+		if (scene instanceof PixelScene) {
 			((PixelScene) scene).restoreWindows();
 		}
 	}
@@ -171,7 +171,7 @@ public class CarbonizedPixelDungeon extends Game {
 
 		if (scene instanceof PixelScene &&
 				(height != Game.height || width != Game.width)) {
-			//PixelScene.noFade = true;
+			PixelScene.noFade = !platform.isDesktop();
 			((PixelScene) scene).saveWindows();
 		}
 

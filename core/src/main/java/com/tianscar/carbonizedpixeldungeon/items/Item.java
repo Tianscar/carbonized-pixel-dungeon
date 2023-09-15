@@ -29,6 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Blindness;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Degrade;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Paralysis;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
@@ -106,7 +107,7 @@ public class Item implements Bundlable {
 		return actions;
 	}
 
-	public String actionName(String action, Hero hero){
+	public String actionName(String action, Hero hero) {
 		return Messages.get(this, "ac_" + action);
 	}
 	
@@ -264,7 +265,7 @@ public class Item implements Bundlable {
 		} else
 		if (quantity == 1) {
 
-			if (stackable){
+			if (stackable) {
 				Dungeon.quickslot.convertToPlaceholder(this);
 			}
 
@@ -565,11 +566,20 @@ public class Item implements Bundlable {
 							if (i != null) i.onThrow(cell);
 							if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
 									&& !(Item.this instanceof MissileWeapon)
-									&& curUser.buff(Talent.ImprovisedProjectileCooldown.class) == null){
-								if (enemy != null && enemy.alignment != curUser.alignment){
+									&& curUser.buff(Talent.ImprovisedProjectileCooldown.class) == null) {
+								if (enemy != null && enemy.alignment != curUser.alignment) {
 									Sample.INSTANCE.play(Assets.Sounds.HIT);
+									if (Item.this instanceof CarbonSteel) {
+										Buff.affect(enemy, Paralysis.class, 1f);
+									}
 									Buff.affect(enemy, Blindness.class, 1f + curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES));
 									Buff.affect(curUser, Talent.ImprovisedProjectileCooldown.class, 50f);
+								}
+							}
+							else if (Item.this instanceof CarbonSteel) {
+								if (enemy != null && enemy.alignment != curUser.alignment) {
+									Sample.INSTANCE.play(Assets.Sounds.HIT);
+									Buff.affect(enemy, Paralysis.class, 1f);
 								}
 							}
 							if (user.buff(Talent.LethalMomentumTracker.class) != null){

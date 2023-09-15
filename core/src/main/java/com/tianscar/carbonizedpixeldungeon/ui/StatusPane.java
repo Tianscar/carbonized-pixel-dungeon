@@ -23,7 +23,6 @@ package com.tianscar.carbonizedpixeldungeon.ui;
 
 import com.tianscar.carbonizedpixeldungeon.*;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.journal.Document;
@@ -33,11 +32,7 @@ import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
 import com.tianscar.carbonizedpixeldungeon.windows.*;
 import com.tianscar.pixeldungeonclasses.input.GameAction;
-import com.tianscar.pixeldungeonclasses.noosa.BitmapText;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.NinePatch;
+import com.tianscar.pixeldungeonclasses.noosa.*;
 import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
 import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
 import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
@@ -57,9 +52,7 @@ public class StatusPane extends Component {
 	private Image rawShielding;
 	private Image shieldedHP;
 	private Image hp;
-	private BitmapText hpText;
 	private Image hg;
-	private BitmapText hgText;
 
 	private Image exp;
 
@@ -67,7 +60,7 @@ public class StatusPane extends Component {
 
 	private int lastLvl = -1;
 
-	private BitmapText level;
+	private RenderedTextBlock statText;
 
 	private Image depthIcon;
 	private BitmapText depthText;
@@ -91,7 +84,7 @@ public class StatusPane extends Component {
 	@Override
 	protected void createChildren() {
 
-		bg = new NinePatch( Assets.Interfaces.STATUS, 0, 0, 128, 36, 85, 0, 45, 0 );
+		bg = new NinePatch( Assets.Interfaces.STATUS, 0, 0, 128, 43, 85, 0, 45, 0 );
 		add( bg );
 
 		add( new Button(){
@@ -185,26 +178,18 @@ public class StatusPane extends Component {
 		compass = new Compass( Statistics.amuletObtained ? Dungeon.level.entrance : Dungeon.level.exit );
 		add( compass );
 
-		rawShielding = new Image( Assets.Interfaces.SHLD_BAR );
+		rawShielding = new Image( Assets.Interfaces.STAT_BAR, 0, 4, 32, 4 );
 		rawShielding.alpha(0.5f);
 		add(rawShielding);
 
-		shieldedHP = new Image( Assets.Interfaces.SHLD_BAR );
+		shieldedHP = new Image( Assets.Interfaces.STAT_BAR, 0, 4, 32, 4 );
 		add(shieldedHP);
 
-		hp = new Image( Assets.Interfaces.HP_BAR );
+		hp = new Image( Assets.Interfaces.STAT_BAR, 0, 0, 32, 4 );
 		add( hp );
 
-		hpText = new BitmapText(PixelScene.pixelFont);
-		hpText.alpha(0.6f);
-		add(hpText);
-
-		hg = new Image( Assets.Interfaces.HG_BAR );
+		hg = new Image( Assets.Interfaces.STAT_BAR, 0, 8, 32, 4 );
 		add( hg );
-
-		hgText = new BitmapText(PixelScene.pixelFont);
-		hgText.alpha(0.6f);
-		add(hgText);
 
 		exp = new Image( Assets.Interfaces.XP_BAR );
 		add( exp );
@@ -212,12 +197,11 @@ public class StatusPane extends Component {
 		bossHP = new BossHealthBar();
 		add( bossHP );
 
-		level = new BitmapText( PixelScene.pixelFont);
-		level.hardlight( 0xFFFFAA );
-		add( level );
-
 		danger = new DangerIndicator();
 		add( danger );
+
+		statText = PixelScene.renderTextBlock(6);
+		add( statText );
 
 		buffs = new BuffIndicator( Dungeon.hero );
 		add( buffs );
@@ -232,7 +216,7 @@ public class StatusPane extends Component {
 	@Override
 	protected void layout() {
 
-		height = 32;
+		height = 43;
 
 		bg.size( width, bg.height );
 
@@ -244,29 +228,20 @@ public class StatusPane extends Component {
 		compass.y = avatar.y + avatar.height / 2f - compass.origin.y;
 		PixelScene.align(compass);
 
-		hp.x = shieldedHP.x = rawShielding.x = 30;
-		hp.y = shieldedHP.y = rawShielding.y = 3;
-
-		hpText.scale.set(PixelScene.align(0.5f));
-		hpText.x = hp.x + 1;
-		hpText.y = hp.y + (hp.height - (hpText.baseLine()+hpText.scale.y))/2f;
-		hpText.y -= 0.001f; //prefer to be slightly higher
-		PixelScene.align(hpText);
+		hp.x = shieldedHP.x = rawShielding.x = 2;
+		hp.y = shieldedHP.y = rawShielding.y = 31;
 
 		hg.x = hp.x;
-		hg.y = hp.y + hp.height + 1;
-
-		hgText.scale.set(PixelScene.align(0.5f));
-		hgText.x = hg.x + 1;
-		hgText.y = hg.y + (hg.height - (hgText.baseLine()+hgText.scale.y))/2f;
-		hgText.y -= 0.001f; //prefer to be slightly higher
-		PixelScene.align(hgText);
+		hg.y = hp.y + hp.height + 2;
 
 		bossHP.setPos( 6 + (width - bossHP.width())/2, 20);
 
 		danger.setPos( width - danger.width(), 20 );
 
-		buffs.setPos( 31, 9 + 3 );
+		statText.setPos( 31, 5 );
+		PixelScene.align( statText );
+
+		buffs.setPos( 31, 10 );
 
 		btnMenu.setPos( width - btnMenu.width(), 1 );
 
@@ -283,7 +258,7 @@ public class StatusPane extends Component {
 
 		depthButton.setRect(depthIcon.x, depthIcon.y, depthIcon.width(), depthIcon.height() + depthText.height());
 
-		if (challengeIcon != null){
+		if (challengeIcon != null) {
 			challengeIcon.x = btnJournal.left() - 14 + (7 - challengeIcon.width())/2f - 0.1f;
 			challengeIcon.y = y + 2;
 			PixelScene.align(challengeIcon);
@@ -303,7 +278,7 @@ public class StatusPane extends Component {
 		PixelScene.align(version);
 	}
 	
-	private static final int[] warningColors = new int[]{0x660000, 0xCC0000, 0x660000};
+	private static final int[] warningColors = new int[] { 0x660000, 0xCC0000, 0x660000 };
 
 	@Override
 	public void update() {
@@ -330,15 +305,8 @@ public class StatusPane extends Component {
 		shieldedHP.scale.x = health/(float)max;
 		rawShielding.scale.x = shield/(float)max;
 
-		if (shield <= 0){
-			hpText.text(health + "/" + max);
-		} else {
-			hpText.text(health + "+" + shield +  "/" + max);
-		}
-
 		float hunger = Dungeon.hero.hunger();
-		hg.scale.x = Math.max( 0, hunger / Hunger.STARVING);
-		hgText.text((int) hunger + "/" + (int) Hunger.STARVING);
+		hg.scale.x = Math.max( 0, hunger / Hunger.STARVING );
 
 		exp.scale.x = (width / exp.width) * Dungeon.hero.exp / Dungeon.hero.maxExp();
 
@@ -349,12 +317,13 @@ public class StatusPane extends Component {
 			}
 
 			lastLvl = Dungeon.hero.lvl;
-			level.text( Integer.toString( lastLvl ) );
-			level.measure();
-			level.x = 27.5f - level.width() / 2f;
-			level.y = 28.0f - level.baseLine() / 2f;
-			PixelScene.align(level);
 		}
+
+		statText.text("[" +
+						(shield <= 0 ? health + "/" + max : health + "+" + shield + "/" + max) + ", " +
+						(int) hunger + "/" + (int) Hunger.STARVING + ", " +
+						Dungeon.hero.exp + "/" + Dungeon.hero.maxExp() + "(" + lastLvl + ")" +
+						"]");
 
 		int tier = Dungeon.hero.tier();
 		if (tier != lastTier) {

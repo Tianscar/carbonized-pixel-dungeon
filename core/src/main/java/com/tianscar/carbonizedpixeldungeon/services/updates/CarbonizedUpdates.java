@@ -58,7 +58,7 @@ public class CarbonizedUpdates extends UpdatesService {
 			return;
 		}
 
-		String updateURL = forceHTTPS ? "https://carbonizedpd.tianscar.com/releases" : "http://carbonizedpd.tianscar.com/releases";
+		String updateURL = forceHTTPS ? "https://carbonizedpd.tianscar.com/release" : "http://carbonizedpd.tianscar.com/release";
 
 		Net.HttpRequest httpGet = new Net.HttpRequest(Net.HttpMethods.GET);
 		httpGet.setUrl(updateURL);

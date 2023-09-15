@@ -41,6 +41,7 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfIcyTouc
 import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfMight;
 import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfToxicEssence;
 import com.tianscar.carbonizedpixeldungeon.items.potions.exotic.ExoticPotion;
+import com.tianscar.carbonizedpixeldungeon.items.rings.Ring;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.tianscar.carbonizedpixeldungeon.items.spells.Alchemize;
@@ -55,6 +56,8 @@ import com.tianscar.carbonizedpixeldungeon.items.spells.PhaseShift;
 import com.tianscar.carbonizedpixeldungeon.items.spells.ReclaimTrap;
 import com.tianscar.carbonizedpixeldungeon.items.spells.Recycle;
 import com.tianscar.carbonizedpixeldungeon.items.spells.WildEnergy;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.pixeldungeonclasses.utils.Reflection;
 
@@ -169,48 +172,53 @@ public abstract class Recipe {
 	};
 	
 	private static Recipe[] oneIngredientRecipes = new Recipe[]{
-		new AlchemistsToolkit.upgradeKit(),
-		new Scroll.ScrollToStone(),
-		new ArcaneResin.Recipe(),
-		new StewedMeat.oneMeat()
+			new AlchemistsToolkit.upgradeKit(),
+			new Scroll.ScrollToStone(),
+			new ArcaneResin.Recipe(),
+			new MagicAlloy.Recipe(),
+			new CarbonSteel.Recipe(),
+			new StewedMeat.oneMeat(),
+			new LiquidMetal.oneSteel()
 	};
 	
 	private static Recipe[] twoIngredientRecipes = new Recipe[]{
-		new Blandfruit.CookFruit(),
-		new Bomb.EnhanceBomb(),
-		new AlchemicalCatalyst.Recipe(),
-		new ArcaneCatalyst.Recipe(),
-		new ElixirOfArcaneArmor.Recipe(),
-		new ElixirOfAquaticRejuvenation.Recipe(),
-		new ElixirOfDragonsBlood.Recipe(),
-		new ElixirOfIcyTouch.Recipe(),
-		new ElixirOfMight.Recipe(),
-		new ElixirOfHoneyedHealing.Recipe(),
-		new ElixirOfToxicEssence.Recipe(),
-		new BlizzardBrew.Recipe(),
-		new InfernalBrew.Recipe(),
-		new ShockingBrew.Recipe(),
-		new CausticBrew.Recipe(),
-		new Alchemize.Recipe(),
-		new AquaBlast.Recipe(),
-		new BeaconOfReturning.Recipe(),
-		new CurseInfusion.Recipe(),
-		new FeatherFall.Recipe(),
-		new MagicalInfusion.Recipe(),
-		new MagicalPorter.Recipe(),
-		new PhaseShift.Recipe(),
-		new ReclaimTrap.Recipe(),
-		new Recycle.Recipe(),
-		new WildEnergy.Recipe(),
-		new StewedMeat.twoMeat()
+			new Blandfruit.CookFruit(),
+			new Bomb.EnhanceBomb(),
+			new AlchemicalCatalyst.Recipe(),
+			new ArcaneCatalyst.Recipe(),
+			new ElixirOfArcaneArmor.Recipe(),
+			new ElixirOfAquaticRejuvenation.Recipe(),
+			new ElixirOfDragonsBlood.Recipe(),
+			new ElixirOfIcyTouch.Recipe(),
+			new ElixirOfMight.Recipe(),
+			new ElixirOfHoneyedHealing.Recipe(),
+			new ElixirOfToxicEssence.Recipe(),
+			new BlizzardBrew.Recipe(),
+			new InfernalBrew.Recipe(),
+			new ShockingBrew.Recipe(),
+			new CausticBrew.Recipe(),
+			new Alchemize.Recipe(),
+			new AquaBlast.Recipe(),
+			new BeaconOfReturning.Recipe(),
+			new CurseInfusion.Recipe(),
+			new FeatherFall.Recipe(),
+			new MagicalInfusion.Recipe(),
+			new MagicalPorter.Recipe(),
+			new PhaseShift.Recipe(),
+			new ReclaimTrap.Recipe(),
+			new Recycle.Recipe(),
+			new WildEnergy.Recipe(),
+			new StewedMeat.twoMeat(),
+			new LiquidMetal.twoSteel()
 	};
 	
 	private static Recipe[] threeIngredientRecipes = new Recipe[]{
-		new Potion.SeedToPotion(),
-		new ExoticPotion.PotionToExotic(),
-		new ExoticScroll.ScrollToExotic(),
-		new StewedMeat.threeMeat(),
-		new MeatPie.Recipe()
+			new Potion.SeedToPotion(),
+			new ExoticPotion.PotionToExotic(),
+			new ExoticScroll.ScrollToExotic(),
+			new StewedMeat.threeMeat(),
+			new LiquidMetal.threeSteel(),
+			new MeatPie.Recipe()
 	};
 	
 	public static Recipe findRecipe(ArrayList<Item> ingredients){
@@ -246,11 +254,13 @@ public abstract class Recipe {
 		return null;
 	}
 	
-	public static boolean usableInRecipe(Item item){
+	public static boolean usableInRecipe(Item item) {
 		return !item.cursed
 				&& (!(item instanceof EquipableItem)
 					|| (item instanceof AlchemistsToolkit && item.isIdentified())
-					|| item instanceof MissileWeapon);
+					|| item instanceof MissileWeapon
+					|| item instanceof MeleeWeapon && !(item instanceof MagesStaff)
+					|| item instanceof Ring);
 	}
 }
 

@@ -24,11 +24,13 @@ package com.tianscar.carbonizedpixeldungeon.items.weapon.melee;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.pixeldungeonclasses.utils.Random;
 
-public class MeleeWeapon extends Weapon {
+public abstract class MeleeWeapon extends Weapon {
 
 	public int tier;
 	public boolean twoHanded = false;
@@ -133,6 +135,23 @@ public class MeleeWeapon extends Weapon {
 			price = 1;
 		}
 		return price;
+	}
+
+	public static class PlaceHolder extends MeleeWeapon {
+
+		{
+			image = ItemSpriteSheet.WEAPON_HOLDER;
+		}
+
+		@Override
+		public boolean isSimilar(Item item) {
+			return item instanceof MeleeWeapon;
+		}
+
+		@Override
+		public String info() {
+			return "";
+		}
 	}
 
 }

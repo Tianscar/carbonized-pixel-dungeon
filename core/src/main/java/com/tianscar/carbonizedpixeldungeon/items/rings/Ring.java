@@ -32,8 +32,10 @@ import com.tianscar.carbonizedpixeldungeon.items.Generator;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.ItemStatusHandler;
 import com.tianscar.carbonizedpixeldungeon.items.KindofMisc;
+import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.journal.Catalog;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.pixeldungeonclasses.utils.Bundle;
@@ -43,7 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Ring extends KindofMisc {
+public abstract class Ring extends KindofMisc {
 	
 	protected Buff buff;
 
@@ -63,6 +65,8 @@ public class Ring extends KindofMisc {
 			put("diamond",ItemSpriteSheet.RING_DIAMOND);
 		}
 	};
+
+	public int alloyBonus = 0;
 	
 	private static ItemStatusHandler<Ring> handler;
 	
@@ -155,9 +159,15 @@ public class Ring extends KindofMisc {
 	}
 	
 	@Override
-	public String info(){
+	public String info() {
 		
 		String desc = isKnown() ? super.desc() : Messages.get(this, "unknown_desc");
+
+		if (alloyBonus == 1) {
+			desc += "\n\n" + Messages.get(Ring.class, "alloy_one");
+		} else if (alloyBonus > 1){
+			desc += "\n\n" + Messages.get(Ring.class, "alloy_many", alloyBonus);
+		}
 		
 		if (cursed && isEquipped( Dungeon.hero )) {
 			desc += "\n\n" + Messages.get(Ring.class, "cursed_worn");
@@ -180,13 +190,22 @@ public class Ring extends KindofMisc {
 	protected String statsInfo(){
 		return "";
 	}
-	
+
+	@Override
+	public int level() {
+		return super.level() + alloyBonus;
+	}
+
 	@Override
 	public Item upgrade() {
 		super.upgrade();
 		
 		if (Random.Int(3) == 0) {
 			cursed = false;
+		}
+
+		if (alloyBonus > 0) {
+			alloyBonus--;
 		}
 		
 		return this;
@@ -196,7 +215,7 @@ public class Ring extends KindofMisc {
 	public boolean isIdentified() {
 		return super.isIdentified() && isKnown();
 	}
-	
+
 	@Override
 	public Item identify() {
 		setKnown();
@@ -237,7 +256,14 @@ public class Ring extends KindofMisc {
 	public static boolean allKnown() {
 		return handler.known().size() == Generator.Category.RING.classes.length;
 	}
-	
+
+	@Override
+	public ItemSprite.Glowing glowing() {
+		if (alloyBonus == 0) return null;
+
+		return new ItemSprite.Glowing(0xFFFFFF, 1f/(float)alloyBonus);
+	}
+
 	@Override
 	public int value() {
 		int price = 75;
@@ -262,17 +288,20 @@ public class Ring extends KindofMisc {
 	}
 
 	private static final String LEVELS_TO_ID    = "levels_to_ID";
+	private static final String ALLOY_BONUS     = "alloy_bonus";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( LEVELS_TO_ID, levelsToID );
+		bundle.put( ALLOY_BONUS, alloyBonus );
 	}
 
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		levelsToID = bundle.getFloat( LEVELS_TO_ID );
+		alloyBonus = bundle.getInt( ALLOY_BONUS );
 	}
 	
 	public void onHeroGainExp( float levelPercent, Hero hero ){
@@ -312,16 +341,16 @@ public class Ring extends KindofMisc {
 		return bonus;
 	}
 	
-	public int soloBonus(){
-		if (cursed){
+	public int soloBonus() {
+		if (cursed) {
 			return Math.min( 0, Ring.this.level()-2 );
 		} else {
 			return Ring.this.level()+1;
 		}
 	}
 
-	public int soloBuffedBonus(){
-		if (cursed){
+	public int soloBuffedBonus() {
+		if (cursed) {
 			return Math.min( 0, Ring.this.buffedLvl()-2 );
 		} else {
 			return Ring.this.buffedLvl()+1;
@@ -347,4 +376,28 @@ public class Ring extends KindofMisc {
 		}
 
 	}
+
+	public static class PlaceHolder extends Ring {
+
+		{
+			image = ItemSpriteSheet.RING_HOLDER;
+		}
+
+		@Override
+		public boolean isSimilar(Item item) {
+			return item instanceof Ring;
+		}
+
+		@Override
+		public String info() {
+			return "";
+		}
+
+		@Override
+		public String name() {
+			return Messages.get(this, "name");
+		}
+
+	}
+
 }

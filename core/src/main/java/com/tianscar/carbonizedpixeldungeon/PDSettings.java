@@ -53,7 +53,7 @@ public class PDSettings extends GameSettings {
 	public static final String KEY_POWER_SAVER 	= "power_saver";
 	public static final String KEY_SCALE		= "scale";
 	public static final String KEY_ZOOM			= "zoom";
-	public static final String KEY_TRANS_ANIM   = "trans_anim";
+	public static final String KEY_CUTSCENE     = "cutscene";
 	public static final String KEY_BRIGHTNESS	= "brightness";
 	public static final String KEY_GRID 	    = "visual_grid";
 	
@@ -116,12 +116,12 @@ public class PDSettings extends GameSettings {
 		return getInt( KEY_BRIGHTNESS, 0, -1, 1 );
 	}
 
-	public static void transAnim( int value ) {
-		put( KEY_TRANS_ANIM, value );
+	public static void cutscene(int value ) {
+		put(KEY_CUTSCENE, value );
 	}
 
-	public static int transAnim() {
-		return getInt( KEY_TRANS_ANIM, 2 );
+	public static int cutscene() {
+		return getInt(KEY_CUTSCENE, 2 );
 	}
 	
 	public static void visualGrid( int value ){

@@ -30,7 +30,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.Recipe;
+import com.tianscar.carbonizedpixeldungeon.items.armor.Armor;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.AlchemistsToolkit;
+import com.tianscar.carbonizedpixeldungeon.items.rings.Ring;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.tianscar.carbonizedpixeldungeon.journal.Journal;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
@@ -61,7 +64,7 @@ import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
 import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 public class AlchemyScene extends PixelScene {
 	
@@ -78,6 +81,9 @@ public class AlchemyScene extends PixelScene {
 	private RenderedTextBlock energyCost;
 	
 	private RedButton btnCombine;
+
+	private final HashMap<Item, Integer> equipstats = new HashMap<>();
+	private static final int STAT_WEAPON = 0, STAT_EXTRA = 1, STAT_RING = 2, STAT_MISC = 3, STAT_ARMOR = 4;
 	
 	private static final int BTN_SIZE	= 28;
 
@@ -146,7 +152,8 @@ public class AlchemyScene extends PixelScene {
 					protected void onClick() {
 						super.onClick();
 						if (item != null) {
-							if (!(item instanceof AlchemistsToolkit)) {
+							restoreEquipment( item );
+							if (!(item instanceof AlchemistsToolkit) && !item.isEquipped( Dungeon.hero )) {
 								if (!item.collect()) {
 									Dungeon.level.drop(item, Dungeon.hero.pos);
 								}
@@ -160,7 +167,7 @@ public class AlchemyScene extends PixelScene {
 
 					@Override
 					protected boolean onLongClick() {
-						if (item != null){
+						if (item != null) {
 							Game.scene().addToFront(new WndInfoItem(item));
 							return true;
 						}
@@ -216,11 +223,11 @@ public class AlchemyScene extends PixelScene {
 		btnCombine.setRect(left + (w-30)/2f, inputs[1].top()+5, 30, inputs[1].height()-10);
 		add(btnCombine);
 		
-		output = new ItemSlot(){
+		output = new ItemSlot() {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				if (visible && item.trueName() != null){
+				if (visible && item.trueName() != null) {
 					AlchemyScene.this.addToFront(new WndInfoItem(item));
 				}
 			}
@@ -251,7 +258,7 @@ public class AlchemyScene extends PixelScene {
 		add(lowerBubbles);
 		lowerBubbles.pour(Speck.factory( Speck.BUBBLE ), 0.1f );
 		
-		ExitButton btnExit = new ExitButton(){
+		ExitButton btnExit = new ExitButton() {
 			@Override
 			protected void onClick() {
 				Game.switchScene(GameScene.class);
@@ -260,13 +267,14 @@ public class AlchemyScene extends PixelScene {
 		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
 		add( btnExit );
 		
-		IconButton btnGuide = new IconButton( new ItemSprite(ItemSpriteSheet.ALCH_PAGE, null)){
+		IconButton btnGuide = new IconButton( new ItemSprite(ItemSpriteSheet.ALCH_PAGE, null)) {
 			@Override
 			protected void onClick() {
 				super.onClick();
+				restoreEquipments();
 				clearSlots();
 				updateState();
-				AlchemyScene.this.addToFront(new Window(){
+				AlchemyScene.this.addToFront(new Window() {
 				
 					{
 						WndJournal.AlchemyTab t = new WndJournal.AlchemyTab();
@@ -307,6 +315,54 @@ public class AlchemyScene extends PixelScene {
 			CarbonizedPixelDungeon.reportException(e);
 		}
 	}
+
+	private void restoreEquipment( Item item ) {
+		if (equipstats.containsKey( item )) {
+			switch (equipstats.get( item )) {
+				case STAT_WEAPON:
+					Dungeon.hero.belongings.weapon = (MeleeWeapon) item;
+					break;
+				case STAT_EXTRA:
+					Dungeon.hero.belongings.extra = (MeleeWeapon) item;
+					break;
+				case STAT_RING:
+					Dungeon.hero.belongings.ring = (Ring) item;
+					break;
+				case STAT_MISC:
+					Dungeon.hero.belongings.misc = (Ring) item;
+					break;
+				case STAT_ARMOR:
+					Dungeon.hero.belongings.armor = (Armor) item;
+					break;
+			}
+		}
+		equipstats.remove( item );
+	}
+
+	private void restoreEquipments() {
+		Set<Map.Entry<Item, Integer>> entriesToRemove = new LinkedHashSet<>();
+		for (Map.Entry<Item, Integer> entry : equipstats.entrySet()) {
+			switch (entry.getValue()) {
+				case STAT_WEAPON:
+					Dungeon.hero.belongings.weapon = (MeleeWeapon) entry.getKey();
+					break;
+				case STAT_EXTRA:
+					Dungeon.hero.belongings.extra = (MeleeWeapon) entry.getKey();
+					break;
+				case STAT_RING:
+					Dungeon.hero.belongings.ring = (Ring) entry.getKey();
+					break;
+				case STAT_MISC:
+					Dungeon.hero.belongings.misc = (Ring) entry.getKey();
+					break;
+				case STAT_ARMOR:
+					Dungeon.hero.belongings.armor = (Armor) entry.getKey();
+					break;
+			}
+			entriesToRemove.add(entry);
+		}
+		equipstats.entrySet().removeAll(entriesToRemove);
+	}
 	
 	@Override
 	public void update() {
@@ -342,6 +398,31 @@ public class AlchemyScene extends PixelScene {
 							} else if (item instanceof AlchemistsToolkit) {
 								clearSlots();
 								inputs[i].item(item);
+							} else if (item.isEquipped(Dungeon.hero)) {
+								int stat;
+								if (item == Dungeon.hero.belongings.weapon) {
+									Dungeon.hero.belongings.weapon = null;
+									stat = STAT_WEAPON;
+								}
+								else if (item == Dungeon.hero.belongings.extra) {
+									Dungeon.hero.belongings.extra = null;
+									stat = STAT_EXTRA;
+								}
+								else if (item == Dungeon.hero.belongings.ring) {
+									Dungeon.hero.belongings.ring = null;
+									stat = STAT_RING;
+								}
+								else if (item == Dungeon.hero.belongings.misc) {
+									Dungeon.hero.belongings.misc = null;
+									stat = STAT_MISC;
+								}
+								else if (item == Dungeon.hero.belongings.armor) {
+									Dungeon.hero.belongings.armor = null;
+									stat = STAT_ARMOR;
+								}
+								else throw new IllegalStateException();
+								inputs[i].item(item);
+								equipstats.put(item, stat);
 							} else {
 								inputs[i].item(item.detach(Dungeon.hero.belongings.backpack));
 							}
@@ -365,7 +446,7 @@ public class AlchemyScene extends PixelScene {
 		return filtered;
 	}
 	
-	private void updateState(){
+	private void updateState() {
 		
 		ArrayList<Item> ingredients = filterInput(Item.class);
 		Recipe recipe = Recipe.findRecipe(ingredients);
@@ -400,14 +481,14 @@ public class AlchemyScene extends PixelScene {
 		
 	}
 	
-	private void combine(){
+	private void combine() {
 		
 		ArrayList<Item> ingredients = filterInput(Item.class);
 		Recipe recipe = Recipe.findRecipe(ingredients);
 		
 		Item result = null;
 		
-		if (recipe != null){
+		if (recipe != null) {
 			provider.spendEnergy(recipe.cost(ingredients));
 			energyLeft.text(Messages.get(AlchemyScene.class, "energy", availableEnergy()));
 			energyLeft.setPos(
@@ -418,14 +499,14 @@ public class AlchemyScene extends PixelScene {
 			result = recipe.brew(ingredients);
 		}
 		
-		if (result != null){
+		if (result != null) {
 			bubbleEmitter.start(Speck.factory( Speck.BUBBLE ), 0.01f, 100 );
 			smokeEmitter.burst(Speck.factory( Speck.WOOL ), 10 );
 			Sample.INSTANCE.play( Assets.Sounds.PUFF );
-			
+
 			output.item(result);
 			if (!(result instanceof AlchemistsToolkit)) {
-				if (!result.collect()){
+				if (!result.collect()) {
 					Dungeon.level.drop(result, Dungeon.hero.pos);
 				}
 			}
@@ -448,23 +529,46 @@ public class AlchemyScene extends PixelScene {
 					}
 				}
 			}
+			equipstats.clear();
 			
 			btnCombine.enable(false);
 		}
 		
 	}
 	
-	public void populate(ArrayList<Item> toFind, Belongings inventory){
+	public void populate(ArrayList<Item> toFind, Belongings inventory) {
+		restoreEquipments();
 		clearSlots();
 		
 		int curslot = 0;
-		for (Item finding : toFind){
+		for (Item finding : toFind) {
 			int needed = finding.quantity();
 			ArrayList<Item> found = inventory.getAllSimilar(finding);
-			while (!found.isEmpty() && needed > 0){
+			while (!found.isEmpty() && needed > 0) {
 				Item detached;
 				if (finding instanceof Dart) {
 					detached = found.get(0).detachAll(inventory.backpack);
+				} else if (finding.isEquipped(Dungeon.hero)) {
+					int stat;
+					if (finding == Dungeon.hero.belongings.weapon) {
+						Dungeon.hero.belongings.weapon = null;
+						stat = 0;
+					}
+					else if (finding == Dungeon.hero.belongings.extra) {
+						Dungeon.hero.belongings.extra = null;
+						stat = 1;
+					}
+					else if (finding == Dungeon.hero.belongings.ring) {
+						Dungeon.hero.belongings.ring = null;
+						stat = 2;
+					}
+					else if (finding == Dungeon.hero.belongings.misc) {
+						Dungeon.hero.belongings.misc = null;
+						stat = 3;
+					}
+					else throw new IllegalStateException();
+					detached = finding;
+					equipstats.put(finding, stat);
 				} else {
 					detached = found.get(0).detach(inventory.backpack);
 				}
@@ -482,6 +586,7 @@ public class AlchemyScene extends PixelScene {
 	@Override
 	public void destroy() {
 		synchronized ( inputs ) {
+			restoreEquipments();
 			clearSlots();
 			for (int i = 0; i < inputs.length; i++) {
 				inputs[i] = null;
@@ -498,11 +603,11 @@ public class AlchemyScene extends PixelScene {
 		super.destroy();
 	}
 	
-	public void clearSlots(){
+	public void clearSlots() {
 		synchronized ( inputs ) {
 			for (int i = 0; i < inputs.length; i++) {
 				if (inputs[i] != null && inputs[i].item != null) {
-					if (!(inputs[i].item instanceof AlchemistsToolkit)) {
+					if (!(inputs[i].item instanceof AlchemistsToolkit) && !inputs[i].item.isEquipped( Dungeon.hero )) {
 						if (!inputs[i].item.collect()) {
 							Dungeon.level.drop(inputs[i].item, Dungeon.hero.pos);
 						}

@@ -26,20 +26,20 @@ import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
 
 public class ItemSpriteSheet {
 
-	private static final int WIDTH = 32;
+	public static final int WIDTH = 32;
 	public static final int SIZE = 16;
 
 	public static TextureFilm film = new TextureFilm( Assets.Sprites.ITEMS, SIZE, SIZE );
 
-	private static int xy(int x, int y){
+	private static int xy(int x, int y) {
 		x -= 1; y -= 1;
-		return x + WIDTH*y;
+		return x + WIDTH * y;
 	}
 
-	private static void assignItemRect( int item, int width, int height ){
+	private static void assignItemRect( int item, int width, int height ) {
 		int x = (item % WIDTH) * SIZE;
 		int y = (item / WIDTH) * SIZE;
-		film.add( item, x, y, x+width, y+height);
+		film.add( item, x, y, x + width, y + height);
 	}
 
 	private static final int PLACEHOLDERS   =                               xy(1, 1);   //32 slots
@@ -342,7 +342,7 @@ public class ItemSpriteSheet {
 	public static final int DISPLACING_DART = TIPPED_DARTS+10;
 	public static final int BLINDING_DART   = TIPPED_DARTS+11;
 	static {
-		for (int i = TIPPED_DARTS; i < TIPPED_DARTS+16; i++)
+		for (int i = TIPPED_DARTS; i < TIPPED_DARTS+WIDTH; i++)
 			assignItemRect(i, 15, 15);
 	}
 	
@@ -385,7 +385,7 @@ public class ItemSpriteSheet {
 	public static final int WAND_REGROWTH       = WANDS+11;
 	public static final int WAND_TRANSFUSION    = WANDS+12;
 	static {
-		for (int i = WANDS; i < WANDS+16; i++)
+		for (int i = WANDS; i < WANDS+WIDTH; i++)
 			assignItemRect(i, 14, 14);
 	}
 
@@ -403,7 +403,7 @@ public class ItemSpriteSheet {
 	public static final int RING_AGATE      = RINGS+10;
 	public static final int RING_DIAMOND    = RINGS+11;
 	static {
-		for (int i = RINGS; i < RINGS+16; i++)
+		for (int i = RINGS; i < RINGS+WIDTH; i++)
 			assignItemRect(i, 8, 10);
 	}
 
@@ -476,7 +476,7 @@ public class ItemSpriteSheet {
 	public static final int SCROLL_TIWAZ    = SCROLLS+11;
 
 	static {
-		for (int i = SCROLLS; i < SCROLLS+16; i++)
+		for (int i = SCROLLS; i < SCROLLS+WIDTH; i++)
 			assignItemRect(i, 15, 14);
 	}
 	
@@ -494,7 +494,7 @@ public class ItemSpriteSheet {
 	public static final int EXOTIC_ODAL     = EXOTIC_SCROLLS+10;
 	public static final int EXOTIC_TIWAZ    = EXOTIC_SCROLLS+11;
 	static {
-		for (int i = EXOTIC_SCROLLS; i < EXOTIC_SCROLLS+16; i++)
+		for (int i = EXOTIC_SCROLLS; i < EXOTIC_SCROLLS+WIDTH; i++)
 			assignItemRect(i, 15, 14);
 	}
 	
@@ -512,7 +512,7 @@ public class ItemSpriteSheet {
 	public static final int STONE_INTUITION     = STONES+10;
 	public static final int STONE_SHOCK         = STONES+11;
 	static {
-		for (int i = STONES; i < STONES+16; i++)
+		for (int i = STONES; i < STONES+WIDTH; i++)
 			assignItemRect(i, 14, 12);
 	}
 
@@ -530,7 +530,7 @@ public class ItemSpriteSheet {
 	public static final int POTION_SILVER   = POTIONS+10;
 	public static final int POTION_IVORY    = POTIONS+11;
 	static {
-		for (int i = POTIONS; i < POTIONS+16; i++)
+		for (int i = POTIONS; i < POTIONS+WIDTH; i++)
 			assignItemRect(i, 12, 14);
 	}
 	
@@ -548,7 +548,7 @@ public class ItemSpriteSheet {
 	public static final int EXOTIC_SILVER   = EXOTIC_POTIONS+10;
 	public static final int EXOTIC_IVORY    = EXOTIC_POTIONS+11;
 	static {
-		for (int i = EXOTIC_POTIONS; i < EXOTIC_POTIONS+16; i++)
+		for (int i = EXOTIC_POTIONS; i < EXOTIC_POTIONS+WIDTH; i++)
 			assignItemRect(i, 12, 13);
 	}
 
@@ -566,7 +566,7 @@ public class ItemSpriteSheet {
 	public static final int SEED_FADELEAF       = SEEDS+10;
 	public static final int SEED_BLINDWEED      = SEEDS+11;
 	static{
-		for (int i = SEEDS; i < SEEDS+16; i++)
+		for (int i = SEEDS; i < SEEDS+WIDTH; i++)
 			assignItemRect(i, 10, 10);
 	}
 	
@@ -585,20 +585,24 @@ public class ItemSpriteSheet {
 	public static final int ELIXIR_ICY      = ELIXIRS+5;
 	public static final int ELIXIR_ARCANE   = ELIXIRS+6;
 	static{
-		for (int i = BREWS; i < BREWS+16; i++)
+		for (int i = BREWS; i < BREWS+WIDTH; i++)
 			assignItemRect(i, 12, 14);
 	}
 
-	private static final int MATERIALS      =                               xy(0, 26);  //16 slots
-	public static final int POTION_CATALYST = MATERIALS+0;
-	public static final int LIQUID_METAL    = MATERIALS+1;
-	public static final int SCROLL_CATALYST = MATERIALS+1;
-	public static final int ARCANE_RESIN    = MATERIALS+2;
+	private static final int MATERIALS      =                               xy(1, 26);  //16 slots
+	public static final int SCROLL_CATALYST = MATERIALS+0;
+	public static final int ARCANE_RESIN    = MATERIALS+1;
+	public static final int POTION_CATALYST = MATERIALS+2;
+	public static final int LIQUID_METAL    = MATERIALS+3;
+	public static final int MAGIC_ALLOY     = MATERIALS+4;
+	public static final int CARBON_STEEL    = MATERIALS+5;
 	static {
+		assignItemRect(SCROLL_CATALYST, 12, 11);
+		assignItemRect(ARCANE_RESIN,    12, 11);
 		assignItemRect(POTION_CATALYST, 6, 15);
 		assignItemRect(LIQUID_METAL,    8, 15);
-		assignItemRect(SCROLL_CATALYST, 12, 11);
-		assignItemRect(ARCANE_RESIN   , 12, 11);
+		assignItemRect(MAGIC_ALLOY,     14, 14);
+		assignItemRect(CARBON_STEEL,    14, 14);
 	}
 	
 	private static final int SPELLS         =                               xy(1, 27);  //32 slots

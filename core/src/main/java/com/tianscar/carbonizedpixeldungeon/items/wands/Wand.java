@@ -209,7 +209,7 @@ public abstract class Wand extends Item {
 		}
 	}
 	
-	public void level( int value) {
+	public void level( int value ) {
 		super.level( value );
 		updateLevel();
 	}
@@ -278,7 +278,7 @@ public abstract class Wand extends Item {
 	
 	@Override
 	public int level() {
-		if (!cursed && curseInfusionBonus){
+		if (!cursed && curseInfusionBonus) {
 			curseInfusionBonus = false;
 			updateLevel();
 		}
@@ -294,7 +294,7 @@ public abstract class Wand extends Item {
 			cursed = false;
 		}
 
-		if (resinBonus > 0){
+		if (resinBonus > 0) {
 			resinBonus--;
 		}
 

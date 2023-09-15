@@ -125,7 +125,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 				boolean fullscreen = Build.VERSION.SDK_INT < Build.VERSION_CODES.N
 						|| !AndroidGame.instance.isInMultiWindowMode();
 				
-				if (fullscreen){
+				if (fullscreen) {
 					AndroidGame.instance.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 							WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 				} else {
@@ -133,7 +133,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 							WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 				}
 				
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 					if (PDSettings.fullscreen()) {
 						AndroidGame.instance.getWindow().getDecorView().setSystemUiVisibility(
 								View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -289,7 +289,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 					break;
 			}
 			KRFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_kr.ttf"));
-			SCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_sc.ttf"));
+			SCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_zh.ttf"));
 			TCFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_tc.ttf"));
 			JPFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/fusion_pixel_jp.ttf"));
 		}

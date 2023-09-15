@@ -88,11 +88,11 @@ public class WndBag extends WndTabbed {
 	
 	private static Bag lastBag;
 
-	public WndBag(Bag bag ) {
+	public WndBag( Bag bag ) {
 		this(bag, null);
 	}
 
-	public WndBag(Bag bag, ItemSelector selector ) {
+	public WndBag( Bag bag, ItemSelector selector ) {
 		
 		super();
 		

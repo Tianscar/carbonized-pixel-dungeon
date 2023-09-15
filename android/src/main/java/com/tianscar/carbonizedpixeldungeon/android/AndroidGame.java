@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ViewConfiguration;
+
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -91,6 +92,7 @@ public class AndroidGame extends AndroidApplication {
 		}
 		
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		config.useImmersiveMode = false;
 		config.depth = 0;
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
 			//use rgb565 on ICS devices for better performance

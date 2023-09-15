@@ -74,7 +74,7 @@ public class WndStory extends Window {
 		int width = PixelScene.landscape() ? WIDTH_L - MARGIN * 2: WIDTH_P - MARGIN *2;
 
 		float y = MARGIN;
-		if (icon != null && title != null){
+		if (icon != null && title != null) {
 			ttl = new IconTitle(icon, title);
 			ttl.setRect(MARGIN, y, width-2*MARGIN, 0);
 			y = ttl.bottom()+MARGIN;

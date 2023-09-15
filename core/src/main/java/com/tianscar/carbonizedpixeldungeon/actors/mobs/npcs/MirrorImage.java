@@ -30,7 +30,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Invisibility;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.DualWielding;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Wieldings;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
@@ -57,7 +57,7 @@ public class MirrorImage extends NPC {
 	}
 	
 	private Hero hero;
-	private DualWielding dualWielding;
+	private Wieldings wieldings;
 	private int heroID;
 	public int armTier;
 
@@ -66,7 +66,7 @@ public class MirrorImage extends NPC {
 		
 		if ( hero == null ) {
 			hero = (Hero)Actor.findById(heroID);
-			dualWielding = new DualWielding( hero );
+			wieldings = new Wieldings( hero );
 			if ( hero == null ){
 				die(null);
 				sprite.killAndErase();
@@ -98,20 +98,20 @@ public class MirrorImage extends NPC {
 	
 	public void duplicate( Hero hero ) {
 		this.hero = hero;
-		dualWielding = new DualWielding( hero );
+		wieldings = new Wieldings( hero );
 		heroID = this.hero.id();
 		Buff.affect(this, MirrorInvis.class, Short.MAX_VALUE);
 	}
 	
 	@Override
 	public int damageRoll() {
-		int damage = hero.damageRoll( dualWielding );
+		int damage = hero.damageRoll(wieldings);
 		return (damage+1)/2; //half hero damage, rounded up
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return hero.attackSkill( dualWielding, target );
+		return hero.attackSkill(wieldings, target );
 	}
 	
 	@Override
@@ -129,18 +129,18 @@ public class MirrorImage extends NPC {
 	
 	@Override
 	public float attackDelay() {
-		return hero.attackDelay( dualWielding ); //handles ring of furor
+		return hero.attackDelay(wieldings); //handles ring of furor
 	}
 	
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return dualWielding.weaponCanAttack(this, enemy) || super.canAttack(enemy);
+		return wieldings.weaponCanAttack(this, enemy) || super.canAttack(enemy);
 	}
 	
 	@Override
 	public int drRoll() {
-		if (hero != null && dualWielding.weaponNotNull()) {
-			return Random.NormalIntRange(0, dualWielding.weaponDefenseFactor(this)/2);
+		if (hero != null && wieldings.weaponNotNull()) {
+			return Random.NormalIntRange(0, wieldings.weaponDefenseFactor(this)/2);
 		} else {
 			return 0;
 		}
@@ -158,8 +158,8 @@ public class MirrorImage extends NPC {
 		if (enemy instanceof Mob) {
 			((Mob)enemy).aggro( this );
 		}
-		if (dualWielding.weaponNotNull()){
-			damage = dualWielding.weaponProc( this, enemy, damage );
+		if (wieldings.weaponNotNull()){
+			damage = wieldings.weaponProc( this, enemy, damage );
 			if (!enemy.isAlive() && enemy == Dungeon.hero){
 				Dungeon.fail(getClass());
 				GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );

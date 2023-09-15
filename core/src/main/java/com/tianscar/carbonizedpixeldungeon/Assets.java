@@ -85,9 +85,7 @@ public class Assets {
 		public static final String ICONS	= "interfaces/icons.png";
 		public static final String STATUS	= "interfaces/status_pane.png";
 		public static final String MENU		= "interfaces/menu_button.png";
-		public static final String HP_BAR	= "interfaces/hp_bar.png";
-		public static final String HG_BAR	= "interfaces/hg_bar.png";
-		public static final String SHLD_BAR = "interfaces/shield_bar.png";
+		public static final String STAT_BAR	= "interfaces/status_bar.png";
 		public static final String XP_BAR	= "interfaces/exp_bar.png";
 		public static final String TOOLBAR	= "interfaces/toolbar.png";
 		public static final String SHADOW   = "interfaces/shadow.png";
@@ -243,8 +241,6 @@ public class Assets {
 		public static final String SHEEP    = "sounds/sheep.mp3";
 
 		public static final String VOI_RELOADED  = "sounds/voi_reloaded.mp3";
-		public static final String VOI_THANKS    = "sounds/voi_thanks.mp3";
-		public static final String VOI_NOTHING   = "sounds/voi_nothing.mp3";
 
 		public static final String[] all = new String[]{
 				CLICK, BADGE, GOLD,
@@ -259,8 +255,9 @@ public class Assets {
 				TELEPORT, CHARMS, MASTERY, PUFF, ROCKS, BURNING, FALLING, GHOST, SECRET, BONES,
 				BEE, DEGRADE, MIMIC, DEBUFF, CHARGEUP, GAS, CHAINS, SCAN, SHEEP,
 
-				VOI_RELOADED, VOI_THANKS, VOI_NOTHING
+				VOI_RELOADED
 		};
+
 	}
 
 	public static class Sprites {

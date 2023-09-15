@@ -239,13 +239,13 @@ abstract public class MissileWeapon extends Weapon {
 		return delayFactor( user );
 	}
 	
-	protected void rangedHit( Char enemy, int cell ){
+	protected void rangedHit( Char enemy, int cell ) {
 		decrementDurability();
-		if (durability > 0){
+		if (durability > 0) {
 			//attempt to stick the missile weapon to the enemy, just drop it if we can't.
-			if (sticky && enemy != null && enemy.isAlive() && enemy.buff(Corruption.class) == null){
+			if (sticky && enemy != null && enemy.isAlive() && enemy.buff(Corruption.class) == null) {
 				PinCushion p = Buff.affect(enemy, PinCushion.class);
-				if (p.target == enemy){
+				if (p.target == enemy) {
 					p.stick(this);
 					return;
 				}
@@ -463,4 +463,5 @@ abstract public class MissileWeapon extends Weapon {
 			return "";
 		}
 	}
+
 }

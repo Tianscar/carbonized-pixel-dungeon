@@ -180,12 +180,13 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	private static Ring changeRing( Ring r ) {
 		Ring n;
 		do {
-			n = (Ring)Generator.random( Generator.Category.RING );
+			n = (Ring) Generator.random( Generator.Category.RING );
 		} while (Challenges.isItemBlocked(n) || n.getClass() == r.getClass());
 		
 		n.level(0);
 		
 		int level = r.level();
+		level -= r.alloyBonus;
 		if (level > 0) {
 			n.upgrade( level );
 		} else if (level < 0) {

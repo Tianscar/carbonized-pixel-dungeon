@@ -211,7 +211,6 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void switchScene(Class<? extends Scene> c, SceneChangeCallback callback) {
-		platform.titleHashCode(c.getName());
 		instance.sceneClass = c;
 		instance.requestedReset = true;
 		instance.onChange = callback;

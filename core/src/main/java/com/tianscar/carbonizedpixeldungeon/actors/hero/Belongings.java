@@ -80,7 +80,7 @@ public class Belongings implements Iterable<Item> {
 	// we still want to access the raw equipped items in cases where effects should be ignored though,
 	// such as when equipping something, showing an interface, or dealing with items from a dead hero
 
-	public KindOfWeapon weapon(){
+	public KindOfWeapon weapon() {
 		//no point in lost invent check, if it's assigned it must be usable
 		if (thrownWeapon != null) return thrownWeapon;
 

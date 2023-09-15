@@ -415,7 +415,7 @@ public class GameScene extends PixelScene {
 
 		Dungeon.hero.next();
 
-		switch (InterlevelScene.mode){
+		switch (InterlevelScene.mode) {
 			case FALL: case DESCEND: case CONTINUE:
 				Camera.main.snapTo(hero.center().x, hero.center().y - DungeonTilemap.SIZE * (defaultZoom/Camera.main.zoom));
 				break;
@@ -433,7 +433,7 @@ public class GameScene extends PixelScene {
 				GLog.h(Messages.get(this, "descend"), Dungeon.depth);
 				Sample.INSTANCE.play(Assets.Sounds.DESCEND);
 				
-				for (Char ch : Actor.chars()){
+				for (Char ch : Actor.chars()) {
 					if (ch instanceof DriedRose.GhostHero){
 						((DriedRose.GhostHero) ch).sayAppeared();
 					}
@@ -473,20 +473,20 @@ public class GameScene extends PixelScene {
 
 				//50%/75% chance, use level's seed so that we get the same result for the same level
 				Random.pushGenerator(Dungeon.seedCurDepth());
-					if (reqSecrets <= 0 && Random.Int(4) <= Dungeon.hero.pointsInTalent(Talent.ROGUES_FORESIGHT)){
+					if (reqSecrets <= 0 && Random.Int(4) <= Dungeon.hero.pointsInTalent(Talent.ROGUES_FORESIGHT)) {
 						GLog.p(Messages.get(this, "secret_hint"));
 					}
 				Random.popGenerator();
 			}
 
 			boolean unspentTalents = false;
-			for (int i = 1; i <= Dungeon.hero.talents.size(); i++){
+			for (int i = 1; i <= Dungeon.hero.talents.size(); i ++) {
 				if (Dungeon.hero.talentPointsAvailable(i) > 0){
 					unspentTalents = true;
 					break;
 				}
 			}
-			if (unspentTalents){
+			if (unspentTalents) {
 				GLog.newLine();
 				GLog.w( Messages.get(Dungeon.hero, "unspent") );
 				StatusPane.talentBlink = 10f;
@@ -518,15 +518,15 @@ public class GameScene extends PixelScene {
 			GLog.p(Messages.get(Guidebook.class, "hint"));
 			GameScene.flashForDocument(Document.GUIDE_DIEING);
 		}
-		
+
 		fadeIn();
 
 		//re-show WndResurrect if needed
-		if (!Dungeon.hero.isAlive()){
+		if (!Dungeon.hero.isAlive()) {
 			//check if hero has an unblessed ankh
 			Ankh ankh = null;
-			for (Ankh i : Dungeon.hero.belongings.getAllItems(Ankh.class)){
-				if (!i.isBlessed()){
+			for (Ankh i : Dungeon.hero.belongings.getAllItems(Ankh.class)) {
+				if (!i.isBlessed()) {
 					ankh = i;
 				}
 			}

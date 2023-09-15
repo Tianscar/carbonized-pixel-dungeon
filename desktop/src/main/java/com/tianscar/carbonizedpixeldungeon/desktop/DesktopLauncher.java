@@ -37,7 +37,6 @@ import com.tianscar.carbonizedpixeldungeon.services.updates.Updates;
 import com.tianscar.pixeldungeonclasses.noosa.Game;
 import com.tianscar.pixeldungeonclasses.utils.FileUtils;
 import com.tianscar.pixeldungeonclasses.utils.Point;
-import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -48,7 +47,7 @@ import java.nio.charset.StandardCharsets;
 
 public class DesktopLauncher {
 
-	public static void main (String[] args) {
+	public static void main(String[] args) {
 
 		if (!DesktopLaunchValidator.verifyValidJVMState(args)) return;
 
@@ -64,25 +63,19 @@ public class DesktopLauncher {
 				PrintWriter pw = new PrintWriter(sw);
 				throwable.printStackTrace(pw);
 				pw.flush();
-				String exceptionMsg = sw.toString();
+				String rawMsg = sw.toString();
+				String dispMsg;
 
 				//shorten/simplify exception message to make it easier to fit into a message box
-				exceptionMsg = exceptionMsg.replaceAll("\\(.*:([0-9]*)\\)", "($1)");
-				exceptionMsg = exceptionMsg.replace("com.tianscar.carbonizedpixeldungeon.", "");
-				exceptionMsg = exceptionMsg.replace("com.tianscar.pixeldungeonclasses.", "");
-				exceptionMsg = exceptionMsg.replace("com.badlogic.gdx.", "");
-				exceptionMsg = exceptionMsg.replace("\t", "    ");
+				dispMsg = rawMsg.replace("\t", "    ");
+				/*
+				dispMsg = dispMsg.replaceAll("\\(.*:([0-9]*)\\)", "($1)");
+				dispMsg = dispMsg.replace("com.tianscar.carbonizedpixeldungeon.", "");
+				dispMsg = dispMsg.replace("com.tianscar.pixeldungeonclasses.", "");
+				dispMsg = dispMsg.replace("com.badlogic.gdx.", "");
+				 */
 
-				if (exceptionMsg.contains("Couldn't create window")){
-					TinyFileDialogs.tinyfd_messageBox(DesktopMessages.get(DesktopLauncher.class, "crash_title", title, Game.version),
-							DesktopMessages.get(DesktopLauncher.class, "crash_msg_gl", title, Game.version) + "\n" + exceptionMsg,
-							"ok", "error", false);
-				} else {
-					TinyFileDialogs.tinyfd_messageBox(DesktopMessages.get(DesktopLauncher.class, "crash_title", title, Game.version),
-							DesktopMessages.get(DesktopLauncher.class, "crash_msg", title, Game.version) + "\n" + exceptionMsg,
-							"ok", "error", false);
-				}
-				System.exit(1);
+				DesktopCrashDialog.show(DesktopMessages.get(DesktopLauncher.class, "crash_title", title), dispMsg, rawMsg);
 			}
 		});
 
@@ -114,7 +107,7 @@ public class DesktopLauncher {
 		} else if (SharedLibraryLoader.isMac) {
 			basePath = "Library/Application Support/Carbonized Pixel Dungeon/";
 		} else if (SharedLibraryLoader.isLinux) {
-			String XDGHome = System.getenv().get("XDG_DATA_HOME");
+			String XDGHome = System.getenv("XDG_DATA_HOME");
 			if (XDGHome == null) XDGHome = ".local/share/";
 			basePath = XDGHome + "tianscar/carbonized-pixel-dungeon/";
 		}

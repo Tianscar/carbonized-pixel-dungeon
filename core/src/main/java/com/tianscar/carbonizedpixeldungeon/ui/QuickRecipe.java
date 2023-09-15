@@ -23,11 +23,7 @@ package com.tianscar.carbonizedpixeldungeon.ui;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
-import com.tianscar.carbonizedpixeldungeon.items.ArcaneResin;
-import com.tianscar.carbonizedpixeldungeon.items.Generator;
-import com.tianscar.carbonizedpixeldungeon.items.Item;
-import com.tianscar.carbonizedpixeldungeon.items.LiquidMetal;
-import com.tianscar.carbonizedpixeldungeon.items.Recipe;
+import com.tianscar.carbonizedpixeldungeon.items.*;
 import com.tianscar.carbonizedpixeldungeon.items.bombs.Bomb;
 import com.tianscar.carbonizedpixeldungeon.items.food.Blandfruit;
 import com.tianscar.carbonizedpixeldungeon.items.food.Food;
@@ -49,6 +45,7 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfIcyTouc
 import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfMight;
 import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfToxicEssence;
 import com.tianscar.carbonizedpixeldungeon.items.potions.exotic.ExoticPotion;
+import com.tianscar.carbonizedpixeldungeon.items.rings.Ring;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.tianscar.carbonizedpixeldungeon.items.spells.Alchemize;
@@ -65,6 +62,9 @@ import com.tianscar.carbonizedpixeldungeon.items.spells.Recycle;
 import com.tianscar.carbonizedpixeldungeon.items.spells.WildEnergy;
 import com.tianscar.carbonizedpixeldungeon.items.stones.Runestone;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.tianscar.carbonizedpixeldungeon.items.CarbonSteel;
+import com.tianscar.carbonizedpixeldungeon.items.MagicAlloy;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
@@ -322,8 +322,13 @@ public class QuickRecipe extends Component {
 				result.add(new QuickRecipe( new LiquidMetal.Recipe(),
 						new ArrayList<Item>(Arrays.asList(new MissileWeapon.PlaceHolder().quantity(3))),
 						new LiquidMetal()));
-				result.add(null);
-				result.add(null);
+				result.add(new QuickRecipe( new LiquidMetal.oneSteel()  ));
+				result.add(new QuickRecipe( new CarbonSteel.Recipe(),
+						new ArrayList<Item>(Arrays.asList(new MeleeWeapon.PlaceHolder())),
+						new CarbonSteel()));
+				result.add(new QuickRecipe( new MagicAlloy.Recipe(),
+						new ArrayList<Item>(Arrays.asList(new Ring.PlaceHolder())),
+						new MagicAlloy()));
 				result.add(new QuickRecipe( new ArcaneResin.Recipe(),
 						new ArrayList<Item>(Arrays.asList(new Wand.PlaceHolder())),
 						new ArcaneResin()));

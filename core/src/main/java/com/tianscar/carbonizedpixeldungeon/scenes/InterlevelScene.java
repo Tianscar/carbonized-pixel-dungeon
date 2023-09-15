@@ -159,11 +159,11 @@ public class InterlevelScene extends PixelScene {
 		else                         loadingAsset = Assets.Interfaces.SHADOW;
 		
 		//slow down transition when displaying an install prompt
-		if (Updates.isInstallable() || PDSettings.transAnim() > 1){
+		if (Updates.isInstallable() || PDSettings.cutscene() > 1){
 			fadeTime += 0.5f; //adds 1 second total
 		}
 		//speed up transition
-		if (PDSettings.transAnim() < 1){
+		if (PDSettings.cutscene() < 1){
 			fadeTime = 0f;
 		}
 		
@@ -215,7 +215,7 @@ public class InterlevelScene extends PixelScene {
 		align(message);
 		add( message );
 
-		if (PDSettings.transAnim() > 1) {
+		if (PDSettings.cutscene() > 1) {
 			text = Messages.get(InterlevelScene.class, "tip_" + Random.Int(1, 7));
 			tip = PixelScene.renderTextBlock( text, 6 );
 			tip.setPos(

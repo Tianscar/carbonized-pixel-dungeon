@@ -21,6 +21,7 @@
 
 package com.tianscar.carbonizedpixeldungeon.items.bags;
 
+import com.tianscar.carbonizedpixeldungeon.items.CarbonSteel;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.bombs.Bomb;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
@@ -38,7 +39,7 @@ public class MagicalHolster extends Bag {
 	
 	@Override
 	public boolean canHold( Item item ) {
-		if (item instanceof Wand || item instanceof MissileWeapon || item instanceof Bomb){
+		if (item instanceof Wand || item instanceof MissileWeapon || item instanceof Bomb || item instanceof CarbonSteel) {
 			return super.canHold(item);
 		} else {
 			return false;
