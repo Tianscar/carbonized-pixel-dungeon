@@ -93,7 +93,7 @@ import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfTransfusion;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfWarding;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.AssassinsBlade;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.BattleAxe;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Crossbow;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Dirk;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Flail;
@@ -118,6 +118,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Sword;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WarHammer;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Whip;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.LightCrossbow;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
@@ -167,6 +168,7 @@ public enum Catalog {
 		WEAPONS.seen.put( Quarterstaff.class,               false);
 		WEAPONS.seen.put( Dirk.class,                       false);
 		WEAPONS.seen.put( Sword.class,                      false);
+		WEAPONS.seen.put( LightCrossbow.class,              false);
 		WEAPONS.seen.put( Mace.class,                       false);
 		WEAPONS.seen.put( Scimitar.class,                   false);
 		WEAPONS.seen.put( RoundShield.class,                false);

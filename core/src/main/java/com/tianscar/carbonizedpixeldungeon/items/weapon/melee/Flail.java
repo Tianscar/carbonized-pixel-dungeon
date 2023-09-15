@@ -22,6 +22,7 @@
 package com.tianscar.carbonizedpixeldungeon.items.weapon.melee;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
 public class Flail extends MeleeWeapon {
@@ -33,7 +34,11 @@ public class Flail extends MeleeWeapon {
 
 		tier = 4;
 		ACC = 0.8f; //0.8x accuracy
-		//also cannot surprise attack, see Hero.canSurpriseAttack
+	}
+
+	@Override
+	public boolean canSurpriseAttack(Hero hero) {
+		return false; //also cannot surprise attack
 	}
 
 	@Override

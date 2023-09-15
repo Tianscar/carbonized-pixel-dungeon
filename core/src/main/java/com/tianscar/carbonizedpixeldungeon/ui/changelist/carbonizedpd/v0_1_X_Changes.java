@@ -76,9 +76,6 @@ public class v0_1_X_Changes {
 						"_-_ 物品栏居中显示错误的问题\n" +
 						"_-_ 场景 BGM 不能正确播放的问题"));
 
-		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING), "删档警告",
-				"因为下个大版本将全面重做天赋系统，所以将不兼容以前的存档"));
-
 	}
 
 	public static void add_v0_1_2_Changes( ArrayList<ChangeInfo> changeInfos ){

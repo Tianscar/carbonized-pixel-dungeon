@@ -111,7 +111,7 @@ public class MirrorImage extends NPC {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return hero.attackSkill(wieldings, target );
+		return hero.attackSkill( wieldings, target );
 	}
 	
 	@Override

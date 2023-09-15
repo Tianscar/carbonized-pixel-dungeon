@@ -54,6 +54,10 @@ public class v0_2_X_Changes {
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
 				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.2.0的 Bug）：\n" +
+						"_-_ 无法正确拉取更新的问题"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
 				"尝试修复了（v0.1.0的 Bug）：\n" +
 						"_-_ 沉浸模式在安卓端不起作用的问题\n" +
 						"_-_ 部分物品贴图错误的问题"));
@@ -61,6 +65,11 @@ public class v0_2_X_Changes {
 				"加入了两个新的炼金配方！它们主要用于帮助废物利用你不想使用的近战武器和戒指。\n\n" +
 						"_碳钢锭_由近战武器融化而来，并且可以进一步融化为液金。\n\n" +
 						"_魔金锭_由戒指裂解而来，可以用于升级其他低级戒指。"));
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.CROSSBOW), "新的武器类别！",
+				"添加了新的武器类别：_远程武器_！\n\n" +
+						"远程武器需要装填弹药，并且一般需要装备才能进行射击，能大幅提升弹药的攻击力！\n\n" +
+						"值得注意的是：_受诅咒的_远程武器命中率会_严重_下降。\n\n" +
+						"现版本远程武器只有 _2 阶_的_轻型十字弩_（单手）和 _4 阶_的_十字弩_（双手）。"));
 		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
 				"_-_ 微调了游戏主界面的玩家信息显示\n" +
 						"_-_ 重制了桌面端的崩溃日志界面"));

@@ -443,11 +443,14 @@ public class Hero extends Char {
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
 
-		if (wep instanceof MissileWeapon){
+		if (wep instanceof MissileWeapon) {
 			if (Dungeon.level.adjacent( pos, target.pos )) {
 				accuracy *= (0.5f + 0.2f*pointsInTalent(Talent.POINT_BLANK));
 			} else {
 				accuracy *= 1.5f;
+			}
+			if (((MissileWeapon) wep).shooter != null && ((MissileWeapon) wep).shooter.cursed) {
+				accuracy *= 0.5f;
 			}
 		}
 
@@ -591,14 +594,11 @@ public class Hero extends Char {
 		
 	}
 
-	public boolean canSurpriseAttack(){
-		if (!wieldings.weaponNotNull())    													return true;
-		if (!(belongings.weapon() instanceof Weapon)
-				&& !(belongings.extra() instanceof Weapon))   								return true;
-		if (belongings.weapon() instanceof Flail)                                       	return false;
-		if (belongings.extra() instanceof Flail)                                      	 	return false;
-		if (belongings.weapon() != null && STR() < ((Weapon)belongings.weapon()).STRReq())  return false;
-		if (belongings.extra() != null && STR() < ((Weapon)belongings.extra()).STRReq())    return false;
+	public boolean canSurpriseAttack() {
+		if (!wieldings.weaponNotNull())    																 return true;
+		if (!(belongings.weapon() instanceof Weapon) && !(belongings.extra() instanceof Weapon))   		 return true;
+		if (belongings.weapon() != null && !((Weapon)belongings.weapon()).canSurpriseAttack(this))  return false;
+		if (belongings.extra() != null && !((Weapon)belongings.extra()).canSurpriseAttack(this))    return false;
 
 		return true;
 	}

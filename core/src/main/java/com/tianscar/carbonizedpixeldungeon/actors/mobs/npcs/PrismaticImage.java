@@ -158,7 +158,7 @@ public class PrismaticImage extends NPC {
 	@Override
 	public int attackSkill( Char target ) {
 		if (hero != null) {
-			return hero.attackSkill(wieldings, target );
+			return hero.attackSkill( wieldings, target );
 		} else {
 			return 0;
 		}

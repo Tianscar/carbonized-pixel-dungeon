@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.sprites;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Crossbow;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.Bolas;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.HeavyBoomerang;

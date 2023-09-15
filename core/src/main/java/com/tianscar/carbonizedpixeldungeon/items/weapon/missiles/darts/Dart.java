@@ -29,7 +29,6 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
 import com.tianscar.carbonizedpixeldungeon.items.bags.VelvetPouch;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Crossbow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
@@ -75,10 +74,8 @@ public class Dart extends MissileWeapon {
 	
 	@Override
 	public int min(int lvl) {
-		if (bow != null){
-			return  4 +                    //4 base
-					bow.buffedLvl() + lvl; //+1 per level or bow level
-		} else {
+		if (shooter != null) return shooter.missileMin( this, lvl );
+		else {
 			return  1 +     //1 base, down from 2
 					lvl;    //scaling unchanged
 		}
@@ -86,77 +83,10 @@ public class Dart extends MissileWeapon {
 
 	@Override
 	public int max(int lvl) {
-		if (bow != null){
-			return  12 +                       //12 base
-					3*bow.buffedLvl() + 2*lvl; //+3 per bow level, +2 per level (default scaling +2)
-		} else {
+		if (shooter != null) return shooter.missileMax( this, lvl );
+		else {
 			return  2 +     //2 base, down from 5
 					2*lvl;  //scaling unchanged
-		}
-	}
-	
-	private static Crossbow bow;
-	
-	private void updateCrossbow(){
-		if (Dungeon.hero.belongings.weapon() instanceof Crossbow){
-			bow = (Crossbow) Dungeon.hero.belongings.weapon();
-		} else if (Dungeon.hero.belongings.extra() instanceof Crossbow){
-			bow = (Crossbow) Dungeon.hero.belongings.extra();
-		} else {
-			bow = null;
-		}
-	}
-
-	public boolean crossbowHasEnchant( Char owner ){
-		return bow != null && bow.enchantment != null && owner.buff(MagicImmune.class) == null;
-	}
-	
-	@Override
-	public boolean hasEnchant(Class<? extends Enchantment> type, Char owner) {
-		if (bow != null && bow.hasEnchant(type, owner)){
-			return true;
-		} else {
-			return super.hasEnchant(type, owner);
-		}
-	}
-	
-	@Override
-	public int proc(Char attacker, Char defender, int damage) {
-		if (bow != null){
-			damage = bow.proc(attacker, defender, damage);
-		}
-
-		return super.proc(attacker, defender, damage);
-	}
-	
-	@Override
-	protected void onThrow(int cell) {
-		updateCrossbow();
-		super.onThrow(cell);
-	}
-
-	@Override
-	public void throwSound() {
-		updateCrossbow();
-		if (bow != null) {
-			Sample.INSTANCE.play(Assets.Sounds.ATK_CROSSBOW, 1, Random.Float(0.87f, 1.15f));
-		} else {
-			super.throwSound();
-		}
-	}
-	
-	@Override
-	public String info() {
-		updateCrossbow();
-		if (bow != null && !bow.isIdentified()){
-			int level = bow.level();
-			//temporarily sets the level of the bow to 0 for IDing purposes
-			bow.level(0);
-			String info = super.info();
-			bow.level(level);
-			return info;
-		} else {
-			return super.info();
 		}
 	}
 	

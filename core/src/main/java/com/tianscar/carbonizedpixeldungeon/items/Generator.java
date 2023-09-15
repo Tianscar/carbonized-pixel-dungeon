@@ -112,7 +112,7 @@ import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfTransfusion;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfWarding;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.AssassinsBlade;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.BattleAxe;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Crossbow;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Dirk;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Flail;
@@ -138,6 +138,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Sword;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WarHammer;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Whip;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.LightCrossbow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.Bolas;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ForceCube;
@@ -339,9 +340,10 @@ public class Generator {
 					HandAxe.class,
 					Spear.class,
 					Quarterstaff.class,
-					Dirk.class
+					Dirk.class,
+					LightCrossbow.class
 			};
-			WEP_T2.probs = new float[]{ 6, 5, 5, 4, 4 };
+			WEP_T2.probs = new float[]{ 6, 5, 5, 4, 4, 4 };
 			
 			WEP_T3.classes = new Class<?>[]{
 					Sword.class,

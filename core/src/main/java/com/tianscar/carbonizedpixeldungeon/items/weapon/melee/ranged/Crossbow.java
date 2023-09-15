@@ -19,23 +19,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.tianscar.carbonizedpixeldungeon.items.weapon.melee;
+package com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts.Dart;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
-public class Crossbow extends MeleeWeapon {
+public class Crossbow extends RangedWeapon {
 	
 	{
 		image = ItemSpriteSheet.CROSSBOW;
 		hitSound = Assets.Sounds.HIT;
 		hitSoundPitch = 1f;
 		
-		//check Dart.class for additional properties
-		
 		tier = 4;
 
 		twoHanded = true;
+
+		missileType = Dart.class;
+
+		loadSound = Assets.Sounds.UNLOCK;
+		loadSoundPitch = 1.1f;
+		unloadSound = Assets.Sounds.UNLOCK;
+		unloadSoundPitch = 1.1f;
 	}
 	
 	@Override
@@ -43,4 +51,15 @@ public class Crossbow extends MeleeWeapon {
 		return  4*(tier+1) +    //20 base, down from 25
 				lvl*(tier);     //+4 per level, down from +5
 	}
+
+	@Override
+	protected int initialCharges() {
+		return 3;
+	}
+
+	@Override
+	public void missileThrowSound() {
+		Sample.INSTANCE.play(Assets.Sounds.ATK_CROSSBOW, 1, Random.Float(0.87f, 1.15f));
+	}
+
 }

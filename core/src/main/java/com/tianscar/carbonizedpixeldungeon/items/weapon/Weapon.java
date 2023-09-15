@@ -121,7 +121,7 @@ abstract public class Weapon extends KindOfWeapon {
 		return damage;
 	}
 	
-	public void onHeroGainExp( float levelPercent, Hero hero ){
+	public void onHeroGainExp( float levelPercent, Hero hero ) {
 		levelPercent *= Talent.itemIDSpeedFactor(hero, this);
 		if (!levelKnown && isEquipped(hero) && availableUsesToID <= USES_TO_ID/2f) {
 			//gains enough uses to ID over 0.5 levels
@@ -178,6 +178,10 @@ abstract public class Weapon extends KindOfWeapon {
 		float ACC = this.ACC;
 
 		return encumbrance > 0 ? (float)(ACC / Math.pow( 1.5, encumbrance )) : ACC;
+	}
+
+	public boolean canSurpriseAttack( Hero hero ) {
+		return hero.STR() >= STRReq();
 	}
 	
 	@Override

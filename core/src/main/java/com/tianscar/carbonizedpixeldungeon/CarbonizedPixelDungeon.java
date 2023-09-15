@@ -38,7 +38,12 @@ public class CarbonizedPixelDungeon extends Game {
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
 
-		//v1.0.0
+		//CAPD v0.2.1
+		Bundle.addAlias(
+				com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow.class,
+				"com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Crossbow" );
+
+		//SHPD v1.0.0
 		Bundle.addAlias(
 				com.tianscar.carbonizedpixeldungeon.items.stones.StoneOfFear.class,
 				"com.tianscar.carbonizedpixeldungeon.items.stones.StoneOfAffection" );
@@ -46,7 +51,7 @@ public class CarbonizedPixelDungeon extends Game {
 				com.tianscar.carbonizedpixeldungeon.items.stones.StoneOfDeepSleep.class,
 				"com.tianscar.carbonizedpixeldungeon.items.stones.StoneOfDeepenedSleep" );
 
-		//v0.9.3
+		//SHPD v0.9.3
 		Bundle.addAlias(
 				com.tianscar.carbonizedpixeldungeon.actors.mobs.Tengu.class,
 				"com.tianscar.carbonizedpixeldungeon.actors.mobs.NewTengu" );

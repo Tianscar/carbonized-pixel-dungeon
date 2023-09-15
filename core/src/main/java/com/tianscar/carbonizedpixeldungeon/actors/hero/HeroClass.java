@@ -118,7 +118,7 @@ public enum HeroClass {
 		}
 
 		for (int s = 0; s < QuickSlot.SIZE; s++){
-			if (Dungeon.quickslot.getItem(s) == null){
+			if (Dungeon.quickslot.getItem(s) == null) {
 				Dungeon.quickslot.setSlot(s, waterskin);
 				break;
 			}
