@@ -27,8 +27,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Fire;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 public class PotionOfLiquidFlame extends Potion {
 

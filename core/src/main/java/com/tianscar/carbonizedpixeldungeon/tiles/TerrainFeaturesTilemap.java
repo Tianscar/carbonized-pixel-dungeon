@@ -27,11 +27,11 @@ import com.tianscar.carbonizedpixeldungeon.levels.LastShopLevel;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.tweeners.ScaleTweener;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
-import com.tianscar.pixeldungeonclasses.utils.RectF;
-import com.tianscar.pixeldungeonclasses.utils.SparseArray;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.ScaleTweener;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.utils.RectF;
+import com.tianscar.carbonizedpixeldungeon.utils.SparseArray;
 
 public class TerrainFeaturesTilemap extends DungeonTilemap {
 

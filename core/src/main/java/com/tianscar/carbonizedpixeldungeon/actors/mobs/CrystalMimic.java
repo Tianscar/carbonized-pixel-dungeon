@@ -43,9 +43,9 @@ import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.MimicSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 

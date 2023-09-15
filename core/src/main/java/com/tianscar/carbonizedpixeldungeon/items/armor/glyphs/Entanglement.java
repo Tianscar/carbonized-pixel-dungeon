@@ -30,8 +30,8 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.Armor.Glyph;
 import com.tianscar.carbonizedpixeldungeon.plants.Earthroot;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite.Glowing;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Entanglement extends Glyph {
 	

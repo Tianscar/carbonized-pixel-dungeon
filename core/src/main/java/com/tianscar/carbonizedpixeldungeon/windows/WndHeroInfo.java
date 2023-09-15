@@ -35,9 +35,9 @@ import com.tianscar.carbonizedpixeldungeon.ui.IconButton;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.TalentsPane;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

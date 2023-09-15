@@ -37,9 +37,9 @@ import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.EyeSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Eye extends Mob {
 	

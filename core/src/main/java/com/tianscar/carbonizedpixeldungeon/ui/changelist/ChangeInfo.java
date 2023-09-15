@@ -23,8 +23,8 @@ package com.tianscar.carbonizedpixeldungeon.ui.changelist;
 
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
-import com.tianscar.pixeldungeonclasses.noosa.ColorBlock;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 

@@ -30,8 +30,8 @@ import com.tianscar.carbonizedpixeldungeon.effects.particles.PoisonParticle;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public class Poison extends Buff implements Hero.Doom {
 	

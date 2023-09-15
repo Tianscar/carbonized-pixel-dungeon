@@ -27,7 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 public class WndOptions extends Window {
 

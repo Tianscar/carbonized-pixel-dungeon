@@ -29,7 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Paralysis;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.effects.Flare;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class ScrollOfPetrification extends ExoticScroll {
 	

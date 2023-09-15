@@ -27,7 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfEnergy;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class MasterThievesArmband extends Artifact {
 

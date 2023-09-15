@@ -45,9 +45,9 @@ import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.journal.Document;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.Bundlable;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 import java.util.ArrayList;
 import java.util.Collection;

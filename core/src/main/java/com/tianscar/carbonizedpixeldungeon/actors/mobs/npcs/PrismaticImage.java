@@ -40,9 +40,9 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.glyphs.Brimstone;
 import com.tianscar.carbonizedpixeldungeon.levels.features.Chasm;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.PrismaticSprite;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class PrismaticImage extends NPC {
 	

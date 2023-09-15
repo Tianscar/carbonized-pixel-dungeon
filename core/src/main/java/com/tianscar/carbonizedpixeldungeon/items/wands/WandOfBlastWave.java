@@ -37,14 +37,14 @@ import com.tianscar.carbonizedpixeldungeon.levels.traps.TenguDartTrap;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Group;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class WandOfBlastWave extends DamageWand {
 

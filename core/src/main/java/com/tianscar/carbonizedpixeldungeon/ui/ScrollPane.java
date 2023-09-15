@@ -22,14 +22,14 @@
 package com.tianscar.carbonizedpixeldungeon.ui;
 
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.pixeldungeonclasses.input.PointerEvent;
-import com.tianscar.pixeldungeonclasses.input.ScrollEvent;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.ColorBlock;
-import com.tianscar.pixeldungeonclasses.noosa.ScrollArea;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
-import com.tianscar.pixeldungeonclasses.utils.Point;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
+import com.tianscar.carbonizedpixeldungeon.input.ScrollEvent;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.ScrollArea;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 public class ScrollPane extends Component {
 

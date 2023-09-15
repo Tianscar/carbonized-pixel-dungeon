@@ -166,10 +166,10 @@ import com.tianscar.carbonizedpixeldungeon.plants.Starflower;
 import com.tianscar.carbonizedpixeldungeon.plants.Stormvine;
 import com.tianscar.carbonizedpixeldungeon.plants.Sungrass;
 import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.GameMath;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

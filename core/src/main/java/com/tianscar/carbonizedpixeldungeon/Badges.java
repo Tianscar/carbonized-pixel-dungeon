@@ -31,8 +31,8 @@ import com.tianscar.carbonizedpixeldungeon.journal.Catalog;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.FileUtils;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

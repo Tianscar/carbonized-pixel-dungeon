@@ -37,11 +37,11 @@ import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.StyledButton;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.windows.WndTitledMessage;
-import com.tianscar.pixeldungeonclasses.noosa.BitmapText;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.NinePatch;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 import java.util.Calendar;

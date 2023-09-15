@@ -31,7 +31,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Frost;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 public class FrostBomb extends Bomb {
 	

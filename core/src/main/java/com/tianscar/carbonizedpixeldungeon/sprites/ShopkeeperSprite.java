@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.sprites;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.particles.PixelParticle;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.PixelParticle;
 
 public class ShopkeeperSprite extends MobSprite {
 	

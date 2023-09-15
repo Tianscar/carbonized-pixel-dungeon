@@ -25,8 +25,8 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.PDAction;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.pixeldungeonclasses.input.GameAction;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 public class ActionIndicator extends Tag {
 

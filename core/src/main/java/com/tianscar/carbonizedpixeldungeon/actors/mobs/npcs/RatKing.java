@@ -32,8 +32,8 @@ import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.RatKingSprite;
 import com.tianscar.carbonizedpixeldungeon.windows.WndInfoArmorAbility;
 import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 public class RatKing extends NPC {
 

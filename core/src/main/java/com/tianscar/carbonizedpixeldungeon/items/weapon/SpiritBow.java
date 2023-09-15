@@ -47,11 +47,11 @@ import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.sprites.MissileSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 import java.util.ArrayList;
 

@@ -38,10 +38,10 @@ import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v0_7_X_Chan
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v0_8_X_Changes;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v0_9_X_Changes;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v1_0_X_Changes;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.NinePatch;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 

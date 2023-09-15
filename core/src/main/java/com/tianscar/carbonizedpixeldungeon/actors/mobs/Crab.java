@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.actors.mobs;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.items.food.MysteryMeat;
 import com.tianscar.carbonizedpixeldungeon.sprites.CrabSprite;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Crab extends Mob {
 

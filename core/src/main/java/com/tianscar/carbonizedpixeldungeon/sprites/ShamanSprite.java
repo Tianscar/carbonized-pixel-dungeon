@@ -24,9 +24,9 @@ package com.tianscar.carbonizedpixeldungeon.sprites;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Shaman;
 import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 public abstract class ShamanSprite extends MobSprite {
 	

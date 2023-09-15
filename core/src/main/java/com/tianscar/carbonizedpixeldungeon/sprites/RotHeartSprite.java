@@ -24,9 +24,9 @@ package com.tianscar.carbonizedpixeldungeon.sprites;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
-import com.tianscar.pixeldungeonclasses.noosa.MovieClip;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.noosa.MovieClip;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 
 public class RotHeartSprite extends MobSprite {
 

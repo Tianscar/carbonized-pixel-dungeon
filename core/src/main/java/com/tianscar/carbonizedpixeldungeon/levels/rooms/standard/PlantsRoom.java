@@ -27,8 +27,8 @@ import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
 import com.tianscar.carbonizedpixeldungeon.plants.Firebloom;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
-import com.tianscar.pixeldungeonclasses.utils.Point;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class PlantsRoom extends StandardRoom {
 	

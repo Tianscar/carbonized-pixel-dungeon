@@ -23,8 +23,8 @@ package com.tianscar.carbonizedpixeldungeon.ui;
 
 import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.pixeldungeonclasses.noosa.NinePatch;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class Toast extends Component {
 

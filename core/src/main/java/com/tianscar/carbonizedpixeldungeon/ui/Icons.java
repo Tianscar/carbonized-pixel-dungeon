@@ -27,7 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 public enum Icons {
 	

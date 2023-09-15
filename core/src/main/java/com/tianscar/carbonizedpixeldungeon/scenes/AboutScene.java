@@ -29,9 +29,9 @@ import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.ScrollPane;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.pixeldungeonclasses.input.PointerEvent;
-import com.tianscar.pixeldungeonclasses.noosa.*;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
+import com.tianscar.carbonizedpixeldungeon.noosa.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class AboutScene extends PixelScene {
 

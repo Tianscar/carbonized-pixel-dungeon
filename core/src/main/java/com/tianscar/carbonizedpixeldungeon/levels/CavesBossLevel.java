@@ -47,11 +47,11 @@ import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.noosa.*;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
-import com.tianscar.pixeldungeonclasses.utils.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.utils.*;
 
 import java.util.ArrayList;
 

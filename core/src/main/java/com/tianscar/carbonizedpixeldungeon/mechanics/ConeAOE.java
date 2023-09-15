@@ -22,9 +22,9 @@
 package com.tianscar.carbonizedpixeldungeon.mechanics;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.pixeldungeonclasses.utils.GameMath;
-import com.tianscar.pixeldungeonclasses.utils.Point;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 import java.util.ArrayList;
 import java.util.HashSet;

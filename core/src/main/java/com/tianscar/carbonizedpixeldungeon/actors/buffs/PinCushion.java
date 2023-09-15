@@ -26,7 +26,7 @@ import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 import java.util.ArrayList;
 import java.util.Collection;

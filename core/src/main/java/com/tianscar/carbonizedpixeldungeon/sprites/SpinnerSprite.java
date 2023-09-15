@@ -25,9 +25,9 @@ import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Spinner;
 import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 //TODO improvements here
 public class SpinnerSprite extends MobSprite {

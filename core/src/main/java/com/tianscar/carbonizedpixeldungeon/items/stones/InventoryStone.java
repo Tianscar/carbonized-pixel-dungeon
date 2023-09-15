@@ -29,7 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 import java.util.ArrayList;
 

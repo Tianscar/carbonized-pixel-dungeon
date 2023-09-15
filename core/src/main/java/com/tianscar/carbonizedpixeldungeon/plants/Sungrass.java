@@ -33,7 +33,7 @@ import com.tianscar.carbonizedpixeldungeon.effects.particles.ShaftParticle;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public class Sungrass extends Plant {
 	

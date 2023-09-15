@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.sprites;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.MirrorImage;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
 
 public class MirrorSprite extends MobSprite {
 	

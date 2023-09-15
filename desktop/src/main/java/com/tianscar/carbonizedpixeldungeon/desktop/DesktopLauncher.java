@@ -34,9 +34,9 @@ import com.tianscar.carbonizedpixeldungeon.services.news.CarbonizedNews;
 import com.tianscar.carbonizedpixeldungeon.services.news.News;
 import com.tianscar.carbonizedpixeldungeon.services.updates.CarbonizedUpdates;
 import com.tianscar.carbonizedpixeldungeon.services.updates.Updates;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.utils.FileUtils;
-import com.tianscar.pixeldungeonclasses.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

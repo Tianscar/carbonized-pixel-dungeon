@@ -28,8 +28,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.CorrosiveGas;
 import com.tianscar.carbonizedpixeldungeon.items.quest.MetalShard;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.DM201Sprite;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class DM201 extends DM200 {
 

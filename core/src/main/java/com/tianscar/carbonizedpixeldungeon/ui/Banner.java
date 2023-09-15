@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui;
 
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 public class Banner extends Image {
 

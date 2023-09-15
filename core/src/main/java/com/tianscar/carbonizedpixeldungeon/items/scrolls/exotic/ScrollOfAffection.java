@@ -28,7 +28,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Charm;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class ScrollOfAffection extends ExoticScroll {
 	

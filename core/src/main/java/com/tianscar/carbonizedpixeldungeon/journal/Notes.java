@@ -24,8 +24,8 @@ package com.tianscar.carbonizedpixeldungeon.journal;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.items.keys.Key;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.pixeldungeonclasses.utils.Bundlable;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 import java.util.ArrayList;
 import java.util.Collections;

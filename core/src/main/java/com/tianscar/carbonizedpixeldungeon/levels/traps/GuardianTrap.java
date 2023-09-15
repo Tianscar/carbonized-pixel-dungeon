@@ -31,7 +31,7 @@ import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.StatueSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class GuardianTrap extends Trap {
 

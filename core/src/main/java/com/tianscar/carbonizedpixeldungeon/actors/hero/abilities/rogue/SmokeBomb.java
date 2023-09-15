@@ -49,10 +49,10 @@ import com.tianscar.carbonizedpixeldungeon.sprites.MobSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.HeroIcon;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class SmokeBomb extends ArmorAbility {
 

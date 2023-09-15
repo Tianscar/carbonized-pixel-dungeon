@@ -23,8 +23,8 @@ package com.tianscar.carbonizedpixeldungeon.levels.rooms.connection;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 import java.util.ArrayList;
 

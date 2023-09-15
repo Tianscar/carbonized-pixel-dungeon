@@ -37,7 +37,7 @@ import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.EntranceRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.ExitRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.ImpShopRoom;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.pixeldungeonclasses.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
 
 import java.util.ArrayList;
 

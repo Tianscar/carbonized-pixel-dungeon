@@ -39,7 +39,7 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfStrength;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfToxicGas;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;

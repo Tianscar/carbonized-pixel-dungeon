@@ -65,7 +65,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Buckler;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 public enum HeroClass {
 

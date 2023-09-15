@@ -22,7 +22,7 @@
 package com.tianscar.carbonizedpixeldungeon.actors.buffs;
 
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public abstract class ShieldBuff extends Buff {
 	

@@ -26,9 +26,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.utils.PlatformSupport;
-import com.tianscar.pixeldungeonclasses.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.utils.PlatformSupport;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.HashMap;

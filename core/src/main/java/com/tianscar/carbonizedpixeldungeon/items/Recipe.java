@@ -59,7 +59,7 @@ import com.tianscar.carbonizedpixeldungeon.items.spells.WildEnergy;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 import java.util.ArrayList;
 

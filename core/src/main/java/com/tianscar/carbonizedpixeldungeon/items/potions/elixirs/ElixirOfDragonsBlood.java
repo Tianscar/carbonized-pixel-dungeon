@@ -29,7 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.effects.particles.FlameParticle;
 import com.tianscar.carbonizedpixeldungeon.items.potions.AlchemicalCatalyst;
 import com.tianscar.carbonizedpixeldungeon.items.potions.exotic.PotionOfDragonsBreath;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class ElixirOfDragonsBlood extends Elixir {
 	

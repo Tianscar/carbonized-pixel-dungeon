@@ -32,15 +32,15 @@ import com.tianscar.carbonizedpixeldungeon.effects.particles.RainbowParticle;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.ShadowParticle;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.SparkParticle;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Group;
-import com.tianscar.pixeldungeonclasses.noosa.Visual;
-import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
-import com.tianscar.pixeldungeonclasses.noosa.particles.PixelParticle;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
-import com.tianscar.pixeldungeonclasses.utils.ColorMath;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.PixelParticle;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.ColorMath;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class MagicMissile extends Emitter {
 

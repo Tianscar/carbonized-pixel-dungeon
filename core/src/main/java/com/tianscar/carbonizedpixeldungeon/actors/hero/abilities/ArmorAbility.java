@@ -28,8 +28,8 @@ import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.CellSelector;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.ui.HeroIcon;
-import com.tianscar.pixeldungeonclasses.utils.Bundlable;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public abstract class ArmorAbility implements Bundlable {
 

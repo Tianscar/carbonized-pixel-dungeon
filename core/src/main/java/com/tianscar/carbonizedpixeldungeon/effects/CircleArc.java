@@ -21,14 +21,14 @@
 
 package com.tianscar.carbonizedpixeldungeon.effects;
 
-import com.tianscar.pixeldungeonclasses.gltextures.SmartTexture;
-import com.tianscar.pixeldungeonclasses.gltextures.TextureCache;
-import com.tianscar.pixeldungeonclasses.glwrap.Blending;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Group;
-import com.tianscar.pixeldungeonclasses.noosa.NoosaScript;
-import com.tianscar.pixeldungeonclasses.noosa.Visual;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.gltextures.SmartTexture;
+import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
+import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;

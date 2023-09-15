@@ -48,14 +48,14 @@ import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.tianscar.carbonizedpixeldungeon.ui.TargetHealthIndicator;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Group;
-import com.tianscar.pixeldungeonclasses.noosa.Tilemap;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.noosa.tweeners.AlphaTweener;
-import com.tianscar.pixeldungeonclasses.utils.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Tilemap;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.AlphaTweener;
+import com.tianscar.carbonizedpixeldungeon.utils.*;
 
 import java.util.ArrayList;
 

@@ -22,7 +22,7 @@
 package com.tianscar.carbonizedpixeldungeon.sprites;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
 
 public class GnollSprite extends MobSprite {
 	

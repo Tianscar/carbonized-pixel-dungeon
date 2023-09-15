@@ -26,9 +26,9 @@ import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
-import com.tianscar.pixeldungeonclasses.utils.Bundlable;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.SparseArray;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.SparseArray;
 
 import java.util.HashSet;
 

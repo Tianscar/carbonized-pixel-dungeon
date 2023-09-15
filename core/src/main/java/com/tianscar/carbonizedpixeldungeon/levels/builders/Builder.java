@@ -22,11 +22,11 @@
 package com.tianscar.carbonizedpixeldungeon.levels.builders;
 
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
-import com.tianscar.pixeldungeonclasses.utils.GameMath;
-import com.tianscar.pixeldungeonclasses.utils.Point;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.Rect;
+import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Rect;
 
 import java.util.ArrayList;
 import java.util.Iterator;

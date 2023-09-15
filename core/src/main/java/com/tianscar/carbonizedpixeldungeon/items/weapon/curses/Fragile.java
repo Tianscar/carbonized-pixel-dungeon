@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.items.weapon.curses;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public class Fragile extends Weapon.Enchantment {
 

@@ -119,7 +119,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WarHammer;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Whip;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 import java.util.ArrayList;
 import java.util.Arrays;

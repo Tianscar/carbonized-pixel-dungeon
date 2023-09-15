@@ -29,7 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.TalentIcon;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 public class WndInfoTalent extends Window {
 

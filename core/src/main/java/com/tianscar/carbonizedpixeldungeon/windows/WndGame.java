@@ -30,7 +30,7 @@ import com.tianscar.carbonizedpixeldungeon.services.updates.Updates;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 import java.io.IOException;
 

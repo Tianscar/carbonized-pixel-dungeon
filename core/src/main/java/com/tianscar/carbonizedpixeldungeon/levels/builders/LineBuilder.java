@@ -23,7 +23,7 @@ package com.tianscar.carbonizedpixeldungeon.levels.builders;
 
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.connection.ConnectionRoom;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 

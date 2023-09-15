@@ -33,7 +33,7 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.Armor;
 import com.tianscar.carbonizedpixeldungeon.items.armor.Armor.Glyph;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite.Glowing;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class AntiEntropy extends Glyph {
 

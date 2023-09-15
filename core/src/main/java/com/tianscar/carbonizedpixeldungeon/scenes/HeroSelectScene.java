@@ -34,12 +34,12 @@ import com.tianscar.carbonizedpixeldungeon.windows.WndChallenges;
 import com.tianscar.carbonizedpixeldungeon.windows.WndHeroInfo;
 import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
 import com.tianscar.carbonizedpixeldungeon.windows.WndMessage;
-import com.tianscar.pixeldungeonclasses.input.GameAction;
-import com.tianscar.pixeldungeonclasses.input.PointerEvent;
-import com.tianscar.pixeldungeonclasses.noosa.*;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
-import com.tianscar.pixeldungeonclasses.utils.Point;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
+import com.tianscar.carbonizedpixeldungeon.noosa.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.Calendar;
 

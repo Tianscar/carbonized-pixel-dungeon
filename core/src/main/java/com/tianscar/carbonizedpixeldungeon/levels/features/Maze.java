@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.levels.features;
 
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.Rect;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Rect;
 
 public class Maze {
 	

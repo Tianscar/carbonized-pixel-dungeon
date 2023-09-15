@@ -29,7 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corrosion;
 import com.tianscar.carbonizedpixeldungeon.effects.BlobEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public class CorrosiveGas extends Blob {
 

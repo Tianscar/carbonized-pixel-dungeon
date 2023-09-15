@@ -21,8 +21,6 @@
 
 package com.tianscar.carbonizedpixeldungeon.utils;
 
-import com.tianscar.pixeldungeonclasses.utils.Random;
-
 //This class defines the parameters for seeds in ShatteredPD and contains a few convenience methods
 public class DungeonSeed {
 

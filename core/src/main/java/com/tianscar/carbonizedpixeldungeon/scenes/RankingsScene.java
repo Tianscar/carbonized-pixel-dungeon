@@ -36,12 +36,12 @@ import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.windows.WndError;
 import com.tianscar.carbonizedpixeldungeon.windows.WndRanking;
-import com.tianscar.pixeldungeonclasses.noosa.BitmapText;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.ui.Button;
-import com.tianscar.pixeldungeonclasses.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
 
 public class RankingsScene extends PixelScene {
 	

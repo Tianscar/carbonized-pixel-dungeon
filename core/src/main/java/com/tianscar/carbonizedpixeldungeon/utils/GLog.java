@@ -22,8 +22,7 @@
 package com.tianscar.carbonizedpixeldungeon.utils;
 
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.utils.Signal;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 public class GLog {
 

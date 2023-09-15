@@ -36,11 +36,11 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingSpear;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.Trident;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
-import com.tianscar.pixeldungeonclasses.noosa.Visual;
-import com.tianscar.pixeldungeonclasses.noosa.tweeners.PosTweener;
-import com.tianscar.pixeldungeonclasses.noosa.tweeners.Tweener;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
+import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.PosTweener;
+import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.Tweener;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 import java.util.HashMap;
 

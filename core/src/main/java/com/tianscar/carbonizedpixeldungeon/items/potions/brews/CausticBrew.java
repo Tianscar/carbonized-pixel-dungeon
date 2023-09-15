@@ -32,8 +32,8 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfToxicGas;
 import com.tianscar.carbonizedpixeldungeon.items.quest.GooBlob;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 public class CausticBrew extends Brew {
 	

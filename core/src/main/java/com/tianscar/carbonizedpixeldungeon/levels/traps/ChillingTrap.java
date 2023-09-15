@@ -27,8 +27,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Freezing;
 import com.tianscar.carbonizedpixeldungeon.effects.Splash;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 public class ChillingTrap extends Trap{
 

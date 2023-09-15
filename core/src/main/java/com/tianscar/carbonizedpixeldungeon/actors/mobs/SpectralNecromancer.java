@@ -9,9 +9,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.effects.Pushing;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.tianscar.carbonizedpixeldungeon.sprites.SpectralNecromancerSprite;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;

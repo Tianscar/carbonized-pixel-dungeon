@@ -21,7 +21,7 @@
 
 package com.tianscar.carbonizedpixeldungeon.actors.buffs;
 
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 //A buff whose only purposes is to keep track of a count of some form
 public class CounterBuff extends Buff {

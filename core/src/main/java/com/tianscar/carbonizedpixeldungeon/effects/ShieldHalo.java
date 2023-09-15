@@ -22,10 +22,10 @@
 package com.tianscar.carbonizedpixeldungeon.effects;
 
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
-import com.tianscar.pixeldungeonclasses.glwrap.Blending;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Halo;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Halo;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 public class ShieldHalo extends Halo {
 	

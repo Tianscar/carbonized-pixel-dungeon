@@ -40,9 +40,9 @@ import com.tianscar.carbonizedpixeldungeon.levels.traps.PoisonDartTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.TeleportationTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.WarpingTrap;
-import com.tianscar.pixeldungeonclasses.utils.Point;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 public class TrapsRoom extends SpecialRoom {
 

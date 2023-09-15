@@ -27,9 +27,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.LeafParticle;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfRegrowth;
-import com.tianscar.pixeldungeonclasses.noosa.MovieClip;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.noosa.MovieClip;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 
 import java.util.ArrayList;
 

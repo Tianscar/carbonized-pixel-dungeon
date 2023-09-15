@@ -31,8 +31,8 @@ import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.EntranceRoom;
 import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
-import com.tianscar.pixeldungeonclasses.noosa.Tilemap;
-import com.tianscar.pixeldungeonclasses.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.noosa.Tilemap;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
 
 public class DemonSpawnerRoom extends SpecialRoom {
 	@Override

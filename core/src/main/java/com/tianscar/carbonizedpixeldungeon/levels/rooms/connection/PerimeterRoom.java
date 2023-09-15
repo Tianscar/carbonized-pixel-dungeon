@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.levels.rooms.connection;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
-import com.tianscar.pixeldungeonclasses.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
 
 import java.util.ArrayList;
 

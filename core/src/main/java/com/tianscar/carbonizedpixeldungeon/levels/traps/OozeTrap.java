@@ -27,7 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Ooze;
 import com.tianscar.carbonizedpixeldungeon.effects.Splash;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 public class OozeTrap extends Trap {
 

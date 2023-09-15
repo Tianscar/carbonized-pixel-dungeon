@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.ui;
 
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
-import com.tianscar.pixeldungeonclasses.noosa.ColorBlock;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class HealthBar extends Component {
 

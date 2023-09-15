@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.effects;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 public class Enchanting extends ItemSprite {
 

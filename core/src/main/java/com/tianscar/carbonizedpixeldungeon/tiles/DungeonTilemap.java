@@ -22,13 +22,13 @@
 package com.tianscar.carbonizedpixeldungeon.tiles;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.Tilemap;
-import com.tianscar.pixeldungeonclasses.noosa.tweeners.AlphaTweener;
-import com.tianscar.pixeldungeonclasses.utils.GameMath;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.Tilemap;
+import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.AlphaTweener;
+import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 public abstract class DungeonTilemap extends Tilemap {
 

@@ -4,7 +4,7 @@ import com.tianscar.carbonizedpixeldungeon.PDSettings;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.ui.*;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 public class WndFeedback extends Window {
 

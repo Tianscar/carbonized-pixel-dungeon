@@ -59,8 +59,8 @@ import com.tianscar.carbonizedpixeldungeon.levels.traps.ExplosiveTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.FrostTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.WornDartTrap;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collection;

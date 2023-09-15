@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.services.updates;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 import java.util.Date;
 

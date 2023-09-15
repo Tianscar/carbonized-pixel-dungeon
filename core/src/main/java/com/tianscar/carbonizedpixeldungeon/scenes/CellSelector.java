@@ -29,18 +29,18 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.items.Heap;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
-import com.tianscar.pixeldungeonclasses.input.GameAction;
-import com.tianscar.pixeldungeonclasses.input.KeyBindings;
-import com.tianscar.pixeldungeonclasses.input.KeyEvent;
-import com.tianscar.pixeldungeonclasses.input.PointerEvent;
-import com.tianscar.pixeldungeonclasses.input.ControllerHandler;
-import com.tianscar.pixeldungeonclasses.input.ScrollEvent;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.ScrollArea;
-import com.tianscar.pixeldungeonclasses.utils.GameMath;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
-import com.tianscar.pixeldungeonclasses.utils.Signal;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.input.KeyBindings;
+import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
+import com.tianscar.carbonizedpixeldungeon.input.ControllerHandler;
+import com.tianscar.carbonizedpixeldungeon.input.ScrollEvent;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.ScrollArea;
+import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 
 public class CellSelector extends ScrollArea {
 

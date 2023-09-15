@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.tiles;
 
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.SparseArray;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.SparseArray;
 
 import java.util.Arrays;
 import java.util.HashSet;

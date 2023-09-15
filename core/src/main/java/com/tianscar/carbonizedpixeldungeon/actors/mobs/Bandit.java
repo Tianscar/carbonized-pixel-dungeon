@@ -29,7 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Poison;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.sprites.BanditSprite;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Bandit extends Thief {
 	

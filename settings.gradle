@@ -1,6 +1,7 @@
 //core game code modules
-include ':core'
 include ':engine'
+include ':services'
+include ':core'
 
 //platform modules
 include ':android'

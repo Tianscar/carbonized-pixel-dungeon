@@ -30,11 +30,11 @@ import com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd.v0_1_X_Cha
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeSelection;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd.v0_2_X_Changes;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.NinePatch;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 

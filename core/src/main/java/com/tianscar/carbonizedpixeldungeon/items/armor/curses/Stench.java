@@ -27,7 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.ToxicGas;
 import com.tianscar.carbonizedpixeldungeon.items.armor.Armor;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Stench extends Armor.Glyph {
 

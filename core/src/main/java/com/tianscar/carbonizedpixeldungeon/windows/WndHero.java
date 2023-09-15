@@ -40,9 +40,9 @@ import com.tianscar.carbonizedpixeldungeon.ui.ScrollPane;
 import com.tianscar.carbonizedpixeldungeon.ui.StatusPane;
 import com.tianscar.carbonizedpixeldungeon.ui.TalentsPane;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.pixeldungeonclasses.noosa.Group;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 import java.util.Locale;

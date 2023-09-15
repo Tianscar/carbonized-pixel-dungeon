@@ -33,8 +33,8 @@ import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfMystical
 import com.tianscar.carbonizedpixeldungeon.items.wands.CursedWand;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 public class WildEnergy extends TargetedSpell {
 	

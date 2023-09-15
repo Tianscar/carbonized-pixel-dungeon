@@ -27,11 +27,11 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.DM300;
 import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.BlastParticle;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.SparkParticle;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
-import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
-import com.tianscar.pixeldungeonclasses.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 public class DM300Sprite extends MobSprite {
 

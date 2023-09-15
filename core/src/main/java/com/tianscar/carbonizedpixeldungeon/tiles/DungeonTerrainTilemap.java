@@ -23,8 +23,8 @@ package com.tianscar.carbonizedpixeldungeon.tiles;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 public class DungeonTerrainTilemap extends DungeonTilemap {
 

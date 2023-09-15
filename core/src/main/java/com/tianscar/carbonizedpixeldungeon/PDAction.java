@@ -22,10 +22,10 @@
 package com.tianscar.carbonizedpixeldungeon;
 
 import com.badlogic.gdx.Input;
-import com.tianscar.pixeldungeonclasses.input.GameAction;
-import com.tianscar.pixeldungeonclasses.input.KeyBindings;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.FileUtils;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.input.KeyBindings;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;

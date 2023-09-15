@@ -40,8 +40,8 @@ import com.tianscar.carbonizedpixeldungeon.services.news.News;
 import com.tianscar.carbonizedpixeldungeon.services.updates.CarbonizedUpdates;
 import com.tianscar.carbonizedpixeldungeon.services.updates.Updates;
 import com.tianscar.carbonizedpixeldungeon.ui.Button;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.utils.FileUtils;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 
 public class AndroidGame extends AndroidApplication {
 	

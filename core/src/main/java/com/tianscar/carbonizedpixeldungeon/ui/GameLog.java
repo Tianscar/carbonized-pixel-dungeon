@@ -24,8 +24,8 @@ package com.tianscar.carbonizedpixeldungeon.ui;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
-import com.tianscar.pixeldungeonclasses.utils.Signal;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;

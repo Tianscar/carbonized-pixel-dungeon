@@ -48,7 +48,7 @@ import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfWarding;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.DisintegrationTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.GrimTrap;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.HashSet;
 

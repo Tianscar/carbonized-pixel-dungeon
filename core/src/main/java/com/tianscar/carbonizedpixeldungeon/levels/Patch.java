@@ -21,7 +21,7 @@
 
 package com.tianscar.carbonizedpixeldungeon.levels;
 
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Patch {
 

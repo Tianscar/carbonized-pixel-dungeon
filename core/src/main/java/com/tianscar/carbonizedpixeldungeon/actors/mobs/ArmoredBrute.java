@@ -30,7 +30,7 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.ScaleArmor;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ShieldedSprite;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class ArmoredBrute extends Brute {
 

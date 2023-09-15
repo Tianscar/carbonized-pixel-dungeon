@@ -21,9 +21,9 @@
 
 package com.tianscar.carbonizedpixeldungeon.effects.particles;
 
-import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter;
-import com.tianscar.pixeldungeonclasses.noosa.particles.Emitter.Factory;
-import com.tianscar.pixeldungeonclasses.noosa.particles.PixelParticle;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter.Factory;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.PixelParticle;
 
 public class SacrificialParticle extends PixelParticle.Shrinking {
 

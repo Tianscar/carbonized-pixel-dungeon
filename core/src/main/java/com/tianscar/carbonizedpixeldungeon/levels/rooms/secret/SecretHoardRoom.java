@@ -31,9 +31,9 @@ import com.tianscar.carbonizedpixeldungeon.levels.traps.DisintegrationTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.PoisonDartTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.RockfallTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
-import com.tianscar.pixeldungeonclasses.utils.Point;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 public class SecretHoardRoom extends SecretRoom {
 	

@@ -39,8 +39,8 @@ import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.tianscar.carbonizedpixeldungeon.items.stones.Runestone;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.utils.Random;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;

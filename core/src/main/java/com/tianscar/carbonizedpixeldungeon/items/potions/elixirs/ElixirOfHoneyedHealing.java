@@ -33,7 +33,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.Bee;
 import com.tianscar.carbonizedpixeldungeon.items.Honeypot;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class ElixirOfHoneyedHealing extends Elixir {
 	

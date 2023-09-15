@@ -22,12 +22,12 @@
 package com.tianscar.carbonizedpixeldungeon.tiles;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.NoosaScript;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.Tilemap;
-import com.tianscar.pixeldungeonclasses.utils.Bundlable;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.Tilemap;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public abstract class CustomTilemap implements Bundlable {
 

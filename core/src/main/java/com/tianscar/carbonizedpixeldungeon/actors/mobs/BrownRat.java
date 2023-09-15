@@ -29,7 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Bleeding;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.items.food.MysteryMeat;
 import com.tianscar.carbonizedpixeldungeon.sprites.BrownRatSprite;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class BrownRat extends Rat {
 

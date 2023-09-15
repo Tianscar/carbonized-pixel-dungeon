@@ -25,7 +25,7 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.PDAction;
 import com.tianscar.carbonizedpixeldungeon.items.Heap;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
-import com.tianscar.pixeldungeonclasses.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
 
 public class LootIndicator extends Tag {
 	

@@ -31,8 +31,8 @@ import com.tianscar.carbonizedpixeldungeon.effects.Splash;
 import com.tianscar.carbonizedpixeldungeon.items.potions.exotic.PotionOfStormClouds;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class AquaBlast extends TargetedSpell {
 	

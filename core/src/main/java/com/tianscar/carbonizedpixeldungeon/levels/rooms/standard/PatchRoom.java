@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.levels.rooms.standard;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Patch;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 //This room type uses the patch system to fill itself in in some manner
 //it's still up to the specific room to implement paint, but utility methods are provided

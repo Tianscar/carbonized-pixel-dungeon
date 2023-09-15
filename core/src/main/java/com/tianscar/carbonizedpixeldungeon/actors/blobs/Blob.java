@@ -25,9 +25,9 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.effects.BlobEmitter;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.Rect;
-import com.tianscar.pixeldungeonclasses.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Rect;
+import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 public class Blob extends Actor {
 

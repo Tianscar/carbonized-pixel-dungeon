@@ -21,7 +21,7 @@
 
 package com.tianscar.carbonizedpixeldungeon;
 
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public class Statistics {
 	

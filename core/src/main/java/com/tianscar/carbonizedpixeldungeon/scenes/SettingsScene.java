@@ -26,9 +26,9 @@ import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.ui.Archs;
 import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
 import com.tianscar.carbonizedpixeldungeon.windows.WndSettings;
-import com.tianscar.pixeldungeonclasses.input.KeyEvent;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 
 public class SettingsScene extends PixelScene {
 

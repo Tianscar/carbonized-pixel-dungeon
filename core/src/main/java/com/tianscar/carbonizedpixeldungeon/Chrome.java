@@ -21,7 +21,7 @@
 
 package com.tianscar.carbonizedpixeldungeon;
 
-import com.tianscar.pixeldungeonclasses.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
 
 public class Chrome {
 

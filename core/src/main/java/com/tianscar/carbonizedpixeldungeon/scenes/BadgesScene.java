@@ -30,8 +30,8 @@ import com.tianscar.carbonizedpixeldungeon.ui.BadgesGrid;
 import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.pixeldungeonclasses.noosa.Camera;
-import com.tianscar.pixeldungeonclasses.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 
 public class BadgesScene extends PixelScene {
 

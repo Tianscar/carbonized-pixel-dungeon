@@ -28,7 +28,7 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class StorageRoom extends SpecialRoom {
 

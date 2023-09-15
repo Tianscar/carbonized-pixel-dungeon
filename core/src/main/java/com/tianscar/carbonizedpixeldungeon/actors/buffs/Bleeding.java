@@ -26,10 +26,10 @@ import com.tianscar.carbonizedpixeldungeon.effects.Splash;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.pixeldungeonclasses.utils.Bundle;
-import com.tianscar.pixeldungeonclasses.utils.PointF;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
-import static com.tianscar.pixeldungeonclasses.utils.Random.NormalFloat;
+import static com.tianscar.carbonizedpixeldungeon.utils.Random.NormalFloat;
 
 public class Bleeding extends Buff {
 

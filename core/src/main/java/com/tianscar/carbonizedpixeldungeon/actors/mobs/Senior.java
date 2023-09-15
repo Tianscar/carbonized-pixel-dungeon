@@ -23,7 +23,7 @@ package com.tianscar.carbonizedpixeldungeon.actors.mobs;
 
 import com.tianscar.carbonizedpixeldungeon.items.food.Pasty;
 import com.tianscar.carbonizedpixeldungeon.sprites.SeniorSprite;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Senior extends Monk {
 

@@ -27,8 +27,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Ooze;
 import com.tianscar.carbonizedpixeldungeon.items.quest.GooBlob;
 import com.tianscar.carbonizedpixeldungeon.sprites.CausticSlimeSprite;
-import com.tianscar.pixeldungeonclasses.utils.PathFinder;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class CausticSlime extends Slime {
 	

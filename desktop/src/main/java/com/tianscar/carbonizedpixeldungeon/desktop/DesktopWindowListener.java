@@ -22,7 +22,7 @@
 package com.tianscar.carbonizedpixeldungeon.desktop;
 
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.pixeldungeonclasses.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener;

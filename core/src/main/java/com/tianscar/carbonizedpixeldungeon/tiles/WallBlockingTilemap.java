@@ -24,8 +24,8 @@ package com.tianscar.carbonizedpixeldungeon.tiles;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.levels.HallsBossLevel;
-import com.tianscar.pixeldungeonclasses.noosa.TextureFilm;
-import com.tianscar.pixeldungeonclasses.noosa.Tilemap;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.Tilemap;
 
 
 public class WallBlockingTilemap extends Tilemap {

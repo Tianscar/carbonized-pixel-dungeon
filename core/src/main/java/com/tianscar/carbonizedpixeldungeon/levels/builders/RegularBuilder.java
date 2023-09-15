@@ -29,7 +29,7 @@ import com.tianscar.carbonizedpixeldungeon.levels.rooms.special.ShopRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.EntranceRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.ExitRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.StandardRoom;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

@@ -24,7 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.items.armor.glyphs;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.items.armor.Armor;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
-import com.tianscar.pixeldungeonclasses.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
 
 public class Stone extends Armor.Glyph {
 

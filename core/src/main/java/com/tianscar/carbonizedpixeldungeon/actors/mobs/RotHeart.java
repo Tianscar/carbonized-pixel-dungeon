@@ -34,7 +34,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Vertigo;
 import com.tianscar.carbonizedpixeldungeon.plants.Rotberry;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.RotHeartSprite;
-import com.tianscar.pixeldungeonclasses.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class RotHeart extends Mob {
 

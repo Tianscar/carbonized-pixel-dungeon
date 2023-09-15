@@ -22,14 +22,14 @@
 package com.tianscar.carbonizedpixeldungeon.ui;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.pixeldungeonclasses.gltextures.TextureCache;
-import com.tianscar.pixeldungeonclasses.glwrap.Blending;
-import com.tianscar.pixeldungeonclasses.noosa.Game;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.NoosaScript;
-import com.tianscar.pixeldungeonclasses.noosa.NoosaScriptNoLighting;
-import com.tianscar.pixeldungeonclasses.noosa.SkinnedBlock;
-import com.tianscar.pixeldungeonclasses.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScriptNoLighting;
+import com.tianscar.carbonizedpixeldungeon.noosa.SkinnedBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class Archs extends Component {
 

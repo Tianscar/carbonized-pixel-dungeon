@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.effects;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.pixeldungeonclasses.gltextures.SmartTexture;
-import com.tianscar.pixeldungeonclasses.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.gltextures.SmartTexture;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
 
 public class ShadowBox extends NinePatch {
 

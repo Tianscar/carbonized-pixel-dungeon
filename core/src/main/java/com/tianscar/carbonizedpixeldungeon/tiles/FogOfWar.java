@@ -24,11 +24,11 @@ package com.tianscar.carbonizedpixeldungeon.tiles;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.pixeldungeonclasses.gltextures.TextureCache;
-import com.tianscar.pixeldungeonclasses.noosa.Image;
-import com.tianscar.pixeldungeonclasses.noosa.NoosaScript;
-import com.tianscar.pixeldungeonclasses.noosa.NoosaScriptNoLighting;
-import com.tianscar.pixeldungeonclasses.utils.Rect;
+import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScriptNoLighting;
+import com.tianscar.carbonizedpixeldungeon.utils.Rect;
 
 import java.util.ArrayList;
 

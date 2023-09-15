@@ -7,7 +7,7 @@ import com.tianscar.carbonizedpixeldungeon.items.KindOfWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.tianscar.pixeldungeonclasses.utils.QuietCallable;
+import com.tianscar.carbonizedpixeldungeon.utils.QuietCallable;
 
 // TODO Improve this
 public class Wieldings {
