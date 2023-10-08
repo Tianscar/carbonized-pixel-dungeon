@@ -1,8 +1,3 @@
-# 盗版和停更
-https://carbonizedpd.tianscar.com/2023/10/06/piracy-and-updating-stopped/
-
-2023 年 10 月 7 日（GMT+08:00）起，我决定停更《碳素地牢》，直到铜陵游戏科技工作室停止对该游戏的侵权为止。
-
 # Carbonized Pixel Dungeon
 [![Discord](https://img.shields.io/discord/978644808102994020?style=for-the-badge&logo=discord)](https://discord.gg/24Bykt4YfJ)
 ![Code Size](https://img.shields.io/github/languages/code-size/Tianscar/carbonized-pixel-dungeon?style=for-the-badge)
