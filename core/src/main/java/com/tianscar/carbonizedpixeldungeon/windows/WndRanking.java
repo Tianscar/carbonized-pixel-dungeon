@@ -21,18 +21,36 @@
 
 package com.tianscar.carbonizedpixeldungeon.windows;
 
-import com.tianscar.carbonizedpixeldungeon.*;
+import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.Badges;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.QuickSlot;
+import com.tianscar.carbonizedpixeldungeon.Rankings;
+import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
-import com.tianscar.carbonizedpixeldungeon.ui.*;
-import com.tianscar.carbonizedpixeldungeon.noosa.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
+import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
+import com.tianscar.carbonizedpixeldungeon.ui.BadgesGrid;
+import com.tianscar.carbonizedpixeldungeon.ui.BadgesList;
+import com.tianscar.carbonizedpixeldungeon.ui.Button;
+import com.tianscar.carbonizedpixeldungeon.ui.IconButton;
+import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.ItemSlot;
+import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
+import com.tianscar.carbonizedpixeldungeon.ui.ScrollPane;
+import com.tianscar.carbonizedpixeldungeon.ui.TalentsPane;
+import com.tianscar.carbonizedpixeldungeon.ui.Window;
 
 import java.util.ArrayList;
 import java.util.Locale;

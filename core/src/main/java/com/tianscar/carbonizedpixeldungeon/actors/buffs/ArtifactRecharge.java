@@ -25,8 +25,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.Artifact;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.HornOfPlenty;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public class ArtifactRecharge extends Buff {

@@ -27,21 +27,26 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Momentum;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Paralysis;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.PinCushion;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
 import com.tianscar.carbonizedpixeldungeon.items.bags.MagicalHolster;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfSharpshooting;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Projecting;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Shocking;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.RangedWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
@@ -89,7 +94,7 @@ abstract public class MissileWeapon extends Weapon {
 	@Override
 	public void throwSound() {
 		if (shooter != null) {
-			shooter.missileThrowSound();
+			shooter.shootSound();
 		} else {
 			super.throwSound();
 		}
@@ -102,7 +107,7 @@ abstract public class MissileWeapon extends Weapon {
 
 	@Override
 	public int min(int lvl) {
-		if (shooter != null) return shooter.missileMin( this, lvl );
+		if (shooter != null) return shooter.shootMin( this, lvl );
 		else return  2 * tier +                 //base
 				(tier == 1 ? lvl : 2*lvl);      //level scaling
 	}
@@ -114,7 +119,7 @@ abstract public class MissileWeapon extends Weapon {
 
 	@Override
 	public int max(int lvl) {
-		if (shooter != null) return shooter.missileMax( this, lvl );
+		if (shooter != null) return shooter.shootMax( this, lvl );
 		else return  5 * tier +                 //base
 				(tier == 1 ? 2*lvl : tier*lvl); //level scaling
 	}
@@ -233,17 +238,32 @@ abstract public class MissileWeapon extends Weapon {
 
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		if (attacker == Dungeon.hero && Random.Int(3) < Dungeon.hero.pointsInTalent(Talent.SHARED_ENCHANTMENT)) {
-			if (shooterHasEnchant(Dungeon.hero)) {
-				//do nothing
-			} else {
-				SpiritBow bow = Dungeon.hero.belongings.getItem(SpiritBow.class);
-				if (bow != null && bow.enchantment != null && Dungeon.hero.buff(MagicImmune.class) == null) {
-					damage = bow.enchantment.proc(this, attacker, defender, damage);
+		if (attacker == Dungeon.hero) {
+			if (Random.Int(3) < Dungeon.hero.pointsInTalent(Talent.SHARED_ENCHANTMENT)) {
+				if (shooterHasEnchant(Dungeon.hero)) {
+					//do nothing
+				} else {
+					SpiritBow bow = Dungeon.hero.belongings.getItem(SpiritBow.class);
+					if (bow != null && bow.enchantment != null && Dungeon.hero.buff(MagicImmune.class) == null) {
+						damage = bow.enchantment.proc(this, attacker, defender, damage);
+					}
 				}
 			}
+			if (Dungeon.hero.hasTalent(Talent.MIGHTY_THUNDER) && Dungeon.hero.buff(ElementalHeart.ShockFocus.class) != null) {
+				Buff.prolong(defender, Paralysis.class, 1);
+			}
 		}
-		if (shooter != null) damage = shooter.missileProc(attacker, defender, damage);
+		if (shooter != null) damage = shooter.shootProc(attacker, defender, damage);
+		if (attacker == Dungeon.hero && Dungeon.hero.subClass == HeroSubClass.BINDER &&
+				Dungeon.hero.buff(ElementalHeart.ShockFocus.class) != null) {
+			Shocking shocking = new Shocking();
+			int minLvl = 0;
+			for (Item item : Dungeon.hero.belongings.getAllSimilar(new MissileWeapon.PlaceHolder())) {
+				minLvl = Math.max(minLvl, item.buffedLvl());
+			}
+			shocking.minLvl = minLvl;
+			shocking.proc(this, attacker, defender, damage);
+		}
 
 		return super.proc(attacker, defender, damage);
 	}
@@ -272,7 +292,7 @@ abstract public class MissileWeapon extends Weapon {
 
 	protected void rangedHit( Char enemy, int cell ){
 		decrementDurability();
-		if (durability > 0){
+		if (durability > 0) {
 			//attempt to stick the missile weapon to the enemy, just drop it if we can't.
 			if (sticky && enemy != null && enemy.isAlive() && enemy.alignment != Char.Alignment.ALLY) {
 				PinCushion p = Buff.affect(enemy, PinCushion.class);

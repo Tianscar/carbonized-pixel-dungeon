@@ -25,13 +25,13 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTerrainTilemap;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 public class WndInfoCell extends Window {
 	

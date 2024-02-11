@@ -31,8 +31,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Cripple;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Paralysis;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.mage.WildMagic;
 import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Blazing;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
@@ -40,12 +42,13 @@ import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.mechanics.ConeAOE;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 
@@ -107,7 +110,7 @@ public class WandOfFireblast extends DamageWand {
 			for (int i : PathFinder.NEIGHBOURS4){
 				if (Dungeon.level.trueDistance(cell+i, bolt.sourcePos) > Dungeon.level.trueDistance(cell, bolt.sourcePos)
 						&& Dungeon.level.flamable[cell+i]
-						&& Fire.volumeAt(cell+i, Fire.class) == 0){
+						&& com.tianscar.carbonizedpixeldungeon.actors.blobs.Fire.volumeAt(cell+i, Fire.class) == 0){
 					GameScene.add( Blob.seed( cell+i, 1+chargesPerCast(), Fire.class ) );
 				}
 			}
@@ -129,13 +132,17 @@ public class WandOfFireblast extends DamageWand {
 						break;
 				}
 			}
+			else if (Dungeon.hero.hasTalent(Talent.WILDFIRE) &&
+					Random.Int(3) < 1+Dungeon.hero.pointsInTalent(Talent.WILDFIRE)) {
+				Buff.prolong(curUser, ElementalHeart.FireFocus.class, 3).fx();
+			}
 		}
 	}
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
 		//acts like blazing enchantment
-		new Blazing().proc( staff, attacker, defender, damage);
+		new Blazing().proc( staff, attacker, defender, damage );
 	}
 
 	@Override

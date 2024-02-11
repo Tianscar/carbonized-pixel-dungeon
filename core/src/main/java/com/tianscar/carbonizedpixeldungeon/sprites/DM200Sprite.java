@@ -26,10 +26,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.DM200;
 import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 
 public class DM200Sprite extends MobSprite {
 

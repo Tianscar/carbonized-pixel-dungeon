@@ -21,11 +21,11 @@
 
 package com.tianscar.carbonizedpixeldungeon.effects;
 
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class EmoIcon extends Image {

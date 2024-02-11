@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.actors.buffs;
 
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 
 public class Haste extends FlavourBuff {
 	

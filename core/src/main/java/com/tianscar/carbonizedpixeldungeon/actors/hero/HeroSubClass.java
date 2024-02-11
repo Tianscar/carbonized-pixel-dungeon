@@ -24,9 +24,9 @@ package com.tianscar.carbonizedpixeldungeon.actors.hero;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.ui.HeroIcon;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 public enum HeroSubClass {
 
@@ -42,7 +42,31 @@ public enum HeroSubClass {
 	FREERUNNER(HeroIcon.FREERUNNER),
 	
 	SNIPER(HeroIcon.SNIPER),
-	WARDEN(HeroIcon.WARDEN);
+	WARDEN(HeroIcon.WARDEN),
+
+	//
+	//
+
+	//
+	//
+
+	//
+	//
+
+	//
+	//
+
+	BINDER(HeroIcon.BINDER),
+	SPELLWEAVER(HeroIcon.SPELLWEAVER);
+
+	//
+	//
+
+	//
+	//
+
+	//
+	//
 
 	int icon;
 

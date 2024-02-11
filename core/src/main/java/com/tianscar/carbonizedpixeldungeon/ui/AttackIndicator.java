@@ -25,14 +25,14 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.PDAction;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
-import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
-import com.tianscar.carbonizedpixeldungeon.input.GameAction;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
 
 import java.util.ArrayList;
 

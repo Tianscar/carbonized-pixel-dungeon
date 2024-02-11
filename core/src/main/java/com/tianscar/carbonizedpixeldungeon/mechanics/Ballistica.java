@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.mechanics;
 
-import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 
 import java.util.ArrayList;

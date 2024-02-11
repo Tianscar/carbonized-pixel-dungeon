@@ -21,10 +21,10 @@
 
 package com.tianscar.carbonizedpixeldungeon.noosa;
 
-import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 import com.tianscar.carbonizedpixeldungeon.input.GameAction;
 import com.tianscar.carbonizedpixeldungeon.input.KeyBindings;
 import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
+import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 
 public class Scene extends Group {
 	

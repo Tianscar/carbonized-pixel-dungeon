@@ -23,6 +23,7 @@ package com.tianscar.carbonizedpixeldungeon.levels;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
 import com.tianscar.carbonizedpixeldungeon.items.Torch;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.HallsPainter;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
@@ -47,12 +48,11 @@ import com.tianscar.carbonizedpixeldungeon.levels.traps.SummoningTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.WarpingTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.WeakeningTrap;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
-import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Group;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.PixelParticle;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 

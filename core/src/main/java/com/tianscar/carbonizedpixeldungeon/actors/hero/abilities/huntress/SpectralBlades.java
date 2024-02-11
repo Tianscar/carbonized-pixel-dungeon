@@ -37,8 +37,8 @@ import com.tianscar.carbonizedpixeldungeon.mechanics.ConeAOE;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.MissileSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.HeroIcon;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 
 import java.util.HashSet;
 

@@ -25,11 +25,11 @@ import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
 import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public abstract class InventoryScroll extends Scroll {
 

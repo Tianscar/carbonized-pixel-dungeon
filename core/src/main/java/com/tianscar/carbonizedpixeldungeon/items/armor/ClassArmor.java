@@ -30,9 +30,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.tianscar.carbonizedpixeldungeon.items.BrokenSeal;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.windows.WndChooseAbility;
-import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -100,6 +100,9 @@ abstract public class ClassArmor extends Armor {
 			break;
 		case HUNTRESS:
 			classArmor = new HuntressArmor();
+			break;
+		case ELEMENTALIST:
+			classArmor = new ElementalistArmor();
 			break;
 		}
 		

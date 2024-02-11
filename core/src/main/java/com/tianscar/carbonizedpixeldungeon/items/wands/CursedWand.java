@@ -22,9 +22,9 @@
 package com.tianscar.carbonizedpixeldungeon.items.wands;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Challenges;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
@@ -37,6 +37,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Frost;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Recharging;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Spellweave;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.GoldenMimic;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mimic;
@@ -60,19 +61,19 @@ import com.tianscar.carbonizedpixeldungeon.levels.traps.SummoningTrap;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.messages.Languages;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
 import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.TargetHealthIndicator;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -302,6 +303,8 @@ public class CursedWand {
 					if (timeFreeze != null) timeFreeze.disarmPressedTraps();
 					Swiftthistle.TimeBubble timeBubble = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 					if (timeBubble != null) timeBubble.disarmPressedTraps();
+					Spellweave.TimeBent timeBent = Dungeon.hero.buff(Spellweave.TimeBent.class);
+					if (timeBent != null) timeBent.disarmPressedTraps();
 
 					InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 					InterlevelScene.returnDepth = depth;

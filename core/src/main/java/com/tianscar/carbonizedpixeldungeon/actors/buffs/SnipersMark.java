@@ -28,12 +28,12 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.ActionIndicator;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 public class SnipersMark extends FlavourBuff implements ActionIndicator.Action {

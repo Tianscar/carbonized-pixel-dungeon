@@ -27,11 +27,26 @@ import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.Ratmogrify;
+import com.tianscar.carbonizedpixeldungeon.gltextures.SmartTexture;
+import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Matrix;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Quad;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.DriedRose;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfLivingEarth;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfWarding;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
+import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.EarthGuardianSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.GhostSprite;
@@ -39,21 +54,6 @@ import com.tianscar.carbonizedpixeldungeon.sprites.RatSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.WardSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.Archs;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
-import com.tianscar.carbonizedpixeldungeon.gltextures.SmartTexture;
-import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
-import com.tianscar.carbonizedpixeldungeon.glwrap.Matrix;
-import com.tianscar.carbonizedpixeldungeon.glwrap.Quad;
-import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
-import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
-import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Group;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
-import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
-import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
-import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
@@ -442,11 +442,11 @@ public class SurfaceScene extends PixelScene {
 
 		public Avatar( HeroClass cl ) {
 			super( Assets.Sprites.AVATARS );
-			frame( new TextureFilm( texture, WIDTH, HEIGHT ).get( cl.ordinal() ) );
+			frame( new TextureFilm( texture, WIDTH, HEIGHT ).get( cl.ordinal() + cl.ordinal() / 4 ) );
 		}
 
 		public void heroClass( HeroClass cl ) {
-			frame( new TextureFilm( texture, WIDTH, HEIGHT ).get( cl.ordinal() ) );
+			frame( new TextureFilm( texture, WIDTH, HEIGHT ).get( cl.ordinal() + cl.ordinal() / 4 ) );
 		}
 
 	}

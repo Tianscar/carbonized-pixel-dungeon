@@ -27,8 +27,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 
 public class AlarmTrap extends Trap {
 

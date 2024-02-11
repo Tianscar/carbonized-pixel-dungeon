@@ -22,15 +22,15 @@
 package com.tianscar.carbonizedpixeldungeon.items;
 
 import com.tianscar.carbonizedpixeldungeon.Badges;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Challenges;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.scenes.AmuletScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -42,17 +42,17 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.journal.Notes;
 import com.tianscar.carbonizedpixeldungeon.levels.SewerLevel;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
-import com.tianscar.carbonizedpixeldungeon.sprites.GhostSprite;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.windows.WndQuest;
-import com.tianscar.carbonizedpixeldungeon.windows.WndSadGhost;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
+import com.tianscar.carbonizedpixeldungeon.sprites.GhostSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.windows.WndQuest;
+import com.tianscar.carbonizedpixeldungeon.windows.WndSadGhost;
 
 public class Ghost extends NPC {
 

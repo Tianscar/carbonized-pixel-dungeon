@@ -21,10 +21,10 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui;
 
-import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
 import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
 
 public class ExitButton extends IconButton {
 

@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.noosa;
 
-import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
+import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 
 public class PointerArea extends Visual implements Signal.Listener<PointerEvent> {
 

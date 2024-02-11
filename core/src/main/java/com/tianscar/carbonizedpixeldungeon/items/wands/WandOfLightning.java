@@ -25,6 +25,7 @@ import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Lightning;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.SparkParticle;
@@ -32,13 +33,13 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Shocking;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
@@ -98,7 +99,7 @@ public class WandOfLightning extends DamageWand {
 		new Shocking().proc(staff, attacker, defender, damage);
 	}
 
-	private void arc( Char ch ) {
+	public static void arc( ArrayList<Lightning.Arc> arcs, ArrayList<Char> affected, Char ch ) {
 
 		int dist = (Dungeon.level.water[ch.pos] && !ch.flying) ? 2 : 1;
 
@@ -107,7 +108,7 @@ public class WandOfLightning extends DamageWand {
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE){
 				Char n = Actor.findChar( i );
-				if (n == Dungeon.hero && PathFinder.distance[i] > 1)
+				if ((n == Dungeon.hero && PathFinder.distance[i] > 1) || Dungeon.hero.pointsInTalent(Talent.INSULATED_ELECTRICITY) == 2)
 					//the hero is only zapped if they are adjacent
 					continue;
 				else if (n != null && !affected.contains( n )) {
@@ -117,10 +118,14 @@ public class WandOfLightning extends DamageWand {
 		}
 		
 		affected.addAll(hitThisArc);
-		for (Char hit : hitThisArc){
+		for (Char hit : hitThisArc) {
 			arcs.add(new Lightning.Arc(ch.sprite.center(), hit.sprite.center()));
-			arc(hit);
+			arc(arcs, affected, hit);
 		}
+	}
+
+	private void arc( Char ch ) {
+		arc( arcs, affected, ch );
 	}
 	
 	@Override

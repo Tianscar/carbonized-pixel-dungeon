@@ -14,6 +14,10 @@ public class TalentIcon extends Image {
 		this(talent.icon(), false);
 	}
 
+	public TalentIcon( int icon ) {
+		this(icon, false);
+	}
+
 	public TalentIcon( int icon, boolean old ) {
 		super( old ? Assets.Interfaces.TALENT_ICONS_OLD : Assets.Interfaces.TALENT_ICONS );
 

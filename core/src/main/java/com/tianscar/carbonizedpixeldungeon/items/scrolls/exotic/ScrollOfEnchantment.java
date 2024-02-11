@@ -34,6 +34,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -42,7 +43,6 @@ import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
 import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
 import com.tianscar.carbonizedpixeldungeon.windows.WndTitledMessage;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class ScrollOfEnchantment extends ExoticScroll {
 	

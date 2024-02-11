@@ -21,13 +21,16 @@
 
 package com.tianscar.carbonizedpixeldungeon.windows;
 
-import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
@@ -40,9 +43,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.ScrollPane;
 import com.tianscar.carbonizedpixeldungeon.ui.StatusPane;
 import com.tianscar.carbonizedpixeldungeon.ui.TalentsPane;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.Group;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 import java.util.Locale;

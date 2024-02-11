@@ -22,10 +22,10 @@
 package com.tianscar.carbonizedpixeldungeon.ui;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 
 public class GoldIndicator extends Component {
 

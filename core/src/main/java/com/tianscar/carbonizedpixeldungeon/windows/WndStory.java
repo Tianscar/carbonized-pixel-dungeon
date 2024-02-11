@@ -23,14 +23,14 @@ package com.tianscar.carbonizedpixeldungeon.windows;
 
 import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
-import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
+import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
+import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
+import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.utils.SparseArray;
 
 public class WndStory extends Window {

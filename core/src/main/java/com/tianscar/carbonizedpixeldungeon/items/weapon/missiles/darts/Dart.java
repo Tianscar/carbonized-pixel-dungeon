@@ -23,8 +23,6 @@ package com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.actors.Char;
-import com.tianscar.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
@@ -37,8 +35,6 @@ import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
 import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 
@@ -74,7 +70,7 @@ public class Dart extends MissileWeapon {
 	
 	@Override
 	public int min(int lvl) {
-		if (shooter != null) return shooter.missileMin( this, lvl );
+		if (shooter != null) return shooter.shootMin( this, lvl );
 		else {
 			return  1 +     //1 base, down from 2
 					lvl;    //scaling unchanged
@@ -83,7 +79,7 @@ public class Dart extends MissileWeapon {
 
 	@Override
 	public int max(int lvl) {
-		if (shooter != null) return shooter.missileMax( this, lvl );
+		if (shooter != null) return shooter.shootMax( this, lvl );
 		else {
 			return  2 +     //2 base, down from 5
 					2*lvl;  //scaling unchanged

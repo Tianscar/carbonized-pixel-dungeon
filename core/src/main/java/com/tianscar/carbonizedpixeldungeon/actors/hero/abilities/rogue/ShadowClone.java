@@ -27,26 +27,26 @@ import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Invisibility;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.Wieldings;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Wielding;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.SmokeParticle;
 import com.tianscar.carbonizedpixeldungeon.items.armor.ClassArmor;
 import com.tianscar.carbonizedpixeldungeon.levels.CityLevel;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.Tweener;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.MobSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.HeroIcon;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
-import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.Tweener;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
@@ -149,10 +149,10 @@ public class ShadowClone extends ArmorAbility {
 			immunities.add(Corruption.class);
 		}
 
-		private Wieldings wieldings;
-		private Wieldings dualWielding() {
-			if (wieldings == null) wieldings = new Wieldings( Dungeon.hero );
-			return wieldings;
+		private Wielding wielding;
+		private Wielding wielding() {
+			if (wielding == null) wielding = new Wielding( Dungeon.hero );
+			return wielding;
 		}
 
 		public ShadowAlly() {
@@ -201,8 +201,8 @@ public class ShadowClone extends ArmorAbility {
 		@Override
 		public int damageRoll() {
 			int damage = Random.NormalIntRange(10, 20);
-			int heroDamage = Dungeon.hero.damageRoll(dualWielding());
-			heroDamage /= Dungeon.hero.attackDelay(dualWielding()); //normalize hero damage based on atk speed
+			int heroDamage = Dungeon.hero.damageRoll(wielding());
+			heroDamage /= Dungeon.hero.attackDelay(wielding()); //normalize hero damage based on atk speed
 			heroDamage = Math.round(0.075f * Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE) * heroDamage);
 			if (heroDamage > 0){
 				damage += heroDamage;
@@ -214,8 +214,8 @@ public class ShadowClone extends ArmorAbility {
 		public int attackProc( Char enemy, int damage ) {
 			damage = super.attackProc( enemy, damage );
 			if (Random.Int(4) < Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE)
-					&& dualWielding().weaponNotNull()){
-				return dualWielding().weaponProc( this, enemy, damage );
+					&& wielding().weaponNotNull()){
+				return wielding().proc( this, enemy, damage );
 			} else {
 				return damage;
 			}
@@ -223,7 +223,7 @@ public class ShadowClone extends ArmorAbility {
 
 		@Override
 		protected boolean canAttack(Char enemy) {
-			return dualWielding().weaponCanAttack(this, enemy) || super.canAttack(enemy);
+			return wielding().canAttack(this, enemy) || super.canAttack(enemy);
 		}
 
 		@Override

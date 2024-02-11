@@ -22,12 +22,12 @@
 package com.tianscar.carbonizedpixeldungeon.ui;
 
 import com.tianscar.carbonizedpixeldungeon.Chrome;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
 import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
 import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
 import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 

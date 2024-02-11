@@ -27,8 +27,8 @@ import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.mechanics.ShadowCaster;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 

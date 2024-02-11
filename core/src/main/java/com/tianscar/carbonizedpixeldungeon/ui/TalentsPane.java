@@ -27,11 +27,11 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

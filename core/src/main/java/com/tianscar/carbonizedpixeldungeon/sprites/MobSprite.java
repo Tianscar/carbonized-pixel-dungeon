@@ -22,10 +22,10 @@
 package com.tianscar.carbonizedpixeldungeon.sprites;
 
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.AlphaTweener;
 import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.ScaleTweener;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 

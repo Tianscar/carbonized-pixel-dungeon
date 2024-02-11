@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.levels.rooms.special;
 
-import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;

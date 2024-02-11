@@ -21,13 +21,13 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui.changelist;
 
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
-import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
+import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
+import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 
 public class ChangeSelection extends Component {
 

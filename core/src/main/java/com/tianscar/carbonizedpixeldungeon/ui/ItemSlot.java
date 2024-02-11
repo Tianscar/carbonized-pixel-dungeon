@@ -28,11 +28,11 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.Armor;
 import com.tianscar.carbonizedpixeldungeon.items.rings.Ring;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.utils.Rect;
 
 public class ItemSlot extends Button {
@@ -135,8 +135,8 @@ public class ItemSlot extends Button {
 			extra.y = y + margin.top;
 			PixelScene.align(extra);
 
-			if ((status.width() + extra.width()) > (width - margin.right)) {
-				extra.scale.set(PixelScene.align(0.8f));
+			if (status != null) {
+				extra.scale.set(status.scale);
 				if ((status.width() + extra.width()) > (width - margin.right)) {
 					extra.x = status.x;
 					extra.y = status.y + status.height() - 1;
@@ -149,7 +149,7 @@ public class ItemSlot extends Button {
 			}
 		}
 
-		if (itemIcon != null){
+		if (itemIcon != null) {
 			itemIcon.x = x + width - (ItemSpriteSheet.Icons.SIZE + itemIcon.width())/2f - margin.right;
 			itemIcon.y = y + (ItemSpriteSheet.Icons.SIZE - itemIcon.height)/2f + margin.top;
 			PixelScene.align(itemIcon);
@@ -200,9 +200,9 @@ public class ItemSlot extends Button {
 		}
 	}
 
-	public void updateText(){
+	public void updateText() {
 
-		if (itemIcon != null){
+		if (itemIcon != null) {
 			remove(itemIcon);
 			itemIcon = null;
 		}
@@ -276,9 +276,9 @@ public class ItemSlot extends Button {
 		if (itemIcon != null) itemIcon.alpha( alpha );
 	}
 
-	public void showExtraInfo( boolean show ){
+	public void showExtraInfo( boolean show ) {
 
-		if (show){
+		if (show) {
 			add(extra);
 		} else {
 			remove(extra);
@@ -286,7 +286,7 @@ public class ItemSlot extends Button {
 
 	}
 
-	public void setMargins( int left, int top, int right, int bottom){
+	public void setMargins( int left, int top, int right, int bottom ) {
 		margin.set(left, top, right, bottom);
 		layout();
 	}

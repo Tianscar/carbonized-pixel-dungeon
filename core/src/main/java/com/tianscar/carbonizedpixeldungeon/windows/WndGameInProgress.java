@@ -21,24 +21,24 @@
 
 package com.tianscar.carbonizedpixeldungeon.windows;
 
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.GamesInProgress;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.StartScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.ActionIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.Button;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.ui.Button;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 

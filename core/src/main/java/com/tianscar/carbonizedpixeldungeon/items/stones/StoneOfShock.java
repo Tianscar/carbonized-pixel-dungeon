@@ -31,9 +31,9 @@ import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Lightning;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.EnergyParticle;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.SparkParticle;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 import java.util.ArrayList;

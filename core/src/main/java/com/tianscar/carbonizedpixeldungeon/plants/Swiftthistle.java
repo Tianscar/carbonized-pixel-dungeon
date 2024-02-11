@@ -29,11 +29,11 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 
 import java.util.ArrayList;

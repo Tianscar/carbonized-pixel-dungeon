@@ -30,11 +30,11 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.services.news.CarbonizedNews;
 import com.tianscar.carbonizedpixeldungeon.services.news.News;
 import com.tianscar.carbonizedpixeldungeon.services.updates.CarbonizedUpdates;
 import com.tianscar.carbonizedpixeldungeon.services.updates.Updates;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 import com.tianscar.carbonizedpixeldungeon.utils.Point;
 
@@ -56,7 +56,7 @@ public class DesktopLauncher {
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
 			public void uncaughtException(Thread thread, Throwable throwable) {
-				System.err.println(DesktopMessages.get(DesktopLauncher.class, "crash_msg", title, Game.version));
+				System.err.println(DesktopMessages.get(DesktopLauncher.class, "crash_msg", title, Game.version, Game.versionCode));
 
 				Game.reportException(throwable);
 				StringWriter sw = new StringWriter();

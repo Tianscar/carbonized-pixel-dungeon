@@ -32,11 +32,11 @@ import com.tianscar.carbonizedpixeldungeon.effects.particles.FlameParticle;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.LeafParticle;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.ShadowParticle;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.SparkParticle;
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 public abstract class FistSprite extends MobSprite {

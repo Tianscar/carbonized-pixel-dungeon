@@ -23,9 +23,9 @@ package com.tianscar.carbonizedpixeldungeon.actors.buffs;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 public class MagicalSight extends FlavourBuff {
 	

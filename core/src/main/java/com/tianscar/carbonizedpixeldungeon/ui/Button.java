@@ -21,16 +21,16 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui;
 
-import com.tianscar.carbonizedpixeldungeon.utils.Signal;
+import com.tianscar.carbonizedpixeldungeon.input.ControllerHandler;
 import com.tianscar.carbonizedpixeldungeon.input.GameAction;
 import com.tianscar.carbonizedpixeldungeon.input.KeyBindings;
 import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
-import com.tianscar.carbonizedpixeldungeon.input.ControllerHandler;
 import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 
 import java.util.ArrayList;
 

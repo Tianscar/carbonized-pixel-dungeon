@@ -21,10 +21,10 @@
 
 package com.tianscar.carbonizedpixeldungeon.noosa.ui;
 
-import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 
 public class Cursor {
 

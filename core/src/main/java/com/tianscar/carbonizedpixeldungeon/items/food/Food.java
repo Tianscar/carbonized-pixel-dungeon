@@ -33,9 +33,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.effects.SpellSprite;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 import java.util.ArrayList;
 
@@ -94,7 +94,8 @@ public class Food extends Item {
 		if (Dungeon.hero.hasTalent(Talent.IRON_STOMACH)
 			|| Dungeon.hero.hasTalent(Talent.ENERGIZING_MEAL)
 			|| Dungeon.hero.hasTalent(Talent.MYSTICAL_MEAL)
-			|| Dungeon.hero.hasTalent(Talent.INVIGORATING_MEAL)){
+			|| Dungeon.hero.hasTalent(Talent.INVIGORATING_MEAL)
+			|| Dungeon.hero.hasTalent(Talent.FOCUSING_MEAL)) {
 			return TIME_TO_EAT - 2;
 		} else {
 			return TIME_TO_EAT;

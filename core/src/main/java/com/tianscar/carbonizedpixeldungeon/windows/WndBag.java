@@ -27,6 +27,10 @@ import com.tianscar.carbonizedpixeldungeon.PDAction;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.LostInventory;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.input.KeyBindings;
+import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
 import com.tianscar.carbonizedpixeldungeon.items.EquipableItem;
 import com.tianscar.carbonizedpixeldungeon.items.Gold;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
@@ -38,6 +42,11 @@ import com.tianscar.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -46,15 +55,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.ItemSlot;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
-import com.tianscar.carbonizedpixeldungeon.input.GameAction;
-import com.tianscar.carbonizedpixeldungeon.input.KeyBindings;
-import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
-import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
-import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class WndBag extends WndTabbed {
 	

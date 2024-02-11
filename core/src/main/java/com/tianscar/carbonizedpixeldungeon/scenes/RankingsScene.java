@@ -22,26 +22,25 @@
 package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.Rankings;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
+import com.tianscar.carbonizedpixeldungeon.Rankings;
 import com.tianscar.carbonizedpixeldungeon.effects.Flare;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.ui.Archs;
-import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
-import com.tianscar.carbonizedpixeldungeon.ui.Icons;
-import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
-import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.windows.WndError;
-import com.tianscar.carbonizedpixeldungeon.windows.WndRanking;
 import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.tianscar.carbonizedpixeldungeon.ui.Archs;
 import com.tianscar.carbonizedpixeldungeon.ui.Button;
+import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
+import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
+import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.windows.WndError;
+import com.tianscar.carbonizedpixeldungeon.windows.WndRanking;
 
 public class RankingsScene extends PixelScene {
 	
@@ -219,10 +218,12 @@ public class RankingsScene extends PixelScene {
 			}
 			
 			classIcon.copy( Icons.get( rec.heroClass ) );
-			if (rec.heroClass == HeroClass.ROGUE){
+			/*
+			if (rec.heroClass == HeroClass.ROGUE) {
 				//cloak of shadows needs to be brightened a bit
 				classIcon.brightness(2f);
 			}
+			 */
 		}
 		
 		@Override

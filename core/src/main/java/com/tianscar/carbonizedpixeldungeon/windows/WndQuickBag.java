@@ -6,6 +6,7 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.QuickSlot;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.LostInventory;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
+import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
 import com.tianscar.carbonizedpixeldungeon.items.EquipableItem;
 import com.tianscar.carbonizedpixeldungeon.items.Generator;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
@@ -14,16 +15,15 @@ import com.tianscar.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.ui.ItemSlot;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
-import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +50,7 @@ public class WndQuickBag extends Window {
 			return;
 		}
 
-		int btnWidth = 16;
+		int btnWidth = 18;
 		int btnHeight = 20;
 
 		//height of the toolbar and status pane, plus a little extra
@@ -62,7 +62,7 @@ public class WndQuickBag extends Window {
 			expectedHeight -= rows;
 		}
 
-		for (Item i : items){
+		for (Item i : items) {
 			QuickItemButton btn = new QuickItemButton(i) {
 				@Override
 				protected String hoverText() {
@@ -221,7 +221,7 @@ public class WndQuickBag extends Window {
 				}
 
 				if (Dungeon.hero.buff(LostInventory.class) != null
-						&& !item.keptThoughLostInvent){
+						&& !item.keptThoughLostInvent) {
 					enable(false);
 				}
 

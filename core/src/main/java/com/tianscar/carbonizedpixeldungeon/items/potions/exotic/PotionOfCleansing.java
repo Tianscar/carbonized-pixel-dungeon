@@ -30,8 +30,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.LostInventory;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
 public class PotionOfCleansing extends ExoticPotion {
 	

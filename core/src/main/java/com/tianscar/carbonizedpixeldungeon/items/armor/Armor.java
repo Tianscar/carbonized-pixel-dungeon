@@ -58,13 +58,13 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.glyphs.Thorns;
 import com.tianscar.carbonizedpixeldungeon.items.armor.glyphs.Viscosity;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
@@ -72,7 +72,7 @@ import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Armor extends EquipableItem {
+public abstract class Armor extends EquipableItem {
 
 	protected static final String AC_DETACH       = "DETACH";
 	
@@ -129,8 +129,8 @@ public class Armor extends EquipableItem {
 		bundle.put( AVAILABLE_USES, availableUsesToID );
 		bundle.put( GLYPH, glyph );
 		bundle.put( CURSE_INFUSION_BONUS, curseInfusionBonus );
-		bundle.put( SEAL, seal);
-		bundle.put( AUGMENT, augment);
+		bundle.put( SEAL, seal );
+		bundle.put( AUGMENT, augment );
 	}
 
 	@Override

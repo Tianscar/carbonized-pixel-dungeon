@@ -27,7 +27,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ViewConfiguration;
-
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -35,12 +34,12 @@ import com.badlogic.gdx.backends.android.AndroidAudio;
 import com.badlogic.gdx.backends.android.AsynchronousAndroidAudio;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.services.news.CarbonizedNews;
 import com.tianscar.carbonizedpixeldungeon.services.news.News;
 import com.tianscar.carbonizedpixeldungeon.services.updates.CarbonizedUpdates;
 import com.tianscar.carbonizedpixeldungeon.services.updates.Updates;
 import com.tianscar.carbonizedpixeldungeon.ui.Button;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 
 public class AndroidGame extends AndroidApplication {

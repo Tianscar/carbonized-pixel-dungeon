@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.noosa.audio;
 
 import com.badlogic.gdx.Gdx;
-import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;

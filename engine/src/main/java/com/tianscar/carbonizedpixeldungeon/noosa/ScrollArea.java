@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.noosa;
 
-import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 import com.tianscar.carbonizedpixeldungeon.input.ScrollEvent;
+import com.tianscar.carbonizedpixeldungeon.utils.Signal;
 
 //pointer area with additional support for detecting scrolling events
 public class ScrollArea extends PointerArea {

@@ -21,16 +21,21 @@
 
 package com.tianscar.carbonizedpixeldungeon.windows;
 
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.GamesInProgress;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
+import com.tianscar.carbonizedpixeldungeon.scenes.HeroSelectScene;
+import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
+import com.tianscar.carbonizedpixeldungeon.scenes.RankingsScene;
+import com.tianscar.carbonizedpixeldungeon.scenes.TitleScene;
 import com.tianscar.carbonizedpixeldungeon.services.updates.Updates;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 import java.io.IOException;
 

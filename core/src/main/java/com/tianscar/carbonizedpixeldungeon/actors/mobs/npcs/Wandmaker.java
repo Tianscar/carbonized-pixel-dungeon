@@ -37,16 +37,16 @@ import com.tianscar.carbonizedpixeldungeon.levels.rooms.special.MassGraveRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.special.RotGardenRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.RitualSiteRoom;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.plants.Rotberry;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.WandmakerSprite;
-import com.tianscar.carbonizedpixeldungeon.windows.WndQuest;
-import com.tianscar.carbonizedpixeldungeon.windows.WndWandmaker;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.windows.WndQuest;
+import com.tianscar.carbonizedpixeldungeon.windows.WndWandmaker;
 
 import java.util.ArrayList;
 
@@ -140,7 +140,7 @@ public class Wandmaker extends NPC {
 
 			String msg1 = "";
 			String msg2 = "";
-			switch(Dungeon.hero.heroClass){
+			switch(Dungeon.hero.heroClass) {
 				case WARRIOR:
 					msg1 += Messages.get(this, "intro_warrior");
 					break;
@@ -152,6 +152,9 @@ public class Wandmaker extends NPC {
 					break;
 				case HUNTRESS:
 					msg1 += Messages.get(this, "intro_huntress");
+					break;
+				case ELEMENTALIST:
+					msg1 += Messages.get(this, "intro_elementalist");
 					break;
 			}
 

@@ -24,13 +24,13 @@ package com.tianscar.carbonizedpixeldungeon.ui;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.PDAction;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
-import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
 import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
+import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
 
 public class DangerIndicator extends Tag {
 	

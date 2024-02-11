@@ -26,28 +26,35 @@ import com.tianscar.carbonizedpixeldungeon.Badges;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
+import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
+import com.tianscar.carbonizedpixeldungeon.actors.blobs.Electricity;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Blindness;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Degrade;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Paralysis;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.journal.Catalog;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.scenes.CellSelector;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.MissileSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.utils.BArray;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 import java.util.ArrayList;
@@ -562,24 +569,49 @@ public class Item implements Bundlable {
 						@Override
 						public void call() {
 							curUser = user;
-							Item i = Item.this.detach(user.belongings.backpack);
-							if (i != null) i.onThrow(cell);
+							Item item = Item.this.detach(user.belongings.backpack);
+							if (item != null) item.onThrow(cell);
 							if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
 									&& !(Item.this instanceof MissileWeapon)
 									&& curUser.buff(Talent.ImprovisedProjectileCooldown.class) == null) {
 								if (enemy != null && enemy.alignment != curUser.alignment) {
 									Sample.INSTANCE.play(Assets.Sounds.HIT);
 									if (Item.this instanceof CarbonSteel) {
-										Buff.affect(enemy, Paralysis.class, 1f);
+										Buff.prolong(enemy, Paralysis.class, 1f);
 									}
 									Buff.affect(enemy, Blindness.class, 1f + curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES));
 									Buff.affect(curUser, Talent.ImprovisedProjectileCooldown.class, 50f);
 								}
 							}
 							else if (Item.this instanceof CarbonSteel) {
+								if (curUser.hasTalent(Talent.MIGHTY_THUNDER) &&
+										curUser.buff(ElementalHeart.ShockFocus.class) != null) {
+									if (Random.Float() < Math.min(2, curUser.pointsInTalent(Talent.MIGHTY_THUNDER)) * 0.25f) {
+										int pos = enemy.pos;
+										if (Dungeon.level.heroFOV[pos]){
+											Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
+										}
+
+										if (curUser.pointsInTalent(Talent.MIGHTY_THUNDER) > 2) {
+											PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid, null ), 2 );
+											for (int i = 0; i < PathFinder.distance.length; i++) {
+												if (PathFinder.distance[i] < Integer.MAX_VALUE) {
+													GameScene.add(Blob.seed(i, 4, Electricity.class));
+												}
+											}
+										}
+										else {
+											for( int i : PathFinder.NEIGHBOURS9) {
+												if (!Dungeon.level.solid[pos + i]) {
+													GameScene.add(Blob.seed(pos + i, 4, Electricity.class));
+												}
+											}
+										}
+									}
+								}
 								if (enemy != null && enemy.alignment != curUser.alignment) {
 									Sample.INSTANCE.play(Assets.Sounds.HIT);
-									Buff.affect(enemy, Paralysis.class, 1f);
+									Buff.prolong(enemy, Paralysis.class, 1f);
 								}
 							}
 							if (user.buff(Talent.LethalMomentumTracker.class) != null){

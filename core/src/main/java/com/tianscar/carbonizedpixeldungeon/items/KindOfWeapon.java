@@ -29,15 +29,15 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.ActionIndicator;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
 
 abstract public class KindOfWeapon extends EquipableItem {
 	
@@ -218,7 +218,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 		return 1;
 	}
 	
-	public boolean canReach( Char owner, int target){
+	public boolean canReach( Char owner, int target) {
 		if (Dungeon.level.distance( owner.pos, target ) > reachFactor(owner)){
 			return false;
 		} else {

@@ -29,8 +29,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.Fire;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Freezing;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Roots;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 public class PotionOfSnapFreeze extends ExoticPotion {

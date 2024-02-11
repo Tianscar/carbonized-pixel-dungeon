@@ -28,6 +28,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -35,9 +38,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.IconButton;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.TalentsPane;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -53,10 +53,10 @@ public class WndHeroInfo extends WndTabbed {
 	private static int MIN_HEIGHT = 125;
 	private static int MARGIN = 2;
 
-	public WndHeroInfo(HeroClass cl ){
+	public WndHeroInfo(HeroClass cl ) {
 
 		Image tabIcon;
-		switch (cl){
+		switch (cl) {
 			case WARRIOR: default:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
 				break;
@@ -68,6 +68,9 @@ public class WndHeroInfo extends WndTabbed {
 				break;
 			case HUNTRESS:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SPIRIT_BOW, null);
+				break;
+			case ELEMENTALIST:
+				tabIcon = new ItemSprite(ItemSpriteSheet.ELEMENTAL_HEART, null);
 				break;
 		}
 
@@ -179,27 +182,33 @@ public class WndHeroInfo extends WndTabbed {
 				add(info[i]);
 			}
 
-			switch (cls){
+			switch (cls) {
 				case WARRIOR: default:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
+					icons = new Image[] { new ItemSprite(ItemSpriteSheet.SEAL),
 							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case MAGE:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.MAGES_STAFF),
+					icons = new Image[] { new ItemSprite(ItemSpriteSheet.MAGES_STAFF),
 							new ItemSprite(ItemSpriteSheet.WAND_MAGIC_MISSILE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case ROGUE:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.ARTIFACT_CLOAK),
+					icons = new Image[] { new ItemSprite(ItemSpriteSheet.ARTIFACT_CLOAK),
 							Icons.get(Icons.STAIRS),
 							new ItemSprite(ItemSpriteSheet.DAGGER),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case HUNTRESS:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SPIRIT_BOW),
+					icons = new Image[] { new ItemSprite(ItemSpriteSheet.SPIRIT_BOW),
 							new Image(Assets.Environment.TILES_SEWERS, 112, 96, 16, 16),
 							new ItemSprite(ItemSpriteSheet.GLOVES),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case ELEMENTALIST:
+					icons = new Image[] { new ItemSprite(ItemSpriteSheet.ELEMENTAL_HEART),
+							Icons.get( Icons.SCPD ),
+							new ItemSprite(ItemSpriteSheet.KNUCKLES),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 			}

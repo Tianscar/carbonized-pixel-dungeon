@@ -25,13 +25,13 @@ import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Badges;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.ui.Archs;
 import com.tianscar.carbonizedpixeldungeon.ui.BadgesGrid;
 import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 
 public class BadgesScene extends PixelScene {
 

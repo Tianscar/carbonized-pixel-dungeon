@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.noosa.tweeners;
 
-import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 public class PosTweener extends Tweener {
 

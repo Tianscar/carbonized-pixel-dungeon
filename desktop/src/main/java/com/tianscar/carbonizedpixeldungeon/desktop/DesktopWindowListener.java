@@ -21,15 +21,18 @@
 
 package com.tianscar.carbonizedpixeldungeon.desktop;
 
-import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener;
+import com.tianscar.carbonizedpixeldungeon.PDSettings;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWWindowPosCallback;
 
 public class DesktopWindowListener implements Lwjgl3WindowListener {
+
+	// FIXME HiDPI for this dialog not really supported yet
+	static volatile float DENSITY = 1.f;
 
 	private final int[] windowSizeRecords = new int[4];
 	private final int[] windowPosRecords = new int[4];
@@ -58,7 +61,7 @@ public class DesktopWindowListener implements Lwjgl3WindowListener {
 		lwjgl3Window.postRunnable(new Runnable() {
 			@Override
 			public void run() {
-				DesktopCrashDialog.DENSITY = Gdx.graphics.getDensity();
+				DENSITY = Gdx.graphics.getDensity();
 				if (PDSettings.fullscreen()) {
 					Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 				}

@@ -22,11 +22,11 @@
 package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.ui.Archs;
-import com.tianscar.carbonizedpixeldungeon.windows.WndStory;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.ui.Archs;
+import com.tianscar.carbonizedpixeldungeon.windows.WndStory;
 
 public class IntroScene extends PixelScene {
 

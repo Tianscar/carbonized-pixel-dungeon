@@ -27,6 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.items.Ankh;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.bags.Bag;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
@@ -34,7 +35,6 @@ import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 public class WndResurrect extends Window {
 	

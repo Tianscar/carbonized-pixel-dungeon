@@ -29,10 +29,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Sheep;
 import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Flare;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.TargetHealthIndicator;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class ScrollOfPolymorph extends ExoticScroll {

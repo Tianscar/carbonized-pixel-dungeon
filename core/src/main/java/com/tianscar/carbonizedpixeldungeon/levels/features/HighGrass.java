@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.levels.features;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
@@ -40,8 +40,8 @@ import com.tianscar.carbonizedpixeldungeon.items.artifacts.SandalsOfNature;
 import com.tianscar.carbonizedpixeldungeon.items.food.Berry;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
-import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class HighGrass {

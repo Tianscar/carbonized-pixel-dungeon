@@ -22,9 +22,9 @@
 package com.tianscar.carbonizedpixeldungeon.noosa.particles;
 
 import com.tianscar.carbonizedpixeldungeon.gltextures.SmartTexture;
-import com.tianscar.carbonizedpixeldungeon.utils.RectF;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.utils.RectF;
 
 public class BitmaskEmitter extends Emitter {
 

@@ -36,8 +36,8 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
 public class CurseInfusion extends InventorySpell {
 	
@@ -79,6 +79,8 @@ public class CurseInfusion extends InventorySpell {
 		} else if (item instanceof Wand){
 			((Wand) item).curseInfusionBonus = true;
 			((Wand) item).updateLevel();
+		} else if (item instanceof ElementalHeart){
+			((ElementalHeart) item).curseInfusionBonus = true;
 		}
 		Badges.validateItemLevelAquired(item);
 		updateQuickslot();

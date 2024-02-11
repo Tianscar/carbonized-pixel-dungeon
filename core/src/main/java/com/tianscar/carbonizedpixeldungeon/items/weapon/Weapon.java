@@ -27,10 +27,12 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Berserk;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.KindOfWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfFuror;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.curses.Annoying;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.curses.Displacing;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.curses.Exhausting;
@@ -52,11 +54,12 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Projecting;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Shocking;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Unstable;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Vampiric;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
@@ -102,6 +105,13 @@ abstract public class Weapon extends KindOfWeapon {
 	
 	@Override
 	public int proc( Char attacker, Char defender, int damage ) {
+
+		if (attacker == Dungeon.hero &&
+				Dungeon.hero.subClass == HeroSubClass.BINDER &&
+				!(this instanceof MissileWeapon) &&
+				Dungeon.hero.buff(ElementalHeart.FireFocus.class) != null) {
+			new Blazing().proc( this, attacker, defender, damage );
+		}
 		
 		if (enchantment != null && attacker.buff(MagicImmune.class) == null) {
 			damage = enchantment.proc( this, attacker, defender, damage );

@@ -21,13 +21,13 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui;
 
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
 import com.tianscar.carbonizedpixeldungeon.input.ScrollEvent;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
 import com.tianscar.carbonizedpixeldungeon.noosa.ScrollArea;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 

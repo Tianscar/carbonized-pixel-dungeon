@@ -27,6 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Fire;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Thief;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.ElmoParticle;
 import com.tianscar.carbonizedpixeldungeon.items.Heap;
@@ -35,12 +36,13 @@ import com.tianscar.carbonizedpixeldungeon.items.food.ChargrilledMeat;
 import com.tianscar.carbonizedpixeldungeon.items.food.FrozenCarpaccio;
 import com.tianscar.carbonizedpixeldungeon.items.food.MysteryMeat;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.Scroll;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
@@ -127,6 +129,11 @@ public class Burning extends Buff implements Hero.Doom {
 				
 			} else {
 				target.damage( damage, this );
+
+				if (!target.isAlive() && Dungeon.hero.hasTalent(Talent.WILDFIRE) &&
+						Random.Int(3) < 1+Dungeon.hero.pointsInTalent(Talent.WILDFIRE)) {
+					Buff.prolong(target, ElementalHeart.FireFocus.class, 3).fx();
+				}
 			}
 
 			if (target instanceof Thief && ((Thief) target).item != null) {

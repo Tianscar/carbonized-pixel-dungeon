@@ -21,9 +21,9 @@
 
 package com.tianscar.carbonizedpixeldungeon.windows;
 
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Challenges;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.ui.CheckBox;

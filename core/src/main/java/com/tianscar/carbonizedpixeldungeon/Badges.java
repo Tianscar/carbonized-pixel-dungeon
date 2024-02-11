@@ -30,9 +30,9 @@ import com.tianscar.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.tianscar.carbonizedpixeldungeon.journal.Catalog;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,79 +50,82 @@ public class Badges {
 		MASTERY_MAGE,
 		MASTERY_ROGUE,
 		MASTERY_HUNTRESS,
+		MASTERY_ELEMENTALIST,
 		FOUND_RATMOGRIFY,
 
 		//bronze
 		UNLOCK_MAGE                 ( 1 ),
 		UNLOCK_ROGUE                ( 2 ),
 		UNLOCK_HUNTRESS             ( 3 ),
-		MONSTERS_SLAIN_1            ( 4 ),
-		MONSTERS_SLAIN_2            ( 5 ),
-		GOLD_COLLECTED_1            ( 6 ),
-		GOLD_COLLECTED_2            ( 7 ),
-		ITEM_LEVEL_1                ( 8 ),
-		LEVEL_REACHED_1             ( 9 ),
-		STRENGTH_ATTAINED_1         ( 10 ),
-		FOOD_EATEN_1                ( 11 ),
-		POTIONS_COOKED_1            ( 12 ),
-		BOSS_SLAIN_1                ( 13 ),
-		DEATH_FROM_FIRE             ( 14 ),
-		DEATH_FROM_POISON           ( 15 ),
-		DEATH_FROM_GAS              ( 16 ),
-		DEATH_FROM_HUNGER           ( 17 ),
-		DEATH_FROM_FALLING          ( 18 ),
+		UNLOCK_ELEMENTALIST         ( 8 ),
+		MONSTERS_SLAIN_1            ( 17 ),
+		MONSTERS_SLAIN_2            ( 18 ),
+		GOLD_COLLECTED_1            ( 19 ),
+		GOLD_COLLECTED_2            ( 20 ),
+		ITEM_LEVEL_1                ( 21 ),
+		LEVEL_REACHED_1             ( 22 ),
+		STRENGTH_ATTAINED_1         ( 23 ),
+		FOOD_EATEN_1                ( 24 ),
+		POTIONS_COOKED_1            ( 25 ),
+		BOSS_SLAIN_1                ( 26 ),
+		DEATH_FROM_FIRE             ( 27 ),
+		DEATH_FROM_POISON           ( 28 ),
+		DEATH_FROM_GAS              ( 29 ),
+		DEATH_FROM_HUNGER           ( 30 ),
+		DEATH_FROM_FALLING          ( 31 ),
 
 		//silver
-		NO_MONSTERS_SLAIN           ( 32 ),
-		GRIM_WEAPON                 ( 33 ),
-		MONSTERS_SLAIN_3            ( 34 ),
-		MONSTERS_SLAIN_4            ( 35 ),
-		GOLD_COLLECTED_3            ( 36 ),
-		GOLD_COLLECTED_4            ( 37 ),
-		ITEM_LEVEL_2                ( 38 ),
-		ITEM_LEVEL_3                ( 39 ),
-		LEVEL_REACHED_2             ( 40 ),
-		LEVEL_REACHED_3             ( 41 ),
-		STRENGTH_ATTAINED_2         ( 42 ),
-		STRENGTH_ATTAINED_3         ( 43 ),
-		FOOD_EATEN_2                ( 44 ),
-		FOOD_EATEN_3                ( 45 ),
-		POTIONS_COOKED_2            ( 46 ),
-		POTIONS_COOKED_3            ( 47 ),
-		BOSS_SLAIN_2                ( 48 ),
-		BOSS_SLAIN_3                ( 49 ),
-		ALL_POTIONS_IDENTIFIED      ( 50 ),
-		ALL_SCROLLS_IDENTIFIED      ( 51 ),
-		DEATH_FROM_GLYPH            ( 52 ),
+		NO_MONSTERS_SLAIN           ( 64 ),
+		GRIM_WEAPON                 ( 65 ),
+		MONSTERS_SLAIN_3            ( 66 ),
+		MONSTERS_SLAIN_4            ( 67 ),
+		GOLD_COLLECTED_3            ( 68 ),
+		GOLD_COLLECTED_4            ( 69 ),
+		ITEM_LEVEL_2                ( 70 ),
+		ITEM_LEVEL_3                ( 71 ),
+		LEVEL_REACHED_2             ( 72 ),
+		LEVEL_REACHED_3             ( 73 ),
+		STRENGTH_ATTAINED_2         ( 74 ),
+		STRENGTH_ATTAINED_3         ( 75 ),
+		FOOD_EATEN_2                ( 76 ),
+		FOOD_EATEN_3                ( 77 ),
+		POTIONS_COOKED_2            ( 78 ),
+		POTIONS_COOKED_3            ( 79 ),
+		BOSS_SLAIN_2                ( 80 ),
+		BOSS_SLAIN_3                ( 81 ),
+		ALL_POTIONS_IDENTIFIED      ( 82 ),
+		ALL_SCROLLS_IDENTIFIED      ( 83 ),
+		DEATH_FROM_GLYPH            ( 84 ),
 		BOSS_SLAIN_1_WARRIOR,
 		BOSS_SLAIN_1_MAGE,
 		BOSS_SLAIN_1_ROGUE,
 		BOSS_SLAIN_1_HUNTRESS,
-		BOSS_SLAIN_1_ALL_CLASSES    ( 53, true ),
-		GAMES_PLAYED_1              ( 54, true ),
+		BOSS_SLAIN_1_ELEMENTALIST,
+		BOSS_SLAIN_1_ALL_CLASSES    ( 85, true ),
+		GAMES_PLAYED_1              ( 86, true ),
 
 		//gold
-		PIRANHAS                    ( 64 ),
+		PIRANHAS                    ( 128 ),
 		//these names are a bit outdated, but it doesn't really matter.
 		BAG_BOUGHT_SEED_POUCH,
 		BAG_BOUGHT_SCROLL_HOLDER,
 		BAG_BOUGHT_POTION_BANDOLIER,
 		BAG_BOUGHT_WAND_HOLSTER,
-		ALL_BAGS_BOUGHT             ( 65 ),
-		MASTERY_COMBO               ( 66 ),
-		ITEM_LEVEL_4                ( 67 ),
-		LEVEL_REACHED_4             ( 68 ),
-		STRENGTH_ATTAINED_4         ( 69 ),
-		FOOD_EATEN_4                ( 70 ),
-		POTIONS_COOKED_4            ( 71 ),
-		BOSS_SLAIN_4                ( 72 ),
-		ALL_WEAPONS_IDENTIFIED      ( 73 ),
-		ALL_ARMOR_IDENTIFIED        ( 74 ),
-		ALL_WANDS_IDENTIFIED        ( 75 ),
-		ALL_RINGS_IDENTIFIED        ( 76 ),
-		ALL_ARTIFACTS_IDENTIFIED    ( 77 ),
-		VICTORY                     ( 78 ),
-		YASD                        ( 79, true ),
+		ALL_BAGS_BOUGHT             ( 129 ),
+		MASTERY_COMBO               ( 130 ),
+		ITEM_LEVEL_4                ( 131 ),
+		LEVEL_REACHED_4             ( 132 ),
+		STRENGTH_ATTAINED_4         ( 133 ),
+		FOOD_EATEN_4                ( 134 ),
+		POTIONS_COOKED_4            ( 135 ),
+		BOSS_SLAIN_4                ( 136 ),
+		ALL_WEAPONS_IDENTIFIED      ( 137 ),
+		ALL_ARMOR_IDENTIFIED        ( 138 ),
+		ALL_WANDS_IDENTIFIED        ( 139 ),
+		ALL_RINGS_IDENTIFIED        ( 140 ),
+		ALL_ARTIFACTS_IDENTIFIED    ( 141 ),
+		VICTORY                     ( 142 ),
+		YASD                        ( 143, true ),
 		BOSS_SLAIN_3_GLADIATOR,
 		BOSS_SLAIN_3_BERSERKER,
 		BOSS_SLAIN_3_WARLOCK,
@@ -131,24 +134,27 @@ public class Badges {
 		BOSS_SLAIN_3_ASSASSIN,
 		BOSS_SLAIN_3_SNIPER,
 		BOSS_SLAIN_3_WARDEN,
+		BOSS_SLAIN_3_BINDER,
+		BOSS_SLAIN_3_SPELLWEAVER,
 		BOSS_SLAIN_3_ALL_SUBCLASSES ( 80, true ),
 		GAMES_PLAYED_2              ( 81, true ),
 
 		//platinum
-		HAPPY_END                   ( 96 ),
-		ALL_ITEMS_IDENTIFIED        ( 97, true ),
+		HAPPY_END                   ( 192 ),
+		ALL_ITEMS_IDENTIFIED        ( 193, true ),
 		VICTORY_WARRIOR,
 		VICTORY_MAGE,
 		VICTORY_ROGUE,
 		VICTORY_HUNTRESS,
-		VICTORY_ALL_CLASSES         ( 98, true ),
-		GAMES_PLAYED_3              ( 99, true ),
-		CHAMPION_1                  ( 100 ),
+		VICTORY_ELEMENTALIST,
+		VICTORY_ALL_CLASSES         ( 194, true ),
+		GAMES_PLAYED_3              ( 195, true ),
+		CHAMPION_1                  ( 196 ),
 
 		//diamond
-		GAMES_PLAYED_4              ( 112, true ),
-		CHAMPION_2                  ( 113 ),
-		CHAMPION_3                  ( 114 );
+		GAMES_PLAYED_4              ( 224, true ),
+		CHAMPION_2                  ( 225 ),
+		CHAMPION_3                  ( 226 );
 
 		public boolean meta;
 
@@ -602,6 +608,9 @@ public class Badges {
 				case HUNTRESS:
 					badge = Badge.BOSS_SLAIN_1_HUNTRESS;
 					break;
+				case ELEMENTALIST:
+					badge = Badge.BOSS_SLAIN_1_ELEMENTALIST;
+					break;
 				}
 				local.add( badge );
 				if (!global.contains( badge )) {
@@ -612,7 +621,8 @@ public class Badges {
 				if (global.contains( Badge.BOSS_SLAIN_1_WARRIOR ) &&
 					global.contains( Badge.BOSS_SLAIN_1_MAGE ) &&
 					global.contains( Badge.BOSS_SLAIN_1_ROGUE ) &&
-					global.contains( Badge.BOSS_SLAIN_1_HUNTRESS)) {
+					global.contains( Badge.BOSS_SLAIN_1_HUNTRESS ) &&
+					global.contains( Badge.BOSS_SLAIN_1_ELEMENTALIST )) {
 					
 					badge = Badge.BOSS_SLAIN_1_ALL_CLASSES;
 					if (!global.contains( badge )) {
@@ -648,6 +658,12 @@ public class Badges {
 				case WARDEN:
 					badge = Badge.BOSS_SLAIN_3_WARDEN;
 					break;
+				case BINDER:
+					badge = Badge.BOSS_SLAIN_3_BINDER;
+					break;
+				case SPELLWEAVER:
+					badge = Badge.BOSS_SLAIN_3_SPELLWEAVER;
+					break;
 				default:
 					return;
 				}
@@ -664,7 +680,9 @@ public class Badges {
 					global.contains( Badge.BOSS_SLAIN_3_FREERUNNER ) &&
 					global.contains( Badge.BOSS_SLAIN_3_ASSASSIN ) &&
 					global.contains( Badge.BOSS_SLAIN_3_SNIPER ) &&
-					global.contains( Badge.BOSS_SLAIN_3_WARDEN )) {
+					global.contains( Badge.BOSS_SLAIN_3_WARDEN ) &&
+					global.contains( Badge.BOSS_SLAIN_3_BINDER ) &&
+					global.contains( Badge.BOSS_SLAIN_3_SPELLWEAVER )) {
 					
 					badge = Badge.BOSS_SLAIN_3_ALL_SUBCLASSES;
 					if (!global.contains( badge )) {
@@ -692,6 +710,9 @@ public class Badges {
 			break;
 		case HUNTRESS:
 			badge = Badge.MASTERY_HUNTRESS;
+			break;
+		case ELEMENTALIST:
+			badge = Badge.MASTERY_ELEMENTALIST;
 			break;
 		}
 		
@@ -725,6 +746,12 @@ public class Badges {
 			displayBadge( Badge.UNLOCK_HUNTRESS );
 		}
 	}
+
+	public static void validateElementalistUnlock(){
+		if (ElementalStatistics.elementalKindsSlain() >= 2 && !global.contains(Badge.UNLOCK_ELEMENTALIST)){
+			displayBadge( Badge.UNLOCK_ELEMENTALIST );
+		}
+	}
 	
 	public static void validateMasteryCombo( int n ) {
 		if (!local.contains( Badge.MASTERY_COMBO ) && n == 10) {
@@ -752,6 +779,9 @@ public class Badges {
 		case HUNTRESS:
 			badge = Badge.VICTORY_HUNTRESS;
 			break;
+		case ELEMENTALIST:
+			badge = Badge.VICTORY_ELEMENTALIST;
+			break;
 		}
 		local.add( badge );
 		if (!global.contains( badge )) {
@@ -762,7 +792,8 @@ public class Badges {
 		if (global.contains( Badge.VICTORY_WARRIOR ) &&
 			global.contains( Badge.VICTORY_MAGE ) &&
 			global.contains( Badge.VICTORY_ROGUE ) &&
-			global.contains( Badge.VICTORY_HUNTRESS )) {
+			global.contains( Badge.VICTORY_HUNTRESS ) &&
+			global.contains( Badge.VICTORY_ELEMENTALIST )) {
 			
 			badge = Badge.VICTORY_ALL_CLASSES;
 			displayBadge( badge );

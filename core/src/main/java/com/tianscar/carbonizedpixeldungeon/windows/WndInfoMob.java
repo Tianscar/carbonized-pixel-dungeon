@@ -23,12 +23,12 @@ package com.tianscar.carbonizedpixeldungeon.windows;
 
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.ui.HealthBar;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class WndInfoMob extends WndTitledMessage {
 	

@@ -7,33 +7,28 @@ import com.tianscar.carbonizedpixeldungeon.items.KindOfWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.tianscar.carbonizedpixeldungeon.utils.QuietCallable;
 
-// TODO Improve this
-public class Wieldings {
+// TODO improve this
+public class Wielding {
 
-    private final QuietCallable<KindOfWeapon> weapon, extra;
-    public Wieldings(QuietCallable<KindOfWeapon> weapon, QuietCallable<KindOfWeapon> extra ) {
-        this.weapon = weapon;
-        this.extra = extra;
-    }
+    private Hero owner;
 
-    public Wieldings( Hero hero ) {
-        this(hero.belongings::weapon, hero.belongings::extra);
+    public Wielding( Hero owner ) {
+        this.owner = owner;
     }
 
     public boolean canWeaponAttack = false;
     public boolean canExtraAttack = false;
 
     public KindOfWeapon weapon() {
-        return weapon.call();
+        return owner == null ? null : owner.belongings.weapon();
     }
 
     public KindOfWeapon extra() {
-        return extra.call();
+        return owner == null ? null : owner.belongings.extra();
     }
 
-    public void weaponHitSound(float pitch) {
+    public void hitSound(float pitch) {
         KindOfWeapon wep = weapon();
         KindOfWeapon ext = extra();
         if (canWeaponAttack && canExtraAttack) {
@@ -52,7 +47,7 @@ public class Wieldings {
         return weapon() != null || extra() != null;
     }
 
-    public boolean weaponCanAttack(Char owner, Char enemy) {
+    public boolean canAttack(Char owner, Char enemy) {
         if (enemy == null || owner.pos == enemy.pos || !Actor.chars().contains(enemy)) {
             canWeaponAttack = false;
             canExtraAttack = false;
@@ -86,7 +81,7 @@ public class Wieldings {
         return canWeaponAttack || canExtraAttack;
     }
 
-    public int weaponProc(Char attacker, Char defender, int damage) {
+    public int proc(Char attacker, Char defender, int damage) {
         KindOfWeapon wep = weapon();
         if (wep instanceof MissileWeapon || wep instanceof SpiritBow) return wep.proc(attacker, defender, damage);
         KindOfWeapon ext = extra();
@@ -97,7 +92,7 @@ public class Wieldings {
         else return 0;
     }
 
-    public int weaponDamageRoll(Char owner) {
+    public int damageRoll(Char owner) {
         KindOfWeapon wep = weapon();
         if (wep instanceof MissileWeapon || wep instanceof SpiritBow) return wep.damageRoll(owner);
         KindOfWeapon ext = extra();
@@ -107,14 +102,14 @@ public class Wieldings {
         else return 0;
     }
 
-    public int weaponDefenseFactor(Char owner) {
+    public int defenseFactor(Char owner) {
         int defenceFactor = 0;
         if (weapon() != null) defenceFactor += weapon().defenseFactor(owner);
         if (extra() != null) defenceFactor += extra().defenseFactor(owner);
         return defenceFactor;
     }
 
-    public float weaponAccuracyFactor(Char owner) {
+    public float accuracyFactor(Char owner) {
         KindOfWeapon wep = weapon();
         if (wep instanceof MissileWeapon || wep instanceof SpiritBow) return wep.accuracyFactor(owner);
         KindOfWeapon ext = extra();
@@ -125,7 +120,7 @@ public class Wieldings {
         else return 0;
     }
 
-    public float weaponDelayFactor(Char owner) {
+    public float delayFactor(Char owner) {
         KindOfWeapon wep = weapon();
         if (wep instanceof MissileWeapon || wep instanceof SpiritBow) return wep.delayFactor(owner);
         KindOfWeapon ext = extra();

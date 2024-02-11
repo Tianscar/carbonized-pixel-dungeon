@@ -27,18 +27,20 @@ import com.tianscar.carbonizedpixeldungeon.Challenges;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.QuickSlot;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.elementalist.AetherBlink;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.elementalist.Resonance;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.huntress.SpectralBlades;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.mage.WildMagic;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.mage.WarpBeacon;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.mage.ElementalBlast;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.mage.WarpBeacon;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.mage.WildMagic;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.rogue.ShadowClone;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.rogue.SmokeBomb;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.HeroicLeap;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.Shockwave;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.tianscar.carbonizedpixeldungeon.items.BrokenSeal;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.Waterskin;
@@ -46,6 +48,7 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.ClothArmor;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.tianscar.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.tianscar.carbonizedpixeldungeon.items.food.Food;
+import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfExperience;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfInvisibility;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
@@ -54,14 +57,17 @@ import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfRage;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfMagicMissile;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Buckler;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Gloves;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Knuckles;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Buckler;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
@@ -72,7 +78,15 @@ public enum HeroClass {
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
-	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN );
+	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN ),
+	ARCHER( HeroSubClass.NONE, HeroSubClass.NONE ),
+	LANCER( HeroSubClass.NONE, HeroSubClass.NONE ),
+	BARD( HeroSubClass.NONE, HeroSubClass.NONE ),
+	BARBARIAN( HeroSubClass.NONE, HeroSubClass.NONE ),
+	ELEMENTALIST( HeroSubClass.BINDER, HeroSubClass.SPELLWEAVER ),
+	ALCHEMIST( HeroSubClass.NONE, HeroSubClass.NONE ),
+	BLACKSMITH( HeroSubClass.NONE, HeroSubClass.NONE ),
+	WARLOCK( HeroSubClass.NONE, HeroSubClass.NONE );
 
 	private HeroSubClass[] subClasses;
 
@@ -86,7 +100,7 @@ public enum HeroClass {
 		Talent.initClassTalents(hero);
 
 		Item i = new ClothArmor().identify();
-		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
+		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor) i;
 
 		i = new Food();
 		if (!Challenges.isItemBlocked(i)) i.collect();
@@ -115,9 +129,60 @@ public enum HeroClass {
 			case HUNTRESS:
 				initHuntress( hero );
 				break;
+
+			case ELEMENTALIST:
+				initElementalist( hero );
+				break;
 		}
 
-		for (int s = 0; s < QuickSlot.SIZE; s++){
+		//TESTPLAY ONLY
+		/*
+		if (Game.platform.isDebug()) {
+			new TengusMask().collect();
+			new KingsCrown().collect();
+
+			new ScrollHolder().collect();
+			new PotionBandolier().collect();
+			new MagicalHolster().collect();
+
+			new ScrollOfUpgrade().identify().quantity(20).collect();
+			new ScrollOfRemoveCurse().identify().quantity(20).collect();
+			new ScrollOfMysticalEnergy().identify().quantity(20).collect();
+			new ScrollOfAntiMagic().identify().quantity(20).collect();
+
+			new CurseInfusion().quantity(20).collect();
+			new StoneOfEnchantment().quantity(20).collect();
+			new Stylus().quantity(20).collect();
+
+			new PotionOfExperience().identify().quantity(30).collect();
+			new PotionOfHealing().identify().quantity(30).collect();
+			new Food().identify().quantity(30).collect();
+
+			new PlateArmor().identify().upgrade(8).collect();
+			new Greatsword().identify().upgrade(8).collect();
+			new WandOfBlastWave().identify().upgrade(8).collect();
+			new WandOfFireblast().identify().upgrade(8).collect();
+			new WandOfLightning().identify().upgrade(8).collect();
+			new FishingSpear().quantity(30).collect();
+			new RingOfMight().identify().upgrade(8).collect();
+			new RingOfForce().identify().upgrade(8).collect();
+			new EtherealChains().identify().collect();
+			new ChaliceOfBlood().identify().collect();
+
+			new Honeypot().collect();
+			new Honeypot().collect();
+			new Honeypot().collect();
+			new Honeypot().collect();
+			new ElixirOfHoneyedHealing().quantity(4).collect();
+
+			new Amulet().collect();
+			new ScrollOfAffection().quantity(5).collect();
+
+			new CarbonSteel().quantity(30).collect();
+		}
+		 */
+
+		for (int s = 0; s < QuickSlot.SIZE; s++) {
 			if (Dungeon.quickslot.getItem(s) == null) {
 				Dungeon.quickslot.setSlot(s, waterskin);
 				break;
@@ -136,6 +201,8 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_ROGUE;
 			case HUNTRESS:
 				return Badges.Badge.MASTERY_HUNTRESS;
+			case ELEMENTALIST:
+				return Badges.Badge.MASTERY_ELEMENTALIST;
 		}
 		return null;
 	}
@@ -198,6 +265,18 @@ public enum HeroClass {
 		new ScrollOfLullaby().identify();
 	}
 
+	private static void initElementalist( Hero hero ) {
+
+		(hero.belongings.weapon = new Knuckles()).identify();
+		ElementalHeart heart = new ElementalHeart();
+		heart.identify().collect();
+
+		Dungeon.quickslot.setSlot(0, heart);
+
+		new PotionOfExperience().identify();
+		new ScrollOfTeleportation().identify();
+	}
+
 	public String title() {
 		return Messages.get(HeroClass.class, name());
 	}
@@ -210,16 +289,18 @@ public enum HeroClass {
 		return subClasses;
 	}
 
-	public ArmorAbility[] armorAbilities(){
+	public ArmorAbility[] armorAbilities() {
 		switch (this) {
 			case WARRIOR: default:
-				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
+				return new ArmorAbility[] { new HeroicLeap(), new Shockwave(), new Endure() };
 			case MAGE:
-				return new ArmorAbility[]{new ElementalBlast(), new WildMagic(), new WarpBeacon()};
+				return new ArmorAbility[] { new ElementalBlast(), new WildMagic(), new WarpBeacon() };
 			case ROGUE:
-				return new ArmorAbility[]{new SmokeBomb(), new DeathMark(), new ShadowClone()};
+				return new ArmorAbility[] { new SmokeBomb(), new DeathMark(), new ShadowClone() };
 			case HUNTRESS:
-				return new ArmorAbility[]{new SpectralBlades(), new NaturesPower(), new SpiritHawk()};
+				return new ArmorAbility[] { new SpectralBlades(), new NaturesPower(), new SpiritHawk() };
+			case ELEMENTALIST:
+				return new ArmorAbility[] { new Resonance(), new AetherBlink()/*, new ElementalConduit() */};
 		}
 	}
 
@@ -233,6 +314,8 @@ public enum HeroClass {
 				return Assets.Sprites.ROGUE;
 			case HUNTRESS:
 				return Assets.Sprites.HUNTRESS;
+			case ELEMENTALIST:
+				return Assets.Sprites.ELEMENTALIST;
 		}
 	}
 	
@@ -286,6 +369,8 @@ public enum HeroClass {
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
 			case HUNTRESS:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
+			case ELEMENTALIST:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_ELEMENTALIST);
 		}
 	}
 	
@@ -299,6 +384,8 @@ public enum HeroClass {
 				return Messages.get(HeroClass.class, "rogue_unlock");
 			case HUNTRESS:
 				return Messages.get(HeroClass.class, "huntress_unlock");
+			case ELEMENTALIST:
+				return Messages.get(HeroClass.class, "elementalist_unlock");
 		}
 	}
 

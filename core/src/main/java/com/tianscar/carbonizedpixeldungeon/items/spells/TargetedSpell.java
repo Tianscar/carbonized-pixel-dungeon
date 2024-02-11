@@ -24,19 +24,26 @@ package com.tianscar.carbonizedpixeldungeon.items.spells;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Invisibility;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.MagicImmune;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
+import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.CellSelector;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 
 public abstract class TargetedSpell extends Spell {
 	
 	protected int collisionProperties = Ballistica.PROJECTILE;
+
+	protected int collisionProperties(int target) {
+		return collisionProperties;
+	}
 	
 	@Override
 	protected void onCast(Hero hero) {
@@ -70,8 +77,15 @@ public abstract class TargetedSpell extends Spell {
 					return;
 				}
 				
-				final Ballistica shot = new Ballistica( curUser.pos, target, curSpell.collisionProperties);
+				final Ballistica shot = new Ballistica( curUser.pos, target, curSpell.collisionProperties(target) );
 				int cell = shot.collisionPos;
+
+				if (target == curUser.pos || cell == curUser.pos) {
+					if (target == curUser.pos && curSpell instanceof ElementalHeart) {
+						GLog.i( Messages.get(Wand.class, "self_target") );
+						return;
+					}
+				}
 				
 				curUser.sprite.zap(cell);
 				
@@ -80,6 +94,11 @@ public abstract class TargetedSpell extends Spell {
 					QuickSlotButton.target(Actor.findChar(target));
 				else
 					QuickSlotButton.target(Actor.findChar(cell));
+
+				if (curUser.buff(MagicImmune.class) != null) {
+					GLog.w( Messages.get(this, "no_magic") );
+					return;
+				}
 				
 				curUser.busy();
 				

@@ -28,10 +28,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Ghost;
 import com.tianscar.carbonizedpixeldungeon.items.food.MysteryMeat;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.GreatCrabSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class GreatCrab extends Crab {

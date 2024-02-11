@@ -21,12 +21,12 @@
 
 package com.tianscar.carbonizedpixeldungeon.input;
 
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 public class InputHandler extends InputAdapter {
 

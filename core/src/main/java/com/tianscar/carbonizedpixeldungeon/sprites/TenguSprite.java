@@ -24,8 +24,8 @@ package com.tianscar.carbonizedpixeldungeon.sprites;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
-import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 public class TenguSprite extends MobSprite {

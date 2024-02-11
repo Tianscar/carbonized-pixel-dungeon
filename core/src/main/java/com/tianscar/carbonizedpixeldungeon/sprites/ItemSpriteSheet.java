@@ -358,6 +358,7 @@ public class ItemSpriteSheet {
 	public static final int ARMOR_MAGE      = ARMOR+6;
 	public static final int ARMOR_ROGUE     = ARMOR+7;
 	public static final int ARMOR_HUNTRESS  = ARMOR+8;
+	public static final int ARMOR_ELEMENTALIST = ARMOR+13;
 	static{
 		assignItemRect(ARMOR_CLOTH,     15, 12);
 		assignItemRect(ARMOR_LEATHER,   14, 13);
@@ -368,6 +369,7 @@ public class ItemSpriteSheet {
 		assignItemRect(ARMOR_MAGE,      16, 16);
 		assignItemRect(ARMOR_ROGUE,     14, 12);
 		assignItemRect(ARMOR_HUNTRESS,  13, 15);
+		assignItemRect(ARMOR_ELEMENTALIST, 13, 13);
 	}
 
 	                                                                                    //32 free slots
@@ -610,7 +612,7 @@ public class ItemSpriteSheet {
 	private static final int SPELLS         =                               xy(1, 27);  //32 slots
 	public static final int MAGIC_PORTER    = SPELLS+0;
 	public static final int PHASE_SHIFT     = SPELLS+1;
-	public static final int WILD_ENERGY = SPELLS+2;
+	public static final int WILD_ENERGY     = SPELLS+2;
 	public static final int RETURN_BEACON   = SPELLS+3;
 	
 	public static final int AQUA_BLAST      = SPELLS+5;
@@ -621,6 +623,8 @@ public class ItemSpriteSheet {
 	public static final int MAGIC_INFUSE    = SPELLS+10;
 	public static final int ALCHEMIZE       = SPELLS+11;
 	public static final int RECYCLE         = SPELLS+12;
+
+	public static final int ELEMENTAL_HEART = SPELLS+16;
 	static{
 		assignItemRect(MAGIC_PORTER,    12, 11);
 		assignItemRect(PHASE_SHIFT,     12, 11);
@@ -635,6 +639,8 @@ public class ItemSpriteSheet {
 		assignItemRect(MAGIC_INFUSE,    10, 15);
 		assignItemRect(ALCHEMIZE,       10, 15);
 		assignItemRect(RECYCLE,         10, 15);
+
+		assignItemRect(ELEMENTAL_HEART, 11, 12);
 	}
 	
 	private static final int FOOD       =                                   xy(1, 28);  //32 slots

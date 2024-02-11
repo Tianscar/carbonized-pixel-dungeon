@@ -28,8 +28,8 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.PrismaticGuard;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
 public class ScrollOfPrismaticImage extends ExoticScroll {
 	

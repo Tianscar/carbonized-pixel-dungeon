@@ -30,10 +30,10 @@ import com.tianscar.carbonizedpixeldungeon.items.food.FrozenCarpaccio;
 import com.tianscar.carbonizedpixeldungeon.items.food.MysteryMeat;
 import com.tianscar.carbonizedpixeldungeon.items.potions.Potion;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;

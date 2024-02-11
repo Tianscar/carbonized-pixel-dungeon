@@ -51,7 +51,7 @@ public class Berry extends Food {
 	@Override
 	protected void satisfy(Hero hero) {
 		super.satisfy(hero);
-		SeedCounter counter = Buff.count(hero, SeedCounter.class, 1);
+		SeedCounter counter = Buff.countUp(hero, SeedCounter.class, 1);
 		if (counter.count() >= 2){
 			Dungeon.level.drop(Generator.random(Generator.Category.SEED), hero.pos).sprite.drop();
 			counter.detach();

@@ -30,15 +30,14 @@ import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidGraphics;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.utils.PlatformSupport;
 
 import java.util.HashMap;

@@ -23,8 +23,8 @@ package com.tianscar.carbonizedpixeldungeon.sprites;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
-import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 
 public class PiranhaSprite extends MobSprite {
 	

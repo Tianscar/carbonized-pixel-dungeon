@@ -21,9 +21,9 @@
 
 package com.tianscar.carbonizedpixeldungeon.effects;
 
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
-import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 public class CellEmitter {

@@ -21,11 +21,16 @@
 
 package com.tianscar.carbonizedpixeldungeon.scenes;
 
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.messages.Languages;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.services.news.News;
 import com.tianscar.carbonizedpixeldungeon.services.news.NewsArticle;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
@@ -37,11 +42,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.StyledButton;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.windows.WndTitledMessage;
-import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
-import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 import java.util.Calendar;

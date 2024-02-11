@@ -22,9 +22,9 @@
 package com.tianscar.carbonizedpixeldungeon.levels;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Challenges;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
@@ -32,7 +32,17 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.SmokeScreen;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Web;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.WellWater;
-import com.tianscar.carbonizedpixeldungeon.actors.buffs.*;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Awareness;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Blindness;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.ChampionEnemy;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.LockedFloor;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.MagicalSight;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.MindVision;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.PinCushion;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.RevealedArea;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Shadows;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Spellweave;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
@@ -64,18 +74,18 @@ import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.mechanics.ShadowCaster;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
 import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Group;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
@@ -949,7 +959,7 @@ public abstract class Level implements Bundlable {
 					set(ch.pos, Terrain.FURROWED_GRASS);
 				} else {
 					set(ch.pos, Terrain.HIGH_GRASS);
-					Buff.count(ch, Talent.RejuvenatingStepsFurrow.class, 3 - Dungeon.hero.pointsInTalent(Talent.REJUVENATING_STEPS));
+					Buff.countUp(ch, Talent.RejuvenatingStepsFurrow.class, 3 - Dungeon.hero.pointsInTalent(Talent.REJUVENATING_STEPS));
 				}
 				GameScene.updateMap(ch.pos);
 				Buff.affect(ch, Talent.RejuvenatingStepsCooldown.class, 15f - 5f*Dungeon.hero.pointsInTalent(Talent.REJUVENATING_STEPS));
@@ -1018,6 +1028,9 @@ public abstract class Level implements Bundlable {
 			
 			Swiftthistle.TimeBubble bubble =
 					Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
+
+			Spellweave.TimeBent timeBent =
+					Dungeon.hero.buff(Spellweave.TimeBent.class);
 			
 			if (bubble != null){
 				
@@ -1035,6 +1048,14 @@ public abstract class Level implements Bundlable {
 				
 				timeFreeze.setDelayedPress(cell);
 				
+			} else if (timeBent != null){
+
+				Sample.INSTANCE.play(Assets.Sounds.TRAP);
+
+				discover(cell);
+
+				timeBent.setDelayedPress(cell);
+
 			} else {
 
 				if (Dungeon.hero.pos == cell) {

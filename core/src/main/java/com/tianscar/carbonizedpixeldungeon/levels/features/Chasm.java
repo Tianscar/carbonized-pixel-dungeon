@@ -27,6 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Bleeding;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Cripple;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Spellweave;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
@@ -36,18 +37,18 @@ import com.tianscar.carbonizedpixeldungeon.levels.RegularLevel;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.special.WeakFloorRoom;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
-import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
-import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
-import com.tianscar.carbonizedpixeldungeon.sprites.MobSprite;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
+import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
+import com.tianscar.carbonizedpixeldungeon.sprites.MobSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
 
 public class Chasm implements Hero.Doom {
 
@@ -90,6 +91,8 @@ public class Chasm implements Hero.Doom {
 		if (timeFreeze != null) timeFreeze.disarmPressedTraps();
 		Swiftthistle.TimeBubble timeBubble = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 		if (timeBubble != null) timeBubble.disarmPressedTraps();
+		Spellweave.TimeBent timeBent = Dungeon.hero.buff(Spellweave.TimeBent.class);
+		if (timeBent != null) timeBent.disarmPressedTraps();
 		
 		if (Dungeon.hero.isAlive()) {
 			Dungeon.hero.interrupt();

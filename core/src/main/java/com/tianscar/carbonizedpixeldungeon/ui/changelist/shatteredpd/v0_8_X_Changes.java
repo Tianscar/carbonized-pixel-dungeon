@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.actors.mobs.DwarfKing;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.DM300;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.DwarfKing;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfEnergy;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfWealth;
@@ -39,6 +39,8 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Flail;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Quarterstaff;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
@@ -60,8 +62,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 import java.util.ArrayList;
 

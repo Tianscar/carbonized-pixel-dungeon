@@ -18,10 +18,12 @@ import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.CellSelector;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -78,7 +80,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
 
     protected abstract int initialCharges();
 
-    public ArrayList<MissileWeapon> missiles = new ArrayList<>(maxMissiles);
+    public ArrayDeque<MissileWeapon> missiles = new ArrayDeque<>(maxMissiles);
     private static final String MISSILES = "missiles";
 
     @Override
@@ -90,7 +92,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
     @Override
     public void restoreFromBundle(Bundle bundle) {
         super.restoreFromBundle(bundle);
-        missiles = new ArrayList<>((Collection<? extends MissileWeapon>) ((Collection<?>) bundle.getCollection(MISSILES)));
+        missiles = new ArrayDeque<>((Collection<? extends MissileWeapon>) ((Collection<?>) bundle.getCollection(MISSILES)));
         for (MissileWeapon missile : missiles) {
             missile.shooter = this;
         }
@@ -123,6 +125,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
             }
             else if (missiles.isEmpty()) {
                 usesTargeting = false;
+                hero.sprite.attack(hero.pos, new Callback() { public void call() {} });
                 GLog.w( Messages.get(this, "no_missile") );
             }
             else {
@@ -191,7 +194,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < amount; i ++) {
-            MissileWeapon missile = popLastMissile();
+            MissileWeapon missile = missiles.removeLast();
             missile.shooter = null;
 
             if (!missile.collect()){
@@ -217,7 +220,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
         hero.busy();
         Sample.INSTANCE.play(unloadSound, 2, unloadSoundPitch);
 
-        MissileWeapon missile = popLastMissile();
+        MissileWeapon missile = missiles.removeLast();
         missile.shooter = null;
 
         GLog.i(Messages.get(this, "you_now_unloaded", missile.name(), name()));
@@ -250,19 +253,11 @@ public abstract class RangedWeapon extends MeleeWeapon {
 
     }
 
-    protected MissileWeapon popFirstMissile() {
-        return missiles.remove(0);
-    }
-
-    protected MissileWeapon popLastMissile() {
-        return missiles.remove(missiles.size() - 1);
-    }
-
     protected CellSelector.Listener shooter = new CellSelector.Listener() {
         @Override
         public void onSelect( Integer target ) {
             if (target != null) {
-                popFirstMissile().cast(curUser, target);
+                missiles.removeFirst().cast(curUser, target);
             }
         }
         @Override
@@ -271,15 +266,15 @@ public abstract class RangedWeapon extends MeleeWeapon {
         }
     };
 
-    public abstract void missileThrowSound();
+    public abstract void shootSound();
 
-    public int missileMin(MissileWeapon missile, int missileLvl) {
+    public int shootMin(MissileWeapon missile, int missileLvl) {
         return  2 * tier +                                      //base
                 (tier == 1 ? buffedLvl() : 2*buffedLvl()) +     //level scaling
                 (missile.tier == 1 ? missileLvl : 2*missileLvl);
     }
 
-    public int missileMax(MissileWeapon missile, int missileLvl) {
+    public int shootMax(MissileWeapon missile, int missileLvl) {
         return  5*(tier+1) +               //base
                 buffedLvl()*(tier+1) +     //level scaling
                 (missile.tier == 1 ? 2*missileLvl : tier*missileLvl);
@@ -307,7 +302,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
             missilesText = builder.substring(0, builder.length() - 2);
             info += "\n\n" + Messages.get( this, "missiles", Messages.replaceComma(missilesText) );
 
-            MissileWeapon missile = missiles.get(0);
+            MissileWeapon missile = missiles.peekFirst();
             int level = 0;
             if (!isIdentified()) {
                 level = level();
@@ -334,7 +329,7 @@ public abstract class RangedWeapon extends MeleeWeapon {
         return info;
     }
 
-    public int missileProc( Char attacker, Char defender, int damage ) {
+    public int shootProc(Char attacker, Char defender, int damage ) {
         return proc( attacker, defender, damage );
     }
 

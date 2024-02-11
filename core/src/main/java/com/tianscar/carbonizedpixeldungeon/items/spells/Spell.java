@@ -40,7 +40,7 @@ public abstract class Spell extends Item {
 	}
 	
 	@Override
-	public ArrayList<String> actions(Hero hero ) {
+	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
 		actions.add( AC_CAST );
 		return actions;
@@ -53,7 +53,7 @@ public abstract class Spell extends Item {
 		
 		if (action.equals( AC_CAST )) {
 			
-			if (curUser.buff(MagicImmune.class) != null){
+			if (curUser.buff(MagicImmune.class) != null) {
 				GLog.w( Messages.get(this, "no_magic") );
 				return;
 			}
@@ -61,6 +61,7 @@ public abstract class Spell extends Item {
 			onCast( hero );
 			
 		}
+
 	}
 	
 	@Override

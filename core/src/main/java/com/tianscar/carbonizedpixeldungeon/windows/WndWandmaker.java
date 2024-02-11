@@ -22,14 +22,17 @@
 package com.tianscar.carbonizedpixeldungeon.windows;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.quest.CorpseDust;
 import com.tianscar.carbonizedpixeldungeon.items.quest.Embers;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.plants.Rotberry;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -38,9 +41,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class WndWandmaker extends Window {
 

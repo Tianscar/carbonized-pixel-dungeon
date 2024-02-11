@@ -28,10 +28,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Recharging;
 import com.tianscar.carbonizedpixeldungeon.effects.SpellSprite;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.EnergyParticle;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 
 public class ScrollOfRecharging extends Scroll {
 

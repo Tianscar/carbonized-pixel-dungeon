@@ -21,10 +21,10 @@
 
 package com.tianscar.carbonizedpixeldungeon.effects;
 
-import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Halo;
+import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 
 public class TorchHalo extends Halo {
 

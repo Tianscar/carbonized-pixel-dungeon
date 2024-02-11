@@ -58,7 +58,7 @@ public class Crossbow extends RangedWeapon {
 	}
 
 	@Override
-	public void missileThrowSound() {
+	public void shootSound() {
 		Sample.INSTANCE.play(Assets.Sounds.ATK_CROSSBOW, 1, Random.Float(0.87f, 1.15f));
 	}
 

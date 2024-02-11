@@ -44,7 +44,16 @@
 			android:screenOrientation="nosensor"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize">
 		</activity>
-
+		<activity
+			android:name=".AndroidCrashActivity"
+			android:process=":crash_activity"
+			android:theme="@android:style/Theme.Holo.NoActionBar">
+		</activity>
+		<provider
+				android:name=".AndroidCrashHandler"
+				android:authorities="com.tianscar.carbonizedpixeldungeon.android.AndroidCrashHandler"
+				android:exported="false"
+				android:initOrder="101" />
 	</application>
 
 </manifest>

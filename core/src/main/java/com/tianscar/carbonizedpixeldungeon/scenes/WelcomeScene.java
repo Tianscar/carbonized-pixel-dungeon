@@ -22,24 +22,24 @@
 package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.GamesInProgress;
-import com.tianscar.carbonizedpixeldungeon.Rankings;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Rankings;
 import com.tianscar.carbonizedpixeldungeon.effects.BannerSprites;
 import com.tianscar.carbonizedpixeldungeon.effects.Fireball;
-import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.ui.Archs;
-import com.tianscar.carbonizedpixeldungeon.ui.Icons;
-import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
-import com.tianscar.carbonizedpixeldungeon.ui.StyledButton;
 import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
+import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.ui.Archs;
+import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
+import com.tianscar.carbonizedpixeldungeon.ui.StyledButton;
 import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
@@ -161,7 +161,7 @@ public class WelcomeScene extends PixelScene {
 				message += "\n";
 				//message += "null";
 				//message += "\n" + Messages.get(this, "patch_balance");
-				message += "\n" + Messages.get(this, "patch_bugfixes");
+				//message += "\n" + Messages.get(this, "patch_bugfixes");
 				message += "\n" + Messages.get(this, "patch_contents");
 				message += "\n" + Messages.get(this, "patch_translations");
 				message += "\n" + Messages.get(this, "patch_tweaks");

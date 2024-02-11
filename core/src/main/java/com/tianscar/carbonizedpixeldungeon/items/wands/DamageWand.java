@@ -30,25 +30,25 @@ import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 //for wands that directly damage a target
 //wands with AOE effects count here (e.g. fireblast), but wands with indrect damage do not (e.g. venom, transfusion)
-public abstract class DamageWand extends Wand{
+public abstract class DamageWand extends Wand {
 
-	public int min(){
+	public int min() {
 		return min(buffedLvl());
 	}
 
 	public abstract int min(int lvl);
 
-	public int max(){
+	public int max() {
 		return max(buffedLvl());
 	}
 
 	public abstract int max(int lvl);
 
-	public int damageRoll(){
+	public int damageRoll() {
 		return damageRoll(buffedLvl());
 	}
 
-	public int damageRoll(int lvl){
+	public int damageRoll(int lvl) {
 		int dmg = Random.NormalIntRange(min(lvl), max(lvl));
 		WandEmpower emp = Dungeon.hero.buff(WandEmpower.class);
 		if (emp != null){

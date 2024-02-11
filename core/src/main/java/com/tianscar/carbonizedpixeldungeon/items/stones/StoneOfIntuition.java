@@ -31,6 +31,7 @@ import com.tianscar.carbonizedpixeldungeon.items.rings.Ring;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -40,9 +41,8 @@ import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.windows.IconTitle;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.windows.IconTitle;
 
 import java.util.ArrayList;
 

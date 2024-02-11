@@ -12,7 +12,6 @@ android {
         versionCode appVersionCode
         versionName appVersionName
 
-        //noinspection MinSdkTooLow
         minSdkVersion appAndroidMinSDK
         targetSdkVersion appAndroidTargetSDK
 
@@ -77,8 +76,6 @@ dependencies {
     natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
     natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
     implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
-
-    implementation 'cat.ereza:customactivityoncrash:2.4.0'
 }
 
 // called every time gradle gets executed, takes the native dependencies of

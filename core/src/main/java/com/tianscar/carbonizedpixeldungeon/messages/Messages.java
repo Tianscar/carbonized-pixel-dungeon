@@ -24,8 +24,8 @@ package com.tianscar.carbonizedpixeldungeon.messages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.PDSettings;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.PDSettings;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 
 import java.util.ArrayList;

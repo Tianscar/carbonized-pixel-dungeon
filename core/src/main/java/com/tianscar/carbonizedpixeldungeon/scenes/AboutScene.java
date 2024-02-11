@@ -23,15 +23,20 @@ package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.effects.Flare;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.ui.Archs;
 import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.ScrollPane;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
-import com.tianscar.carbonizedpixeldungeon.noosa.*;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class AboutScene extends PixelScene {
 
@@ -97,9 +102,23 @@ public class AboutScene extends PixelScene {
 		content.add(ptr);
 		content.add(jason);
 
+		//*** Scorched Pixel Dungeon Credits ***
+
+		final int SCPD_COLOR = 0xEA6f00;
+		CreditsBlock scpd = new CreditsBlock(true, SCPD_COLOR,
+				"Scorched Pixel Dungeon",
+				Icons.SCPD.get(),
+				"Developed by: _dreamdream2020_\nBased on ShatteredPD's open source",
+				"github.com/scorchedpd",
+				"https://github.com/dreamdream2020/scorched-pixel-dungeon");
+		scpd.setRect(tians.left(), jason.bottom() + 12, colWidth, 0);
+		content.add(scpd);
+
+		addLine(scpd.top() - 4, content);
+
 		//*** Shattered Pixel Dungeon Credits ***
 
-		String shpxLink = "https://ShatteredPixel.com";
+		String shpxLink = "https://shatteredpixel.com";
 		//tracking codes, so that the website knows where this pageview came from
 		shpxLink += "?utm_source=shatteredpd";
 		shpxLink += "&utm_medium=about_page";
@@ -111,7 +130,7 @@ public class AboutScene extends PixelScene {
 				"Developed by: _Evan Debenham_\nBased on Pixel Dungeon's open source",
 				"ShatteredPixel.com",
 				shpxLink);
-		shpx.setRect(tians.left(), jason.bottom() + 12, colWidth, 0);
+		shpx.setRect(tians.left(), scpd.bottom() + 12, colWidth, 0);
 		content.add(shpx);
 
 		CreditsBlock alex = new CreditsBlock(false, Window.SHPX_COLOR,

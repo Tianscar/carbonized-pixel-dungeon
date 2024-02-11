@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.sprites;
 
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 
 public class DiscardedItemSprite extends ItemSprite {
 	

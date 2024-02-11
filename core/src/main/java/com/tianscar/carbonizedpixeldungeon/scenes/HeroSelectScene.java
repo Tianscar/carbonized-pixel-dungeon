@@ -21,25 +21,43 @@
 
 package com.tianscar.carbonizedpixeldungeon.scenes;
 
-import com.tianscar.carbonizedpixeldungeon.*;
+import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.Badges;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.GamesInProgress;
+import com.tianscar.carbonizedpixeldungeon.PDAction;
+import com.tianscar.carbonizedpixeldungeon.PDSettings;
+import com.tianscar.carbonizedpixeldungeon.Rankings;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.tianscar.carbonizedpixeldungeon.effects.BannerSprites;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.ui.*;
-import com.tianscar.carbonizedpixeldungeon.scenes.SurfaceScene.Sky;
-import com.tianscar.carbonizedpixeldungeon.scenes.SurfaceScene.GrassPatch;
-import com.tianscar.carbonizedpixeldungeon.scenes.SurfaceScene.Cloud;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.scenes.SurfaceScene.Avatar;
+import com.tianscar.carbonizedpixeldungeon.scenes.SurfaceScene.Cloud;
+import com.tianscar.carbonizedpixeldungeon.scenes.SurfaceScene.GrassPatch;
+import com.tianscar.carbonizedpixeldungeon.scenes.SurfaceScene.Sky;
+import com.tianscar.carbonizedpixeldungeon.ui.ActionIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.Archs;
+import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
+import com.tianscar.carbonizedpixeldungeon.ui.IconButton;
+import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
+import com.tianscar.carbonizedpixeldungeon.ui.Window;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.windows.WndChallenges;
 import com.tianscar.carbonizedpixeldungeon.windows.WndHeroInfo;
 import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
 import com.tianscar.carbonizedpixeldungeon.windows.WndMessage;
-import com.tianscar.carbonizedpixeldungeon.input.GameAction;
-import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
-import com.tianscar.carbonizedpixeldungeon.noosa.*;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
-import com.tianscar.carbonizedpixeldungeon.utils.Point;
-import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.Calendar;
 
@@ -49,7 +67,8 @@ public class HeroSelectScene extends PixelScene {
 			HeroClass.WARRIOR,
 			HeroClass.MAGE,
 			HeroClass.ROGUE,
-			HeroClass.HUNTRESS
+			HeroClass.HUNTRESS,
+			HeroClass.ELEMENTALIST
 	};
 	private static int heroClassIndex = 0;
 	private static void addHeroClassIndex(int add) {
@@ -255,7 +274,7 @@ public class HeroSelectScene extends PixelScene {
 				if (GamesInProgress.selectedClass == null) return;
 				HeroClass cl = GamesInProgress.selectedClass;
 				if( cl.isUnlocked() ) CarbonizedPixelDungeon.scene().addToFront(new WndHeroInfo(cl));
-				else CarbonizedPixelDungeon.scene().addToFront( new WndMessage(cl.unlockMsg()));
+				else CarbonizedPixelDungeon.scene().addToFront( new WndMessage(cl.unlockMsg()) );
 			}
 
 			@Override

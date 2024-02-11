@@ -272,6 +272,7 @@ public class Assets {
 		public static final String LANCER	= "sprites/lancer.png";
 		public static final String BARD	    = "sprites/bard.png";
 		public static final String BARBARIAN= "sprites/barbarian.png";
+		public static final String ELEMENTALIST = "sprites/elementalist.png";
 		public static final String AVATARS	= "sprites/avatars.png";
 		public static final String PET		= "sprites/pet.png";
 		public static final String AMULET	= "sprites/amulet.png";
@@ -317,6 +318,7 @@ public class Assets {
 		public static final String ROT_HEART= "sprites/rot_heart.png";
 		public static final String GUARD    = "sprites/guard.png";
 		public static final String WARDS    = "sprites/wards.png";
+		public static final String CONDUIT  = "sprites/conduit.png";
 		public static final String GUARDIAN	= "sprites/guardian.png";
 		public static final String SLIME	= "sprites/slime.png";
 		public static final String SNAKE	= "sprites/snake.png";

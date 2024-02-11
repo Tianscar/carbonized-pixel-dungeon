@@ -21,22 +21,36 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui;
 
-import com.tianscar.carbonizedpixeldungeon.*;
+import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.Challenges;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.PDAction;
+import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.journal.Document;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
-import com.tianscar.carbonizedpixeldungeon.windows.*;
-import com.tianscar.carbonizedpixeldungeon.input.GameAction;
-import com.tianscar.carbonizedpixeldungeon.noosa.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
+import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
+import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.ColorMath;
+import com.tianscar.carbonizedpixeldungeon.windows.WndChallenges;
+import com.tianscar.carbonizedpixeldungeon.windows.WndGame;
+import com.tianscar.carbonizedpixeldungeon.windows.WndHero;
+import com.tianscar.carbonizedpixeldungeon.windows.WndJournal;
+import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
+import com.tianscar.carbonizedpixeldungeon.windows.WndStory;
 
 public class StatusPane extends Component {
 
@@ -60,7 +74,9 @@ public class StatusPane extends Component {
 
 	private int lastLvl = -1;
 
-	private RenderedTextBlock statText;
+	private RenderedTextBlock hpText;
+	private RenderedTextBlock hgText;
+	private RenderedTextBlock expText;
 
 	private Image depthIcon;
 	private BitmapText depthText;
@@ -200,8 +216,14 @@ public class StatusPane extends Component {
 		danger = new DangerIndicator();
 		add( danger );
 
-		statText = PixelScene.renderTextBlock(6);
-		add( statText );
+		hpText = PixelScene.renderTextBlock( 6 );
+		add( hpText );
+
+		hgText = PixelScene.renderTextBlock( 6 );
+		add( hgText );
+
+		expText = PixelScene.renderTextBlock( 6 );
+		add( expText );
 
 		buffs = new BuffIndicator( Dungeon.hero );
 		add( buffs );
@@ -238,10 +260,16 @@ public class StatusPane extends Component {
 
 		danger.setPos( width - danger.width(), 20 );
 
-		statText.setPos( 31, 5 );
-		PixelScene.align( statText );
+		hpText.setPos( 31, 12 );
+		PixelScene.align( hpText );
 
-		buffs.setPos( 31, 10 );
+		hgText.setPos( 31, 19 );
+		PixelScene.align( hgText );
+
+		expText.setPos( 31, 5 );
+		PixelScene.align( expText );
+
+		buffs.setPos( 31, 28 );
 
 		btnMenu.setPos( width - btnMenu.width(), 1 );
 
@@ -319,11 +347,17 @@ public class StatusPane extends Component {
 			lastLvl = Dungeon.hero.lvl;
 		}
 
-		statText.text("[" +
-						(shield <= 0 ? health + "/" + max : health + "+" + shield + "/" + max) + ", " +
-						(int) hunger + "/" + (int) Hunger.STARVING + ", " +
-						Dungeon.hero.exp + "/" + Dungeon.hero.maxExp() + "(" + lastLvl + ")" +
-						"]");
+		hpText.text(shield <= 0 ? health + "/" + max : health + "+" + shield + "/" + max);
+		if ((health/(float)max) < 0.3f) hpText.hardlight(CharSprite.NEGATIVE);
+		else if ((health/(float)max) < 0.5f) hpText.hardlight(CharSprite.WARNING);
+		else hpText.resetColor();
+
+		hgText.text((int) hunger + "/" + (int) Hunger.STARVING);
+		if (hunger == 0) hgText.hardlight(CharSprite.NEGATIVE);
+		else if (hunger <= Hunger.STARVING - Hunger.HUNGRY) hgText.hardlight(CharSprite.WARNING);
+		else hgText.resetColor();
+
+		expText.text(Dungeon.hero.exp + "/" + Dungeon.hero.maxExp() + " _[" + lastLvl + "]_");
 
 		int tier = Dungeon.hero.tier();
 		if (tier != lastTier) {

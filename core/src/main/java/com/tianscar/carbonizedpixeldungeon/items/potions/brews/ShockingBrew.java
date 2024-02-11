@@ -27,10 +27,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Electricity;
 import com.tianscar.carbonizedpixeldungeon.items.potions.AlchemicalCatalyst;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfParalyticGas;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 
 public class ShockingBrew extends Brew {

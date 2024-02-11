@@ -30,10 +30,10 @@ import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.ShadowParticle;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 
 public class GrimTrap extends Trap {
 

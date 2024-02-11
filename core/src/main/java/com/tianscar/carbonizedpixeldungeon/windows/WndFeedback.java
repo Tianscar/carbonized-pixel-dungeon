@@ -2,9 +2,13 @@ package com.tianscar.carbonizedpixeldungeon.windows;
 
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.carbonizedpixeldungeon.ui.*;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
+import com.tianscar.carbonizedpixeldungeon.ui.IconButton;
+import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
+import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
+import com.tianscar.carbonizedpixeldungeon.ui.Window;
 
 public class WndFeedback extends Window {
 

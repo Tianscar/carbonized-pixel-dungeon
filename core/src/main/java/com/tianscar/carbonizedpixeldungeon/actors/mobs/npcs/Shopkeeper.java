@@ -31,12 +31,12 @@ import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.armor.Armor;
 import com.tianscar.carbonizedpixeldungeon.journal.Notes;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ShopkeeperSprite;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
 import com.tianscar.carbonizedpixeldungeon.windows.WndTradeItem;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 
 public class Shopkeeper extends NPC {
 

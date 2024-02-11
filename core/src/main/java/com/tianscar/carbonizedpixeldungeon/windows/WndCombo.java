@@ -25,13 +25,13 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Combo;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 public class WndCombo extends Window {
 
@@ -57,6 +57,8 @@ public class WndCombo extends Window {
 		Image icon;
 		if (Dungeon.hero.belongings.weapon() != null){
 			icon = new ItemSprite(Dungeon.hero.belongings.weapon().image, null);
+		} else if (Dungeon.hero.belongings.extra() != null){
+			icon = new ItemSprite(Dungeon.hero.belongings.extra().image, null);
 		} else {
 			icon = new ItemSprite(new Item(){ {image = ItemSpriteSheet.WEAPON_HOLDER; }});
 		}

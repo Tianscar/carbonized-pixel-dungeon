@@ -2,14 +2,15 @@
 <resources>
     <string name="app_name">碳素地牢</string>
 
-    <string name="customactivityoncrash_error_activity_close_app">關閉應用</string>
-    <string name="customactivityoncrash_error_activity_error_details">錯誤詳情</string>
-    <string name="customactivityoncrash_error_activity_error_details_clipboard_label">錯誤訊息</string>
-    <string name="customactivityoncrash_error_activity_error_details_close">關閉</string>
-    <string name="customactivityoncrash_error_activity_error_details_copied">已複製到剪貼板</string>
-    <string name="customactivityoncrash_error_activity_error_details_copy">複製到剪貼板</string>
-    <string name="customactivityoncrash_error_activity_error_details_title">錯誤詳情</string>
-    <string name="customactivityoncrash_error_activity_error_occurred_explanation">十分抱歉！發生了一個意外的錯誤。\n\n
-        如果可以，請將錯誤訊息透過電子郵件發送給開發者（tianscar@protonmail.com）。</string>
-    <string name="customactivityoncrash_error_activity_restart_app">重啟應用</string>
+    <string name="close_app">關閉應用</string>
+    <string name="error_details">錯誤詳情</string>
+    <string name="error_details_clipboard_label">錯誤訊息</string>
+    <string name="error_details_close">關閉</string>
+    <string name="error_details_copied">已複製到剪貼板！</string>
+    <string name="error_details_copy">複製到剪貼板</string>
+    <string name="error_details_title">錯誤詳情</string>
+    <string name="error_occurred_explanation">十分抱歉！發生了一個意外的錯誤。\n\n如果可以，請將錯誤訊息透過電子郵件發送給開發者 &lt;tianscar@protonmail.com&gt;。</string>
+    <string name="restart_app">重啟應用</string>
+
+    <string name="version_is">版本：</string>
 </resources>

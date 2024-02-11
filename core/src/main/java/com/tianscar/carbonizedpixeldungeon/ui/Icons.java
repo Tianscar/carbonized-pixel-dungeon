@@ -24,10 +24,10 @@ package com.tianscar.carbonizedpixeldungeon.ui;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 public enum Icons {
 	
@@ -87,6 +87,7 @@ public enum Icons {
 	CHANGES,
 	SHPX,
 	CAPD,
+	SCPD,
 	BACKPACK_LRG,
 	DISCORD,
 	GITHUB,
@@ -276,6 +277,9 @@ public enum Icons {
 		case CAPD:
 			icon.frame( icon.texture.uvRect( 119, 64, 135, 80 ) );
 			break;
+		case SCPD:
+			icon.frame( icon.texture.uvRect( 136, 64, 152, 80 ) );
+			break;
 		case DISCORD:
 			icon.frame( icon.texture.uvRect( 153, 64, 169, 80 ) );
 			break;
@@ -348,6 +352,8 @@ public enum Icons {
 				return new ItemSprite( ItemSpriteSheet.ARTIFACT_CLOAK );
 			case HUNTRESS:
 				return new ItemSprite( ItemSpriteSheet.SPIRIT_BOW );
+			case ELEMENTALIST:
+				return new ItemSprite( ItemSpriteSheet.ELEMENTAL_HEART );
 			default:
 				return null;
 		}

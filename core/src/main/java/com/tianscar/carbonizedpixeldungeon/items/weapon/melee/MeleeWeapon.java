@@ -24,8 +24,11 @@ package com.tianscar.carbonizedpixeldungeon.items.weapon.melee;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.enchantments.Blazing;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
@@ -118,7 +121,7 @@ public abstract class MeleeWeapon extends Weapon {
 	public String statsInfo(){
 		return Messages.get(this, "stats_desc");
 	}
-	
+
 	@Override
 	public int value() {
 		int price = 20 * tier;

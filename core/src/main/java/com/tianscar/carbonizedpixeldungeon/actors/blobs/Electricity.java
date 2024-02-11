@@ -81,7 +81,7 @@ public class Electricity extends Blob {
 							}
 						}
 					}
-					
+
 					Heap h = Dungeon.level.heaps.get( cell );
 					if (h != null){
 						Item toShock = h.peek();
@@ -91,7 +91,7 @@ public class Electricity extends Blob {
 							((MagesStaff) toShock).gainCharge(0.333f);
 						}
 					}
-					
+
 					off[cell] = cur[cell] - 1;
 					volume += off[cell];
 				} else {

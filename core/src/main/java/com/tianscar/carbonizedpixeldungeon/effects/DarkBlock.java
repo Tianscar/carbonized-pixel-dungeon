@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.effects;
 
-import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.noosa.Gizmo;
+import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 
 public class DarkBlock extends Gizmo{
 

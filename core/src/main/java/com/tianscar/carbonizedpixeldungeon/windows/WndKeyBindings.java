@@ -21,20 +21,20 @@
 
 package com.tianscar.carbonizedpixeldungeon.windows;
 
-import com.tianscar.carbonizedpixeldungeon.PDAction;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.PDAction;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
+import com.tianscar.carbonizedpixeldungeon.input.KeyBindings;
+import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.ScrollPane;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.input.GameAction;
-import com.tianscar.carbonizedpixeldungeon.input.KeyBindings;
-import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
-import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

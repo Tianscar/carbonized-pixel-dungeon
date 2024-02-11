@@ -23,37 +23,37 @@ package com.tianscar.carbonizedpixeldungeon.windows;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Badges;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.GamesInProgress;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.journal.Journal;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.IntroScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.ActionIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.Button;
 import com.tianscar.carbonizedpixeldungeon.ui.IconButton;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.ui.Button;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class WndStartGame extends Window {
 	
 	private static final int WIDTH    = 120;
 	private static final int HEIGHT   = 140;
 
-	public WndStartGame(final int slot){
+	public WndStartGame(final int slot) {
 		
 		Badges.loadGlobal();
 		Journal.loadGlobal();
@@ -226,7 +226,7 @@ public class WndStartGame extends Window {
 		protected void createChildren() {
 			super.createChildren();
 			
-			avatar = new Image(Assets.Sprites.AVATARS);
+			avatar = new Image( Assets.Sprites.AVATARS );
 			avatar.scale.set(2f);
 			add(avatar);
 			
@@ -303,14 +303,14 @@ public class WndStartGame extends Window {
 		@Override
 		public synchronized void update() {
 			super.update();
-			if (GamesInProgress.selectedClass != cl){
+			if (GamesInProgress.selectedClass != cl) {
 				cl = GamesInProgress.selectedClass;
 				if (cl != null) {
-					avatar.frame(cl.ordinal() * 24, 0, 24, 32);
+					avatar.frame(cl.ordinal() % 4 * 24, cl.ordinal() / 4, 24, 32);
 					
 					name.text(Messages.capitalize(cl.title()));
 					
-					switch(cl){
+					switch(cl) {
 						case WARRIOR:
 							heroItem.icon(new ItemSprite(ItemSpriteSheet.SEAL, null));
 							heroLoadout.icon(new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD, null));

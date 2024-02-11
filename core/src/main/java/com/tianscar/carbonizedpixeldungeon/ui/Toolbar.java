@@ -21,23 +21,32 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui;
 
-import com.tianscar.carbonizedpixeldungeon.*;
+import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.PDAction;
+import com.tianscar.carbonizedpixeldungeon.PDSettings;
+import com.tianscar.carbonizedpixeldungeon.QuickSlot;
+import com.tianscar.carbonizedpixeldungeon.input.GameAction;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Gizmo;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.scenes.CellSelector;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTerrainTilemap;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
 import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
 import com.tianscar.carbonizedpixeldungeon.windows.WndQuickBag;
-import com.tianscar.carbonizedpixeldungeon.input.GameAction;
-import com.tianscar.carbonizedpixeldungeon.noosa.*;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
-import com.tianscar.carbonizedpixeldungeon.utils.Point;
-import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 public class Toolbar extends Component {
 
@@ -505,7 +514,7 @@ public class Toolbar extends Component {
 			add( slot );
 		}
 
-		public void border( int left, int right ){
+		public void border( int left, int right ) {
 			borderLeft = left;
 			borderRight = right;
 			layout();

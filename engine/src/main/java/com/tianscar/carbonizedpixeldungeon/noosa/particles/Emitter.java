@@ -22,10 +22,10 @@
 package com.tianscar.carbonizedpixeldungeon.noosa.particles;
 
 import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
-import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Group;
 import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Emitter extends Group {

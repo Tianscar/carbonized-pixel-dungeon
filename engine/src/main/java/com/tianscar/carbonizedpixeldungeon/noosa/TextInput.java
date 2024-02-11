@@ -1,8 +1,5 @@
 package com.tianscar.carbonizedpixeldungeon.noosa;
 
-import com.tianscar.carbonizedpixeldungeon.glwrap.Quad;
-import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
-import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,8 +15,11 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tianscar.carbonizedpixeldungeon.glscripts.Script;
 import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Quad;
 import com.tianscar.carbonizedpixeldungeon.glwrap.Texture;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.utils.FileUtils;
+import com.tianscar.carbonizedpixeldungeon.utils.Point;
 
 //essentially contains a libGDX text input field, plus a PD-rendered background
 public class TextInput extends Component {

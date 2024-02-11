@@ -27,9 +27,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Blindness;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Weakness;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class ScrollOfRetribution extends Scroll {
 

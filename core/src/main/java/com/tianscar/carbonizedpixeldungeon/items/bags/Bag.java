@@ -29,9 +29,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.windows.WndQuickBag;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.windows.WndQuickBag;
 
 import java.util.ArrayList;
 import java.util.Iterator;

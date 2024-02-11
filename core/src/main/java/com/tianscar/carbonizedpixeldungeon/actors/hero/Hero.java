@@ -24,9 +24,9 @@ package com.tianscar.carbonizedpixeldungeon.actors.hero;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Badges;
 import com.tianscar.carbonizedpixeldungeon.Bones;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.GamesInProgress;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
@@ -40,9 +40,11 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Berserk;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Bless;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Burning;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Chill;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Combo;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Drowsy;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Foresight;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Frost;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.HoldFast;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Invisibility;
@@ -52,6 +54,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Momentum;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Paralysis;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Regeneration;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.SnipersMark;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Spellweave;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Vertigo;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
@@ -101,11 +104,11 @@ import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfMight;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfTenacity;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfMagicMapping;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfLivingEarth;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Flail;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.journal.Document;
@@ -116,6 +119,9 @@ import com.tianscar.carbonizedpixeldungeon.levels.features.Chasm;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.mechanics.ShadowCaster;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.plants.Earthroot;
 import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
 import com.tianscar.carbonizedpixeldungeon.scenes.AlchemyScene;
@@ -128,19 +134,16 @@ import com.tianscar.carbonizedpixeldungeon.ui.AttackIndicator;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
 import com.tianscar.carbonizedpixeldungeon.ui.StatusPane;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
+import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.windows.WndHero;
 import com.tianscar.carbonizedpixeldungeon.windows.WndMessage;
 import com.tianscar.carbonizedpixeldungeon.windows.WndResurrect;
 import com.tianscar.carbonizedpixeldungeon.windows.WndTradeItem;
-import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
-import com.tianscar.carbonizedpixeldungeon.utils.Callback;
-import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
-import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
-import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -181,7 +184,7 @@ public class Hero extends Char {
 	
 	public Belongings belongings;
 
-	public Wieldings wieldings;
+	public Wielding wielding;
 	
 	public int STR;
 	
@@ -206,12 +209,12 @@ public class Hero extends Char {
 		STR = STARTING_STR;
 		
 		belongings = new Belongings( this );
-		wieldings = new Wieldings( this );
+		wielding = new Wielding( this );
 		
 		visibleEnemies = new ArrayList<>();
 	}
 	
-	public void updateHT( boolean boostHP ){
+	public void updateHT( boolean boostHP ) {
 		int curHT = HT;
 		
 		HT = 20 + 5*(lvl-1) + HTBoost;
@@ -222,7 +225,7 @@ public class Hero extends Char {
 			HT += buff(ElixirOfMight.HTBoost.class).boost();
 		}
 		
-		if (boostHP){
+		if (boostHP) {
 			HP += Math.max(HT - curHT, 0);
 		}
 		HP = Math.min(HP, HT);
@@ -382,8 +385,8 @@ public class Hero extends Char {
 
 	@Override
 	public void hitSound(float pitch) {
-		if ( wieldings.weaponNotNull() ){
-			wieldings.weaponHitSound(pitch);
+		if ( wielding.weaponNotNull() ){
+			wielding.hitSound(pitch);
 		} else if (RingOfForce.getBuffedBonus(this, RingOfForce.Force.class) > 0) {
 			//pitch deepens by 2.5% (additive) per point of strength, down to 75%
 			super.hitSound( pitch * GameMath.gate( 0.75f, 1.25f - 0.025f*STR(), 1f) );
@@ -394,7 +397,7 @@ public class Hero extends Char {
 
 	@Override
 	public boolean blockSound(float pitch) {
-		if ( wieldings.weaponDefenseFactor(this) >= 4 ){
+		if ( wielding.defenseFactor(this) >= 4 ){
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
 			return true;
 		}
@@ -437,8 +440,8 @@ public class Hero extends Char {
 		return hit;
 	}
 
-	public int attackSkill(Wieldings wieldings, Char target ) {
-		KindOfWeapon wep = wieldings.weapon();
+	public int attackSkill(Wielding wielding, Char target ) {
+		KindOfWeapon wep = wielding.weapon();
 
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
@@ -454,8 +457,8 @@ public class Hero extends Char {
 			}
 		}
 
-		if (wieldings.weaponNotNull()) {
-			return (int)(attackSkill * accuracy * wieldings.weaponAccuracyFactor( this ));
+		if (wielding.weaponNotNull()) {
+			return (int)(attackSkill * accuracy * wielding.accuracyFactor( this ));
 		} else {
 			return (int)(attackSkill * accuracy);
 		}
@@ -463,7 +466,7 @@ public class Hero extends Char {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return attackSkill(wieldings, target);
+		return attackSkill(wielding, target);
 	}
 	
 	@Override
@@ -473,6 +476,11 @@ public class Hero extends Char {
 			if (canAttack(enemy)){
 				Buff.affect(this, Combo.RiposteTracker.class).enemy = enemy;
 			}
+			return INFINITE_EVASION;
+		}
+
+		if (buff(Spellweave.Predict.class) != null) {
+			buff(Spellweave.Predict.class).countDown(1);
 			return INFINITE_EVASION;
 		}
 		
@@ -514,10 +522,13 @@ public class Hero extends Char {
 			if (STR() < belongings.armor().STRReq()){
 				armDr -= 2*(belongings.armor().STRReq() - STR());
 			}
+			if (hasTalent(Talent.ICEMAIL) && buff(ElementalHeart.FrostFocus.class) != null || buff(Chill.class) != null) {
+				armDr += Math.round(armDr * 0.25f * pointsInTalent(Talent.ICEMAIL));
+			}
 			if (armDr > 0) dr += armDr;
 		}
-		if (wieldings.weaponNotNull())  {
-			int wepDr = Random.NormalIntRange( 0 , wieldings.weaponDefenseFactor( this ) );
+		if (wielding.weaponNotNull())  {
+			int wepDr = Random.NormalIntRange( 0 , wielding.defenseFactor( this ) );
 			if (belongings.weapon() != null && belongings.extra() != null) {
 				if (STR() < ((Weapon)belongings.weapon()).STRReq()){
 					wepDr -= (((Weapon)belongings.weapon()).STRReq() - STR());
@@ -546,12 +557,12 @@ public class Hero extends Char {
 		return dr;
 	}
 
-	public int damageRoll(Wieldings wieldings) {
-		KindOfWeapon wep = wieldings.weapon();
+	public int damageRoll(Wielding wielding) {
+		KindOfWeapon wep = wielding.weapon();
 		int dmg;
 
-		if (wieldings.weaponNotNull()) {
-			dmg = wieldings.weaponDamageRoll( this );
+		if (wielding.weaponNotNull()) {
+			dmg = wielding.damageRoll( this );
 			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
 		} else {
 			dmg = RingOfForce.damageRoll(this);
@@ -563,7 +574,7 @@ public class Hero extends Char {
 	
 	@Override
 	public int damageRoll() {
-		return damageRoll(wieldings);
+		return damageRoll(wielding);
 	}
 	
 	@Override
@@ -595,7 +606,7 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack() {
-		if (!wieldings.weaponNotNull())    																 return true;
+		if (!wielding.weaponNotNull())    																 return true;
 		if (!(belongings.weapon() instanceof Weapon) && !(belongings.extra() instanceof Weapon))   		 return true;
 		if (belongings.weapon() != null && !((Weapon)belongings.weapon()).canSurpriseAttack(this))  return false;
 		if (belongings.extra() != null && !((Weapon)belongings.extra()).canSurpriseAttack(this))    return false;
@@ -604,18 +615,18 @@ public class Hero extends Char {
 	}
 
 	public boolean canAttack(Char enemy){
-		return wieldings.weaponCanAttack(this, enemy);
+		return wielding.canAttack(this, enemy);
 	}
 
-	public float attackDelay(Wieldings wieldings) {
+	public float attackDelay(Wielding wielding) {
 		if (buff(Talent.LethalMomentumTracker.class) != null){
 			buff(Talent.LethalMomentumTracker.class).detach();
 			return 0;
 		}
 
-		if (wieldings.weaponNotNull()) {
+		if (wielding.weaponNotNull()) {
 
-			return wieldings.weaponDelayFactor( this );
+			return wielding.delayFactor( this );
 
 		} else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
@@ -626,7 +637,7 @@ public class Hero extends Char {
 	}
 
 	public float attackDelay() {
-		return attackDelay(wieldings);
+		return attackDelay(wielding);
 	}
 
 	@Override
@@ -641,6 +652,12 @@ public class Hero extends Char {
 		Swiftthistle.TimeBubble bubble = buff(Swiftthistle.TimeBubble.class);
 		if (bubble != null){
 			bubble.processTime(time);
+			return;
+		}
+
+		Spellweave.TimeBent timeBent = buff(Spellweave.TimeBent.class);
+		if (timeBent != null){
+			timeBent.processTime(time);
 			return;
 		}
 		
@@ -1033,6 +1050,8 @@ public class Hero extends Char {
 			if (timeFreeze != null) timeFreeze.disarmPressedTraps();
 			Swiftthistle.TimeBubble timeBubble = buff(Swiftthistle.TimeBubble.class);
 			if (timeBubble != null) timeBubble.disarmPressedTraps();
+			Spellweave.TimeBent timeBent = buff(Spellweave.TimeBent.class);
+			if (timeBent != null) timeBent.disarmPressedTraps();
 			
 			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 			Game.switchScene( InterlevelScene.class );
@@ -1086,6 +1105,8 @@ public class Hero extends Char {
 				if (timeFreeze != null) timeFreeze.disarmPressedTraps();
 				Swiftthistle.TimeBubble timeBubble = buff(Swiftthistle.TimeBubble.class);
 				if (timeBubble != null) timeBubble.disarmPressedTraps();
+				Spellweave.TimeBent timeBent = buff(Spellweave.TimeBent.class);
+				if (timeBent != null) timeBent.disarmPressedTraps();
 
 				InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
 				Game.switchScene( InterlevelScene.class );
@@ -1150,7 +1171,7 @@ public class Hero extends Char {
 
 		KindOfWeapon wep = belongings.weapon();
 
-		if (wieldings.weaponNotNull()) damage = wieldings.weaponProc( this, enemy, damage );
+		if (wielding.weaponNotNull()) damage = wielding.proc( this, enemy, damage );
 
 		if (buff(Talent.SpiritBladesTracker.class) != null
 				&& Random.Int(10) < 3*pointsInTalent(Talent.SPIRIT_BLADES)){
@@ -1241,9 +1262,20 @@ public class Hero extends Char {
 			dmg -= AntiMagic.drRoll(belongings.armor().buffedLvl());
 		}
 
+		if (hasTalent(Talent.WALKING_GLACIER) && belongings.armor() != null &&
+				(buff(ElementalHeart.FrostFocus.class) != null || buff(Chill.class) != null)
+				&& AntiMagic.RESISTS.contains(src.getClass())){
+			dmg -= Math.round(AntiMagic.drRoll(belongings.armor().buffedLvl()) * pointsInTalent(Talent.WALKING_GLACIER) / 3f);
+		}
+
 		if (buff(Talent.WarriorFoodImmunity.class) != null){
 			if (pointsInTalent(Talent.IRON_STOMACH) == 1)       dmg = Math.round(dmg*0.25f);
 			else if (pointsInTalent(Talent.IRON_STOMACH) == 2)  dmg = Math.round(dmg*0.00f);
+		}
+
+		if (hasTalent(Talent.ICEMAIL) && buff(Frost.class) != null) {
+			if (pointsInTalent(Talent.ICEMAIL) == 1)       		dmg = Math.round(dmg*0.25f);
+			else if (pointsInTalent(Talent.ICEMAIL) == 2)  		dmg = Math.round(dmg*0.00f);
 		}
 
 		int preHP = HP + shielding();

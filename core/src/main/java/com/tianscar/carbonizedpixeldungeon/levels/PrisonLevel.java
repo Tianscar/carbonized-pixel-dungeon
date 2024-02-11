@@ -43,11 +43,11 @@ import com.tianscar.carbonizedpixeldungeon.levels.traps.SummoningTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.TeleportationTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.ToxicTrap;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.noosa.Group;
 import com.tianscar.carbonizedpixeldungeon.noosa.Halo;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 

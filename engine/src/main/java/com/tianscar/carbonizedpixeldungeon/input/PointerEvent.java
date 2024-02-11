@@ -21,10 +21,10 @@
 
 package com.tianscar.carbonizedpixeldungeon.input;
 
+import com.badlogic.gdx.Input;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Signal;
-import com.badlogic.gdx.Input;
 
 import java.util.ArrayList;
 import java.util.HashMap;

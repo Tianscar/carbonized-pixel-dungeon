@@ -24,6 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Buckler;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -31,7 +32,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 import java.util.ArrayList;
 

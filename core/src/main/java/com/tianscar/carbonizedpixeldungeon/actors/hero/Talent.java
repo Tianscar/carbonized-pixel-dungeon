@@ -27,12 +27,15 @@ import com.tianscar.carbonizedpixeldungeon.GamesInProgress;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.ArtifactRecharge;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Barrier;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.CounterBuff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.EnhancedRings;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.FlavourBuff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Haste;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.LostInventory;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.MagicalSight;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Recharging;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.RevealedArea;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Roots;
@@ -51,6 +54,7 @@ import com.tianscar.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.HornOfPlenty;
 import com.tianscar.carbonizedpixeldungeon.items.rings.Ring;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
@@ -59,16 +63,17 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
-import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
+import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
@@ -142,6 +147,23 @@ public enum Talent {
 	//Spirit Hawk T4
 	EAGLE_EYE(119, 4), GO_FOR_THE_EYES(120, 4), SWIFT_SPIRIT(121, 4),
 
+	//Elementalist T1
+	SHIELDING_MEAL(256), INSIGHT_OVERFLOW(257), EXTENDED_FOCUS(258), PROTECTIVE_ELEMENTALS(259),
+	//Elementalist T2
+	FOCUSING_MEAL(260), HYDROMANCER(261), WILDFIRE(262), ICEMAIL(263), INSULATED_ELECTRICITY(264),
+	//Elementalist T3
+	ELEMENTAL_MASTER(265, 3), CHAOS_IMPACT(266, 3),
+	//Binder T3
+	ARDENT_BLADE(267, 3), WALKING_GLACIER(268, 3), MIGHTY_THUNDER(269, 3),
+	//Spellweaver T3
+	DEVASTATOR(270, 3), TIME_TRAVELER(271, 3), FUTURESIGHT(272, 3),
+	//Resonance T4
+	ECHOING_RESONANCE(273, 4), RESONANCE_BARRIER(274, 4), DOUBLE_RESONANCE(275, 4),
+	//Aether Step T4
+	AFTERSHOCK(276, 4), AETHER_VISION(277, 4), AETHER_TETHER(278, 4),
+	//Elemental Conduit T4
+	CONDUIT_RELAY(279, 4), STABILIZED_CONDUIT(280, 4), ELEMENTAL_AMPLIFIER(281, 4),
+
 	//universal T4
 	HEROIC_ENERGY(26, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
@@ -186,13 +208,13 @@ public enum Talent {
 		this(icon, 2);
 	}
 
-	Talent( int icon, int maxPoints ){
+	Talent( int icon, int maxPoints ) {
 		this.icon = icon;
 		this.maxPoints = maxPoints;
 	}
 
-	public int icon(){
-		if (this == HEROIC_ENERGY){
+	public int icon() {
+		if (this == HEROIC_ENERGY) {
 			if (Dungeon.hero != null && Dungeon.hero.armorAbility instanceof Ratmogrify){
 				return 127;
 			}
@@ -206,6 +228,8 @@ public enum Talent {
 					return 90;
 				case HUNTRESS:
 					return 122;
+				case ELEMENTALIST:
+					return 282;
 			}
 		} else {
 			return icon;
@@ -231,8 +255,8 @@ public enum Talent {
 
 	public static void onTalentUpgraded( Hero hero, Talent talent){
 		if (talent == NATURES_BOUNTY){
-			if ( hero.pointsInTalent(NATURES_BOUNTY) == 1) Buff.count(hero, NatureBerriesAvailable.class, 4);
-			else                                           Buff.count(hero, NatureBerriesAvailable.class, 2);
+			if ( hero.pointsInTalent(NATURES_BOUNTY) == 1) Buff.countUp(hero, NatureBerriesAvailable.class, 4);
+			else                                           Buff.countUp(hero, NatureBerriesAvailable.class, 2);
 		}
 
 		if (talent == ARMSMASTERS_INTUITION && hero.pointsInTalent(ARMSMASTERS_INTUITION) == 2){
@@ -307,6 +331,19 @@ public enum Talent {
 		if (hero.hasTalent(INVIGORATING_MEAL)){
 			//effectively 1/2 turns of haste
 			Buff.prolong( hero, Haste.class, 0.67f+hero.pointsInTalent(INVIGORATING_MEAL));
+		}
+		if (hero.hasTalent(SHIELDING_MEAL)){
+			//grants 5/8 shielding
+			Buff.affect( hero, Barrier.class ).setShield(2 + 3 * hero.pointsInTalent(Talent.SHIELDING_MEAL));
+		}
+		if (hero.hasTalent(FOCUSING_MEAL)){
+			//grants 2/3 turns of elemental focus for each kind
+			int turns = 1 + hero.pointsInTalent(Talent.FOCUSING_MEAL);
+			if (hero.buff(ElementalHeart.FireFocus.class) != null) Buff.prolong(hero, ElementalHeart.FireFocus.class, turns).fx();
+			else if (hero.buff(ElementalHeart.FrostFocus.class) != null) Buff.prolong(hero, ElementalHeart.FrostFocus.class, turns).fx();
+			else Buff.prolong(hero, Random.element(Arrays.asList(ElementalHeart.FireFocus.class, ElementalHeart.FrostFocus.class)), turns).fx();
+			Buff.prolong(hero, ElementalHeart.ShockFocus.class, turns).fx();
+			if (hero.hasTalent(CHAOS_IMPACT)) Buff.prolong(hero, ElementalHeart.ChaosFocus.class, turns).fx();
 		}
 	}
 
@@ -435,6 +472,11 @@ public enum Talent {
 			Buff.affect(hero, Recharging.class, 1f + hero.pointsInTalent(TESTED_HYPOTHESIS));
 			ScrollOfRecharging.charge(hero);
 		}
+		if (hero.hasTalent(INSIGHT_OVERFLOW)){
+			//2/3 turns of magical sight
+			Buff.affect(Dungeon.hero, MagicalSight.class, 1 + hero.pointsInTalent(Talent.INSIGHT_OVERFLOW));
+			Dungeon.observe();
+		}
 	}
 
 	public static int onAttackProc( Hero hero, Char enemy, int dmg ){
@@ -457,6 +499,12 @@ public enum Talent {
 			}
 		}
 
+		if (hero.hasTalent(Talent.ARDENT_BLADE) &&
+				enemy.buff(Burning.class) != null &&
+				!(hero.belongings.weapon() instanceof MissileWeapon)) {
+			dmg += Math.round(dmg * (0.25f + 0.25f * hero.pointsInTalent(Talent.ARDENT_BLADE)));
+		}
+
 		return dmg;
 	}
 
@@ -470,14 +518,14 @@ public enum Talent {
 	}
 
 	public static void initClassTalents( HeroClass cls, ArrayList<LinkedHashMap<Talent, Integer>> talents ){
-		while (talents.size() < MAX_TALENT_TIERS){
+		while (talents.size() < MAX_TALENT_TIERS) {
 			talents.add(new LinkedHashMap<>());
 		}
 
 		ArrayList<Talent> tierTalents = new ArrayList<>();
 
 		//tier 1
-		switch (cls){
+		switch (cls) {
 			case WARRIOR: default:
 				Collections.addAll(tierTalents, HEARTY_MEAL, ARMSMASTERS_INTUITION, TEST_SUBJECT, IRON_WILL);
 				break;
@@ -490,6 +538,9 @@ public enum Talent {
 			case HUNTRESS:
 				Collections.addAll(tierTalents, NATURES_BOUNTY, SURVIVALISTS_INTUITION, FOLLOWUP_STRIKE, NATURES_AID);
 				break;
+			case ELEMENTALIST:
+				Collections.addAll(tierTalents, SHIELDING_MEAL, INSIGHT_OVERFLOW, EXTENDED_FOCUS, PROTECTIVE_ELEMENTALS);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(0).put(talent, 0);
@@ -497,7 +548,7 @@ public enum Talent {
 		tierTalents.clear();
 
 		//tier 2
-		switch (cls){
+		switch (cls) {
 			case WARRIOR: default:
 				Collections.addAll(tierTalents, IRON_STOMACH, RESTORED_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -510,6 +561,9 @@ public enum Talent {
 			case HUNTRESS:
 				Collections.addAll(tierTalents, INVIGORATING_MEAL, RESTORED_NATURE, REJUVENATING_STEPS, HEIGHTENED_SENSES, DURABLE_PROJECTILES);
 				break;
+			case ELEMENTALIST:
+				Collections.addAll(tierTalents, FOCUSING_MEAL, HYDROMANCER, WILDFIRE, ICEMAIL, INSULATED_ELECTRICITY);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(1).put(talent, 0);
@@ -517,7 +571,7 @@ public enum Talent {
 		tierTalents.clear();
 
 		//tier 3
-		switch (cls){
+		switch (cls) {
 			case WARRIOR: default:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
 				break;
@@ -530,8 +584,11 @@ public enum Talent {
 			case HUNTRESS:
 				Collections.addAll(tierTalents, POINT_BLANK, SEER_SHOT);
 				break;
+			case ELEMENTALIST:
+				Collections.addAll(tierTalents, ELEMENTAL_MASTER, CHAOS_IMPACT);
+				break;
 		}
-		for (Talent talent : tierTalents){
+		for (Talent talent : tierTalents) {
 			talents.get(2).put(talent, 0);
 		}
 		tierTalents.clear();
@@ -578,6 +635,12 @@ public enum Talent {
 				break;
 			case WARDEN:
 				Collections.addAll(tierTalents, DURABLE_TIPS, BARKSKIN, SHIELDING_DEW);
+				break;
+			case BINDER:
+				Collections.addAll(tierTalents, ARDENT_BLADE, WALKING_GLACIER, MIGHTY_THUNDER);
+				break;
+			case SPELLWEAVER:
+				Collections.addAll(tierTalents, DEVASTATOR, TIME_TRAVELER, FUTURESIGHT);
 				break;
 		}
 		for (Talent talent : tierTalents){

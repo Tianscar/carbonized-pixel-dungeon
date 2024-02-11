@@ -28,6 +28,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Invisibility;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.LockedFloor;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Spellweave;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -38,20 +39,20 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.ClassArmor;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
 import com.tianscar.carbonizedpixeldungeon.ui.HeroIcon;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
 
 import java.util.ArrayList;
 
@@ -167,6 +168,8 @@ public class WarpBeacon extends ArmorAbility {
 							if (timeFreeze != null) timeFreeze.disarmPressedTraps();
 							Swiftthistle.TimeBubble timeBubble = hero.buff(Swiftthistle.TimeBubble.class);
 							if (timeBubble != null) timeBubble.disarmPressedTraps();
+							Spellweave.TimeBent timeBent = hero.buff(Spellweave.TimeBent.class);
+							if (timeBent != null) timeBent.disarmPressedTraps();
 							Invisibility.dispel();
 
 							InterlevelScene.mode = InterlevelScene.Mode.RETURN;

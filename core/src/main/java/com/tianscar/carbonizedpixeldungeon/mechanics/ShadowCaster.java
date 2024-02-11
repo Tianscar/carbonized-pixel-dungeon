@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.mechanics;
 
-import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
 
 //based on: http://www.roguebasin.com/index.php?title=FOV_using_recursive_shadowcasting

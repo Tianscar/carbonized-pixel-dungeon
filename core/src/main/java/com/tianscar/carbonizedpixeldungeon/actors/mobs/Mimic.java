@@ -27,6 +27,7 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Spellweave;
 import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.items.Generator;
@@ -35,12 +36,12 @@ import com.tianscar.carbonizedpixeldungeon.items.Heap;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.MimicSprite;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
@@ -147,7 +148,8 @@ public class Mimic extends Mob {
 		Dungeon.hero.sprite.operate(pos);
 		if (Dungeon.hero.invisible <= 0
 				&& Dungeon.hero.buff(Swiftthistle.TimeBubble.class) == null
-				&& Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class) == null){
+				&& Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class) == null
+				&& Dungeon.hero.buff(Spellweave.TimeBent.class) == null){
 			return doAttack(Dungeon.hero);
 		} else {
 			sprite.idle();

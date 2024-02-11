@@ -30,9 +30,9 @@ import com.tianscar.carbonizedpixeldungeon.effects.particles.ShadowParticle;
 import com.tianscar.carbonizedpixeldungeon.items.journal.Guidebook;
 import com.tianscar.carbonizedpixeldungeon.journal.Document;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 import java.util.ArrayList;
 

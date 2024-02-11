@@ -22,7 +22,6 @@
 package com.tianscar.carbonizedpixeldungeon.utils;
 
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

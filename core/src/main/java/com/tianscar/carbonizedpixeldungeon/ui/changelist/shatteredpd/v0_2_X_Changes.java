@@ -26,6 +26,7 @@ import com.tianscar.carbonizedpixeldungeon.items.Honeypot;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.HornOfPlenty;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -33,7 +34,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 import java.util.ArrayList;
 

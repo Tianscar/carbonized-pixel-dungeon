@@ -24,8 +24,8 @@ package com.tianscar.carbonizedpixeldungeon.actors.buffs;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 
 public class MagicImmune extends FlavourBuff {
 

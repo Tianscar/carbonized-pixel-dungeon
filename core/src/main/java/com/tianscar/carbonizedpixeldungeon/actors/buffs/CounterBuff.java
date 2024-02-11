@@ -28,6 +28,10 @@ public class CounterBuff extends Buff {
 
 	private float count = 0;
 
+	public void count( float val ) {
+		count = val;
+	}
+
 	public void countUp( float inc ){
 		count += inc;
 	}

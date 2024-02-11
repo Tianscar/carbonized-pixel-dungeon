@@ -6,9 +6,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.effects.Beam;
 import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfWarding;
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.tweeners.AlphaTweener;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 
 public class WardSprite extends MobSprite {
 

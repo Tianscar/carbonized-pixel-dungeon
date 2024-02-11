@@ -21,10 +21,10 @@
 
 package com.tianscar.carbonizedpixeldungeon.windows;
 
-import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 
 //a notification window that the player can't get rid of quickly, good for forcibly telling a message
 //USE THIS SPARINGLY

@@ -30,6 +30,7 @@ import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfEnergy;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfFrost;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfTransfusion;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.FistSprite;
@@ -43,7 +44,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.TalentIcon;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 import java.util.ArrayList;
 

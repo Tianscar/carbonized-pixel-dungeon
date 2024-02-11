@@ -28,9 +28,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.effects.Lightning;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.SparkParticle;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
@@ -40,9 +40,11 @@ public class Shocking extends Weapon.Enchantment {
 
 	private static ItemSprite.Glowing WHITE = new ItemSprite.Glowing( 0xFFFFFF, 0.5f );
 
+	public int minLvl = 0;
+
 	@Override
 	public int proc( Weapon weapon, Char attacker, Char defender, int damage ) {
-		int level = Math.max( 0, weapon.buffedLvl() );
+		int level = Math.max( minLvl, weapon.buffedLvl() );
 
 		// lvl 0 - 25%
 		// lvl 1 - 40%

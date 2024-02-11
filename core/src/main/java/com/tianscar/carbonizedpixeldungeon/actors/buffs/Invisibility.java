@@ -24,6 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.actors.buffs;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
@@ -87,7 +88,7 @@ public class Invisibility extends FlavourBuff {
 		return Messages.get(this, "desc", dispTurns());
 	}
 
-	public static void dispel() {
+	public static void dispel(boolean detachTimeBent) {
 		for ( Buff invis : Dungeon.hero.buffs( Invisibility.class )){
 			invis.detach();
 		}
@@ -95,21 +96,33 @@ public class Invisibility extends FlavourBuff {
 		if (cloakBuff != null) {
 			cloakBuff.dispel();
 		}
-		
+
 		//these aren't forms of invisibilty, but do dispel at the same time as it.
 		TimekeepersHourglass.timeFreeze timeFreeze = Dungeon.hero.buff( TimekeepersHourglass.timeFreeze.class );
 		if (timeFreeze != null) {
 			timeFreeze.detach();
 		}
-		
+
 		Preparation prep = Dungeon.hero.buff( Preparation.class );
 		if (prep != null){
 			prep.detach();
 		}
-		
+
 		Swiftthistle.TimeBubble bubble =  Dungeon.hero.buff( Swiftthistle.TimeBubble.class );
 		if (bubble != null){
 			bubble.detach();
 		}
+
+		if (detachTimeBent) {
+			Spellweave.TimeBent timeBent =  Dungeon.hero.buff( Spellweave.TimeBent.class );
+			if (timeBent != null){
+				timeBent.detach();
+			}
+		}
 	}
+
+	public static final void dispel() {
+		dispel(true);
+	}
+
 }

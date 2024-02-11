@@ -35,6 +35,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.Shaman;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Warlock;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.YogFist;
 import com.tianscar.carbonizedpixeldungeon.items.armor.Armor;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfBlastWave;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfDisintegration;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfFireblast;
@@ -78,6 +79,8 @@ public class AntiMagic extends Armor.Glyph {
 		RESISTS.add( WandOfPrismaticLight.class );
 		RESISTS.add( WandOfTransfusion.class );
 		RESISTS.add( WandOfWarding.Ward.class );
+
+		RESISTS.add( ElementalHeart.class );
 
 		RESISTS.add( WarpBeacon.class );
 		

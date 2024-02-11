@@ -22,8 +22,8 @@
 package com.tianscar.carbonizedpixeldungeon.items.artifacts;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.CorrosiveGas;
@@ -51,6 +51,8 @@ import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfPsionicB
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.CellSelector;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
@@ -60,18 +62,16 @@ import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.BossHealthBar;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
+import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
+import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
+import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.windows.IconTitle;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBlacksmith;
 import com.tianscar.carbonizedpixeldungeon.windows.WndQuest;
 import com.tianscar.carbonizedpixeldungeon.windows.WndUseItem;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
-import com.tianscar.carbonizedpixeldungeon.utils.Callback;
-import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
-import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 
@@ -666,7 +666,7 @@ public class DriedRose extends Artifact {
 		public float stealth() {
 			float stealth = super.stealth();
 			
-			if (rose != null && rose.armor != null){
+			if (rose != null && rose.armor != null) {
 				stealth = rose.armor.stealthFactor(this, stealth);
 			}
 			
@@ -676,10 +676,10 @@ public class DriedRose extends Artifact {
 		@Override
 		public int drRoll() {
 			int block = 0;
-			if (rose != null && rose.armor != null){
+			if (rose != null && rose.armor != null) {
 				block += Random.NormalIntRange( rose.armor.DRMin(), rose.armor.DRMax());
 			}
-			if (rose != null && rose.weapon != null){
+			if (rose != null && rose.weapon != null) {
 				block += Random.NormalIntRange( 0, rose.weapon.defenseFactor( this ));
 			}
 			return block;
@@ -699,7 +699,7 @@ public class DriedRose extends Artifact {
 		@Override
 		public boolean interact(Char c) {
 			updateRose();
-			if (c == Dungeon.hero && rose != null && !rose.talkedTo){
+			if (c == Dungeon.hero && rose != null && !rose.talkedTo) {
 				rose.talkedTo = true;
 				Game.runOnRenderThread(new Callback() {
 					@Override

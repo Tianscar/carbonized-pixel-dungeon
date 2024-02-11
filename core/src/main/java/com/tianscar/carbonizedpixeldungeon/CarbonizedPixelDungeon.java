@@ -21,13 +21,13 @@
 
 package com.tianscar.carbonizedpixeldungeon;
 
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.TitleScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.WelcomeScene;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.PlatformSupport;
 
@@ -177,7 +177,7 @@ public class CarbonizedPixelDungeon extends Game {
 		if (scene instanceof PixelScene &&
 				(height != Game.height || width != Game.width)) {
 			PixelScene.noFade = !platform.isDesktop();
-			((PixelScene) scene).saveWindows();
+			if (!platform.isDesktop()) ((PixelScene) scene).saveWindows();
 		}
 
 		super.resize( width, height );

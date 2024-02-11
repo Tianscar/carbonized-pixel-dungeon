@@ -4,12 +4,35 @@ import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.tianscar.carbonizedpixeldungeon.PDSettings;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.metal.DefaultMetalTheme;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.MetalPopupMenuSeparatorUI;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,10 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DesktopCrashDialog {
+import static com.tianscar.carbonizedpixeldungeon.desktop.DesktopWindowListener.DENSITY;
 
-    // FIXME HiDPI for this dialog not really supported yet
-    static volatile float DENSITY = 1.f;
+public class DesktopCrashDialog {
 
     private static InputStream getResourceAsStream(String name) throws IOException {
         InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
@@ -72,17 +94,7 @@ public class DesktopCrashDialog {
         } catch (IOException e) {
             image = null;
         }
-        if (image == null) crashImage = null;
-        else {
-            crashImage = new BufferedImage(Math.round(image.getWidth() / 3.f * DENSITY), Math.round(image.getHeight() / 3.f * DENSITY),
-                    BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = crashImage.createGraphics();
-            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g.drawImage(image, AffineTransform.getScaleInstance(1 / 3.f * DENSITY, 1 / 3.f * DENSITY), null);
-            g.dispose();
-            image.flush();
-            image = null;
-        }
+        crashImage = image;
         List<Image> iconImages = new ArrayList<>();
         try {
             iconImages.add(ImageIO.read(getResourceAsStream("icons/icon_16.png")));
@@ -135,7 +147,11 @@ public class DesktopCrashDialog {
                 textArea.setEditable(false);
                 JPopupMenu popupMenu = new JPopupMenu();
                 popupMenu.setLightWeightPopupEnabled(false);
-                popupMenu.setBorder(BorderFactory.createLineBorder(Color.BLACK, Math.round(DENSITY)));
+                int borderPadding = Math.round(DENSITY) * 4;
+                popupMenu.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, Math.round(DENSITY)),
+                                BorderFactory.createRaisedBevelBorder()),
+                        BorderFactory.createEmptyBorder(borderPadding, borderPadding, borderPadding, borderPadding)));
                 JMenuItem copy = new JMenuItem(DesktopMessages.get(DesktopCrashDialog.class, "copy"));
                 popupMenu.add(copy);
                 JSeparator separator = new JPopupMenu.Separator();
@@ -154,8 +170,26 @@ public class DesktopCrashDialog {
                 scrollPane.getHorizontalScrollBar().setBorder(BorderFactory.createLineBorder(Color.BLACK, Math.round(DENSITY)));
                 scrollPane.getVerticalScrollBar().setBorder(BorderFactory.createLineBorder(Color.BLACK, Math.round(DENSITY)));
                 scrollPane.setBorder(BorderFactory.createEmptyBorder());
-                JOptionPane pane = new JOptionPane(scrollPane, JOptionPane.ERROR_MESSAGE,
-                        JOptionPane.DEFAULT_OPTION, crashImage == null ? null : new ImageIcon(crashImage), new Object[] { close, copyAll }, close);
+                JOptionPane pane = new JOptionPane(scrollPane, JOptionPane.ERROR_MESSAGE, JOptionPane.DEFAULT_OPTION,
+                        crashImage == null ? null : new ImageIcon(crashImage) {
+                    private static final long serialVersionUID = 6424191874437999771L;
+
+                    @Override
+                    public int getIconWidth() {
+                        return Math.round(super.getIconWidth() / 3.f * DENSITY);
+                    }
+                    @Override
+                    public int getIconHeight() {
+                        return Math.round(super.getIconHeight() / 3.f * DENSITY);
+                    }
+                    @Override
+                    public synchronized void paintIcon(Component c, Graphics g, int x, int y) {
+                        Graphics2D g2d = (Graphics2D) g;
+                        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                        g2d.setTransform(AffineTransform.getScaleInstance(1 / 3.f * DENSITY, 1 / 3.f * DENSITY));
+                        super.paintIcon(c, g, x, y);
+                    }
+                }, new Object[] { close, copyAll }, close);
                 ActionListener actionListener = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {

@@ -21,11 +21,11 @@
 
 package com.tianscar.carbonizedpixeldungeon.windows;
 
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 public class WndTitledMessage extends Window {
 
@@ -46,12 +46,12 @@ public class WndTitledMessage extends Window {
 		int width = WIDTH_MIN;
 
 		titlebar.setRect( 0, 0, width, 0 );
-		add(titlebar);
 
 		RenderedTextBlock text = PixelScene.renderTextBlock( 6 );
 		text.text( message, width );
 		text.setPos( titlebar.left(), titlebar.bottom() + 2*GAP );
 		add( text );
+		add(titlebar);
 
 		while (PixelScene.landscape()
 				&& text.bottom() > (PixelScene.MIN_HEIGHT_L - 10)

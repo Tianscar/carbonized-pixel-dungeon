@@ -28,19 +28,23 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.CorrosiveGas;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.ToxicGas;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Burning;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Chill;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Frost;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.PrismaticGuard;
-import com.tianscar.carbonizedpixeldungeon.actors.hero.Wieldings;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Wielding;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.tianscar.carbonizedpixeldungeon.items.armor.glyphs.Brimstone;
+import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.levels.features.Chasm;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.PrismaticSprite;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
@@ -63,7 +67,7 @@ public class PrismaticImage extends NPC {
 	}
 	
 	private Hero hero;
-	private Wieldings wieldings;
+	private Wielding wielding;
 	private int heroID;
 	public int armTier;
 	
@@ -91,17 +95,17 @@ public class PrismaticImage extends NPC {
 			sprite.resetColor();
 		}
 		
-		if ( hero == null ){
+		if ( hero == null ) {
 			hero = (Hero) Actor.findById(heroID);
-			wieldings = new Wieldings( hero );
-			if ( hero == null ){
+			if ( hero == null ) {
 				destroy();
 				sprite.die();
 				return true;
 			}
+			else wielding = new Wielding( hero );
 		}
 		
-		if (hero.tier() != armTier){
+		if (hero.tier() != armTier) {
 			armTier = hero.tier();
 			((PrismaticSprite)sprite).updateArmor( armTier );
 		}
@@ -140,7 +144,7 @@ public class PrismaticImage extends NPC {
 	
 	public void duplicate( Hero hero, int HP ) {
 		this.hero = hero;
-		wieldings = new Wieldings( hero );
+		wielding = new Wielding( hero );
 		heroID = this.hero.id();
 		this.HP = HP;
 		HT = PrismaticGuard.maxHP( hero );
@@ -158,7 +162,7 @@ public class PrismaticImage extends NPC {
 	@Override
 	public int attackSkill( Char target ) {
 		if (hero != null) {
-			return hero.attackSkill( wieldings, target );
+			return hero.attackSkill( wielding, target );
 		} else {
 			return 0;
 		}
@@ -179,7 +183,7 @@ public class PrismaticImage extends NPC {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return wieldings.weaponCanAttack(this, enemy) || super.canAttack(enemy);
+		return wielding.canAttack(this, enemy) || super.canAttack(enemy);
 	}
 	
 	@Override
@@ -208,6 +212,12 @@ public class PrismaticImage extends NPC {
 		if (hero != null && hero.belongings.armor() != null && hero.belongings.armor().hasGlyph(AntiMagic.class, this)
 				&& AntiMagic.RESISTS.contains(src.getClass())){
 			dmg -= AntiMagic.drRoll(hero.belongings.armor().buffedLvl());
+		}
+
+		if (hero != null && hero.hasTalent(Talent.WALKING_GLACIER) && hero.belongings.armor() != null &&
+				(hero.buff(ElementalHeart.FrostFocus.class) != null || buff(Chill.class) != null)
+				&& AntiMagic.RESISTS.contains(src.getClass())){
+			dmg -= Math.round(AntiMagic.drRoll(hero.belongings.armor().buffedLvl()) * hero.pointsInTalent(Talent.WALKING_GLACIER) / 3f);
 		}
 		
 		super.damage(dmg, src);

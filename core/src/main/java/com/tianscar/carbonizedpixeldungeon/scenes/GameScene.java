@@ -21,7 +21,16 @@
 
 package com.tianscar.carbonizedpixeldungeon.scenes;
 
-import com.tianscar.carbonizedpixeldungeon.*;
+import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.Badges;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Challenges;
+import com.tianscar.carbonizedpixeldungeon.Chrome;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.GamesInProgress;
+import com.tianscar.carbonizedpixeldungeon.PDSettings;
+import com.tianscar.carbonizedpixeldungeon.Rankings;
+import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
@@ -38,6 +47,8 @@ import com.tianscar.carbonizedpixeldungeon.effects.Flare;
 import com.tianscar.carbonizedpixeldungeon.effects.FloatingText;
 import com.tianscar.carbonizedpixeldungeon.effects.Ripple;
 import com.tianscar.carbonizedpixeldungeon.effects.SpellSprite;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
 import com.tianscar.carbonizedpixeldungeon.items.Ankh;
 import com.tianscar.carbonizedpixeldungeon.items.Heap;
 import com.tianscar.carbonizedpixeldungeon.items.Honeypot;
@@ -54,6 +65,16 @@ import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.secret.SecretRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Gizmo;
+import com.tianscar.carbonizedpixeldungeon.noosa.Group;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScriptNoLighting;
+import com.tianscar.carbonizedpixeldungeon.noosa.SkinnedBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.plants.Plant;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.DiscardedItemSprite;
@@ -69,23 +90,38 @@ import com.tianscar.carbonizedpixeldungeon.tiles.GridTileMap;
 import com.tianscar.carbonizedpixeldungeon.tiles.RaisedTerrainTilemap;
 import com.tianscar.carbonizedpixeldungeon.tiles.TerrainFeaturesTilemap;
 import com.tianscar.carbonizedpixeldungeon.tiles.WallBlockingTilemap;
-import com.tianscar.carbonizedpixeldungeon.ui.*;
+import com.tianscar.carbonizedpixeldungeon.ui.ActionIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.AttackIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.Banner;
+import com.tianscar.carbonizedpixeldungeon.ui.BusyIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.CharHealthIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.GameLog;
+import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.LootIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
+import com.tianscar.carbonizedpixeldungeon.ui.ResumeIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.StatusPane;
+import com.tianscar.carbonizedpixeldungeon.ui.StyledButton;
+import com.tianscar.carbonizedpixeldungeon.ui.TargetHealthIndicator;
+import com.tianscar.carbonizedpixeldungeon.ui.Toast;
+import com.tianscar.carbonizedpixeldungeon.ui.Toolbar;
+import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.windows.*;
-import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
-import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
-import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Gizmo;
-import com.tianscar.carbonizedpixeldungeon.noosa.Group;
-import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
-import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScriptNoLighting;
-import com.tianscar.carbonizedpixeldungeon.noosa.SkinnedBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.utils.GameMath;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
+import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
+import com.tianscar.carbonizedpixeldungeon.windows.WndGame;
+import com.tianscar.carbonizedpixeldungeon.windows.WndHero;
+import com.tianscar.carbonizedpixeldungeon.windows.WndInfoCell;
+import com.tianscar.carbonizedpixeldungeon.windows.WndInfoItem;
+import com.tianscar.carbonizedpixeldungeon.windows.WndInfoMob;
+import com.tianscar.carbonizedpixeldungeon.windows.WndInfoPlant;
+import com.tianscar.carbonizedpixeldungeon.windows.WndInfoTrap;
+import com.tianscar.carbonizedpixeldungeon.windows.WndKeyBindings;
+import com.tianscar.carbonizedpixeldungeon.windows.WndMessage;
+import com.tianscar.carbonizedpixeldungeon.windows.WndOptions;
+import com.tianscar.carbonizedpixeldungeon.windows.WndResurrect;
+import com.tianscar.carbonizedpixeldungeon.windows.WndStory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -300,22 +336,22 @@ public class GameScene extends PixelScene {
 		log.camera = uiCamera;
 		log.newLine();
 		add( log );
+
+		resume = new ResumeIndicator();
+		resume.camera = uiCamera;
+		add( resume );
+
+		loot = new LootIndicator();
+		loot.camera = uiCamera;
+		add( loot );
 		
 		attack = new AttackIndicator();
 		attack.camera = uiCamera;
 		add( attack );
 
-		loot = new LootIndicator();
-		loot.camera = uiCamera;
-		add( loot );
-
 		action = new ActionIndicator();
 		action.camera = uiCamera;
 		add( action );
-
-		resume = new ResumeIndicator();
-		resume.camera = uiCamera;
-		add( resume );
 
 		pane = new StatusPane();
 		pane.camera = uiCamera;

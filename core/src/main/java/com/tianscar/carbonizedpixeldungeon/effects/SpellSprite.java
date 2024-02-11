@@ -23,10 +23,10 @@ package com.tianscar.carbonizedpixeldungeon.effects;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
-import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 
 import java.util.HashMap;
 

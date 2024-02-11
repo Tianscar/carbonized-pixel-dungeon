@@ -29,13 +29,13 @@ import com.tianscar.carbonizedpixeldungeon.glscripts.Script;
 import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
 import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
 import com.tianscar.carbonizedpixeldungeon.glwrap.Vertexbuffer;
+import com.tianscar.carbonizedpixeldungeon.input.InputHandler;
+import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.utils.PlatformSupport;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
-import com.tianscar.carbonizedpixeldungeon.input.InputHandler;
-import com.tianscar.carbonizedpixeldungeon.input.PointerEvent;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

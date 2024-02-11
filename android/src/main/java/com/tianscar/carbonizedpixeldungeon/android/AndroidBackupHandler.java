@@ -26,7 +26,6 @@ import android.app.backup.BackupDataInput;
 import android.app.backup.BackupDataOutput;
 import android.app.backup.FullBackupDataOutput;
 import android.os.ParcelFileDescriptor;
-
 import com.tianscar.carbonizedpixeldungeon.Badges;
 import com.tianscar.carbonizedpixeldungeon.Rankings;
 import com.tianscar.carbonizedpixeldungeon.journal.Journal;

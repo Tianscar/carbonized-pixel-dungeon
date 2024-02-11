@@ -23,12 +23,12 @@ package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
-import com.tianscar.carbonizedpixeldungeon.ui.Archs;
-import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
-import com.tianscar.carbonizedpixeldungeon.windows.WndFeedback;
 import com.tianscar.carbonizedpixeldungeon.input.KeyEvent;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.ui.Archs;
+import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
+import com.tianscar.carbonizedpixeldungeon.windows.WndFeedback;
 
 public class FeedbackScene extends PixelScene {
 

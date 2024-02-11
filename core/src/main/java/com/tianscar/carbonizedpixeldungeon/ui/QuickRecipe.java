@@ -21,9 +21,15 @@
 
 package com.tianscar.carbonizedpixeldungeon.ui;
 
-import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
-import com.tianscar.carbonizedpixeldungeon.items.*;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.items.ArcaneResin;
+import com.tianscar.carbonizedpixeldungeon.items.CarbonSteel;
+import com.tianscar.carbonizedpixeldungeon.items.Generator;
+import com.tianscar.carbonizedpixeldungeon.items.Item;
+import com.tianscar.carbonizedpixeldungeon.items.LiquidMetal;
+import com.tianscar.carbonizedpixeldungeon.items.MagicAlloy;
+import com.tianscar.carbonizedpixeldungeon.items.Recipe;
 import com.tianscar.carbonizedpixeldungeon.items.bombs.Bomb;
 import com.tianscar.carbonizedpixeldungeon.items.food.Blandfruit;
 import com.tianscar.carbonizedpixeldungeon.items.food.Food;
@@ -63,22 +69,20 @@ import com.tianscar.carbonizedpixeldungeon.items.spells.WildEnergy;
 import com.tianscar.carbonizedpixeldungeon.items.stones.Runestone;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
-import com.tianscar.carbonizedpixeldungeon.items.CarbonSteel;
-import com.tianscar.carbonizedpixeldungeon.items.MagicAlloy;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.plants.Plant;
-import com.tianscar.carbonizedpixeldungeon.scenes.AlchemyScene;
-import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
-import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
-import com.tianscar.carbonizedpixeldungeon.windows.WndInfoItem;
 import com.tianscar.carbonizedpixeldungeon.noosa.BitmapText;
 import com.tianscar.carbonizedpixeldungeon.noosa.Group;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.PointerArea;
 import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.plants.Plant;
+import com.tianscar.carbonizedpixeldungeon.scenes.AlchemyScene;
+import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
+import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
+import com.tianscar.carbonizedpixeldungeon.windows.WndInfoItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;

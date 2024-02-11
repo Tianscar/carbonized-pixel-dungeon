@@ -23,11 +23,11 @@ package com.tianscar.carbonizedpixeldungeon.effects;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.noosa.Group;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 
 public class Surprise extends Image {
 

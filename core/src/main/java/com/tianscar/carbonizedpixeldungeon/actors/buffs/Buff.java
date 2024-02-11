@@ -23,8 +23,8 @@ package com.tianscar.carbonizedpixeldungeon.actors.buffs;
 
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
-import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
 
 import java.text.DecimalFormat;
@@ -163,6 +163,12 @@ public class Buff extends Actor {
 	}
 
 	public static<T extends CounterBuff> T count( Char target, Class<T> buffclass, float count ) {
+		T buff = affect( target, buffclass );
+		buff.count( count );
+		return buff;
+	}
+
+	public static<T extends CounterBuff> T countUp(Char target, Class<T> buffclass, float count ) {
 		T buff = affect( target, buffclass );
 		buff.countUp( count );
 		return buff;

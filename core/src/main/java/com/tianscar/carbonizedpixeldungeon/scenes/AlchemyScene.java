@@ -23,11 +23,13 @@ package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Badges;
+import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Belongings;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
+import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
+import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.Recipe;
 import com.tianscar.carbonizedpixeldungeon.items.armor.Armor;
@@ -37,6 +39,17 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.tianscar.carbonizedpixeldungeon.journal.Journal;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
+import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScriptNoLighting;
+import com.tianscar.carbonizedpixeldungeon.noosa.SkinnedBlock;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
@@ -49,22 +62,13 @@ import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.windows.WndBag;
 import com.tianscar.carbonizedpixeldungeon.windows.WndInfoItem;
 import com.tianscar.carbonizedpixeldungeon.windows.WndJournal;
-import com.tianscar.carbonizedpixeldungeon.gltextures.TextureCache;
-import com.tianscar.carbonizedpixeldungeon.glwrap.Blending;
-import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
-import com.tianscar.carbonizedpixeldungeon.noosa.ColorBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.Game;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
-import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
-import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScript;
-import com.tianscar.carbonizedpixeldungeon.noosa.NoosaScriptNoLighting;
-import com.tianscar.carbonizedpixeldungeon.noosa.SkinnedBlock;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
-import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class AlchemyScene extends PixelScene {
 	
@@ -82,6 +86,7 @@ public class AlchemyScene extends PixelScene {
 	
 	private RedButton btnCombine;
 
+	// FIXME should we separate these to another class?
 	private final HashMap<Item, Integer> equipstats = new HashMap<>();
 	private static final int STAT_WEAPON = 0, STAT_EXTRA = 1, STAT_RING = 2, STAT_MISC = 3, STAT_ARMOR = 4;
 	

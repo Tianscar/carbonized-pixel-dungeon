@@ -22,7 +22,12 @@
 package com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.elementalist.AetherBlink;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.elementalist.Resonance;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
@@ -30,7 +35,7 @@ import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
+import com.tianscar.carbonizedpixeldungeon.windows.WndHeroInfo;
 
 import java.util.ArrayList;
 
@@ -41,8 +46,38 @@ public class v0_2_X_Changes {
 		ChangeInfo changes = new ChangeInfo("v0.2.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_2_2_Changes( changeInfos );
 		add_v0_2_1_Changes( changeInfos );
 		add_v0_2_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_2_2_Changes( ArrayList<ChangeInfo> changeInfos ) {
+
+		ChangeInfo changes = new ChangeInfo("v0.2.2", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING),
+				"内容未完成",
+				"一些文本未被翻译成英文，并且元素使的第三个护甲技能未被添加"));
+		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"_-_ 微调了游戏主界面的玩家信息显示" +
+						 "_-_ 重制了安卓端的崩溃日志界面"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.ELEMENTALIST, 0, 15, 12, 15),
+				HeroClass.ELEMENTALIST.title(), HeroClass.ELEMENTALIST.unlockMsg()));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.ELEMENTALIST, 0, 90, 12, 15),
+				Messages.get(WndHeroInfo.class, "subclasses"),
+				"_" + HeroSubClass.BINDER.title() + "_\n\n" +
+				HeroSubClass.BINDER.shortDesc() + "\n\n" +
+				"_" + HeroSubClass.SPELLWEAVER.title() + "_\n\n" +
+				HeroSubClass.SPELLWEAVER.shortDesc()));
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ARMOR_ELEMENTALIST),
+				Messages.get(WndHeroInfo.class, "abilities"),
+				"_" + Messages.get(Resonance.class, "name") + "_\n\n" +
+				Messages.get(Resonance.class, "desc") + "\n\n" +
+				"_" + Messages.get(AetherBlink.class, "name") + "_\n\n" +
+				Messages.get(AetherBlink.class, "desc")));
 
 	}
 

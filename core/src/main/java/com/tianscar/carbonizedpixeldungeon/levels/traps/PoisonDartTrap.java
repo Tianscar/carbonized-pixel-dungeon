@@ -22,16 +22,16 @@
 package com.tianscar.carbonizedpixeldungeon.levels.traps;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Poison;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts.PoisonDart;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
-import com.tianscar.carbonizedpixeldungeon.sprites.MissileSprite;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
+import com.tianscar.carbonizedpixeldungeon.sprites.MissileSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 

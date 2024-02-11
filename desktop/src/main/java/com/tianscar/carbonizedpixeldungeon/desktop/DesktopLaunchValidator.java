@@ -33,10 +33,10 @@ public class DesktopLaunchValidator {
 	//Validates that the launching JVM is correctly configured
 	// and attempts to launch a new one if it is not
 	// returns false if current JVM is invalid and should be killed.
-	public static boolean verifyValidJVMState(String[] args){
+	public static boolean verifyValidJVMState(String[] args) {
 
 		//mac computers require the -XstartOnFirstThread JVM argument
-		if (SharedLibraryLoader.isMac){
+		if (SharedLibraryLoader.isMac) {
 
 			// If XstartOnFirstThread is present and enabled, we can return true
 			if ("1".equals(System.getenv("JAVA_STARTED_ON_FIRST_THREAD_" +
@@ -46,7 +46,7 @@ public class DesktopLaunchValidator {
 
 			// Check if we are the relaunched process, if so return true to avoid looping.
 			// The game will likely crash, but that's unavoidable at this point.
-			if ("true".equals(System.getProperty("capdRelaunched"))){
+			if ("true".equals(System.getProperty("capdRelaunched"))) {
 				System.err.println("Error: Could not verify new process is running on the first thread. Trying to run the game anyway...");
 				return true;
 			}

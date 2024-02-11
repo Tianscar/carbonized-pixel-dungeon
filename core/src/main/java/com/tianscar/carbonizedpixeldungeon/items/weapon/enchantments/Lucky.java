@@ -26,9 +26,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfWealth;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
+import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite.Glowing;
-import com.tianscar.carbonizedpixeldungeon.noosa.Visual;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Lucky extends Weapon.Enchantment {

@@ -45,6 +45,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.Shuriken;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.Tomahawk;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -53,7 +54,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.Icons;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
-import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 
 import java.util.ArrayList;
 

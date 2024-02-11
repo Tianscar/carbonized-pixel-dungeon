@@ -22,10 +22,20 @@
 package com.tianscar.carbonizedpixeldungeon.scenes;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.CarbonizedPixelDungeon;
+import com.tianscar.carbonizedpixeldungeon.Chrome;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
-import com.tianscar.carbonizedpixeldungeon.ui.*;
+import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
+import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
+import com.tianscar.carbonizedpixeldungeon.ui.Archs;
+import com.tianscar.carbonizedpixeldungeon.ui.ExitButton;
+import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
+import com.tianscar.carbonizedpixeldungeon.ui.ScrollPane;
+import com.tianscar.carbonizedpixeldungeon.ui.StyledButton;
+import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeSelection;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v0_1_X_Changes;
@@ -38,10 +48,6 @@ import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v0_7_X_Chan
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v0_8_X_Changes;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v0_9_X_Changes;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.shatteredpd.v1_0_X_Changes;
-import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
-import com.tianscar.carbonizedpixeldungeon.noosa.NinePatch;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
-import com.tianscar.carbonizedpixeldungeon.noosa.ui.Component;
 
 import java.util.ArrayList;
 

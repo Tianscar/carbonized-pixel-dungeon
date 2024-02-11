@@ -27,10 +27,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Eye;
 import com.tianscar.carbonizedpixeldungeon.effects.Beam;
 import com.tianscar.carbonizedpixeldungeon.effects.MagicMissile;
-import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
+import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 
 public class EyeSprite extends MobSprite {
 

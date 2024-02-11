@@ -25,6 +25,7 @@ import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Badges;
 import com.tianscar.carbonizedpixeldungeon.Challenges;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.ElementalStatistics;
 import com.tianscar.carbonizedpixeldungeon.Statistics;
 import com.tianscar.carbonizedpixeldungeon.actors.Actor;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
@@ -38,6 +39,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Preparation;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Sleep;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.SoulMark;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Spellweave;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Terror;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
@@ -61,11 +63,11 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.features.Chasm;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.PathFinder;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 import com.tianscar.carbonizedpixeldungeon.utils.Reflection;
@@ -523,7 +525,8 @@ public abstract class Mob extends Char {
 	public void updateSpriteState() {
 		super.updateSpriteState();
 		if (Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class) != null
-				|| Dungeon.hero.buff(Swiftthistle.TimeBubble.class) != null)
+				|| Dungeon.hero.buff(Swiftthistle.TimeBubble.class) != null
+			    || Dungeon.hero.buff(Spellweave.TimeBent.class) != null)
 			sprite.add( CharSprite.State.PARALYSED );
 	}
 	
@@ -689,6 +692,12 @@ public abstract class Mob extends Char {
 					&& Dungeon.hero.hasTalent(Talent.LETHAL_MOMENTUM)
 					&& Random.Float() < 0.34f + 0.33f* Dungeon.hero.pointsInTalent(Talent.LETHAL_MOMENTUM)){
 				Buff.affect(Dungeon.hero, Talent.LethalMomentumTracker.class, 1f);
+			}
+
+			if (this instanceof Elemental) {
+				ElementalStatistics.registerSlain((Class<? extends Elemental>) getClass());
+
+				Badges.validateElementalistUnlock();
 			}
 		}
 

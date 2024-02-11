@@ -21,8 +21,8 @@
 
 package com.tianscar.carbonizedpixeldungeon.noosa.tweeners;
 
-import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.noosa.Camera;
+import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 
 public class CameraScrollTweener extends Tweener {
 

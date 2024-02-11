@@ -48,15 +48,15 @@ import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.CellSelector;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
@@ -410,7 +410,7 @@ public abstract class Wand extends Item {
 				//grants 3/5 shielding
 				Buff.affect(Dungeon.hero, Barrier.class).setShield(1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER));
 			}
-			if (Dungeon.hero.hasTalent(Talent.EMPOWERED_STRIKE)){
+			if (Dungeon.hero.hasTalent(Talent.EMPOWERED_STRIKE)) {
 				Buff.prolong(Dungeon.hero, Talent.EmpoweredStrikeTracker.class, 10f);
 			}
 		}
@@ -512,7 +512,7 @@ public abstract class Wand extends Item {
 		availableUsesToID = USES_TO_ID/2f;
 	}
 
-	public int collisionProperties(int target){
+	public int collisionProperties(int target) {
 		return collisionProperties;
 	}
 
@@ -557,7 +557,7 @@ public abstract class Wand extends Item {
 				int cell = shot.collisionPos;
 				
 				if (target == curUser.pos || cell == curUser.pos) {
-					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)){
+					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)) {
 						float shield = curUser.HT * (0.05f*curWand.curCharges);
 						if (curUser.pointsInTalent(Talent.SHIELD_BATTERY) == 2) shield *= 1.5f;
 						Buff.affect(curUser, Barrier.class).setShield(Math.round(shield));

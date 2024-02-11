@@ -26,9 +26,9 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.effects.CheckedCell;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.tianscar.carbonizedpixeldungeon.mechanics.ShadowCaster;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.utils.Point;
 
 public class StoneOfClairvoyance extends Runestone {
