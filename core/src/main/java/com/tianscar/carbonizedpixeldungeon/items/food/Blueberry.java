@@ -26,10 +26,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
-public class Blueberries extends Food {
+public class Blueberry extends Food {
 
 	{
-		image = ItemSpriteSheet.BLUEBERRIES;
+		image = ItemSpriteSheet.BLUEBERRY;
 		energy = Hunger.HUNGRY/3f; //100 food value
 
 		bones = false;

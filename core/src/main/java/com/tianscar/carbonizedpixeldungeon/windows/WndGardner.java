@@ -25,7 +25,7 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Gardner;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.food.Blandfruit;
-import com.tianscar.carbonizedpixeldungeon.items.food.Blueberries;
+import com.tianscar.carbonizedpixeldungeon.items.food.Blueberry;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -40,7 +40,7 @@ public class WndGardner extends Window {
 	private static final int BTN_HEIGHT = 20;
 	private static final int GAP        = 2;
 
-	public WndGardner(final Blueberries berries) {
+	public WndGardner(final Blueberry berries) {
 		
 		super();
 		

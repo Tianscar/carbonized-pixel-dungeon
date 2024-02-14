@@ -78,7 +78,7 @@ public class v0_2_X_Changes {
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.CHEESE),
 				Messages.get(Cheese.class, "name"),
 				"在老鼠王的房间会固定刷新一块。效果等价于全肉大饼。"));
-		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.BLUEBERRIES),
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.BLUEBERRY),
 				"蓝莓花园",
 				"在下水道的每层（Boss层除外）固定刷新一个蓝莓花园（如果是大型层则两个），每个蓝莓花园会刷新1-2个可供采摘的蓝莓丛。蓝莓能回复少量饱食度。"));
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.OVERPRICED),

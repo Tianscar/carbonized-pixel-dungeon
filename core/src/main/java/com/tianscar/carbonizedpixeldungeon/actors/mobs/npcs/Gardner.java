@@ -27,7 +27,7 @@ package com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.tianscar.carbonizedpixeldungeon.items.food.Blueberries;
+import com.tianscar.carbonizedpixeldungeon.items.food.Blueberry;
 import com.tianscar.carbonizedpixeldungeon.journal.Notes;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
@@ -100,7 +100,7 @@ public class Gardner extends NPC {
 				});
 			}
 			else {
-				Blueberries berries = Dungeon.hero.belongings.getItem(Blueberries.class);
+				Blueberry berries = Dungeon.hero.belongings.getItem(Blueberry.class);
 
 				if (berries != null) {
 

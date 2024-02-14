@@ -85,7 +85,7 @@ import com.tianscar.carbonizedpixeldungeon.items.artifacts.HornOfPlenty;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.tianscar.carbonizedpixeldungeon.items.bags.MagicalHolster;
-import com.tianscar.carbonizedpixeldungeon.items.food.Blueberries;
+import com.tianscar.carbonizedpixeldungeon.items.food.Blueberry;
 import com.tianscar.carbonizedpixeldungeon.items.journal.Guidebook;
 import com.tianscar.carbonizedpixeldungeon.items.keys.CrystalKey;
 import com.tianscar.carbonizedpixeldungeon.items.keys.GoldenKey;
@@ -1976,7 +1976,7 @@ public class Hero extends Char {
 			if (src instanceof BerryGardenRoom.Bush) {
 				((BerryGardenRoom.Bush) src).frame(0);
 
-				Dungeon.level.drop(new Blueberries().quantity(Random.Int(1, 3)), pos).sprite.drop();
+				Dungeon.level.drop(new Blueberry().quantity(Random.Int(1, 3)), pos).sprite.drop();
 				spend( Key.TIME_TO_UNLOCK );
 			}
 
