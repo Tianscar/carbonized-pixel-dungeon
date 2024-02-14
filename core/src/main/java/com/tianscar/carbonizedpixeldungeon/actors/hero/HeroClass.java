@@ -41,11 +41,23 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.rogue.SmokeBomb
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.HeroicLeap;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.Shockwave;
+import com.tianscar.carbonizedpixeldungeon.items.Amulet;
 import com.tianscar.carbonizedpixeldungeon.items.BrokenSeal;
+import com.tianscar.carbonizedpixeldungeon.items.CarbonSteel;
+import com.tianscar.carbonizedpixeldungeon.items.Honeypot;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
+import com.tianscar.carbonizedpixeldungeon.items.KingsCrown;
+import com.tianscar.carbonizedpixeldungeon.items.Stylus;
+import com.tianscar.carbonizedpixeldungeon.items.TengusMask;
 import com.tianscar.carbonizedpixeldungeon.items.Waterskin;
 import com.tianscar.carbonizedpixeldungeon.items.armor.ClothArmor;
+import com.tianscar.carbonizedpixeldungeon.items.armor.PlateArmor;
+import com.tianscar.carbonizedpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.CloakOfShadows;
+import com.tianscar.carbonizedpixeldungeon.items.artifacts.EtherealChains;
+import com.tianscar.carbonizedpixeldungeon.items.bags.MagicalHolster;
+import com.tianscar.carbonizedpixeldungeon.items.bags.PotionBandolier;
+import com.tianscar.carbonizedpixeldungeon.items.bags.ScrollHolder;
 import com.tianscar.carbonizedpixeldungeon.items.bags.VelvetPouch;
 import com.tianscar.carbonizedpixeldungeon.items.food.Food;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfExperience;
@@ -53,21 +65,35 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfInvisibility;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
+import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfHoneyedHealing;
+import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfForce;
+import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfMight;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfRage;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfAffection;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfAntiMagic;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfMysticalEnergy;
+import com.tianscar.carbonizedpixeldungeon.items.spells.CurseInfusion;
 import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
+import com.tianscar.carbonizedpixeldungeon.items.stones.StoneOfEnchantment;
+import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfBlastWave;
+import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfFireblast;
+import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfLightning;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfMagicMissile;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Buckler;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Gloves;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Greatsword;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Knuckles;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.WornShortsword;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
@@ -136,7 +162,6 @@ public enum HeroClass {
 		}
 
 		//TESTPLAY ONLY
-		/*
 		if (Game.platform.isDebug()) {
 			new TengusMask().collect();
 			new KingsCrown().collect();
@@ -149,6 +174,7 @@ public enum HeroClass {
 			new ScrollOfRemoveCurse().identify().quantity(20).collect();
 			new ScrollOfMysticalEnergy().identify().quantity(20).collect();
 			new ScrollOfAntiMagic().identify().quantity(20).collect();
+			new ScrollOfMagicMapping().identify().quantity(20).collect();
 
 			new CurseInfusion().quantity(20).collect();
 			new StoneOfEnchantment().quantity(20).collect();
@@ -156,6 +182,7 @@ public enum HeroClass {
 
 			new PotionOfExperience().identify().quantity(30).collect();
 			new PotionOfHealing().identify().quantity(30).collect();
+			new PotionOfInvisibility().identify().quantity(30).collect();
 			new Food().identify().quantity(30).collect();
 
 			new PlateArmor().identify().upgrade(8).collect();
@@ -180,7 +207,6 @@ public enum HeroClass {
 
 			new CarbonSteel().quantity(30).collect();
 		}
-		 */
 
 		for (int s = 0; s < QuickSlot.SIZE; s++) {
 			if (Dungeon.quickslot.getItem(s) == null) {

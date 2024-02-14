@@ -112,8 +112,31 @@ public class Ghost extends NPC {
 		if (c != Dungeon.hero){
 			return super.interact(c);
 		}
-		
-		if (Quest.given) {
+
+		if (!Patrol.Quest.given) {
+			Game.runOnRenderThread(new Callback() {
+				@Override
+				public void call() {
+					GameScene.show( new WndQuest( Ghost.this, Messages.get(Ghost.this, "silence") ) );
+				}
+			});
+
+			int newPos = -1;
+			for (int i = 0; i < 10; i++) {
+				newPos = Dungeon.level.randomRespawnCell( this );
+				if (newPos != -1) {
+					break;
+				}
+			}
+			if (newPos != -1) {
+
+				CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+				pos = newPos;
+				sprite.place(pos);
+				sprite.visible = Dungeon.level.heroFOV[pos];
+			}
+		}
+		else if (Quest.given) {
 			if (Quest.weapon != null) {
 				if (Quest.processed) {
 					Game.runOnRenderThread(new Callback() {
@@ -196,7 +219,7 @@ public class Ghost extends NPC {
 		
 		private static boolean spawned;
 
-		private static int type;
+		static int type;
 
 		private static boolean given;
 		private static boolean processed;

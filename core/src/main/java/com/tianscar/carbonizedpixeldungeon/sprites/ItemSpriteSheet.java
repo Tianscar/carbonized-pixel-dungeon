@@ -656,7 +656,9 @@ public class ItemSpriteSheet {
 	public static final int MEAT_PIE    = FOOD+9;
 	public static final int BLANDFRUIT  = FOOD+10;
 	public static final int BLAND_CHUNKS= FOOD+11;
-	public static final int BERRY =       FOOD+12;
+	public static final int BERRY       = FOOD+12;
+	public static final int BLUEBERRIES = FOOD+13;
+	public static final int CHEESE      = FOOD+14;
 	static{
 		assignItemRect(MEAT,        15, 11);
 		assignItemRect(STEAK,       15, 11);
@@ -671,6 +673,8 @@ public class ItemSpriteSheet {
 		assignItemRect(BLANDFRUIT,  9,  12);
 		assignItemRect(BLAND_CHUNKS,14, 6);
 		assignItemRect(BERRY,       9,  11);
+		assignItemRect(BLUEBERRIES, 13, 11);
+		assignItemRect(CHEESE,      15, 13);
 	}
 
 	private static final int QUEST  =                                       xy(1, 29);  //32 slots
@@ -683,6 +687,9 @@ public class ItemSpriteSheet {
 	public static final int TOKEN   = QUEST+6;
 	public static final int BLOB    = QUEST+7;
 	public static final int SHARD   = QUEST+8;
+	public static final int HIDE    = QUEST+9;
+	public static final int CLAW    = QUEST+10;
+	public static final int SATCHEL = QUEST+11;
 	static{
 		assignItemRect(SKULL,   16, 11);
 		assignItemRect(DUST,    12, 11);
@@ -693,6 +700,9 @@ public class ItemSpriteSheet {
 		assignItemRect(TOKEN,   12, 12);
 		assignItemRect(BLOB,    10,  9);
 		assignItemRect(SHARD,    8, 10);
+		assignItemRect(HIDE,    14, 11);
+		assignItemRect(CLAW,    15, 13);
+		assignItemRect(SATCHEL, 14, 13);
 	}
 
 																						//32 free slots

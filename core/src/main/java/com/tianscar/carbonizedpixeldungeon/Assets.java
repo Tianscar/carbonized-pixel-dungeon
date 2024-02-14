@@ -55,6 +55,7 @@ public class Assets {
 		public static final String WATER_SOKOBAN= "environment/water_sokoban.png";
 
 		public static final String WEAK_FLOOR       = "environment/custom_tiles/weak_floor.png";
+		public static final String SEWER_BUSH       = "environment/custom_tiles/sewer_bush.png";
 		public static final String SEWER_BOSS       = "environment/custom_tiles/sewer_boss.png";
 		public static final String PRISON_QUEST     = "environment/custom_tiles/prison_quests.png";
 		public static final String PRISON_EXIT      = "environment/custom_tiles/prison_exit.png";
@@ -137,7 +138,7 @@ public class Assets {
 		public static final String HERO_SELECT  = "music/hero_select.ogg";
 		public static final String SURFACE  	= "music/surface.ogg";
 
-		public static final String INN          = "music/inn.png";
+		public static final String INN          = "music/inn.ogg";
 
 		public static final String SOKOBAN  	= "music/sokoban.ogg";
 
@@ -278,6 +279,9 @@ public class Assets {
 		public static final String AMULET	= "sprites/amulet.png";
 
 		public static final String RAT		= "sprites/rat.png";
+		public static final String BARMAID  = "sprites/barmaid.png";
+		public static final String PATROL   = "sprites/patrol.png";
+		public static final String PLAGUEDR = "sprites/plaguedoctor.png";
 		public static final String BRUTE	= "sprites/brute.png";
 		public static final String SPINNER	= "sprites/spinner.png";
 		public static final String DM300	= "sprites/dm300.png";
@@ -307,6 +311,7 @@ public class Assets {
 		public static final String FISTS	= "sprites/yog_fists.png";
 		public static final String YOG		= "sprites/yog.png";
 		public static final String LARVA	= "sprites/larva.png";
+		public static final String GARDNER	= "sprites/gardner.png";
 		public static final String GHOST	= "sprites/ghost.png";
 		public static final String MAKER	= "sprites/wandmaker.png";
 		public static final String TROLL	= "sprites/blacksmith.png";
@@ -332,6 +337,5 @@ public class Assets {
 		public static final String LOTUS	= "sprites/lotus.png";
 		public static final String NINJA_LOG= "sprites/ninja_log.png";
 		public static final String SPIRIT_HAWK= "sprites/spirit_hawk.png";
-		public static final String TIANSCAR = "sprites/tianscar.png";
 	}
 }

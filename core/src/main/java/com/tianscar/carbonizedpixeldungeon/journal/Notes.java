@@ -71,7 +71,10 @@ public class Notes {
 		GARDEN,
 		STATUE,
 		SHOP,
-		
+
+		GARDNER,
+		PATROL,
+		PLAGUEDOCTOR,
 		GHOST,
 		WANDMAKER,
 		TROLL,

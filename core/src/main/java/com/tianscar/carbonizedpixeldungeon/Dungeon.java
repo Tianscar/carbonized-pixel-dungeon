@@ -33,8 +33,11 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Blacksmith;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Gardner;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Ghost;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Imp;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Patrol;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.PlagueDoctor;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.tianscar.carbonizedpixeldungeon.items.Generator;
 import com.tianscar.carbonizedpixeldungeon.items.Heap;
@@ -53,6 +56,7 @@ import com.tianscar.carbonizedpixeldungeon.levels.CityLevel;
 import com.tianscar.carbonizedpixeldungeon.levels.DeadEndLevel;
 import com.tianscar.carbonizedpixeldungeon.levels.HallsBossLevel;
 import com.tianscar.carbonizedpixeldungeon.levels.HallsLevel;
+import com.tianscar.carbonizedpixeldungeon.levels.InnLevel;
 import com.tianscar.carbonizedpixeldungeon.levels.LastLevel;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.PrisonBossLevel;
@@ -160,6 +164,7 @@ public class Dungeon {
 	
 	public static int depth;
 	public static int gold;
+	public static boolean dungeon = false;
 	
 	public static HashSet<Integer> chapters;
 
@@ -200,6 +205,7 @@ public class Dungeon {
 		
 		depth = 0;
 		gold = 0;
+		dungeon = false;
 
 		droppedItems = new SparseArray<>();
 		portedItems = new SparseArray<>();
@@ -207,7 +213,8 @@ public class Dungeon {
 		LimitedDrops.reset();
 		
 		chapters = new HashSet<>();
-		
+
+		Gardner.Quest.reset();
 		Ghost.Quest.reset();
 		Wandmaker.Quest.reset();
 		Blacksmith.Quest.reset();
@@ -230,20 +237,24 @@ public class Dungeon {
 		
 		Dungeon.level = null;
 		Actor.clear();
-		
-		depth++;
+
+		Level level;
+
+		if (dungeon) depth++;
 		if (depth > Statistics.deepestFloor) {
 			Statistics.deepestFloor = depth;
-			
+
 			if (Statistics.qualifiedForNoKilling) {
 				Statistics.completedWithNoKilling = true;
 			} else {
 				Statistics.completedWithNoKilling = false;
 			}
 		}
-		
-		Level level;
+
 		switch (depth) {
+		case 0:
+			level = new InnLevel();
+			break;
 		case 1:
 		case 2:
 		case 3:
@@ -296,10 +307,10 @@ public class Dungeon {
 			level = new DeadEndLevel();
 			Statistics.deepestFloor--;
 		}
-		
+
 		level.create();
-		
-		Statistics.qualifiedForNoKilling = !bossLevel();
+
+		Statistics.qualifiedForNoKilling = !bossLevel() && depth != 0;
 		
 		return level;
 	}
@@ -485,6 +496,9 @@ public class Dungeon {
 			bundle.put( CHAPTERS, ids );
 			
 			Bundle quests = new Bundle();
+			Gardner     .Quest.storeInBundle( quests );
+			Patrol      .Quest.storeInBundle( quests );
+			PlagueDoctor.Quest.storeInBundle( quests );
 			Ghost		.Quest.storeInBundle( quests );
 			Wandmaker	.Quest.storeInBundle( quests );
 			Blacksmith	.Quest.storeInBundle( quests );
@@ -579,11 +593,17 @@ public class Dungeon {
 			
 			Bundle quests = bundle.getBundle( QUESTS );
 			if (!quests.isNull()) {
+				Gardner.Quest.restoreFromBundle( quests );
+				Patrol.Quest.restoreFromBundle( quests );
+				PlagueDoctor.Quest.restoreFromBundle( quests );
 				Ghost.Quest.restoreFromBundle( quests );
 				Wandmaker.Quest.restoreFromBundle( quests );
 				Blacksmith.Quest.restoreFromBundle( quests );
 				Imp.Quest.restoreFromBundle( quests );
 			} else {
+				Gardner.Quest.reset();
+				Patrol.Quest.reset();
+				PlagueDoctor.Quest.reset();
 				Ghost.Quest.reset();
 				Wandmaker.Quest.reset();
 				Blacksmith.Quest.reset();
@@ -608,6 +628,8 @@ public class Dungeon {
 		
 		gold = bundle.getInt( GOLD );
 		depth = bundle.getInt( DEPTH );
+
+		dungeon = true;
 		
 		Statistics.restoreFromBundle( bundle );
 		Generator.restoreFromBundle( bundle );

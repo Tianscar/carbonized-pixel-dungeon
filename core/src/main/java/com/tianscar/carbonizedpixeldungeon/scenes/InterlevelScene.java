@@ -62,6 +62,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class InterlevelScene extends PixelScene {
+
+	public static final int NUM_TIPS = 7;
 	
 	//slow fade on entering a new region
 	private static final float SLOW_FADE = 1f; //.33 in, 1.33 steady, .33 out, 2 seconds total
@@ -121,8 +123,8 @@ public class InterlevelScene extends PixelScene {
 				scrollSpeed = 5;
 				break;
 			case DESCEND:
-				if (Dungeon.hero == null){
-					loadingDepth = 1;
+				if (Dungeon.hero == null || !Dungeon.dungeon) {
+					loadingDepth = 0;
 					fadeTime = SLOW_FADE;
 				} else {
 					loadingDepth = Dungeon.depth+1;
@@ -157,7 +159,8 @@ public class InterlevelScene extends PixelScene {
 			lastRegion = region;
 		}
 
-		if      (lastRegion == 1)    loadingAsset = Assets.Interfaces.LOADING_SEWERS;
+		if      (lastRegion == 0)    loadingAsset = Assets.Interfaces.LOADING_INN;
+		else if (lastRegion == 1)    loadingAsset = Assets.Interfaces.LOADING_SEWERS;
 		else if (lastRegion == 2)    loadingAsset = Assets.Interfaces.LOADING_PRISON;
 		else if (lastRegion == 3)    loadingAsset = Assets.Interfaces.LOADING_CAVES;
 		else if (lastRegion == 4)    loadingAsset = Assets.Interfaces.LOADING_CITY;
@@ -222,7 +225,7 @@ public class InterlevelScene extends PixelScene {
 		add( message );
 
 		if (PDSettings.cutscene() > 1) {
-			text = Messages.get(InterlevelScene.class, "tip_" + Random.Int(1, 7));
+			text = Messages.get(InterlevelScene.class, "tip_" + Random.Int(1, NUM_TIPS + 1));
 			tip = PixelScene.renderTextBlock( text, 6 );
 			tip.setPos(
 					(Camera.main.width - tip.width()) / 2,

@@ -25,8 +25,11 @@ import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Ghost;
 import com.tianscar.carbonizedpixeldungeon.effects.Ripple;
+import com.tianscar.carbonizedpixeldungeon.items.food.SmallRation;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.SewerPainter;
+import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
+import com.tianscar.carbonizedpixeldungeon.levels.rooms.special.BerryGardenRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.AlarmTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.ChillingTrap;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.ConfusionTrap;
@@ -45,10 +48,14 @@ import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.PixelParticle;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
+import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.ColorMath;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class SewerLevel extends RegularLevel {
 
@@ -63,7 +70,35 @@ public class SewerLevel extends RegularLevel {
 				new float[]{1, 1, 0.5f},
 				false);
 	}
-	
+
+	@Override
+	public void destroy(int pos) {
+		HashSet<BerryGardenRoom.Bush> bushes = new HashSet<>();
+		for (CustomTilemap tile : customTiles) {
+			if (tile instanceof BerryGardenRoom.Bush) {
+				if (pointToCell(tile.tileX, tile.tileY) == pos) bushes.add((BerryGardenRoom.Bush) tile);
+			}
+		}
+		for (BerryGardenRoom.Bush bush : bushes) {
+			bush.remove();
+		}
+		super.destroy(pos);
+	}
+
+	@Override
+	protected ArrayList<Room> initRooms() {
+		ArrayList<Room> rooms = super.initRooms();
+		BerryGardenRoom room = new BerryGardenRoom();
+		room.h = Random.Int(2) == 0;
+		rooms.add( room );
+		if (feeling == Feeling.LARGE) {
+			room = new BerryGardenRoom();
+			room.h = Random.Int(2) == 0;
+			rooms.add( room );
+		}
+		return rooms;
+	}
+
 	@Override
 	protected int standardRooms(boolean forceMax) {
 		if (forceMax) return 6;
@@ -85,7 +120,14 @@ public class SewerLevel extends RegularLevel {
 				.setGrass(feeling == Feeling.GRASS ? 0.80f : 0.20f, 4)
 				.setTraps(nTraps(), trapClasses(), trapChances());
 	}
-	
+
+	@Override
+	public void create() {
+		addItemToSpawn( new SmallRation() );
+		if (feeling == Feeling.LARGE) addItemToSpawn( new SmallRation() );
+		super.create();
+	}
+
 	@Override
 	public String tilesTex() {
 		return Assets.Environment.TILES_SEWERS;
@@ -115,7 +157,7 @@ public class SewerLevel extends RegularLevel {
 						2, 2,
 						1, 1, 1, 1, 1};
 	}
-	
+
 	@Override
 	protected void createItems() {
 		Ghost.Quest.spawn( this );

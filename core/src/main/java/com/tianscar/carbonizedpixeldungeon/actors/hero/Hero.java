@@ -85,6 +85,7 @@ import com.tianscar.carbonizedpixeldungeon.items.artifacts.HornOfPlenty;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.tianscar.carbonizedpixeldungeon.items.bags.MagicalHolster;
+import com.tianscar.carbonizedpixeldungeon.items.food.Blueberries;
 import com.tianscar.carbonizedpixeldungeon.items.journal.Guidebook;
 import com.tianscar.carbonizedpixeldungeon.items.keys.CrystalKey;
 import com.tianscar.carbonizedpixeldungeon.items.keys.GoldenKey;
@@ -116,6 +117,7 @@ import com.tianscar.carbonizedpixeldungeon.journal.Notes;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.levels.features.Chasm;
+import com.tianscar.carbonizedpixeldungeon.levels.rooms.special.BerryGardenRoom;
 import com.tianscar.carbonizedpixeldungeon.levels.traps.Trap;
 import com.tianscar.carbonizedpixeldungeon.mechanics.ShadowCaster;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
@@ -130,6 +132,7 @@ import com.tianscar.carbonizedpixeldungeon.scenes.InterlevelScene;
 import com.tianscar.carbonizedpixeldungeon.scenes.SurfaceScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.HeroSprite;
+import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.tianscar.carbonizedpixeldungeon.ui.AttackIndicator;
 import com.tianscar.carbonizedpixeldungeon.ui.BuffIndicator;
 import com.tianscar.carbonizedpixeldungeon.ui.QuickSlotButton;
@@ -728,12 +731,15 @@ public class Hero extends Char {
 			} else if (curAction instanceof HeroAction.Buy) {
 				actResult = actBuy( (HeroAction.Buy)curAction );
 				
-			}else if (curAction instanceof HeroAction.PickUp) {
+			} else if (curAction instanceof HeroAction.PickUp) {
 				actResult = actPickUp( (HeroAction.PickUp)curAction );
 				
 			} else if (curAction instanceof HeroAction.OpenChest) {
 				actResult = actOpenChest( (HeroAction.OpenChest)curAction );
 				
+			} else if (curAction instanceof HeroAction.Pull) {
+				actResult = actPull( (HeroAction.Pull)curAction );
+
 			} else if (curAction instanceof HeroAction.Unlock) {
 				actResult = actUnlock((HeroAction.Unlock) curAction);
 				
@@ -861,22 +867,22 @@ public class Hero extends Char {
 		if (Dungeon.level.distance(dst, pos) <= 1) {
 
 			ready();
-			
+
 			AlchemistsToolkit.kitEnergy kit = buff(AlchemistsToolkit.kitEnergy.class);
-			if (kit != null && kit.isCursed()){
-				GLog.w( Messages.get(AlchemistsToolkit.class, "cursed"));
+			if (kit != null && kit.isCursed()) {
+				GLog.w(Messages.get(AlchemistsToolkit.class, "cursed"));
 				return false;
 			}
-			
+
 			Alchemy alch = (Alchemy) Dungeon.level.blobs.get(Alchemy.class);
 			if (alch != null) {
 				alch.alchPos = dst;
-				AlchemyScene.setProvider( alch );
+				AlchemyScene.setProvider(alch);
 			}
 			CarbonizedPixelDungeon.switchScene(AlchemyScene.class);
 			return false;
 
-		} else if (getCloser( dst )) {
+		} else if (getCloser(dst)) {
 
 			return true;
 
@@ -990,6 +996,33 @@ public class Hero extends Char {
 			return false;
 		}
 	}
+
+	private boolean actPull( HeroAction.Pull action ) {
+
+		int dst = action.dst;
+
+		if (Dungeon.level.adjacent(pos, dst) || pos == dst) {
+
+			Object src = action.src;
+			if (src instanceof BerryGardenRoom.Bush) {
+				((BerryGardenRoom.Bush) src).age = 0;
+
+				Sample.INSTANCE.play( Assets.Sounds.PLANT );
+				sprite.operate( dst );
+			}
+
+			return true;
+
+		} else if (getCloser( dst )) {
+
+			return true;
+
+		} else {
+			ready();
+			return false;
+		}
+
+	}
 	
 	private boolean actUnlock( HeroAction.Unlock action ) {
 		int doorCell = action.dst;
@@ -1052,7 +1085,8 @@ public class Hero extends Char {
 			if (timeBubble != null) timeBubble.disarmPressedTraps();
 			Spellweave.TimeBent timeBent = buff(Spellweave.TimeBent.class);
 			if (timeBent != null) timeBent.disarmPressedTraps();
-			
+
+			Dungeon.dungeon = true;
 			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 			Game.switchScene( InterlevelScene.class );
 
@@ -1479,7 +1513,23 @@ public class Hero extends Char {
 		
 		Char ch = Actor.findChar( cell );
 		Heap heap = Dungeon.level.heaps.get( cell );
-		
+
+		if (Dungeon.level.map[cell] == Terrain.FLAMABLE_SIGN && cell != pos) {
+
+			for (CustomTilemap tile : Dungeon.level.customTiles) {
+				if (tile instanceof BerryGardenRoom.Bush) {
+					if (Dungeon.level.pointToCell(tile.tileX, tile.tileY) == cell) {
+						if (((BerryGardenRoom.Bush) tile).age == 2) {
+							curAction = new HeroAction.Pull( tile, cell );
+
+							return true;
+						}
+					}
+				}
+			}
+
+		}
+
 		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
 			
 			curAction = new HeroAction.Alchemy( cell );
@@ -1920,6 +1970,16 @@ public class Hero extends Char {
 				}
 			}
 			
+		} else if (curAction instanceof HeroAction.Pull) {
+
+			Object src = ((HeroAction.Pull) curAction).src;
+			if (src instanceof BerryGardenRoom.Bush) {
+				((BerryGardenRoom.Bush) src).frame(0);
+
+				Dungeon.level.drop(new Blueberries().quantity(Random.Int(1, 3)), pos).sprite.drop();
+				spend( Key.TIME_TO_UNLOCK );
+			}
+
 		}
 		curAction = null;
 

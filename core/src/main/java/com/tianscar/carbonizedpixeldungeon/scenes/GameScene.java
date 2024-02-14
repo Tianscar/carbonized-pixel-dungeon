@@ -464,8 +464,11 @@ public class GameScene extends PixelScene {
 		if (InterlevelScene.mode != InterlevelScene.Mode.NONE) {
 			if (Dungeon.depth == Statistics.deepestFloor
 					&& (InterlevelScene.mode == InterlevelScene.Mode.DESCEND || InterlevelScene.mode == InterlevelScene.Mode.FALL)) {
-				GLog.h(Messages.get(this, "descend"), Dungeon.depth);
-				Sample.INSTANCE.play(Assets.Sounds.DESCEND);
+				if (Dungeon.depth == 0) GLog.h(Messages.get(this, "descend_inn"));
+				else {
+					GLog.h(Messages.get(this, "descend"), Dungeon.depth);
+					Sample.INSTANCE.play(Assets.Sounds.DESCEND);
+				}
 				
 				for (Char ch : Actor.chars()) {
 					if (ch instanceof DriedRose.GhostHero){
@@ -495,7 +498,8 @@ public class GameScene extends PixelScene {
 			} else if (InterlevelScene.mode == InterlevelScene.Mode.RESURRECT) {
 				GLog.h(Messages.get(this, "resurrect"), Dungeon.depth);
 			} else {
-				GLog.h(Messages.get(this, "return"), Dungeon.depth);
+				if (Dungeon.depth == 0) GLog.h(Messages.get(this, "return_inn"), Dungeon.depth);
+				else GLog.h(Messages.get(this, "return"), Dungeon.depth);
 			}
 
 			if (Dungeon.hero.hasTalent(Talent.ROGUES_FORESIGHT)

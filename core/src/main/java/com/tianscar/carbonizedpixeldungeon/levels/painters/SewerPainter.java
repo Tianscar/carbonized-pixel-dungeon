@@ -21,9 +21,13 @@
 
 package com.tianscar.carbonizedpixeldungeon.levels.painters;
 
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Gardner;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Patrol;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.PlagueDoctor;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
+import com.tianscar.carbonizedpixeldungeon.levels.rooms.standard.EntranceRoom;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
@@ -32,6 +36,15 @@ public class SewerPainter extends RegularPainter {
 	
 	@Override
 	protected void decorate(Level level, ArrayList<Room> rooms) {
+
+		for (Room r : rooms) {
+			if (r instanceof EntranceRoom) {
+				Gardner.Quest.spawn(level, r);
+				Patrol.Quest.spawn(level, r);
+				PlagueDoctor.Quest.spawn(level, r);
+				break;
+			}
+		}
 		
 		int[] map = level.map;
 		int w = level.width();

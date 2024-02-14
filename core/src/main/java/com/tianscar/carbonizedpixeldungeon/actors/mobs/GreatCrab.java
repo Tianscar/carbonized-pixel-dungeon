@@ -26,6 +26,7 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Ghost;
 import com.tianscar.carbonizedpixeldungeon.items.food.MysteryMeat;
+import com.tianscar.carbonizedpixeldungeon.items.quest.CrabClaw;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
@@ -86,6 +87,8 @@ public class GreatCrab extends Crab {
 	@Override
 	public void die( Object cause ) {
 		super.die( cause );
+
+		Dungeon.level.drop( new CrabClaw(), pos ).sprite.drop();
 
 		Ghost.Quest.process();
 	}

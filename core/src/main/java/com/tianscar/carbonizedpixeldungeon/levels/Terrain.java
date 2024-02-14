@@ -57,6 +57,8 @@ public class Terrain {
 	public static final int ALCHEMY			= 28;
 
 	public static final int WATER		    = 29;
+
+	public static final int FLAMABLE_SIGN   = 31;
 	
 	public static final int PASSABLE		= 0x01;
 	public static final int LOS_BLOCKING	= 0x02;
@@ -97,6 +99,7 @@ public class Terrain {
 		flags[LOCKED_EXIT]	= SOLID;
 		flags[UNLOCKED_EXIT]= PASSABLE;
 		flags[SIGN]			= SOLID; //Currently these are unused except for visual tile overrides where we want terrain to be solid with no other properties
+		flags[FLAMABLE_SIGN]= SOLID | FLAMABLE;
 		flags[WELL]			= AVOID;
 		flags[STATUE]		= SOLID;
 		flags[STATUE_SP]	= flags[STATUE];

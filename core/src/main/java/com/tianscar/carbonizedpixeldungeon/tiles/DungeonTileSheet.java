@@ -82,7 +82,7 @@ public class DungeonTileSheet {
 			Terrain.ENTRANCE, Terrain.EXIT, Terrain.EMBERS,
 			Terrain.BARRICADE, Terrain.HIGH_GRASS, Terrain.FURROWED_GRASS, Terrain.SECRET_TRAP,
 			Terrain.TRAP, Terrain.INACTIVE_TRAP, Terrain.EMPTY_DECO,
-			Terrain.SIGN, Terrain.WELL, Terrain.STATUE, Terrain.ALCHEMY,
+			Terrain.SIGN, Terrain.FLAMABLE_SIGN, Terrain.WELL, Terrain.STATUE, Terrain.ALCHEMY,
 			Terrain.DOOR, Terrain.OPEN_DOOR, Terrain.LOCKED_DOOR
 	));
 
@@ -125,6 +125,7 @@ public class DungeonTileSheet {
 		chasmStitcheable.put( Terrain.FURROWED_GRASS,CHASM_FLOOR );
 		chasmStitcheable.put( Terrain.EMPTY_DECO,   CHASM_FLOOR );
 		chasmStitcheable.put( Terrain.SIGN,         CHASM_FLOOR );
+		chasmStitcheable.put( Terrain.FLAMABLE_SIGN,CHASM_FLOOR );
 		chasmStitcheable.put( Terrain.EMPTY_WELL,   CHASM_FLOOR );
 		chasmStitcheable.put( Terrain.WELL,         CHASM_FLOOR );
 		chasmStitcheable.put( Terrain.STATUE,       CHASM_FLOOR );
@@ -374,6 +375,7 @@ public class DungeonTileSheet {
 		directFlatVisuals.put(Terrain.WALL_DECO,        FLAT_WALL_DECO);
 		directFlatVisuals.put(Terrain.BOOKSHELF,        FLAT_BOOKSHELF);
 		directFlatVisuals.put(Terrain.SIGN,             FLAT_SIGN);
+		directFlatVisuals.put(Terrain.FLAMABLE_SIGN,    FLAT_SIGN);
 		directFlatVisuals.put(Terrain.STATUE,           FLAT_STATUE);
 		directFlatVisuals.put(Terrain.STATUE_SP,        FLAT_STATUE_SP);
 		directFlatVisuals.put(Terrain.ALCHEMY,          FLAT_ALCHEMY_POT);

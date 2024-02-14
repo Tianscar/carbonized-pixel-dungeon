@@ -88,4 +88,13 @@ public class HeroAction {
 			this.target = target;
 		}
 	}
+
+	public static class Pull extends HeroAction {
+		public Object src;
+		public Pull( Object src, int dst ) {
+			this.src = src;
+			this.dst = dst;
+		}
+	}
+
 }

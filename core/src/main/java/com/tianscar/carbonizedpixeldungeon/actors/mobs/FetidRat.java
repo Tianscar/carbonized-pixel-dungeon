@@ -21,12 +21,14 @@
 
 package com.tianscar.carbonizedpixeldungeon.actors.mobs;
 
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.StenchGas;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Ooze;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Ghost;
+import com.tianscar.carbonizedpixeldungeon.items.quest.RatSkull;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.FetidRatSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
@@ -78,6 +80,8 @@ public class FetidRat extends Rat {
 	@Override
 	public void die( Object cause ) {
 		super.die( cause );
+
+		Dungeon.level.drop( new RatSkull(), pos ).sprite.drop();
 
 		Ghost.Quest.process();
 	}

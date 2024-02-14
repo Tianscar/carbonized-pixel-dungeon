@@ -24,6 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.actors.mobs;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.Ratmogrify;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.PlagueDoctor;
 import com.tianscar.carbonizedpixeldungeon.sprites.RatSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
@@ -61,6 +62,13 @@ public class Rat extends Mob {
 	@Override
 	public int drRoll() {
 		return Random.NormalIntRange(0, 1);
+	}
+
+	@Override
+	public void rollToDropLoot() {
+		PlagueDoctor.Quest.process( this );
+
+		super.rollToDropLoot();
 	}
 
 	private static final String RAT_ALLY = "rat_ally";

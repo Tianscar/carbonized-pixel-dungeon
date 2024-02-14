@@ -25,11 +25,13 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.RatKing;
 import com.tianscar.carbonizedpixeldungeon.items.Gold;
 import com.tianscar.carbonizedpixeldungeon.items.Heap;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
+import com.tianscar.carbonizedpixeldungeon.items.food.Cheese;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.sewerboss.SewerBossEntranceRoom;
+import com.tianscar.carbonizedpixeldungeon.utils.GrowableIntArray;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class RatKingRoom extends SecretRoom {
@@ -46,7 +48,7 @@ public class RatKingRoom extends SecretRoom {
 	public int maxHeight() { return 7; }
 	public int maxWidth() { return 7; }
 	
-	public void paint(Level level ) {
+	public void paint( Level level ) {
 
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1, Terrain.EMPTY_SP );
@@ -54,15 +56,29 @@ public class RatKingRoom extends SecretRoom {
 		Door entrance = entrance();
 		entrance.set( Door.Type.HIDDEN );
 		int door = entrance.x + entrance.y * level.width();
-		
+
+		GrowableIntArray keys = new GrowableIntArray();
+
 		for (int i=left + 1; i < right; i++) {
-			addChest( level, (top + 1) * level.width() + i, door );
-			addChest( level, (bottom - 1) * level.width() + i, door );
+			testPlaceChest( level, (top + 1) * level.width() + i, door, keys );
+			testPlaceChest( level, (bottom - 1) * level.width() + i, door, keys );
 		}
 		
 		for (int i=top + 2; i < bottom - 1; i++) {
-			addChest( level, i * level.width() + left + 1, door );
-			addChest( level, i * level.width() + right - 1, door );
+			testPlaceChest( level, i * level.width() + left + 1, door, keys );
+			testPlaceChest( level, i * level.width() + right - 1, door, keys );
+		}
+
+		Item[] values = new Item[keys.size];
+		values[0] = new Cheese();
+		for (int i = 1; i < values.length; i ++) {
+			values[i] = new Gold( Random.IntRange( 10, 25 ) );
+		}
+
+		Random.shuffle( values );
+
+		for (int i = 0; i < keys.size; i ++) {
+			level.drop( values[i], keys.get(i) ).type = Heap.Type.CHEST;
 		}
 
 		RatKing king = new RatKing();
@@ -70,7 +86,7 @@ public class RatKingRoom extends SecretRoom {
 		level.mobs.add( king );
 	}
 	
-	private static void addChest( Level level, int pos, int door ) {
+	private static void testPlaceChest(Level level, int pos, int door, GrowableIntArray keys ) {
 		
 		if (pos == door - 1 ||
 			pos == door + 1 ||
@@ -78,9 +94,9 @@ public class RatKingRoom extends SecretRoom {
 			pos == door + level.width()) {
 			return;
 		}
-		
-		Item prize = new Gold( Random.IntRange( 10, 25 ) );
-		
-		level.drop( prize, pos ).type = Heap.Type.CHEST;
+
+		keys.add( pos );
+
 	}
+
 }

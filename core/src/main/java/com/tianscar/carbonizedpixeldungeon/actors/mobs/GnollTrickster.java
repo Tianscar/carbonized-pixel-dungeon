@@ -31,6 +31,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Poison;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Ghost;
 import com.tianscar.carbonizedpixeldungeon.items.Generator;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
+import com.tianscar.carbonizedpixeldungeon.items.quest.BrokenSatchel;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.tianscar.carbonizedpixeldungeon.mechanics.Ballistica;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
@@ -121,6 +122,8 @@ public class GnollTrickster extends Gnoll {
 	@Override
 	public void die( Object cause ) {
 		super.die( cause );
+
+		Dungeon.level.drop( new BrokenSatchel(), pos ).sprite.drop();
 
 		Ghost.Quest.process();
 	}

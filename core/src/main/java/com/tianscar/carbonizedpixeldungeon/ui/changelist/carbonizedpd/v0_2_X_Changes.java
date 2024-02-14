@@ -26,6 +26,11 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.elementalist.AetherBlink;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.elementalist.Resonance;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Gardner;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Patrol;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.PlagueDoctor;
+import com.tianscar.carbonizedpixeldungeon.items.food.Cheese;
+import com.tianscar.carbonizedpixeldungeon.items.food.SmallRation;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
@@ -46,9 +51,51 @@ public class v0_2_X_Changes {
 		ChangeInfo changes = new ChangeInfo("v0.2.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_2_3_Changes( changeInfos );
 		add_v0_2_2_Changes( changeInfos );
 		add_v0_2_1_Changes( changeInfos );
 		add_v0_2_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_2_3_Changes( ArrayList<ChangeInfo> changeInfos ) {
+
+		ChangeInfo changes = new ChangeInfo("v0.2.3", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING),
+				"内容未完成",
+				"一些文本未被翻译成英文，并且元素使的第三个护甲技能未被添加"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.2.2的 Bug）：\n" +
+						"_-_ 徽章贴图显示错误的问题"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.1.0的 Bug）：\n" +
+						"_-_ 英雄选择界面文本缺失的问题"));
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.CHEESE),
+				Messages.get(Cheese.class, "name"),
+				"在老鼠王的房间会固定刷新一块。效果等价于全肉大饼。"));
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.BLUEBERRIES),
+				"蓝莓花园",
+				"在下水道的每层（Boss层除外）固定刷新一个蓝莓花园（如果是大型层则两个），每个蓝莓花园会刷新1-2个可供采摘的蓝莓丛。蓝莓能回复少量饱食度。"));
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.OVERPRICED),
+				Messages.get(SmallRation.class, "name"),
+				"在下水道的每层（Boss层除外）固定刷新一个小包口粮（如果是大型层则两个）。"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.GARDNER, 0, 0, 12, 16),
+				Messages.get(Gardner.class, "name"),
+				Messages.get(Gardner.class, "quest")));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.PLAGUEDR, 0, 0, 18, 16),
+				Messages.get(PlagueDoctor.class, "name"),
+				Messages.get(PlagueDoctor.class, "quest")));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.PATROL, 0, 0, 12, 16),
+				Messages.get(Patrol.class, "name"),
+				Messages.get(Patrol.class, "quest")));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.BARMAID, 0, 0, 16, 16),
+				"酒馆",
+				"0层的酒馆开张！"));
 
 	}
 
@@ -62,7 +109,7 @@ public class v0_2_X_Changes {
 				"内容未完成",
 				"一些文本未被翻译成英文，并且元素使的第三个护甲技能未被添加"));
 		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
-				"_-_ 微调了游戏主界面的玩家信息显示" +
+				"_-_ 微调了游戏主界面的玩家信息显示\n" +
 						 "_-_ 重制了安卓端的崩溃日志界面"));
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.ELEMENTALIST, 0, 15, 12, 15),
 				HeroClass.ELEMENTALIST.title(), HeroClass.ELEMENTALIST.unlockMsg()));

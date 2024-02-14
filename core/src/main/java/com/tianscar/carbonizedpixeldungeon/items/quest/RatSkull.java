@@ -24,8 +24,6 @@ package com.tianscar.carbonizedpixeldungeon.items.quest;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
-//this one's still hanging around to support quests from old saves
-//I may reuse it at some point.
 public class RatSkull extends Item {
 	
 	{
