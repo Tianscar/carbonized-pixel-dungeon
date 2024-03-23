@@ -36,6 +36,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Blacksmith;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Gardner;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Ghost;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Imp;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Knight;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Patrol;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.PlagueDoctor;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Wandmaker;
@@ -215,8 +216,11 @@ public class Dungeon {
 		chapters = new HashSet<>();
 
 		Gardner.Quest.reset();
+		PlagueDoctor.Quest.reset();
+		Patrol.Quest.reset();
 		Ghost.Quest.reset();
 		Wandmaker.Quest.reset();
+		Knight.Quest.reset();
 		Blacksmith.Quest.reset();
 		Imp.Quest.reset();
 
@@ -501,6 +505,7 @@ public class Dungeon {
 			PlagueDoctor.Quest.storeInBundle( quests );
 			Ghost		.Quest.storeInBundle( quests );
 			Wandmaker	.Quest.storeInBundle( quests );
+			Knight      .Quest.storeInBundle( quests );
 			Blacksmith	.Quest.storeInBundle( quests );
 			Imp			.Quest.storeInBundle( quests );
 			bundle.put( QUESTS, quests );
@@ -598,6 +603,7 @@ public class Dungeon {
 				PlagueDoctor.Quest.restoreFromBundle( quests );
 				Ghost.Quest.restoreFromBundle( quests );
 				Wandmaker.Quest.restoreFromBundle( quests );
+				Knight.Quest.restoreFromBundle( quests );
 				Blacksmith.Quest.restoreFromBundle( quests );
 				Imp.Quest.restoreFromBundle( quests );
 			} else {
@@ -606,6 +612,7 @@ public class Dungeon {
 				PlagueDoctor.Quest.reset();
 				Ghost.Quest.reset();
 				Wandmaker.Quest.reset();
+				Knight.Quest.reset();
 				Blacksmith.Quest.reset();
 				Imp.Quest.reset();
 			}

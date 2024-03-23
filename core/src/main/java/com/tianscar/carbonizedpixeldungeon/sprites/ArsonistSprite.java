@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2021 Evan Debenham
+ * Copyright (C) 2014-2042 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,25 +24,26 @@ package com.tianscar.carbonizedpixeldungeon.sprites;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
 
-public class BarmaidSprite extends MobSprite {
+public class ArsonistSprite extends MobSprite {
 
-	public BarmaidSprite() {
+	public ArsonistSprite() {
 		super();
 		
-		texture( Assets.Sprites.BARMAID );
-
-		TextureFilm frames = new TextureFilm( texture, 16, 16 );
-
-		idle = new Animation( 5, true );
-		idle.frames( frames, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7 );
-
-		run = new Animation( 20, true );
-		run.frames( frames, 0 );
-
-		die = new Animation( 20, false );
-		die.frames( frames, 0 );
-
-		play( idle );
+		texture( Assets.Sprites.THIEF );
+		TextureFilm film = new TextureFilm( texture, 12, 13 );
+		
+		idle = new Animation( 1, true );
+		idle.frames( film, 42, 42, 42, 43, 42, 42, 42, 42, 43 );
+		
+		run = new Animation( 15, true );
+		run.frames( film, 42, 42, 44, 45, 45, 46 );
+		
+		die = new Animation( 10, false );
+		die.frames( film, 46, 48, 49, 50, 51 );
+		
+		attack = new Animation( 12, false );
+		attack.frames( film, 52, 53, 54 );
+		
+		idle();
 	}
-
 }

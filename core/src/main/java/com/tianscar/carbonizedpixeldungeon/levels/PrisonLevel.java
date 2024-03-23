@@ -23,6 +23,7 @@ package com.tianscar.carbonizedpixeldungeon.levels;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Knight;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.tianscar.carbonizedpixeldungeon.effects.particles.FlameParticle;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
@@ -69,7 +70,7 @@ public class PrisonLevel extends RegularLevel {
 
 	@Override
 	protected ArrayList<Room> initRooms() {
-		return Wandmaker.Quest.spawnRoom(super.initRooms());
+		return Wandmaker.Quest.spawnRoom(Knight.Quest.spawnRoom(super.initRooms()));
 	}
 
 	@Override

@@ -19,30 +19,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.tianscar.carbonizedpixeldungeon.sprites;
+package com.tianscar.carbonizedpixeldungeon.plants;
 
-import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.Dungeon;
+import com.tianscar.carbonizedpixeldungeon.actors.Char;
+import com.tianscar.carbonizedpixeldungeon.items.Heap;
+import com.tianscar.carbonizedpixeldungeon.items.artifacts.DriedRose;
 
-public class BarmaidSprite extends MobSprite {
+public class RoseBush extends Plant {
 
-	public BarmaidSprite() {
-		super();
-		
-		texture( Assets.Sprites.BARMAID );
-
-		TextureFilm frames = new TextureFilm( texture, 16, 16 );
-
-		idle = new Animation( 5, true );
-		idle.frames( frames, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7 );
-
-		run = new Animation( 20, true );
-		run.frames( frames, 0 );
-
-		die = new Animation( 20, false );
-		die.frames( frames, 0 );
-
-		play( idle );
+	{
+		image = 13;
 	}
 
+	@Override
+	public void activate( Char ch ) {
+		Heap heap = Dungeon.level.drop( new DriedRose.Petal(), pos );
+		heap.type = Heap.Type.HEAP;
+		heap.sprite.drop();
+	}
+
+	//seed is never dropped
+	public static class Seed extends Plant.Seed {
+		{
+			plantClass = RoseBush.class;
+		}
+
+	}
 }

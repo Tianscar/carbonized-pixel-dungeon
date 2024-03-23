@@ -272,6 +272,7 @@ public class ItemSpriteSheet {
 	public static final int GREATAXE        = WEP_TIER5+3;
 	public static final int GREATSHIELD     = WEP_TIER5+4;
 	public static final int GAUNTLETS       = WEP_TIER5+5;
+	public static final int GOLDEN_SWORD    = WEP_TIER5+6;
 	static{
 		assignItemRect(GREATSWORD,  16, 16);
 		assignItemRect(WAR_HAMMER,  16, 16);
@@ -279,6 +280,7 @@ public class ItemSpriteSheet {
 		assignItemRect(GREATAXE,    12, 16);
 		assignItemRect(GREATSHIELD, 12, 16);
 		assignItemRect(GAUNTLETS,   13, 15);
+		assignItemRect(GOLDEN_SWORD,16, 16);
 	}
 
 	                                                                                    //16 free slots
@@ -678,31 +680,33 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int QUEST  =                                       xy(1, 29);  //32 slots
-	public static final int SKULL   = QUEST+0;
-	public static final int DUST    = QUEST+1;
-	public static final int CANDLE  = QUEST+2;
-	public static final int EMBER   = QUEST+3;
-	public static final int PICKAXE = QUEST+4;
-	public static final int ORE     = QUEST+5;
-	public static final int TOKEN   = QUEST+6;
-	public static final int BLOB    = QUEST+7;
-	public static final int SHARD   = QUEST+8;
-	public static final int HIDE    = QUEST+9;
-	public static final int CLAW    = QUEST+10;
-	public static final int SATCHEL = QUEST+11;
+	public static final int SKULL       = QUEST+0;
+	public static final int DUST        = QUEST+1;
+	public static final int CANDLE      = QUEST+2;
+	public static final int EMBER       = QUEST+3;
+	public static final int PICKAXE     = QUEST+4;
+	public static final int ORE         = QUEST+5;
+	public static final int TOKEN       = QUEST+6;
+	public static final int BLOB        = QUEST+7;
+	public static final int SHARD       = QUEST+8;
+	public static final int HIDE        = QUEST+9;
+	public static final int CLAW        = QUEST+10;
+	public static final int SATCHEL     = QUEST+11;
+	public static final int GOLDEN_SEAL = QUEST+12;
 	static{
-		assignItemRect(SKULL,   16, 11);
-		assignItemRect(DUST,    12, 11);
-		assignItemRect(CANDLE,  12, 12);
-		assignItemRect(EMBER,   12, 11);
-		assignItemRect(PICKAXE, 14, 14);
-		assignItemRect(ORE,     15, 15);
-		assignItemRect(TOKEN,   12, 12);
-		assignItemRect(BLOB,    10,  9);
-		assignItemRect(SHARD,    8, 10);
-		assignItemRect(HIDE,    14, 11);
-		assignItemRect(CLAW,    15, 13);
-		assignItemRect(SATCHEL, 14, 13);
+		assignItemRect(SKULL,      16, 11);
+		assignItemRect(DUST,       12, 11);
+		assignItemRect(CANDLE,     12, 12);
+		assignItemRect(EMBER,      12, 11);
+		assignItemRect(PICKAXE,    14, 14);
+		assignItemRect(ORE,        15, 15);
+		assignItemRect(TOKEN,      12, 12);
+		assignItemRect(BLOB,       10,  9);
+		assignItemRect(SHARD,       8, 10);
+		assignItemRect(HIDE,       14, 11);
+		assignItemRect(CLAW,       15, 13);
+		assignItemRect(SATCHEL,    14, 13);
+		assignItemRect(GOLDEN_SEAL, 9, 15);
 	}
 
 																						//32 free slots

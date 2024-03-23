@@ -19,30 +19,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.tianscar.carbonizedpixeldungeon.sprites;
+package com.tianscar.carbonizedpixeldungeon.items.quest;
 
-import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.items.Item;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
+import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 
-public class BarmaidSprite extends MobSprite {
-
-	public BarmaidSprite() {
-		super();
+public class GoldenSeal extends Item {
+	
+	{
+		image = ItemSpriteSheet.GOLDEN_SEAL;
 		
-		texture( Assets.Sprites.BARMAID );
+		unique = true;
+	}
 
-		TextureFilm frames = new TextureFilm( texture, 16, 16 );
+	private static final ItemSprite.Glowing YELLOW = new ItemSprite.Glowing( 0xFFFF00 );
+	
+	@Override
+	public boolean isUpgradable() {
+		return false;
+	}
+	
+	@Override
+	public boolean isIdentified() {
+		return true;
+	}
 
-		idle = new Animation( 5, true );
-		idle.frames( frames, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7 );
-
-		run = new Animation( 20, true );
-		run.frames( frames, 0 );
-
-		die = new Animation( 20, false );
-		die.frames( frames, 0 );
-
-		play( idle );
+	@Override
+	public ItemSprite.Glowing glowing() {
+		return YELLOW;
 	}
 
 }

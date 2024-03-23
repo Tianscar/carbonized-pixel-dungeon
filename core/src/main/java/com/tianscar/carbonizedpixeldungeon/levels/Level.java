@@ -82,6 +82,7 @@ import com.tianscar.carbonizedpixeldungeon.plants.Swiftthistle;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
+import com.tianscar.carbonizedpixeldungeon.tiles.FlamableCustomTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.BArray;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundlable;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
@@ -709,6 +710,18 @@ public abstract class Level implements Bundlable {
 	}
 
 	public void destroy( int pos ) {
+
+		// if custom tile type is flammable
+		HashSet<FlamableCustomTilemap> flammable = new HashSet<>();
+		for (CustomTilemap tile : customTiles) {
+			if (tile instanceof FlamableCustomTilemap) {
+				if (pointToCell(tile.tileX, tile.tileY) == pos) flammable.add((FlamableCustomTilemap) tile);
+			}
+		}
+		for (FlamableCustomTilemap tile : flammable) {
+			tile.remove();
+		}
+
 		//if raw tile type is flammable or empty
 		int terr = map[pos];
 		if (terr == Terrain.EMPTY || terr == Terrain.EMPTY_DECO

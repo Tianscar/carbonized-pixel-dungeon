@@ -164,7 +164,7 @@ public class WelcomeScene extends PixelScene {
 				message += "\n" + Messages.get(this, "patch_bugfixes");
 				message += "\n" + Messages.get(this, "patch_contents");
 				message += "\n" + Messages.get(this, "patch_translations");
-				//message += "\n" + Messages.get(this, "patch_tweaks");
+				message += "\n" + Messages.get(this, "patch_tweaks");
 				//message += "\n" + Messages.get(this, "patch_performance");
 
 			}

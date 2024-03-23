@@ -24,19 +24,25 @@ package com.tianscar.carbonizedpixeldungeon.ui.changelist.carbonizedpd;
 import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroClass;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.HeroSubClass;
+import com.tianscar.carbonizedpixeldungeon.actors.hero.Talent;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.elementalist.AetherBlink;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.elementalist.Resonance;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.Arsonist;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.GoldenStatue;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Gardner;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Knight;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Patrol;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.PlagueDoctor;
 import com.tianscar.carbonizedpixeldungeon.items.food.Cheese;
 import com.tianscar.carbonizedpixeldungeon.items.food.SmallRation;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.GoldenSword;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
 import com.tianscar.carbonizedpixeldungeon.scenes.ChangesScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSpriteSheet;
 import com.tianscar.carbonizedpixeldungeon.ui.Icons;
+import com.tianscar.carbonizedpixeldungeon.ui.TalentIcon;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeButton;
 import com.tianscar.carbonizedpixeldungeon.ui.changelist.ChangeInfo;
@@ -51,10 +57,46 @@ public class v0_2_X_Changes {
 		ChangeInfo changes = new ChangeInfo("v0.2.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_2_4_Changes( changeInfos );
 		add_v0_2_3_Changes( changeInfos );
 		add_v0_2_2_Changes( changeInfos );
 		add_v0_2_1_Changes( changeInfos );
 		add_v0_2_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_2_4_Changes( ArrayList<ChangeInfo> changeInfos ) {
+
+		ChangeInfo changes = new ChangeInfo("v0.2.4", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING),
+				"内容未完成",
+				"一些文本未被翻译成英文，并且元素使的第三个护甲技能未被添加"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.2.3的 Bug）：\n" +
+						"_-_ 瘟疫巫医和巡逻队员不生成的Bug"));
+		changes.addButton( new ChangeButton(new Image(Assets.Sprites.THIEF, 0, 26, 12, 13),
+				Messages.get(Arsonist.class, "name"),
+				"会在监狱层出现，类似于疯狂强盗，但点燃英雄而非使英雄中毒"));
+		changes.addButton( new ChangeButton(new Image(Assets.Sprites.GOLDEN, 0, 0, 12, 15),
+				Messages.get(GoldenStatue.class, "name"),
+				"有概率在矮人层和恶魔层的金币间出现，必定手持昂贵的黄金剑！"));
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.GOLDEN_SWORD),
+				Messages.get(GoldenSword.class, "name"),
+				Messages.get(GoldenSword.class, "desc")));
+		String knightIntro = Messages.get(Knight.class, "intro");
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.KNIGHT, 0, 0, 12, 16),
+				Messages.get(Knight.class, "name"),
+				knightIntro.substring(knightIntro.lastIndexOf("\n") + 1)));
+		changes.addButton(new ChangeButton(new TalentIcon(Talent.ICEMAIL.icon()),
+				Talent.ICEMAIL.title(),
+				"现在晶触之力（晶触秘药的buff）也能像冻伤状态一样触发元素使的寒冰铠甲天赋"));
+		changes.addButton(new ChangeButton(Icons.get(Icons.DISPLAY), "界面改进",
+				"_-_ 更新了字体\n" +
+						"_-_ 微调了部分贴图"));
 
 	}
 

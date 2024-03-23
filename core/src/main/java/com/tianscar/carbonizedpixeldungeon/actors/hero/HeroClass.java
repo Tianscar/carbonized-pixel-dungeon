@@ -44,6 +44,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.Shockwa
 import com.tianscar.carbonizedpixeldungeon.items.Amulet;
 import com.tianscar.carbonizedpixeldungeon.items.BrokenSeal;
 import com.tianscar.carbonizedpixeldungeon.items.CarbonSteel;
+import com.tianscar.carbonizedpixeldungeon.items.Gold;
 import com.tianscar.carbonizedpixeldungeon.items.Honeypot;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.KingsCrown;
@@ -65,6 +66,7 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfInvisibility;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
+import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfStrength;
 import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfHoneyedHealing;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfForce;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfMight;
@@ -82,6 +84,7 @@ import com.tianscar.carbonizedpixeldungeon.items.spells.CurseInfusion;
 import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.stones.StoneOfEnchantment;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfBlastWave;
+import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfDisintegration;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfFireblast;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfLightning;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfMagicMissile;
@@ -89,6 +92,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.SpiritBow;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Buckler;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Dagger;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Gloves;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.GoldenSword;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Greatsword;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Knuckles;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
@@ -180,6 +184,7 @@ public enum HeroClass {
 			new StoneOfEnchantment().quantity(20).collect();
 			new Stylus().quantity(20).collect();
 
+			new PotionOfStrength().identify().quantity(30).collect();
 			new PotionOfExperience().identify().quantity(30).collect();
 			new PotionOfHealing().identify().quantity(30).collect();
 			new PotionOfInvisibility().identify().quantity(30).collect();
@@ -190,6 +195,7 @@ public enum HeroClass {
 			new WandOfBlastWave().identify().upgrade(8).collect();
 			new WandOfFireblast().identify().upgrade(8).collect();
 			new WandOfLightning().identify().upgrade(8).collect();
+			new WandOfDisintegration().identify().upgrade(8).collect();
 			new FishingSpear().quantity(30).collect();
 			new RingOfMight().identify().upgrade(8).collect();
 			new RingOfForce().identify().upgrade(8).collect();
@@ -206,6 +212,8 @@ public enum HeroClass {
 			new ScrollOfAffection().quantity(5).collect();
 
 			new CarbonSteel().quantity(30).collect();
+
+			new GoldenSword().identify().upgrade(8).collect();
 		}
 
 		for (int s = 0; s < QuickSlot.SIZE; s++) {

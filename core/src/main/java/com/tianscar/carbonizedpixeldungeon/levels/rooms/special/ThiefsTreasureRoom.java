@@ -22,56 +22,45 @@
 package com.tianscar.carbonizedpixeldungeon.levels.rooms.special;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.actors.mobs.GoldenStatue;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mimic;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.StrangeMimic;
 import com.tianscar.carbonizedpixeldungeon.items.Gold;
-import com.tianscar.carbonizedpixeldungeon.items.Heap;
 import com.tianscar.carbonizedpixeldungeon.items.keys.IronKey;
+import com.tianscar.carbonizedpixeldungeon.items.quest.GoldenSeal;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
-public class TreasuryRoom extends SpecialRoom {
+public class ThiefsTreasureRoom extends SpecialRoom {
+
+	@Override
+	public int maxWidth() {
+		return 7;
+	}
+
+	@Override
+	public int maxHeight() {
+		return 7;
+	}
 
 	public void paint( Level level ) {
 		
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1, Terrain.EMPTY );
 
-		if (Dungeon.depth > 15 && Random.Int( 2 ) == 0) {
-			GoldenStatue statue = new GoldenStatue();
-			statue.pos = level.pointToCell( center() );
-			level.mobs.add(statue);
-		}
-		else Painter.set( level, center(), Terrain.STATUE );
-		
-		Heap.Type heapType = Random.Int( 2 ) == 0 ? Heap.Type.CHEST : Heap.Type.HEAP;
-		
-		int n = Random.IntRange( 2, 3 );
-		for (int i=0; i < n; i++) {
+		level.mobs.add(Mimic.spawnAt(level.pointToCell(center()), new GoldenSeal(), StrangeMimic.class));
+
+		for (int i=0; i < 6; i++) {
 			int pos;
 			do {
 				pos = level.pointToCell(random());
-			} while (level.map[pos] != Terrain.EMPTY || level.heaps.get( pos ) != null || level.findMob(pos) != null);
-			if (heapType == Heap.Type.CHEST && Dungeon.depth > 1 && Random.Int( 5 ) == 0){
-				level.mobs.add(Mimic.spawnAt(pos, new Gold().random()));
-			} else {
-				level.drop( new Gold().random(), pos ).type = heapType;
-			}
-		}
-		
-		if (heapType == Heap.Type.HEAP) {
-			for (int i=0; i < 6; i++) {
-				int pos;
-				do {
-					pos = level.pointToCell(random());
-				} while (level.map[pos] != Terrain.EMPTY);
-				level.drop( new Gold( Random.IntRange( 5, 12 ) ), pos );
-			}
+			} while (level.map[pos] != Terrain.EMPTY);
+			level.drop( new Gold( Random.IntRange( 5, 12 ) ), pos );
 		}
 		
 		entrance().set( Door.Type.LOCKED );
 		level.addItemToSpawn( new IronKey( Dungeon.depth ) );
 	}
+
 }

@@ -77,6 +77,7 @@ public class Notes {
 		PLAGUEDOCTOR,
 		GHOST,
 		WANDMAKER,
+		KNIGHT,
 		TROLL,
 		IMP;
 		

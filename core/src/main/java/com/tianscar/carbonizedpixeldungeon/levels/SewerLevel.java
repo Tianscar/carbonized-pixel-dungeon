@@ -48,14 +48,12 @@ import com.tianscar.carbonizedpixeldungeon.noosa.audio.Music;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.Emitter;
 import com.tianscar.carbonizedpixeldungeon.noosa.particles.PixelParticle;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
-import com.tianscar.carbonizedpixeldungeon.tiles.CustomTilemap;
 import com.tianscar.carbonizedpixeldungeon.tiles.DungeonTilemap;
 import com.tianscar.carbonizedpixeldungeon.utils.ColorMath;
 import com.tianscar.carbonizedpixeldungeon.utils.PointF;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class SewerLevel extends RegularLevel {
 
@@ -72,29 +70,15 @@ public class SewerLevel extends RegularLevel {
 	}
 
 	@Override
-	public void destroy(int pos) {
-		HashSet<BerryGardenRoom.Bush> bushes = new HashSet<>();
-		for (CustomTilemap tile : customTiles) {
-			if (tile instanceof BerryGardenRoom.Bush) {
-				if (pointToCell(tile.tileX, tile.tileY) == pos) bushes.add((BerryGardenRoom.Bush) tile);
-			}
-		}
-		for (BerryGardenRoom.Bush bush : bushes) {
-			bush.remove();
-		}
-		super.destroy(pos);
-	}
-
-	@Override
 	protected ArrayList<Room> initRooms() {
 		ArrayList<Room> rooms = super.initRooms();
-		BerryGardenRoom room = new BerryGardenRoom();
-		room.h = Random.Int(2) == 0;
-		rooms.add( room );
+		BerryGardenRoom berryRoom = new BerryGardenRoom();
+		berryRoom.h = Random.Int(2) == 0;
+		rooms.add( berryRoom );
 		if (feeling == Feeling.LARGE) {
-			room = new BerryGardenRoom();
-			room.h = Random.Int(2) == 0;
-			rooms.add( room );
+			berryRoom = new BerryGardenRoom();
+			berryRoom.h = Random.Int(2) == 0;
+			rooms.add( berryRoom );
 		}
 		return rooms;
 	}

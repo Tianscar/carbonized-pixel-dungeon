@@ -55,7 +55,7 @@ public class Assets {
 		public static final String WATER_SOKOBAN= "environment/water_sokoban.png";
 
 		public static final String WEAK_FLOOR       = "environment/custom_tiles/weak_floor.png";
-		public static final String SEWER_BUSH       = "environment/custom_tiles/sewer_bush.png";
+		public static final String SEWER_GARDEN     = "environment/custom_tiles/sewer_garden.png";
 		public static final String SEWER_BOSS       = "environment/custom_tiles/sewer_boss.png";
 		public static final String PRISON_QUEST     = "environment/custom_tiles/prison_quests.png";
 		public static final String PRISON_EXIT      = "environment/custom_tiles/prison_exit.png";
@@ -288,6 +288,7 @@ public class Assets {
 		public static final String WRAITH	= "sprites/wraith.png";
 		public static final String UNDEAD	= "sprites/undead.png";
 		public static final String KING		= "sprites/king.png";
+		public static final String KNIGHT   = "sprites/knight.png";
 		public static final String PIRANHA	= "sprites/piranha.png";
 		public static final String EYE		= "sprites/eye.png";
 		public static final String GNOLL	= "sprites/gnoll.png";
@@ -337,5 +338,6 @@ public class Assets {
 		public static final String LOTUS	= "sprites/lotus.png";
 		public static final String NINJA_LOG= "sprites/ninja_log.png";
 		public static final String SPIRIT_HAWK= "sprites/spirit_hawk.png";
+		public static final String GOLDEN   = "sprites/golden_statue.png";
 	}
 }

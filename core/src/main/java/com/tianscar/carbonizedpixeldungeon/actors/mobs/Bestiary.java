@@ -28,9 +28,9 @@ import java.util.Arrays;
 
 public class Bestiary {
 	
-	public static ArrayList<Class<? extends Mob>> getMobRotation( int depth ){
+	public static ArrayList<Class<? extends Mob>> getMobRotation( int depth ) {
 		ArrayList<Class<? extends Mob>> mobs = standardMobRotation( depth );
-		addRareMobs(depth, mobs);
+		//addRareMobs(depth, mobs);
 		swapMobAlts(mobs);
 		Random.shuffle(mobs);
 		return mobs;
@@ -191,6 +191,7 @@ public class Bestiary {
 	}
 	
 	//has a chance to add a rarely spawned mobs to the rotation
+	/*
 	public static void addRareMobs( int depth, ArrayList<Class<?extends Mob>> rotation ){
 		
 		switch (depth){
@@ -218,6 +219,7 @@ public class Bestiary {
 				return;
 		}
 	}
+	 */
 	
 	//switches out regular mobs for their alt versions when appropriate
 	private static void swapMobAlts(ArrayList<Class<?extends Mob>> rotation){
@@ -229,7 +231,8 @@ public class Bestiary {
 				} else if (cl == Slime.class) {
 					cl = CausticSlime.class;
 				} else if (cl == Thief.class) {
-					cl = Bandit.class;
+					if (Random.Int( 2 ) == 0) cl = Bandit.class;
+					else cl = Arsonist.class;
 				} else if (cl == Necromancer.class){
 					cl = SpectralNecromancer.class;
 				} else if (cl == Brute.class) {

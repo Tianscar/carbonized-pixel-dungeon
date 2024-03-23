@@ -28,6 +28,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Acidic;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Albino;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.ArmoredBrute;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.Arsonist;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Bandit;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Bestiary;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.CausticSlime;
@@ -60,7 +61,7 @@ public class DistortionTrap extends Trap{
 
 	private static final ArrayList<Class<?extends Mob>> RARE = new ArrayList<>(Arrays.asList(
 			Albino.class, CausticSlime.class,
-			Bandit.class,
+			Bandit.class, Arsonist.class,
 			ArmoredBrute.class, DM201.class,
 			Elemental.ChaosElemental.class, Senior.class,
 			Acidic.class));

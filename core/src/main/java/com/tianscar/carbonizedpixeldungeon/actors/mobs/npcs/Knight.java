@@ -24,46 +24,40 @@ package com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.Shadow;
 import com.tianscar.carbonizedpixeldungeon.items.Gold;
-import com.tianscar.carbonizedpixeldungeon.items.Item;
-import com.tianscar.carbonizedpixeldungeon.items.quest.BrokenSatchel;
-import com.tianscar.carbonizedpixeldungeon.items.quest.CrabClaw;
-import com.tianscar.carbonizedpixeldungeon.items.quest.RatSkull;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.LightCrossbow;
+import com.tianscar.carbonizedpixeldungeon.items.quest.GoldenSeal;
 import com.tianscar.carbonizedpixeldungeon.journal.Notes;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
+import com.tianscar.carbonizedpixeldungeon.levels.rooms.special.ThiefsTreasureRoom;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
-import com.tianscar.carbonizedpixeldungeon.sprites.PatrolSprite;
+import com.tianscar.carbonizedpixeldungeon.sprites.KnightSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
 import com.tianscar.carbonizedpixeldungeon.utils.Callback;
 import com.tianscar.carbonizedpixeldungeon.utils.Point;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
-import com.tianscar.carbonizedpixeldungeon.windows.WndPatrol;
+import com.tianscar.carbonizedpixeldungeon.windows.WndKnight;
 import com.tianscar.carbonizedpixeldungeon.windows.WndQuest;
 
-public class Patrol extends NPC {
+import java.util.ArrayList;
+
+public class Knight extends NPC {
 
 	{
-		spriteClass = PatrolSprite.class;
+		spriteClass = KnightSprite.class;
 
 		properties.add(Property.IMMOVABLE);
 	}
-
+	
 	@Override
 	protected boolean act() {
-
-		if (Quest.given && Quest.completed && !Dungeon.level.heroFOV[pos] && !Dungeon.level.heroFOV[Dungeon.level.entrance]) {
-			destroy();
-			sprite.die();
+		if (Dungeon.level.heroFOV[pos] && Quest.gold != null){
+			Notes.add( Notes.Landmark.KNIGHT );
 		}
-		else if (Dungeon.level.heroFOV[pos] && Quest.given && !Quest.completed) {
-			Notes.add( Notes.Landmark.PATROL );
-		}
-
 		return super.act();
 	}
 	
@@ -84,7 +78,7 @@ public class Patrol extends NPC {
 	public boolean reset() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean interact(Char c) {
 		sprite.turnTo( pos, Dungeon.hero.pos );
@@ -94,150 +88,148 @@ public class Patrol extends NPC {
 		}
 
 		if (Quest.given) {
+			
+			GoldenSeal seal = Dungeon.hero.belongings.getItem(GoldenSeal.class);
 
-			if (Quest.completed) {
+			if (seal != null) {
 				Game.runOnRenderThread(new Callback() {
 					@Override
 					public void call() {
-						GameScene.show( new WndQuest( Patrol.this, Messages.get(Patrol.this, "thankyou" )) );
+						GameScene.show( new WndKnight( Knight.this, seal ) );
+					}
+				});
+			} else {
+				String msg;
+				switch(Knight.Quest.type){
+					case 1: default:
+						msg = Messages.get(this, "reminder_mimic", Dungeon.hero.name());
+						break;
+					case 2:
+						msg = Messages.get(this, "reminder_thief", Dungeon.hero.name());
+						break;
+				}
+				Game.runOnRenderThread(new Callback() {
+					@Override
+					public void call() {
+						GameScene.show(new WndQuest(Knight.this, msg));
 					}
 				});
 			}
-			else {
+			
+		} else {
 
-				boolean ghostQuestCompleted = Ghost.Quest.completed();
+			String msg1 = Messages.get(this, "intro", Dungeon.hero.name());
+			String msg2 = "";
 
-				Item questedItem;
-				if (ghostQuestCompleted) {
-					switch (Ghost.Quest.type) {
-						case 1: questedItem = Dungeon.hero.belongings.getItem(RatSkull.class); break;
-						case 2: questedItem = Dungeon.hero.belongings.getItem(BrokenSatchel.class); break;
-						case 3: questedItem = Dungeon.hero.belongings.getItem(CrabClaw.class); break;
-						default: questedItem = null; break;
-					}
-				}
-				else questedItem = null;
+			switch (Knight.Quest.type){
+				case 1:
+					msg2 += Messages.get(this, "intro_mimic");
+					break;
+				case 2:
+					msg2 += Messages.get(this, "intro_thief");
 
-				if (ghostQuestCompleted && questedItem != null) {
-
-					Game.runOnRenderThread(new Callback() {
-						@Override
-						public void call() {
-							GameScene.show( new WndPatrol( questedItem ) );
-						}
-					});
-
-				}
-				else {
-
-					Game.runOnRenderThread(new Callback() {
-						@Override
-						public void call() {
-							GameScene.show(new WndQuest(Patrol.this, Messages.get(Patrol.this, "reminder", Dungeon.hero.name())));
-						}
-					});
-
-				}
+					Mob questBoss = new Shadow();
+					questBoss.pos = Dungeon.level.randomRespawnCell( questBoss );
+					if (questBoss.pos == -1) return true;
+					else GameScene.add(questBoss);
+					break;
 			}
 
-		} else {
+			final String msg1Final = msg1;
+			final String msg2Final = msg2;
 
 			Game.runOnRenderThread(new Callback() {
 				@Override
 				public void call() {
-					Game.runOnRenderThread(new Callback() {
+					GameScene.show(new WndQuest(Knight.this, msg1Final){
 						@Override
-						public void call() {
-							GameScene.show(new WndQuest(Patrol.this, Messages.get(Patrol.this, "intro", Dungeon.hero.name())) {
-								@Override
-								public void hide() {
-									super.hide();
-									GameScene.show(new WndQuest(Patrol.this, Messages.get(Patrol.this, "quest")));
-								}
-							});
+						public void hide() {
+							super.hide();
+							GameScene.show(new WndQuest(Knight.this, msg2Final));
 						}
 					});
 				}
 			});
 
 			Quest.given = true;
-			Notes.add( Notes.Landmark.PATROL );
+			Notes.add( Notes.Landmark.KNIGHT );
 		}
 
 		return true;
 	}
-
+	
 	public static class Quest {
 
+		public static int type;
+		// 1 = mimic quest
+		// 2 = thief quest
+		
 		private static boolean spawned;
-		static boolean given;
-		private static boolean completed;
-
+		
+		private static boolean given;
+		
 		public static Gold gold;
-		public static Weapon weapon;
-		public static Weapon.Enchantment enchant;
-
+		
 		public static void reset() {
 			spawned = false;
-			given   = false;
-			completed = false;
+			type = 0;
 
 			gold = null;
-			weapon = null;
-			enchant = null;
 		}
-
-		private static final String NODE		= "patrol";
-
+		
+		private static final String NODE		= "knight";
+		
 		private static final String SPAWNED		= "spawned";
+		private static final String TYPE		= "type";
 		private static final String GIVEN		= "given";
-		private static final String COMPLETED	= "completed";
 		private static final String GOLD		= "gold";
-		private static final String WEAPON      = "weapon";
-		private static final String ENCHANT     = "enchant";
-
+		
 		public static void storeInBundle( Bundle bundle ) {
-
+			
 			Bundle node = new Bundle();
-
+			
 			node.put( SPAWNED, spawned );
-
+			
 			if (spawned) {
+				
+				node.put( TYPE, type );
+				
 				node.put( GIVEN, given );
-				node.put( COMPLETED, completed );
+				
 				node.put( GOLD, gold );
-				node.put( WEAPON, weapon );
 
-				if (enchant != null) {
-					node.put( ENCHANT, enchant );
-				}
 			}
-
+			
 			bundle.put( NODE, node );
 		}
-
+		
 		public static void restoreFromBundle( Bundle bundle ) {
 
 			Bundle node = bundle.getBundle( NODE );
-
+			
 			if (!node.isNull() && (spawned = node.getBoolean( SPAWNED ))) {
 
+				type = node.getInt(TYPE);
+				
 				given = node.getBoolean( GIVEN );
-				completed = node.getBoolean( COMPLETED );
+				
 				gold = (Gold) node.get( GOLD );
-				weapon = (Weapon) node.get( WEAPON );
 
-				if (node.contains( ENCHANT )) enchant = (Weapon.Enchantment) node.get( ENCHANT );
+			} else {
+				reset();
 			}
 		}
-
-		public static void spawn(Level level, Room room ) {
-
-			if (!spawned) {
-
-				Patrol npc = new Patrol();
+		
+		private static boolean questRoomSpawned;
+		
+		public static void spawnKnight( Level level, Room room ) {
+			if (questRoomSpawned) {
+				
+				questRoomSpawned = false;
+				
+				Knight npc = new Knight();
 				boolean validPos;
-				//Do not spawn patrol on the entrance, a trap, other mob, or in front of a door.
+				//Do not spawn knight on the entrance, a trap, or in front of a door.
 				do {
 					validPos = true;
 					npc.pos = level.pointToCell(room.random());
@@ -252,34 +244,40 @@ public class Patrol extends NPC {
 					if (level.traps.get(npc.pos) != null){
 						validPos = false;
 					}
-					if (level.findMob(npc.pos) != null) {
-						validPos = false;
-					}
 				} while (!validPos);
 				level.mobs.add( npc );
 
 				spawned = true;
 
 				given = false;
-
-				gold = new Gold( Random.IntRange( 200, 400 ) );
-				weapon = new LightCrossbow();
-				weapon.cursed = false;
-				if (Random.Int(2) == 0) weapon.upgrade();
-				//10% to be enchanted. We store it separately so enchant status isn't revealed early
-				if (Random.Int(10) == 0) enchant = Weapon.Enchantment.random();
+				gold = new Gold(2000);
+				
 			}
-
 		}
+		
+		public static ArrayList<Room> spawnRoom( ArrayList<Room> rooms ) {
+			questRoomSpawned = false;
+			if (!spawned && (type != 0 || (Dungeon.depth > 6 && Random.Int( 10 - Dungeon.depth ) == 0))) {
+				
+				// decide between 1, or 2 for quest type.
+				if (type == 0) {
+					type = Random.Int(2)+1;
+				}
 
+                if (type == 1) {
+                    rooms.add(new ThiefsTreasureRoom());
+                }
+		
+				questRoomSpawned = true;
+				
+			}
+			return rooms;
+		}
+		
 		public static void complete() {
 			gold = null;
-			weapon = null;
-			completed = true;
-
-			Notes.remove( Notes.Landmark.PATROL );
+			
+			Notes.remove( Notes.Landmark.KNIGHT );
 		}
-
 	}
-
 }

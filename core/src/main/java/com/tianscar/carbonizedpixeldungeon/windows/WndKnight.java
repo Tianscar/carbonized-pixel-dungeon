@@ -22,35 +22,43 @@
 package com.tianscar.carbonizedpixeldungeon.windows;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Patrol;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Knight;
 import com.tianscar.carbonizedpixeldungeon.items.Gold;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
-import com.tianscar.carbonizedpixeldungeon.items.weapon.Weapon;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
 import com.tianscar.carbonizedpixeldungeon.ui.RedButton;
 import com.tianscar.carbonizedpixeldungeon.ui.RenderedTextBlock;
 import com.tianscar.carbonizedpixeldungeon.ui.Window;
-import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 
-public class WndPatrol extends Window {
+public class WndKnight extends Window {
 
 	private static final int WIDTH      = 120;
 	private static final int BTN_HEIGHT = 20;
 	private static final int GAP        = 2;
 
-	public WndPatrol(final Item item) {
+	Knight knight;
+
+	public WndKnight(final Knight knight, final Item item) {
 		
 		super();
+
+		this.knight = knight;
 		
 		IconTitle titlebar = new IconTitle();
 		titlebar.icon( new ItemSprite( item.image(), null ) );
 		titlebar.label( Messages.titleCase( item.name() ) );
 		titlebar.setRect( 0, 0, WIDTH, 0 );
 		add( titlebar );
-		
-		RenderedTextBlock message = PixelScene.renderTextBlock( Messages.get(this, "message"), 6 );
+
+		String msg;
+		switch (Knight.Quest.type) {
+			case 1: default: msg = Messages.get(this, "mimic"); break;
+			case 2: msg = Messages.get(this, "thief"); break;
+		}
+
+		RenderedTextBlock message = PixelScene.renderTextBlock( msg, 6 );
 		message.maxWidth(WIDTH);
 		message.setPos(0, titlebar.bottom() + GAP);
 		add( message );
@@ -58,7 +66,7 @@ public class WndPatrol extends Window {
 		RedButton btnReward = new RedButton( Messages.get(this, "reward") ) {
 			@Override
 			protected void onClick() {
-				takeReward( item, Patrol.Quest.gold, Patrol.Quest.weapon, Patrol.Quest.enchant );
+				takeReward( item, Knight.Quest.gold );
 			}
 		};
 		btnReward.setRect( 0, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT );
@@ -67,26 +75,20 @@ public class WndPatrol extends Window {
 		resize( WIDTH, (int)btnReward.bottom() );
 	}
 
-	private void takeReward( Item item, Gold gold, Weapon reward, Weapon.Enchantment enchant ) {
+	private void takeReward( Item item, Gold gold ) {
 
 		hide();
 
 		gold.doPickUp( Dungeon.hero );
 
 		item.detach( Dungeon.hero.belongings.backpack );
-		if (reward == null) return;
 
-		reward.identify();
+		knight.yell( Messages.get(this, "farewell", Dungeon.hero.name()) );
+		knight.destroy();
 
-		if (enchant != null) reward.enchant( enchant );
+		knight.sprite.die();
 
-		if (reward.doPickUp( Dungeon.hero )) {
-			GLog.i( Messages.get(Dungeon.hero, "you_now_have", reward.name()) );
-		} else {
-			Dungeon.level.drop( reward, Dungeon.hero.pos ).sprite.drop();
-		}
-
-		Patrol.Quest.complete();
+		Knight.Quest.complete();
 	}
 
 }

@@ -45,6 +45,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Combo;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Drowsy;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Foresight;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Frost;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.FrostImbue;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.HoldFast;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Hunger;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Invisibility;
@@ -525,7 +526,7 @@ public class Hero extends Char {
 			if (STR() < belongings.armor().STRReq()){
 				armDr -= 2*(belongings.armor().STRReq() - STR());
 			}
-			if (hasTalent(Talent.ICEMAIL) && buff(ElementalHeart.FrostFocus.class) != null || buff(Chill.class) != null) {
+			if (hasTalent(Talent.ICEMAIL) && (buff(ElementalHeart.FrostFocus.class) != null || buff(Chill.class) != null || buff(FrostImbue.class) != null)) {
 				armDr += Math.round(armDr * 0.25f * pointsInTalent(Talent.ICEMAIL));
 			}
 			if (armDr > 0) dr += armDr;

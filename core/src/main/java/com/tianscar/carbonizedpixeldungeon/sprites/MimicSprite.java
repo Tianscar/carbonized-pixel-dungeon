@@ -102,4 +102,11 @@ public class MimicSprite extends MobSprite {
 		}
 	}
 
+	public static class Dark extends MimicSprite{
+		@Override
+		protected int texOffset() {
+			return 48;
+		}
+	}
+
 }

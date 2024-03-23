@@ -99,6 +99,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Flail;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Gauntlet;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Glaive;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Gloves;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.GoldenSword;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Greataxe;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Greatshield;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Greatsword;
@@ -186,6 +187,7 @@ public enum Catalog {
 		WEAPONS.seen.put( Greataxe.class,                   false);
 		WEAPONS.seen.put( Greatshield.class,                false);
 		WEAPONS.seen.put( Gauntlet.class,                   false);
+		WEAPONS.seen.put( GoldenSword.class,                false);
 	
 		ARMOR.seen.put( ClothArmor.class,                   false);
 		ARMOR.seen.put( LeatherArmor.class,                 false);

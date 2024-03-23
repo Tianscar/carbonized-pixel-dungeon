@@ -22,19 +22,21 @@
 package com.tianscar.carbonizedpixeldungeon.sprites;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
+import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
-public class BarmaidSprite extends MobSprite {
+public class KnightSprite extends MobSprite {
 
-	public BarmaidSprite() {
+	public KnightSprite() {
 		super();
 		
-		texture( Assets.Sprites.BARMAID );
+		texture( Assets.Sprites.KNIGHT );
 
-		TextureFilm frames = new TextureFilm( texture, 16, 16 );
+		TextureFilm frames = new TextureFilm( texture, 12, 16 );
 
-		idle = new Animation( 5, true );
-		idle.frames( frames, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7 );
+		idle = new Animation( 2, true );
+		idle.frames( frames, 0, 1, 1, 1, 0, 1 );
 
 		run = new Animation( 20, true );
 		run.frames( frames, 0 );
@@ -43,6 +45,17 @@ public class BarmaidSprite extends MobSprite {
 		die.frames( frames, 0 );
 
 		play( idle );
+	}
+
+	@Override
+	public void die() {
+		super.die();
+
+		emitter().start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+
+		if (visible) {
+			Sample.INSTANCE.play( Assets.Sounds.TELEPORT );
+		}
 	}
 
 }

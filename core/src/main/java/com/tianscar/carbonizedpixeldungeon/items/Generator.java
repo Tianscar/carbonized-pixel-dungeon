@@ -118,6 +118,7 @@ import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Flail;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Gauntlet;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Glaive;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Gloves;
+import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.GoldenSword;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Greataxe;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Greatshield;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.Greatsword;
@@ -371,9 +372,10 @@ public class Generator {
 					Glaive.class,
 					Greataxe.class,
 					Greatshield.class,
-					Gauntlet.class
+					Gauntlet.class,
+					GoldenSword.class
 			};
-			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4, 4 };
+			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4, 4, 0 };
 			
 			//see Generator.randomArmor
 			ARMOR.classes = new Class<?>[]{

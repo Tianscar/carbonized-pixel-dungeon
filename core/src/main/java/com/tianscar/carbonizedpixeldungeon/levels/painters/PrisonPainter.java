@@ -21,6 +21,7 @@
 
 package com.tianscar.carbonizedpixeldungeon.levels.painters;
 
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Knight;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
 import com.tianscar.carbonizedpixeldungeon.levels.Terrain;
@@ -38,6 +39,7 @@ public class PrisonPainter extends RegularPainter {
 		for (Room r : rooms) {
 			if (r instanceof EntranceRoom) {
 				Wandmaker.Quest.spawnWandmaker(level, r);
+				Knight.Quest.spawnKnight(level, r);
 				break;
 			}
 		}
