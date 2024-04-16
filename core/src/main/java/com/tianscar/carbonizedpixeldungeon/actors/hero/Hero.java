@@ -1012,7 +1012,7 @@ public class Hero extends Char {
 
 			}
 
-			return true;
+			return false;
 
 		} else if (getCloser( dst )) {
 
@@ -1523,15 +1523,14 @@ public class Hero extends Char {
 						if (((BerryGardenRoom.Bush) tile).age == 2) {
 							curAction = new HeroAction.Pull( tile, cell );
 
-							return true;
+							break;
 						}
 					}
 				}
 			}
 
 		}
-
-		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
+		else if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
 			
 			curAction = new HeroAction.Alchemy( cell );
 			
@@ -1951,7 +1950,7 @@ public class Hero extends Char {
 			}
 			
 		} else if (curAction instanceof HeroAction.OpenChest) {
-			
+
 			Heap heap = Dungeon.level.heaps.get( ((HeroAction.OpenChest)curAction).dst );
 			
 			if (Dungeon.level.distance(pos, heap.pos) <= 1){
