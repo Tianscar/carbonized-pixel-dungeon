@@ -127,6 +127,10 @@ public class BerryGardenRoom extends SpecialRoom {
 		do {
 			itemPos = level.pointToCell(random());
 		} while (level.heaps.get(itemPos) != null);
+		if (level.map[itemPos] == Terrain.HIGH_GRASS || level.map[itemPos] == Terrain.FURROWED_GRASS) {
+			level.map[itemPos] = Terrain.GRASS;
+			level.losBlocking[itemPos] = false;
+		}
 
 		level.drop(item, itemPos);
 	}

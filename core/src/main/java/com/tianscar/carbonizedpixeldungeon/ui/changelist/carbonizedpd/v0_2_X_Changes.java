@@ -57,11 +57,36 @@ public class v0_2_X_Changes {
 		ChangeInfo changes = new ChangeInfo("v0.2.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_2_5_Changes( changeInfos );
 		add_v0_2_4_Changes( changeInfos );
 		add_v0_2_3_Changes( changeInfos );
 		add_v0_2_2_Changes( changeInfos );
 		add_v0_2_1_Changes( changeInfos );
 		add_v0_2_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_2_5_Changes( ArrayList<ChangeInfo> changeInfos ) {
+
+		ChangeInfo changes = new ChangeInfo("v0.2.5", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING),
+				"内容未完成",
+				"一些文本未被翻译成英文，并且元素使的第三个护甲技能未被添加"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.2.3的 Bug）：\n" +
+						"_-_ 采摘蓝莓中途取消不掉落蓝莓的问题"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.2.2的 Bug）：\n" +
+						"_-_ 无法解锁元素使的问题"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.2.4的 Bug）：\n" +
+						"_-_ 骑士任务界面文本缺失的问题"));
 
 	}
 

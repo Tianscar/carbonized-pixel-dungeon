@@ -30,7 +30,7 @@ public class ElementalStatistics {
     }
 
     public static void registerSlain(Class<? extends Elemental> clazz) {
-        Statistics.elementalKindsSlain &= mask(clazz);
+        Statistics.elementalKindsSlain |= mask(clazz);
     }
 
     public static boolean isSlain(Class<? extends Elemental> clazz) {

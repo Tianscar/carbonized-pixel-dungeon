@@ -1006,10 +1006,10 @@ public class Hero extends Char {
 
 			Object src = action.src;
 			if (src instanceof BerryGardenRoom.Bush) {
-				((BerryGardenRoom.Bush) src).age = 0;
 
 				Sample.INSTANCE.play( Assets.Sounds.PLANT );
 				sprite.operate( dst );
+
 			}
 
 			return true;
@@ -1975,6 +1975,8 @@ public class Hero extends Char {
 
 			Object src = ((HeroAction.Pull) curAction).src;
 			if (src instanceof BerryGardenRoom.Bush) {
+
+				((BerryGardenRoom.Bush) src).age = 0;
 				((BerryGardenRoom.Bush) src).frame(0);
 
 				Dungeon.level.drop(new Blueberry().quantity(Random.Int(1, 3)), pos).sprite.drop();
