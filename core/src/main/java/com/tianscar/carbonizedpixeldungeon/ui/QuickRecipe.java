@@ -65,6 +65,8 @@ import com.tianscar.carbonizedpixeldungeon.items.spells.MagicalPorter;
 import com.tianscar.carbonizedpixeldungeon.items.spells.PhaseShift;
 import com.tianscar.carbonizedpixeldungeon.items.spells.ReclaimTrap;
 import com.tianscar.carbonizedpixeldungeon.items.spells.Recycle;
+import com.tianscar.carbonizedpixeldungeon.items.spells.SummonElemental;
+import com.tianscar.carbonizedpixeldungeon.items.spells.TelekineticGrab;
 import com.tianscar.carbonizedpixeldungeon.items.spells.WildEnergy;
 import com.tianscar.carbonizedpixeldungeon.items.stones.Runestone;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
@@ -377,11 +379,11 @@ public class QuickRecipe extends Component {
 				result.add(new QuickRecipe(new ElixirOfArcaneArmor.Recipe()));
 				return result;
 			case 9:
-				result.add(new QuickRecipe(new MagicalPorter.Recipe()));
+				result.add(new QuickRecipe(new TelekineticGrab.Recipe()));
 				result.add(new QuickRecipe(new PhaseShift.Recipe()));
 				result.add(new QuickRecipe(new WildEnergy.Recipe()));
 				result.add(new QuickRecipe(new BeaconOfReturning.Recipe()));
-				result.add(null);
+				result.add(new QuickRecipe(new SummonElemental.Recipe()));
 				result.add(null);
 				result.add(new QuickRecipe(new AquaBlast.Recipe()));
 				result.add(new QuickRecipe(new FeatherFall.Recipe()));

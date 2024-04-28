@@ -26,6 +26,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.blobs.Alchemy;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.items.Generator;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
+import com.tianscar.carbonizedpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.tianscar.carbonizedpixeldungeon.items.journal.AlchemyPage;
 import com.tianscar.carbonizedpixeldungeon.items.keys.IronKey;
 import com.tianscar.carbonizedpixeldungeon.items.potions.Potion;
@@ -108,6 +109,19 @@ public class LaboratoryRoom extends SpecialRoom {
 								level.heaps.get(pos) != null);
 				level.drop(p, pos);
 			}
+		}
+
+		if (!Dungeon.LimitedDrops.TOOLKIT.dropped()) {
+			AlchemistsToolkit toolkit = new AlchemistsToolkit();
+			toolkit.identify();
+			int pos;
+			do {
+				pos = level.pointToCell(random());
+			} while (
+					level.map[pos] != Terrain.EMPTY_SP ||
+							level.heaps.get(pos) != null);
+			level.drop(toolkit, pos);
+			Dungeon.LimitedDrops.TOOLKIT.drop();
 		}
 		
 		if (level instanceof RegularLevel && ((RegularLevel)level).hasPitRoom()){

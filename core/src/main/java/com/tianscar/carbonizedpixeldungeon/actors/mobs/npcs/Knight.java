@@ -21,12 +21,13 @@
 
 package com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs;
 
+import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Shadow;
-import com.tianscar.carbonizedpixeldungeon.items.Gold;
+import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.items.quest.GoldenSeal;
 import com.tianscar.carbonizedpixeldungeon.journal.Notes;
 import com.tianscar.carbonizedpixeldungeon.levels.Level;
@@ -34,6 +35,7 @@ import com.tianscar.carbonizedpixeldungeon.levels.rooms.Room;
 import com.tianscar.carbonizedpixeldungeon.levels.rooms.special.ThiefsTreasureRoom;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.Game;
+import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.KnightSprite;
 import com.tianscar.carbonizedpixeldungeon.utils.Bundle;
@@ -55,7 +57,7 @@ public class Knight extends NPC {
 	
 	@Override
 	protected boolean act() {
-		if (Dungeon.level.heroFOV[pos] && Quest.gold != null){
+		if (Dungeon.level.heroFOV[pos] && Quest.given && !Quest.completed){
 			Notes.add( Notes.Landmark.KNIGHT );
 		}
 		return super.act();
@@ -98,7 +100,15 @@ public class Knight extends NPC {
 						GameScene.show( new WndKnight( Knight.this, seal ) );
 					}
 				});
+			} else if (Quest.lost) {
+				Game.runOnRenderThread(new Callback() {
+					@Override
+					public void call() {
+						GameScene.show( new WndKnight( Knight.this ) );
+					}
+				});
 			} else {
+
 				String msg;
 				switch(Knight.Quest.type){
 					case 1: default:
@@ -167,14 +177,15 @@ public class Knight extends NPC {
 		private static boolean spawned;
 		
 		private static boolean given;
-		
-		public static Gold gold;
+		private static boolean completed;
+
+		public static boolean lost;
 		
 		public static void reset() {
 			spawned = false;
+			completed = false;
+			lost = false;
 			type = 0;
-
-			gold = null;
 		}
 		
 		private static final String NODE		= "knight";
@@ -182,7 +193,8 @@ public class Knight extends NPC {
 		private static final String SPAWNED		= "spawned";
 		private static final String TYPE		= "type";
 		private static final String GIVEN		= "given";
-		private static final String GOLD		= "gold";
+		private static final String COMPLETED	= "completed";
+		private static final String LOST		= "lost";
 		
 		public static void storeInBundle( Bundle bundle ) {
 			
@@ -195,8 +207,9 @@ public class Knight extends NPC {
 				node.put( TYPE, type );
 				
 				node.put( GIVEN, given );
-				
-				node.put( GOLD, gold );
+				node.put( COMPLETED, completed );
+
+				node.put( LOST, lost );
 
 			}
 			
@@ -212,8 +225,9 @@ public class Knight extends NPC {
 				type = node.getInt(TYPE);
 				
 				given = node.getBoolean( GIVEN );
-				
-				gold = (Gold) node.get( GOLD );
+				completed = node.getBoolean( COMPLETED );
+
+				lost = node.getBoolean( LOST );
 
 			} else {
 				reset();
@@ -250,7 +264,6 @@ public class Knight extends NPC {
 				spawned = true;
 
 				given = false;
-				gold = new Gold(2000);
 				
 			}
 		}
@@ -275,9 +288,22 @@ public class Knight extends NPC {
 		}
 		
 		public static void complete() {
-			gold = null;
-			
+			completed = true;
+
 			Notes.remove( Notes.Landmark.KNIGHT );
 		}
 	}
+
+	public void flee() {
+		destroy();
+
+		sprite.killAndErase();
+
+		sprite.emitter().start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+
+		if (sprite.visible) {
+			Sample.INSTANCE.play( Assets.Sounds.TELEPORT );
+		}
+	}
+
 }

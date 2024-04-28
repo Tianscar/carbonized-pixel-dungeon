@@ -66,12 +66,12 @@ public class MirrorImage extends NPC {
 		
 		if ( hero == null ) {
 			hero = (Hero) Actor.findById(heroID);
+			wielding = new Wielding( hero );
 			if ( hero == null ) {
 				die(null);
 				sprite.killAndErase();
 				return true;
 			}
-			else wielding = new Wielding( hero );
 		}
 		
 		if (hero.tier() != armTier) {

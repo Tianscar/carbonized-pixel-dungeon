@@ -25,7 +25,7 @@ import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
-import com.tianscar.carbonizedpixeldungeon.actors.buffs.Paralysis;
+import com.tianscar.carbonizedpixeldungeon.actors.buffs.Petrification;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.Mob;
 import com.tianscar.carbonizedpixeldungeon.effects.Flare;
 import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
@@ -44,7 +44,7 @@ public class ScrollOfPetrification extends ExoticScroll {
 		
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
-				Buff.affect( mob, Paralysis.class, Paralysis.DURATION );
+				Buff.affect( mob, Petrification.class, Petrification.DURATION );
 			}
 		}
 

@@ -227,6 +227,13 @@ public class ShopRoom extends SpecialRoom {
 		itemsToSpawn.add( new Ankh() );
 		itemsToSpawn.add( new StoneOfAugmentation() );
 
+		if (!Dungeon.LimitedDrops.HOURGLASS.dropped()) {
+			TimekeepersHourglass hourglass = new TimekeepersHourglass();
+			hourglass.identify();
+			itemsToSpawn.add( hourglass );
+			Dungeon.LimitedDrops.HOURGLASS.drop();
+		}
+
 		TimekeepersHourglass hourglass = Dungeon.hero.belongings.getItem(TimekeepersHourglass.class);
 		if (hourglass != null && hourglass.isIdentified() && !hourglass.cursed){
 			int bags = 0;

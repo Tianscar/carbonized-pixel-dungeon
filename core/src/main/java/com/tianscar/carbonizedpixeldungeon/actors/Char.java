@@ -75,6 +75,7 @@ import com.tianscar.carbonizedpixeldungeon.items.armor.glyphs.Potential;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfElements;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfFireblast;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfFrost;
@@ -341,6 +342,11 @@ public abstract class Char extends Actor {
 				dmg *= 1.5f;
 			}
 
+			for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
+				dmg *= buff.meleeDamageFactor();
+				buff.onAttackProc( enemy );
+			}
+
 			dmg += dmgBonus;
 
 			//friendly endure
@@ -351,6 +357,14 @@ public abstract class Char extends Actor {
 			endure = enemy.buff(Endure.EndureTracker.class);
 			if (endure != null){
 				dmg = endure.adjustDamageTaken(dmg);
+			}
+
+			if (enemy.buff(ScrollOfChallenge.ChallengeArena.class) != null){
+				dmg *= 0.67f;
+			}
+
+			if ( buff(Weakness.class) != null ){
+				dmg *= 0.67f;
 			}
 			
 			int effectiveDamage = enemy.defenseProc( this, dmg );
@@ -486,11 +500,7 @@ public abstract class Char extends Actor {
 	// atm attack is always post-armor and defence is already pre-armor
 	
 	public int attackProc( Char enemy, int damage ) {
-		if ( buff(Weakness.class) != null ){
-			damage *= 0.67f;
-		}
 		for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
-			damage *= buff.meleeDamageFactor();
 			buff.onAttackProc( enemy );
 		}
 		return damage;

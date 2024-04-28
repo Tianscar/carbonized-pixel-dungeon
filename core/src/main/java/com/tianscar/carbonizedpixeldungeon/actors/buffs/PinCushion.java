@@ -49,6 +49,14 @@ public class PinCushion extends Buff {
 		return new ArrayList<>(items);
 	}
 
+	public Item grabOne(){
+		Item item = items.remove(0);
+		if (items.isEmpty()){
+			detach();
+		}
+		return item;
+	}
+
 	@Override
 	public void detach() {
 		for (Item item : items)

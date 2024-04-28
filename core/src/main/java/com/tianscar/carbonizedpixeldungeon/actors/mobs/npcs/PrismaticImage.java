@@ -97,12 +97,12 @@ public class PrismaticImage extends NPC {
 		
 		if ( hero == null ) {
 			hero = (Hero) Actor.findById(heroID);
+			wielding = new Wielding( hero );
 			if ( hero == null ) {
 				destroy();
 				sprite.die();
 				return true;
 			}
-			else wielding = new Wielding( hero );
 		}
 		
 		if (hero.tier() != armTier) {

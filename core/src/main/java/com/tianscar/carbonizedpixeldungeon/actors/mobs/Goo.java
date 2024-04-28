@@ -250,6 +250,12 @@ public class Goo extends Mob {
 		Dungeon.level.unseal();
 		
 		GameScene.bossSlain();
+		if (!Dungeon.LimitedDrops.ROSE.dropped()) {
+			DriedRose rose = new DriedRose();
+			rose.identify();
+			Dungeon.level.drop( rose, pos ).sprite.drop();
+			Dungeon.LimitedDrops.ROSE.drop();
+		}
 		Dungeon.level.drop( new SkeletonKey( Dungeon.depth ), pos ).sprite.drop();
 		
 		//60% chance of 2 blobs, 30% chance of 3, 10% chance for 4. Average of 2.5

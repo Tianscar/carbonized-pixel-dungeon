@@ -22,7 +22,6 @@
 package com.tianscar.carbonizedpixeldungeon.actors.mobs;
 
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
-import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Blob;
 import com.tianscar.carbonizedpixeldungeon.actors.blobs.Fire;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Blindness;
@@ -30,17 +29,20 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Buff;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Burning;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Cripple;
-import com.tianscar.carbonizedpixeldungeon.actors.buffs.Ooze;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Paralysis;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Poison;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Terror;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Knight;
+import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
+import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.quest.GoldenSeal;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.GameScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.CharSprite;
 import com.tianscar.carbonizedpixeldungeon.sprites.ShadowSprite;
+import com.tianscar.carbonizedpixeldungeon.utils.GLog;
 import com.tianscar.carbonizedpixeldungeon.utils.Random;
 
 public class Shadow extends Thief {
@@ -60,12 +62,6 @@ public class Shadow extends Thief {
 
 		//guaranteed first drop, then 1/3, 1/9, etc.
 		lootChance = 1f;
-	}
-
-	@Override
-	public int attackProc(Char enemy, int damage) {
-		if (Random.Int(2) == 0) Buff.affect(enemy, Ooze.class).set( Ooze.DURATION );
-		return super.attackProc(enemy, damage);
 	}
 
 	@Override
@@ -101,33 +97,14 @@ public class Shadow extends Thief {
 				if (enemySeen) {
 					sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Mob.class, "rage"));
 					state = HUNTING;
-				}/* else if (item != null
-						&& !Dungeon.level.heroFOV[pos]
-						&& Dungeon.level.distance(Dungeon.hero.pos, pos) >= 6) {
-
-					int count = 32;
-					int newPos;
-					do {
-						newPos = Dungeon.level.randomRespawnCell( Shadow.this );
-						if (count-- <= 0) {
-							break;
-						}
-					} while (newPos == -1 || Dungeon.level.heroFOV[newPos] || Dungeon.level.distance(newPos, pos) < (count/3));
-
-					if (newPos != -1) {
-
-						if (Dungeon.level.heroFOV[pos]) CellEmitter.get(pos).burst(Speck.factory(Speck.WOOL), 6);
-						pos = newPos;
-						sprite.place( pos );
-						sprite.visible = Dungeon.level.heroFOV[pos];
-						if (Dungeon.level.heroFOV[pos]) CellEmitter.get(pos).burst(Speck.factory(Speck.WOOL), 6);
-
-					}
-
-					if (item != null) GLog.n( Messages.get(Thief.class, "escapes", item.name()));
+				} else if (!Dungeon.level.heroFOV[pos] && Dungeon.level.distance(Dungeon.hero.pos, pos) >= 6) {
+					GLog.n( Messages.get(Shadow.this, "escaped"));
+					if (Dungeon.level.heroFOV[pos]) CellEmitter.get(pos).burst(Speck.factory(Speck.WOOL), 6);
 					item = null;
-					state = WANDERING;
-				}*/ else {
+					destroy();
+					sprite.killAndErase();
+					Knight.Quest.lost = true;
+				} else {
 					state = WANDERING;
 				}
 			} else {

@@ -24,6 +24,7 @@ package com.tianscar.carbonizedpixeldungeon.plants;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.Char;
 import com.tianscar.carbonizedpixeldungeon.items.Heap;
+import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.artifacts.DriedRose;
 
 public class RoseBush extends Plant {
@@ -34,9 +35,20 @@ public class RoseBush extends Plant {
 
 	@Override
 	public void activate( Char ch ) {
-		Heap heap = Dungeon.level.drop( new DriedRose.Petal(), pos );
+
+		Item itemToDrop;
+		if (!Dungeon.LimitedDrops.ROSE.dropped()) {
+			itemToDrop = new DriedRose();
+			itemToDrop.identify();
+		}
+		else itemToDrop = new DriedRose.Petal();
+
+		Heap heap = Dungeon.level.drop( itemToDrop, pos );
 		heap.type = Heap.Type.HEAP;
 		heap.sprite.drop();
+		if (!Dungeon.LimitedDrops.ROSE.dropped()) {
+			Dungeon.LimitedDrops.ROSE.drop();
+		}
 	}
 
 	//seed is never dropped

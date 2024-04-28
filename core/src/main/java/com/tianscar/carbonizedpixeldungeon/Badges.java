@@ -96,13 +96,14 @@ public class Badges {
 		ALL_POTIONS_IDENTIFIED      ( 82 ),
 		ALL_SCROLLS_IDENTIFIED      ( 83 ),
 		DEATH_FROM_GLYPH            ( 84 ),
+		DEATH_FROM_SACRIFICE        ( 85 ),
 		BOSS_SLAIN_1_WARRIOR,
 		BOSS_SLAIN_1_MAGE,
 		BOSS_SLAIN_1_ROGUE,
 		BOSS_SLAIN_1_HUNTRESS,
 		BOSS_SLAIN_1_ELEMENTALIST,
-		BOSS_SLAIN_1_ALL_CLASSES    ( 85, true ),
-		GAMES_PLAYED_1              ( 86, true ),
+		BOSS_SLAIN_1_ALL_CLASSES    ( 86, true ),
+		GAMES_PLAYED_1              ( 87, true ),
 
 		//gold
 		PIRANHAS                    ( 128 ),
@@ -559,14 +560,23 @@ public class Badges {
 
 		validateYASD();
 	}
+
+	public static void validateDeathFromSacrifice() {
+		Badge badge = Badge.DEATH_FROM_SACRIFICE;
+		local.add( badge );
+		displayBadge( badge );
+
+		validateYASD();
+	}
 	
 	private static void validateYASD() {
 		if (global.contains( Badge.DEATH_FROM_FIRE ) &&
 			global.contains( Badge.DEATH_FROM_POISON ) &&
 			global.contains( Badge.DEATH_FROM_GAS ) &&
-			global.contains( Badge.DEATH_FROM_HUNGER) &&
-			global.contains( Badge.DEATH_FROM_GLYPH) &&
-			global.contains( Badge.DEATH_FROM_FALLING)) {
+			global.contains( Badge.DEATH_FROM_HUNGER ) &&
+			global.contains( Badge.DEATH_FROM_GLYPH ) &&
+			global.contains( Badge.DEATH_FROM_FALLING ) &&
+			global.contains( Badge.DEATH_FROM_SACRIFICE )) {
 			
 			Badge badge = Badge.YASD;
 			displayBadge( badge );

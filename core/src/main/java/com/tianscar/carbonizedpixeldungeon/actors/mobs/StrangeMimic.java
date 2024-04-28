@@ -30,6 +30,7 @@ import com.tianscar.carbonizedpixeldungeon.actors.buffs.Corruption;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Haste;
 import com.tianscar.carbonizedpixeldungeon.actors.buffs.Terror;
 import com.tianscar.carbonizedpixeldungeon.actors.hero.Hero;
+import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Knight;
 import com.tianscar.carbonizedpixeldungeon.effects.CellEmitter;
 import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.items.EquipableItem;
@@ -172,12 +173,13 @@ public class StrangeMimic extends Mimic {
 				if (enemySeen) {
 					sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Mob.class, "rage"));
 					state = HUNTING;
-				}/* else if (!Dungeon.level.heroFOV[pos] && Dungeon.level.distance(Dungeon.hero.pos, pos) >= 6) {
-					GLog.n( Messages.get(StrangeMimic.class, "escaped"));
+				} else if (!Dungeon.level.heroFOV[pos] && Dungeon.level.distance(Dungeon.hero.pos, pos) >= 6) {
+					GLog.n(Messages.get(StrangeMimic.class, "escaped"));
 					if (Dungeon.level.heroFOV[pos]) CellEmitter.get(pos).burst(Speck.factory(Speck.WOOL), 6);
 					destroy();
 					sprite.killAndErase();
-				}*/ else {
+					Knight.Quest.lost = true;
+				} else {
 					state = WANDERING;
 				}
 			} else {

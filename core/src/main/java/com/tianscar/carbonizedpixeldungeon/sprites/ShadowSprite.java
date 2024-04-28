@@ -33,7 +33,7 @@ public class ShadowSprite extends MobSprite {
 		TextureFilm film = new TextureFilm( texture, 12, 13 );
 		
 		idle = new Animation( 1, true );
-		idle.frames( film, 63, 63, 63, 64, 63, 63, 63, 63, 43 );
+		idle.frames( film, 63, 63, 63, 64, 63, 63, 63, 63, 63 );
 		
 		run = new Animation( 15, true );
 		run.frames( film, 63, 63, 65, 66, 66, 67 );

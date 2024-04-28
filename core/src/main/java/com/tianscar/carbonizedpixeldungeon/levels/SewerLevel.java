@@ -25,6 +25,7 @@ import com.tianscar.carbonizedpixeldungeon.Assets;
 import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Ghost;
 import com.tianscar.carbonizedpixeldungeon.effects.Ripple;
+import com.tianscar.carbonizedpixeldungeon.items.food.Food;
 import com.tianscar.carbonizedpixeldungeon.items.food.SmallRation;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.Painter;
 import com.tianscar.carbonizedpixeldungeon.levels.painters.SewerPainter;
@@ -107,8 +108,8 @@ public class SewerLevel extends RegularLevel {
 
 	@Override
 	public void create() {
-		addItemToSpawn( new SmallRation() );
-		if (feeling == Feeling.LARGE) addItemToSpawn( new SmallRation() );
+		addItemToSpawn( new Food() );
+		if (feeling == Feeling.LARGE) addItemToSpawn( new Food() );
 		super.create();
 	}
 

@@ -25,6 +25,7 @@ import com.tianscar.carbonizedpixeldungeon.Dungeon;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Knight;
 import com.tianscar.carbonizedpixeldungeon.items.Gold;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
+import com.tianscar.carbonizedpixeldungeon.items.quest.GoldenSeal;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.scenes.PixelScene;
 import com.tianscar.carbonizedpixeldungeon.sprites.ItemSprite;
@@ -66,12 +67,49 @@ public class WndKnight extends Window {
 		RedButton btnReward = new RedButton( Messages.get(this, "reward") ) {
 			@Override
 			protected void onClick() {
-				takeReward( item, Knight.Quest.gold );
+				takeReward( item, new Gold( 2000 ) );
 			}
 		};
 		btnReward.setRect( 0, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT );
 		add( btnReward );
 		
+		resize( WIDTH, (int)btnReward.bottom() );
+	}
+
+	public WndKnight(final Knight knight) {
+
+		super();
+
+		this.knight = knight;
+
+		Item dummySeal = new GoldenSeal();
+
+		IconTitle titlebar = new IconTitle();
+		titlebar.icon( new ItemSprite( dummySeal.image(), null ) );
+		titlebar.label( Messages.titleCase( dummySeal.name() ) );
+		titlebar.setRect( 0, 0, WIDTH, 0 );
+		add( titlebar );
+
+		String msg;
+		switch (Knight.Quest.type) {
+			case 1: default: msg = Messages.get(this, "lost_mimic"); break;
+			case 2: msg = Messages.get(this, "lost_thief"); break;
+		}
+
+		RenderedTextBlock message = PixelScene.renderTextBlock( msg, 6 );
+		message.maxWidth(WIDTH);
+		message.setPos(0, titlebar.bottom() + GAP);
+		add( message );
+
+		RedButton btnReward = new RedButton( Messages.get(this, "reward") ) {
+			@Override
+			protected void onClick() {
+				takeReward( null, new Gold( 500 ) );
+			}
+		};
+		btnReward.setRect( 0, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT );
+		add( btnReward );
+
 		resize( WIDTH, (int)btnReward.bottom() );
 	}
 
@@ -81,12 +119,11 @@ public class WndKnight extends Window {
 
 		gold.doPickUp( Dungeon.hero );
 
-		item.detach( Dungeon.hero.belongings.backpack );
+		if (item != null) item.detach( Dungeon.hero.belongings.backpack );
 
 		knight.yell( Messages.get(this, "farewell", Dungeon.hero.name()) );
-		knight.destroy();
 
-		knight.sprite.die();
+		knight.flee();
 
 		Knight.Quest.complete();
 	}

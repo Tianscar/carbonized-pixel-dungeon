@@ -38,6 +38,14 @@ public class CarbonizedPixelDungeon extends Game {
 	public CarbonizedPixelDungeon(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
 
+		// CAPD v0.2.7
+		Bundle.addAlias(
+				com.tianscar.carbonizedpixeldungeon.items.potions.exotic.PotionOfDivineInspiration.class,
+				"com.tianscar.carbonizedpixeldungeon.items.potions.exotic.PotionOfHolyFuror.class" );
+		Bundle.addAlias(
+				com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfChallenge.class,
+				"com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfConfusion.class" );
+
 		//CAPD v0.2.1
 		Bundle.addAlias(
 				com.tianscar.carbonizedpixeldungeon.items.weapon.melee.ranged.Crossbow.class,

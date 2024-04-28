@@ -51,10 +51,17 @@ public class ScrollOfEnchantment extends ExoticScroll {
 
 		unique = true;
 	}
+
+	protected static boolean identifiedByUse = false;
 	
 	@Override
 	public void doRead() {
-		identify();
+		if (!isKnown()) {
+			identify();
+			identifiedByUse = true;
+		} else {
+			identifiedByUse = false;
+		}
 		
 		GameScene.selectItem( itemSelector );
 	}
@@ -185,8 +192,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 					}
 				});
 			} else {
-				//TODO if this can ever be found un-IDed, need logic for that
-				curItem.collect();
+				if (!identifiedByUse) curItem.collect();
 			}
 		}
 	};

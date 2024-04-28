@@ -118,7 +118,12 @@ public class Dungeon {
 		VELVET_POUCH,
 		SCROLL_HOLDER,
 		POTION_BANDOLIER,
-		MAGICAL_HOLSTER;
+		MAGICAL_HOLSTER,
+
+		//artifacts
+		TOOLKIT,
+		ROSE,
+		HOURGLASS;
 
 		public int count = 0;
 

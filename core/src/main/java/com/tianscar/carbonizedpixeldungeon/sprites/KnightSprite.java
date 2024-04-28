@@ -22,9 +22,7 @@
 package com.tianscar.carbonizedpixeldungeon.sprites;
 
 import com.tianscar.carbonizedpixeldungeon.Assets;
-import com.tianscar.carbonizedpixeldungeon.effects.Speck;
 import com.tianscar.carbonizedpixeldungeon.noosa.TextureFilm;
-import com.tianscar.carbonizedpixeldungeon.noosa.audio.Sample;
 
 public class KnightSprite extends MobSprite {
 
@@ -45,17 +43,6 @@ public class KnightSprite extends MobSprite {
 		die.frames( frames, 0 );
 
 		play( idle );
-	}
-
-	@Override
-	public void die() {
-		super.die();
-
-		emitter().start(Speck.factory(Speck.LIGHT), 0.2f, 3);
-
-		if (visible) {
-			Sample.INSTANCE.play( Assets.Sounds.TELEPORT );
-		}
 	}
 
 }

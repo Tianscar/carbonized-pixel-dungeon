@@ -108,7 +108,7 @@ public class WandOfLightning extends DamageWand {
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE){
 				Char n = Actor.findChar( i );
-				if ((n == Dungeon.hero && PathFinder.distance[i] > 1) || Dungeon.hero.pointsInTalent(Talent.INSULATED_ELECTRICITY) == 2)
+				if (n == Dungeon.hero && (PathFinder.distance[i] > 1 || Dungeon.hero.pointsInTalent(Talent.INSULATED_ELECTRICITY) == 2))
 					//the hero is only zapped if they are adjacent
 					continue;
 				else if (n != null && !affected.contains( n )) {

@@ -97,6 +97,7 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.Potion;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfExperience;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfHealing;
 import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfMight;
+import com.tianscar.carbonizedpixeldungeon.items.potions.exotic.PotionOfDivineInspiration;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfAccuracy;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfEvasion;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfForce;
@@ -106,6 +107,7 @@ import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfMight;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfTenacity;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.Scroll;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfMagicMapping;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
 import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.wands.Wand;
 import com.tianscar.carbonizedpixeldungeon.items.wands.WandOfLivingEarth;
@@ -367,14 +369,27 @@ public class Hero extends Char {
 	}
 
 	public int talentPointsAvailable(int tier){
-		if (lvl < Talent.tierLevelThresholds[tier]
-			|| (tier == 3 && subClass == HeroSubClass.NONE)
-			|| (tier == 4 && armorAbility == null)){
+		if (lvl < (Talent.tierLevelThresholds[tier] - 1)
+				|| (tier == 3 && subClass == HeroSubClass.NONE)
+				|| (tier == 4 && armorAbility == null)) {
 			return 0;
 		} else if (lvl >= Talent.tierLevelThresholds[tier+1]){
-			return Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier);
+			return Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier) + bonusTalentPoints(tier);
 		} else {
-			return 1 + lvl - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier);
+			return 1 + lvl - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier) + bonusTalentPoints(tier);
+		}
+	}
+
+	public int bonusTalentPoints(int tier){
+		if (lvl < (Talent.tierLevelThresholds[tier] - 1)
+				|| (tier == 3 && subClass == HeroSubClass.NONE)
+				|| (tier == 4 && armorAbility == null)) {
+			return 0;
+		} else if (buff(PotionOfDivineInspiration.DivineInspirationTracker.class) != null
+				&& buff(PotionOfDivineInspiration.DivineInspirationTracker.class).isBoosted(tier)) {
+			return 2;
+		} else {
+			return 0;
 		}
 	}
 	
@@ -1282,6 +1297,18 @@ public class Hero extends Char {
 		if (this.buff(Drowsy.class) != null){
 			Buff.detach(this, Drowsy.class);
 			GLog.w( Messages.get(this, "pain_resist") );
+		}
+
+		Endure.EndureTracker endure = buff(Endure.EndureTracker.class);
+		if (!(src instanceof Char)){
+			//reduce damage here if it isn't coming from a character (if it is we already reduced it)
+			if (endure != null){
+				dmg = Math.round(endure.adjustDamageTaken(dmg));
+			}
+			//the same also applies to challenge scroll damage reduction
+			if (buff(ScrollOfChallenge.ChallengeArena.class) != null){
+				dmg *= 0.67f;
+			}
 		}
 
 		CapeOfThorns.Thorns thorns = buff( CapeOfThorns.Thorns.class );

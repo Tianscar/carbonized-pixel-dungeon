@@ -44,10 +44,10 @@ import com.tianscar.carbonizedpixeldungeon.actors.hero.abilities.warrior.Shockwa
 import com.tianscar.carbonizedpixeldungeon.items.Amulet;
 import com.tianscar.carbonizedpixeldungeon.items.BrokenSeal;
 import com.tianscar.carbonizedpixeldungeon.items.CarbonSteel;
-import com.tianscar.carbonizedpixeldungeon.items.Gold;
 import com.tianscar.carbonizedpixeldungeon.items.Honeypot;
 import com.tianscar.carbonizedpixeldungeon.items.Item;
 import com.tianscar.carbonizedpixeldungeon.items.KingsCrown;
+import com.tianscar.carbonizedpixeldungeon.items.MerchantsBeacon;
 import com.tianscar.carbonizedpixeldungeon.items.Stylus;
 import com.tianscar.carbonizedpixeldungeon.items.TengusMask;
 import com.tianscar.carbonizedpixeldungeon.items.Waterskin;
@@ -68,6 +68,7 @@ import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfMindVision;
 import com.tianscar.carbonizedpixeldungeon.items.potions.PotionOfStrength;
 import com.tianscar.carbonizedpixeldungeon.items.potions.elixirs.ElixirOfHoneyedHealing;
+import com.tianscar.carbonizedpixeldungeon.items.potions.exotic.PotionOfDivineInspiration;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfForce;
 import com.tianscar.carbonizedpixeldungeon.items.rings.RingOfMight;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfIdentify;
@@ -79,7 +80,9 @@ import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfAffection;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfAntiMagic;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfMysticalEnergy;
+import com.tianscar.carbonizedpixeldungeon.items.scrolls.exotic.ScrollOfPetrification;
 import com.tianscar.carbonizedpixeldungeon.items.spells.CurseInfusion;
 import com.tianscar.carbonizedpixeldungeon.items.spells.ElementalHeart;
 import com.tianscar.carbonizedpixeldungeon.items.stones.StoneOfEnchantment;
@@ -179,6 +182,7 @@ public enum HeroClass {
 			new ScrollOfMysticalEnergy().identify().quantity(20).collect();
 			new ScrollOfAntiMagic().identify().quantity(20).collect();
 			new ScrollOfMagicMapping().identify().quantity(20).collect();
+			new ScrollOfPetrification().identify().quantity(20).collect();
 
 			new CurseInfusion().quantity(20).collect();
 			new StoneOfEnchantment().quantity(20).collect();
@@ -209,11 +213,15 @@ public enum HeroClass {
 			new ElixirOfHoneyedHealing().quantity(4).collect();
 
 			new Amulet().collect();
-			new ScrollOfAffection().quantity(5).collect();
+			new ScrollOfAffection().identify().quantity(5).collect();
 
 			new CarbonSteel().quantity(30).collect();
 
 			new GoldenSword().identify().upgrade(8).collect();
+
+			new MerchantsBeacon().quantity(10).collect();
+			new PotionOfDivineInspiration().quantity(10).collect();
+			new ScrollOfEnchantment().identify().quantity(10).collect();
 		}
 
 		for (int s = 0; s < QuickSlot.SIZE; s++) {

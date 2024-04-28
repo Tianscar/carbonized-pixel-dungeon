@@ -55,6 +55,8 @@ import com.tianscar.carbonizedpixeldungeon.items.spells.MagicalPorter;
 import com.tianscar.carbonizedpixeldungeon.items.spells.PhaseShift;
 import com.tianscar.carbonizedpixeldungeon.items.spells.ReclaimTrap;
 import com.tianscar.carbonizedpixeldungeon.items.spells.Recycle;
+import com.tianscar.carbonizedpixeldungeon.items.spells.SummonElemental;
+import com.tianscar.carbonizedpixeldungeon.items.spells.TelekineticGrab;
 import com.tianscar.carbonizedpixeldungeon.items.spells.WildEnergy;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MagesStaff;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.MeleeWeapon;
@@ -203,11 +205,12 @@ public abstract class Recipe {
 			new CurseInfusion.Recipe(),
 			new FeatherFall.Recipe(),
 			new MagicalInfusion.Recipe(),
-			new MagicalPorter.Recipe(),
 			new PhaseShift.Recipe(),
 			new ReclaimTrap.Recipe(),
 			new Recycle.Recipe(),
 			new WildEnergy.Recipe(),
+			new TelekineticGrab.Recipe(),
+			new SummonElemental.Recipe(),
 			new StewedMeat.twoMeat(),
 			new LiquidMetal.twoSteel()
 	};

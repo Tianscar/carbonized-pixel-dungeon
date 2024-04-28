@@ -35,6 +35,9 @@ import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.Patrol;
 import com.tianscar.carbonizedpixeldungeon.actors.mobs.npcs.PlagueDoctor;
 import com.tianscar.carbonizedpixeldungeon.items.food.Cheese;
 import com.tianscar.carbonizedpixeldungeon.items.food.SmallRation;
+import com.tianscar.carbonizedpixeldungeon.items.spells.MagicalPorter;
+import com.tianscar.carbonizedpixeldungeon.items.spells.SummonElemental;
+import com.tianscar.carbonizedpixeldungeon.items.spells.TelekineticGrab;
 import com.tianscar.carbonizedpixeldungeon.items.weapon.melee.GoldenSword;
 import com.tianscar.carbonizedpixeldungeon.messages.Messages;
 import com.tianscar.carbonizedpixeldungeon.noosa.Image;
@@ -57,6 +60,7 @@ public class v0_2_X_Changes {
 		ChangeInfo changes = new ChangeInfo("v0.2.X", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
+		add_v0_2_7_Changes( changeInfos );
 		add_v0_2_6_Changes( changeInfos );
 		add_v0_2_5_Changes( changeInfos );
 		add_v0_2_4_Changes( changeInfos );
@@ -64,6 +68,54 @@ public class v0_2_X_Changes {
 		add_v0_2_2_Changes( changeInfos );
 		add_v0_2_1_Changes( changeInfos );
 		add_v0_2_0_Changes( changeInfos );
+
+	}
+
+	public static void add_v0_2_7_Changes( ArrayList<ChangeInfo> changeInfos ) {
+
+		ChangeInfo changes = new ChangeInfo("v0.2.7", false, "");
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING),
+				"内容未完成",
+				"一些文本未被翻译成英文，并且元素使的第三个护甲技能未被添加"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.2.2的 Bug）：\n" +
+						"_-_ 元素使绝缘电流天赋导致电击无法传导的问题"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16),
+				Messages.get(ChangesScene.class, "bugfixes"),
+				"尝试修复了（v0.2.2的 Bug）：\n" +
+						"_-_ 镜像攻击敌人导致闪退的问题"));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SUMMON_ELE),
+				Messages.get(SummonElemental.class, "name"),
+				Messages.get(SummonElemental.class, "desc")));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.TELE_GRAB),
+				Messages.get(TelekineticGrab.class, "name"),
+				Messages.get(TelekineticGrab.class, "desc")));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.EXOTIC_CRIMSON),
+				"合剂改动",
+				"_-_ _激素涌动合剂_现在可以永久提升 1 点力量了。\n" +
+						"_-_ _神圣祝福合剂_改为_神意启发合剂_，可以增加 2 点额外的天赋点，每层限一次。"));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.EXOTIC_KAUNAN),
+				"秘卷改动",
+				"_-_ _石化秘卷_现在_石化_而不是_麻痹_敌人。石化状态下的敌人不会因为受到伤害而解除石化。\n" +
+						"_-_ _迷惑秘卷_改为_决斗秘卷_，可以展开一个_决斗区域_，区域内增幅英雄并削弱敌人。"));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_TOOLKIT),
+				"神器改动",
+				"_-_ _炼金工具箱_现在出现在第一个_炼金房_。\n" +
+						"_-_ _时光沙漏_现在出现在第一个_商店_。\n" +
+						"_-_ _干枯玫瑰_现在由_粘咕_掉落。"));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.MAGIC_PORTER),
+				Messages.get(MagicalPorter.class, "name"),
+				"移除了_信使结晶_的炼金配方。"));
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.KNIGHT, 0, 0, 12, 16),
+				Messages.get(Knight.class, "name"),
+				"增强了骑士任务的怪物，现在它们会逃走了。怪物逃走后骑士仍然会给予一些金币作为报酬。"));
+		changes.addButton( new ChangeButton(Icons.get(Icons.STAIRS),
+				"房间改动",
+				"从后续版本的_破碎的像素地牢_移植了_献祭房_与_毒气房_。"));
 
 	}
 
